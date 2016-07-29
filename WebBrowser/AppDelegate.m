@@ -6,7 +6,11 @@
 //  Copyright © 2016年 钟武. All rights reserved.
 //
 
+#import <AVFoundation/AVFoundation.h>
+
 #import "AppDelegate.h"
+#import "KeyboardHelper.h"
+#import "MenuHelper.h"
 
 @interface AppDelegate ()
 
@@ -14,6 +18,15 @@
 
 @implementation AppDelegate
 
+- (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
+    [[KeyboardHelper sharedInstance] startObserving];
+    
+    [[MenuHelper sharedInstance] setItems];
+    
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback withOptions:AVAudioSessionCategoryOptionMixWithOthers error:nil];
+    
+    return true;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.

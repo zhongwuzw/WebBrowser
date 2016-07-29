@@ -15,6 +15,8 @@
 		0E681F381D4AEC3F003534F5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E681F361D4AEC3F003534F5 /* LaunchScreen.storyboard */; };
 		0E681F431D4AEC3F003534F5 /* WebBrowserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E681F421D4AEC3F003534F5 /* WebBrowserTests.m */; };
 		0E681F4E1D4AEC3F003534F5 /* WebBrowserUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E681F4D1D4AEC3F003534F5 /* WebBrowserUITests.m */; };
+		0E681F661D4AFEAA003534F5 /* KeyboardHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E681F651D4AFEAA003534F5 /* KeyboardHelper.m */; };
+		0E681F691D4B34EB003534F5 /* MenuHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E681F681D4B34EB003534F5 /* MenuHelper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,13 @@
 		0E681F491D4AEC3F003534F5 /* WebBrowserUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WebBrowserUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E681F4D1D4AEC3F003534F5 /* WebBrowserUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WebBrowserUITests.m; sourceTree = "<group>"; };
 		0E681F4F1D4AEC3F003534F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0E681F5D1D4AF218003534F5 /* MacroMethod.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacroMethod.h; sourceTree = "<group>"; };
+		0E681F5F1D4AF2D5003534F5 /* WebBrowser.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebBrowser.pch; sourceTree = "<group>"; };
+		0E681F621D4AF8DB003534F5 /* MacroUIConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacroUIConstants.h; sourceTree = "<group>"; };
+		0E681F641D4AFEAA003534F5 /* KeyboardHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardHelper.h; sourceTree = "<group>"; };
+		0E681F651D4AFEAA003534F5 /* KeyboardHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyboardHelper.m; sourceTree = "<group>"; };
+		0E681F671D4B34EB003534F5 /* MenuHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuHelper.h; sourceTree = "<group>"; };
+		0E681F681D4B34EB003534F5 /* MenuHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuHelper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,14 +110,15 @@
 		0E681F271D4AEC3F003534F5 /* WebBrowser */ = {
 			isa = PBXGroup;
 			children = (
-				0E681F2B1D4AEC3F003534F5 /* AppDelegate.h */,
-				0E681F2C1D4AEC3F003534F5 /* AppDelegate.m */,
+				0E681F5E1D4AF2A3003534F5 /* Application */,
+				0E681F5B1D4AF1A8003534F5 /* Utils */,
 				0E681F2E1D4AEC3F003534F5 /* ViewController.h */,
 				0E681F2F1D4AEC3F003534F5 /* ViewController.m */,
 				0E681F311D4AEC3F003534F5 /* Main.storyboard */,
 				0E681F341D4AEC3F003534F5 /* Assets.xcassets */,
 				0E681F361D4AEC3F003534F5 /* LaunchScreen.storyboard */,
 				0E681F391D4AEC3F003534F5 /* Info.plist */,
+				0E681F5F1D4AF2D5003534F5 /* WebBrowser.pch */,
 				0E681F281D4AEC3F003534F5 /* Supporting Files */,
 			);
 			path = WebBrowser;
@@ -138,6 +148,44 @@
 				0E681F4F1D4AEC3F003534F5 /* Info.plist */,
 			);
 			path = WebBrowserUITests;
+			sourceTree = "<group>";
+		};
+		0E681F5B1D4AF1A8003534F5 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				0E681F631D4AFE93003534F5 /* Helper */,
+				0E681F5C1D4AF1C8003534F5 /* Macro */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+		0E681F5C1D4AF1C8003534F5 /* Macro */ = {
+			isa = PBXGroup;
+			children = (
+				0E681F5D1D4AF218003534F5 /* MacroMethod.h */,
+				0E681F621D4AF8DB003534F5 /* MacroUIConstants.h */,
+			);
+			name = Macro;
+			sourceTree = "<group>";
+		};
+		0E681F5E1D4AF2A3003534F5 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				0E681F2B1D4AEC3F003534F5 /* AppDelegate.h */,
+				0E681F2C1D4AEC3F003534F5 /* AppDelegate.m */,
+			);
+			name = Application;
+			sourceTree = "<group>";
+		};
+		0E681F631D4AFE93003534F5 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				0E681F641D4AFEAA003534F5 /* KeyboardHelper.h */,
+				0E681F651D4AFEAA003534F5 /* KeyboardHelper.m */,
+				0E681F671D4B34EB003534F5 /* MenuHelper.h */,
+				0E681F681D4B34EB003534F5 /* MenuHelper.m */,
+			);
+			name = Helper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -270,8 +318,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E681F661D4AFEAA003534F5 /* KeyboardHelper.m in Sources */,
 				0E681F301D4AEC3F003534F5 /* ViewController.m in Sources */,
 				0E681F2D1D4AEC3F003534F5 /* AppDelegate.m in Sources */,
+				0E681F691D4B34EB003534F5 /* MenuHelper.m in Sources */,
 				0E681F2A1D4AEC3F003534F5 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -413,6 +463,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = WebBrowser/WebBrowser.pch;
 				INFOPLIST_FILE = WebBrowser/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = zhongwu.WebBrowser;
@@ -424,6 +476,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = WebBrowser/WebBrowser.pch;
 				INFOPLIST_FILE = WebBrowser/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = zhongwu.WebBrowser;

@@ -1,0 +1,52 @@
+//
+//  MacroMethod.h
+//  WebBrowser
+//
+//  Created by 钟武 on 16/7/29.
+//  Copyright © 2016年 钟武. All rights reserved.
+//
+
+#ifndef MacroMethod_h
+#define MacroMethod_h
+
+#import <objc/runtime.h>
+
+//颜色宏定义
+#define ColorRedGreenBlue(r, g, b)				[UIColor colorWithRed : (r) / 255.0f green : (g) / 255.0f blue : (b) / 255.0f alpha : 1.0f]
+#define ColorRedGreenBlueWithAlpha(r, g, b, a)	[UIColor colorWithRed : (r) / 255.0f green : (g) / 255.0f blue : (b) / 255.0f alpha : a]
+
+#define UIColorFromRGB(rgbValue)				[UIColor colorWithRed : ((float)((rgbValue & 0xFF0000) >> 16)) / 255.0 green : ((float)((rgbValue & 0xFF00) >> 8)) / 255.0 blue : ((float)(rgbValue & 0xFF)) / 255.0 alpha : 1.0]
+#define UIColorFromRGBAndAlpha(rgbValue,a)				[UIColor colorWithRed : ((float)((rgbValue & 0xFF0000) >> 16)) / 255.0 green : ((float)((rgbValue & 0xFF00) >> 8)) / 255.0 blue : ((float)(rgbValue & 0xFF)) / 255.0 alpha : a]
+
+//weak、strong创建
+#define WEAK_REF(self) \
+__block __weak typeof(self) self##_ = self; (void) self##_
+
+#define STRONG_REF(self) \
+__block __strong typeof(self) self##_ = self; (void) self##_;
+
+
+
+#define SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(__CLASSNAME__)	\
+    \
+    + (__CLASSNAME__*) sharedInstance;
+
+
+#define SYNTHESIZE_SINGLETON_FOR_CLASS(__CLASSNAME__)	\
+    + (__CLASSNAME__ *)sharedInstance\
+    {\
+        static __CLASSNAME__ *shared##className = nil;\
+        static dispatch_once_t onceToken; \
+        dispatch_once(&onceToken, ^{ \
+            shared##className = [[super allocWithZone:NULL] init]; \
+    }); \
+    return shared##className; \
+}\
++ (id)allocWithZone:(NSZone*)zone {\
+    return [self sharedInstance];\
+}\
+- (id)copyWithZone:(NSZone *)zone {\
+    return self;\
+}
+
+#endif /* MacroMethod_h */

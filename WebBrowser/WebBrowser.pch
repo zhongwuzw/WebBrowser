@@ -1,0 +1,19 @@
+//
+//  WebBrowser.pch
+//  WebBrowser
+//
+//  Created by 钟武 on 16/7/29.
+//  Copyright © 2016年 钟武. All rights reserved.
+//
+
+#ifndef WebBrowser_pch
+#define WebBrowser_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+#import <UIKit/UIKit.h>
+
+#import "MacroMethod.h"
+#import "MacroUIConstants.h"
+
+#endif /* WebBrowser_pch */
