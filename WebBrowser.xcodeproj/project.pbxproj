@@ -17,6 +17,8 @@
 		0E681F4E1D4AEC3F003534F5 /* WebBrowserUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E681F4D1D4AEC3F003534F5 /* WebBrowserUITests.m */; };
 		0E681F661D4AFEAA003534F5 /* KeyboardHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E681F651D4AFEAA003534F5 /* KeyboardHelper.m */; };
 		0E681F691D4B34EB003534F5 /* MenuHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E681F681D4B34EB003534F5 /* MenuHelper.m */; };
+		0E986A0B1D4CA6C10003900D /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E986A0A1D4CA6C10003900D /* BrowserViewController.m */; };
+		0E986A0F1D4D06170003900D /* TabManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E986A0E1D4D06170003900D /* TabManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +62,10 @@
 		0E681F651D4AFEAA003534F5 /* KeyboardHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyboardHelper.m; sourceTree = "<group>"; };
 		0E681F671D4B34EB003534F5 /* MenuHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuHelper.h; sourceTree = "<group>"; };
 		0E681F681D4B34EB003534F5 /* MenuHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuHelper.m; sourceTree = "<group>"; };
+		0E986A091D4CA6C10003900D /* BrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserViewController.h; sourceTree = "<group>"; };
+		0E986A0A1D4CA6C10003900D /* BrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserViewController.m; sourceTree = "<group>"; };
+		0E986A0D1D4D06170003900D /* TabManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabManager.h; sourceTree = "<group>"; };
+		0E986A0E1D4D06170003900D /* TabManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +116,8 @@
 		0E681F271D4AEC3F003534F5 /* WebBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				0E986A0C1D4D06030003900D /* Tab */,
+				0E986A081D4CA6890003900D /* Browser */,
 				0E681F5E1D4AF2A3003534F5 /* Application */,
 				0E681F5B1D4AF1A8003534F5 /* Utils */,
 				0E681F2E1D4AEC3F003534F5 /* ViewController.h */,
@@ -186,6 +194,24 @@
 				0E681F681D4B34EB003534F5 /* MenuHelper.m */,
 			);
 			name = Helper;
+			sourceTree = "<group>";
+		};
+		0E986A081D4CA6890003900D /* Browser */ = {
+			isa = PBXGroup;
+			children = (
+				0E986A091D4CA6C10003900D /* BrowserViewController.h */,
+				0E986A0A1D4CA6C10003900D /* BrowserViewController.m */,
+			);
+			name = Browser;
+			sourceTree = "<group>";
+		};
+		0E986A0C1D4D06030003900D /* Tab */ = {
+			isa = PBXGroup;
+			children = (
+				0E986A0D1D4D06170003900D /* TabManager.h */,
+				0E986A0E1D4D06170003900D /* TabManager.m */,
+			);
+			name = Tab;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -318,11 +344,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E986A0F1D4D06170003900D /* TabManager.m in Sources */,
 				0E681F661D4AFEAA003534F5 /* KeyboardHelper.m in Sources */,
 				0E681F301D4AEC3F003534F5 /* ViewController.m in Sources */,
 				0E681F2D1D4AEC3F003534F5 /* AppDelegate.m in Sources */,
 				0E681F691D4B34EB003534F5 /* MenuHelper.m in Sources */,
 				0E681F2A1D4AEC3F003534F5 /* main.m in Sources */,
+				0E986A0B1D4CA6C10003900D /* BrowserViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -550,6 +578,7 @@
 				0E681F541D4AEC3F003534F5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0E681F551D4AEC3F003534F5 /* Build configuration list for PBXNativeTarget "WebBrowserTests" */ = {
 			isa = XCConfigurationList;
@@ -558,6 +587,7 @@
 				0E681F571D4AEC3F003534F5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0E681F581D4AEC3F003534F5 /* Build configuration list for PBXNativeTarget "WebBrowserUITests" */ = {
 			isa = XCConfigurationList;
@@ -566,6 +596,7 @@
 				0E681F5A1D4AEC3F003534F5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

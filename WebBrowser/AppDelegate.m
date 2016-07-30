@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "KeyboardHelper.h"
 #import "MenuHelper.h"
+#import "BrowserViewController.h"
 
 @interface AppDelegate ()
 
@@ -25,11 +26,21 @@
     
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback withOptions:AVAudioSessionCategoryOptionMixWithOthers error:nil];
     
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.window.backgroundColor = AppBackgroundColor;
+    
     return true;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    BrowserViewController *browserViewController = [BrowserViewController new];
+    
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:browserViewController];
+    navigationController.navigationBarHidden = YES;
+    
+    self.window.rootViewController = navigationController;
+    [self.window makeKeyAndVisible];
+    
     return YES;
 }
 
