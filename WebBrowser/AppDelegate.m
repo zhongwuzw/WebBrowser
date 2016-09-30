@@ -19,25 +19,13 @@
 
 @implementation AppDelegate
 
-- (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
-    [[KeyboardHelper sharedInstance] startObserving];
-    
-    [[MenuHelper sharedInstance] setItems];
-    
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback withOptions:AVAudioSessionCategoryOptionMixWithOthers error:nil];
-    
-    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    self.window.backgroundColor = AppBackgroundColor;
-    
-    return true;
-}
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     BrowserViewController *browserViewController = [BrowserViewController new];
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:browserViewController];
     navigationController.navigationBarHidden = YES;
     
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.rootViewController = navigationController;
     [self.window makeKeyAndVisible];
     

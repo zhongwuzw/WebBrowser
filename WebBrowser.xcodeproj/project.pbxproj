@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		0E681F2A1D4AEC3F003534F5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E681F291D4AEC3F003534F5 /* main.m */; };
 		0E681F2D1D4AEC3F003534F5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E681F2C1D4AEC3F003534F5 /* AppDelegate.m */; };
-		0E681F301D4AEC3F003534F5 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E681F2F1D4AEC3F003534F5 /* ViewController.m */; };
-		0E681F331D4AEC3F003534F5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E681F311D4AEC3F003534F5 /* Main.storyboard */; };
 		0E681F351D4AEC3F003534F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E681F341D4AEC3F003534F5 /* Assets.xcassets */; };
 		0E681F381D4AEC3F003534F5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E681F361D4AEC3F003534F5 /* LaunchScreen.storyboard */; };
 		0E681F431D4AEC3F003534F5 /* WebBrowserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E681F421D4AEC3F003534F5 /* WebBrowserTests.m */; };
@@ -43,9 +41,6 @@
 		0E681F291D4AEC3F003534F5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0E681F2B1D4AEC3F003534F5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		0E681F2C1D4AEC3F003534F5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		0E681F2E1D4AEC3F003534F5 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		0E681F2F1D4AEC3F003534F5 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		0E681F321D4AEC3F003534F5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0E681F341D4AEC3F003534F5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0E681F371D4AEC3F003534F5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0E681F391D4AEC3F003534F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -120,9 +115,6 @@
 				0E986A081D4CA6890003900D /* Browser */,
 				0E681F5E1D4AF2A3003534F5 /* Application */,
 				0E681F5B1D4AF1A8003534F5 /* Utils */,
-				0E681F2E1D4AEC3F003534F5 /* ViewController.h */,
-				0E681F2F1D4AEC3F003534F5 /* ViewController.m */,
-				0E681F311D4AEC3F003534F5 /* Main.storyboard */,
 				0E681F341D4AEC3F003534F5 /* Assets.xcassets */,
 				0E681F361D4AEC3F003534F5 /* LaunchScreen.storyboard */,
 				0E681F391D4AEC3F003534F5 /* Info.plist */,
@@ -281,6 +273,7 @@
 				TargetAttributes = {
 					0E681F241D4AEC3F003534F5 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 9R74JVS7P9;
 					};
 					0E681F3D1D4AEC3F003534F5 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -319,7 +312,6 @@
 			files = (
 				0E681F381D4AEC3F003534F5 /* LaunchScreen.storyboard in Resources */,
 				0E681F351D4AEC3F003534F5 /* Assets.xcassets in Resources */,
-				0E681F331D4AEC3F003534F5 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,7 +338,6 @@
 			files = (
 				0E986A0F1D4D06170003900D /* TabManager.m in Sources */,
 				0E681F661D4AFEAA003534F5 /* KeyboardHelper.m in Sources */,
-				0E681F301D4AEC3F003534F5 /* ViewController.m in Sources */,
 				0E681F2D1D4AEC3F003534F5 /* AppDelegate.m in Sources */,
 				0E681F691D4B34EB003534F5 /* MenuHelper.m in Sources */,
 				0E681F2A1D4AEC3F003534F5 /* main.m in Sources */,
@@ -386,14 +377,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		0E681F311D4AEC3F003534F5 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				0E681F321D4AEC3F003534F5 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		0E681F361D4AEC3F003534F5 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -491,9 +474,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 9R74JVS7P9;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = WebBrowser/WebBrowser.pch;
 				INFOPLIST_FILE = WebBrowser/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = zhongwu.WebBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -504,9 +489,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 9R74JVS7P9;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = WebBrowser/WebBrowser.pch;
 				INFOPLIST_FILE = WebBrowser/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = zhongwu.WebBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
