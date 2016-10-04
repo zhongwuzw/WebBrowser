@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E48FB011DA3FD4B00B8FCDB /* BrowserWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E48FB001DA3FD4B00B8FCDB /* BrowserWebView.m */; };
 		0E681F2A1D4AEC3F003534F5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E681F291D4AEC3F003534F5 /* main.m */; };
 		0E681F2D1D4AEC3F003534F5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E681F2C1D4AEC3F003534F5 /* AppDelegate.m */; };
 		0E681F351D4AEC3F003534F5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E681F341D4AEC3F003534F5 /* Assets.xcassets */; };
@@ -37,6 +38,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0E48FAFF1DA3FD4B00B8FCDB /* BrowserWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserWebView.h; sourceTree = "<group>"; };
+		0E48FB001DA3FD4B00B8FCDB /* BrowserWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserWebView.m; sourceTree = "<group>"; };
+		0E48FB031DA4058300B8FCDB /* WebViewHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebViewHeader.h; sourceTree = "<group>"; };
 		0E681F251D4AEC3F003534F5 /* WebBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E681F291D4AEC3F003534F5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0E681F2B1D4AEC3F003534F5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -88,6 +92,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E48FAFD1DA3FCC100B8FCDB /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				0E48FB021DA4055A00B8FCDB /* Header */,
+				0E48FAFE1DA3FCCB00B8FCDB /* View */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+		0E48FAFE1DA3FCCB00B8FCDB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0E48FAFF1DA3FD4B00B8FCDB /* BrowserWebView.h */,
+				0E48FB001DA3FD4B00B8FCDB /* BrowserWebView.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		0E48FB021DA4055A00B8FCDB /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				0E48FB031DA4058300B8FCDB /* WebViewHeader.h */,
+			);
+			name = Header;
+			sourceTree = "<group>";
+		};
 		0E681F1C1D4AEC3F003534F5 = {
 			isa = PBXGroup;
 			children = (
@@ -111,6 +141,7 @@
 		0E681F271D4AEC3F003534F5 /* WebBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				0E48FAFD1DA3FCC100B8FCDB /* Utils */,
 				0E986A0C1D4D06030003900D /* Tab */,
 				0E986A081D4CA6890003900D /* Browser */,
 				0E681F5E1D4AF2A3003534F5 /* Application */,
@@ -339,6 +370,7 @@
 				0E986A0F1D4D06170003900D /* TabManager.m in Sources */,
 				0E681F661D4AFEAA003534F5 /* KeyboardHelper.m in Sources */,
 				0E681F2D1D4AEC3F003534F5 /* AppDelegate.m in Sources */,
+				0E48FB011DA3FD4B00B8FCDB /* BrowserWebView.m in Sources */,
 				0E681F691D4B34EB003534F5 /* MenuHelper.m in Sources */,
 				0E681F2A1D4AEC3F003534F5 /* main.m in Sources */,
 				0E986A0B1D4CA6C10003900D /* BrowserViewController.m in Sources */,
