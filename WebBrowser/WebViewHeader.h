@@ -10,5 +10,6 @@
 #define WebViewHeader_h
 
 #define DOCUMENT_VIEW @"_documentView"
+#define DOCUMENT_VIEW__PROTO (id (*)(id, SEL))
 
 #endif /* WebViewHeader_h */
