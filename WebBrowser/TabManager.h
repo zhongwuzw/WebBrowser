@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+@class BrowserWebView;
+
 @interface TabManager : NSObject
+
+SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(TabManager)
+- (NSMutableArray<BrowserWebView *> *)getBrowserViewArray;
 
 @end

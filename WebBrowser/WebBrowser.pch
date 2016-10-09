@@ -15,5 +15,6 @@
 
 #import "MacroMethod.h"
 #import "MacroUIConstants.h"
+#import "UIView+Additions.h"
 
 #endif /* WebBrowser_pch */

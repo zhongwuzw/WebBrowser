@@ -7,8 +7,12 @@
 //
 
 #import "BrowserViewController.h"
+#import "BrowserContainerView.h"
 
 @interface BrowserViewController ()
+
+@property (nonatomic, strong) BrowserContainerView *browserContainerView;
+@property (nonatomic, strong) UIToolbar *bottomToolBar;
 
 @end
 
@@ -16,22 +20,19 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    [self initializeView];
+
+}
+
+- (void)initializeView{
+    self.browserContainerView = [[BrowserContainerView alloc] initWithFrame:self.view.bounds];
+    [self.view addSubview:_browserContainerView];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

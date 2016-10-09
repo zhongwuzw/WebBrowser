@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E2C539F1DAA24970077B9B4 /* BrowserContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E2C539E1DAA24970077B9B4 /* BrowserContainerView.m */; };
+		0E2C53A31DAA314C0077B9B4 /* UIView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E2C53A21DAA314C0077B9B4 /* UIView+Additions.m */; };
 		0E48FB011DA3FD4B00B8FCDB /* BrowserWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E48FB001DA3FD4B00B8FCDB /* BrowserWebView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		0E681F2A1D4AEC3F003534F5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E681F291D4AEC3F003534F5 /* main.m */; };
 		0E681F2D1D4AEC3F003534F5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E681F2C1D4AEC3F003534F5 /* AppDelegate.m */; };
@@ -38,6 +40,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0E2C539D1DAA24970077B9B4 /* BrowserContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserContainerView.h; sourceTree = "<group>"; };
+		0E2C539E1DAA24970077B9B4 /* BrowserContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserContainerView.m; sourceTree = "<group>"; };
+		0E2C53A11DAA314C0077B9B4 /* UIView+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Additions.h"; sourceTree = "<group>"; };
+		0E2C53A21DAA314C0077B9B4 /* UIView+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Additions.m"; sourceTree = "<group>"; };
 		0E48FAFF1DA3FD4B00B8FCDB /* BrowserWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserWebView.h; sourceTree = "<group>"; };
 		0E48FB001DA3FD4B00B8FCDB /* BrowserWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserWebView.m; sourceTree = "<group>"; };
 		0E48FB031DA4058300B8FCDB /* WebViewHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebViewHeader.h; sourceTree = "<group>"; };
@@ -92,6 +98,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E2C539B1DAA23A40077B9B4 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				0E986A091D4CA6C10003900D /* BrowserViewController.h */,
+				0E986A0A1D4CA6C10003900D /* BrowserViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		0E2C539C1DAA245A0077B9B4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0E2C539D1DAA24970077B9B4 /* BrowserContainerView.h */,
+				0E2C539E1DAA24970077B9B4 /* BrowserContainerView.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		0E2C53A01DAA31210077B9B4 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				0E2C53A11DAA314C0077B9B4 /* UIView+Additions.h */,
+				0E2C53A21DAA314C0077B9B4 /* UIView+Additions.m */,
+			);
+			name = Category;
+			sourceTree = "<group>";
+		};
+		0E3C09981DAA8F7700993129 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		0E48FAFD1DA3FCC100B8FCDB /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -184,6 +224,7 @@
 		0E681F5B1D4AF1A8003534F5 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				0E2C53A01DAA31210077B9B4 /* Category */,
 				0E681F631D4AFE93003534F5 /* Helper */,
 				0E681F5C1D4AF1C8003534F5 /* Macro */,
 			);
@@ -222,8 +263,8 @@
 		0E986A081D4CA6890003900D /* Browser */ = {
 			isa = PBXGroup;
 			children = (
-				0E986A091D4CA6C10003900D /* BrowserViewController.h */,
-				0E986A0A1D4CA6C10003900D /* BrowserViewController.m */,
+				0E3C09981DAA8F7700993129 /* View */,
+				0E2C539B1DAA23A40077B9B4 /* Controller */,
 			);
 			name = Browser;
 			sourceTree = "<group>";
@@ -231,6 +272,7 @@
 		0E986A0C1D4D06030003900D /* Tab */ = {
 			isa = PBXGroup;
 			children = (
+				0E2C539C1DAA245A0077B9B4 /* View */,
 				0E986A0D1D4D06170003900D /* TabManager.h */,
 				0E986A0E1D4D06170003900D /* TabManager.m */,
 			);
@@ -305,6 +347,7 @@
 					0E681F241D4AEC3F003534F5 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = 9R74JVS7P9;
+						ProvisioningStyle = Automatic;
 					};
 					0E681F3D1D4AEC3F003534F5 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -368,7 +411,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E986A0F1D4D06170003900D /* TabManager.m in Sources */,
+				0E2C539F1DAA24970077B9B4 /* BrowserContainerView.m in Sources */,
 				0E681F661D4AFEAA003534F5 /* KeyboardHelper.m in Sources */,
+				0E2C53A31DAA314C0077B9B4 /* UIView+Additions.m in Sources */,
 				0E681F2D1D4AEC3F003534F5 /* AppDelegate.m in Sources */,
 				0E48FB011DA3FD4B00B8FCDB /* BrowserWebView.m in Sources */,
 				0E681F691D4B34EB003534F5 /* MenuHelper.m in Sources */,
@@ -506,6 +551,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 9R74JVS7P9;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = WebBrowser/WebBrowser.pch;
@@ -521,6 +568,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 9R74JVS7P9;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = WebBrowser/WebBrowser.pch;
