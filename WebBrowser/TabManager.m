@@ -24,6 +24,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
         _browserViewArray = [NSMutableArray arrayWithCapacity:11];
         BrowserWebView *webView = [BrowserWebView new];
         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"https://m.baidu.com"]];
+        
         [webView loadRequest:request];
         [_browserViewArray addObject:webView];
     }

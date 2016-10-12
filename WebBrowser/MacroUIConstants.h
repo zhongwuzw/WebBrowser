@@ -9,6 +9,6 @@
 #ifndef MacroUIConstants_h
 #define MacroUIConstants_h
 
-#define AppBackgroundColor ColorRedGreenBlue(0,0,0)
+#define STATUS_BAR_HEIGHT 20
 
 #endif /* MacroUIConstants_h */
