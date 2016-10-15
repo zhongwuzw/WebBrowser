@@ -9,19 +9,22 @@
 #import "BrowserViewController.h"
 #import "BrowserContainerView.h"
 #import "BrowserTopToolBar.h"
-
-#define BOTTOM_TOOL_BAR_HEIGHT 44
-#define TOP_TOOL_BAR_HEIGHT 50
+#import "BrowserHeader.h"
 
 @interface BrowserViewController ()
 
 @property (nonatomic, strong) BrowserContainerView *browserContainerView;
 @property (nonatomic, strong) UIToolbar *bottomToolBar;
 @property (nonatomic, strong) BrowserTopToolBar *browserTopToolBar;
+@property (nonatomic, assign) CGFloat lastContentOffset;
+@property (nonatomic, assign) BOOL isWebViewDecelerate;
+@property (nonatomic, assign) ScrollDirection webViewScrollDirection;
 
 @end
 
 @implementation BrowserViewController
+
+SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -31,9 +34,24 @@
 }
 
 - (void)initializeView{
-    self.automaticallyAdjustsScrollViewInsets = NO;
-    self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor = UIColorFromRGB(0xF8F8F8);
+    
+    self.browserTopToolBar = ({
+        BrowserTopToolBar *browserTopToolBar = [[BrowserTopToolBar alloc] initWithFrame:CGRectMake(0, STATUS_BAR_HEIGHT, self.view.width, TOP_TOOL_BAR_HEIGHT)];
+        [self.view addSubview:browserTopToolBar];
+        browserTopToolBar.backgroundColor = UIColorFromRGB(0xF8F8F8);
+        
+        browserTopToolBar;
+    });
+    
+    self.browserContainerView = ({
+        BrowserContainerView *browserContainerView = [BrowserContainerView new];
+        [self.view addSubview:browserContainerView];
+        
+        browserContainerView.frame = CGRectMake(0, self.browserTopToolBar.bottom, self.view.width, self.view.height);
+        
+        browserContainerView;
+    });
     
     self.bottomToolBar = ({
         UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, self.view.height - BOTTOM_TOOL_BAR_HEIGHT, self.view.width, BOTTOM_TOOL_BAR_HEIGHT)];
@@ -51,27 +69,9 @@
         
         toolBar;
     });
-    
-    self.browserTopToolBar = ({
-        BrowserTopToolBar *browserTopToolBar = [[BrowserTopToolBar alloc] initWithFrame:CGRectMake(0, STATUS_BAR_HEIGHT, self.view.width, TOP_TOOL_BAR_HEIGHT)];
-        [self.view addSubview:browserTopToolBar];
-        
-        
-        
-        browserTopToolBar;
-    });
-    
-    self.browserContainerView = ({
-        BrowserContainerView *browserContainerView = [BrowserContainerView new];
-        [self.view addSubview:browserContainerView];
-        
-        [browserContainerView setTranslatesAutoresizingMaskIntoConstraints:NO];
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[browserContainerView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(browserContainerView)]];
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_browserTopToolBar]-0-[browserContainerView]-0-[_bottomToolBar]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_browserTopToolBar,browserContainerView,_bottomToolBar)]];
-        
-        browserContainerView;
-    });
 }
+
+#pragma mark - Bottom ToolBar Button Clicked
 
 - (void)settingButtonClicked:(id)sender{
 
@@ -97,6 +97,69 @@
     [finalArray addObjectsFromArray:[items subarrayWithRange:theRange]];
     
     [self.bottomToolBar setItems:finalArray animated:NO];
+}
+
+#pragma mark - UIScrollViewDelegate Method
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    CGFloat yOffset = scrollView.contentOffset.y - self.lastContentOffset;
+    
+    if (self.lastContentOffset > scrollView.contentOffset.y) {
+        if (_isWebViewDecelerate) {
+            [self handleTopToolBarWithOffset:yOffset];
+        }
+        self.webViewScrollDirection = ScrollDirectionDown;
+    }
+    else if (self.lastContentOffset < scrollView.contentOffset.y && scrollView.contentOffset.y >= 0)
+    {
+        [self handleTopToolBarWithOffset:yOffset];
+        self.webViewScrollDirection = ScrollDirectionUp;
+    }
+    
+    self.lastContentOffset = scrollView.contentOffset.y;
+    
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    if (self.webViewScrollDirection == ScrollDirectionDown) {
+        self.isWebViewDecelerate = decelerate;
+    }
+    else
+        self.isWebViewDecelerate = NO;
+}
+
+#pragma mark - Handle TopToolBar Scroll
+
+- (void)handleTopToolBarWithOffset:(CGFloat)offset{
+    CGRect bottomRect = self.bottomToolBar.frame;
+    //缩小toolbar
+    if (offset > 0) {
+        if (self.browserTopToolBar.height - offset * 2 <= TOP_TOOL_BAR_THRESHOLD) {
+            self.browserTopToolBar.height = TOP_TOOL_BAR_THRESHOLD;
+            
+            bottomRect.origin.y = self.view.height;
+        }
+        else
+        {
+            self.browserTopToolBar.height -= offset * 2;
+            bottomRect.origin.y += BOTTOM_TOOL_BAR_HEIGHT * offset * 2 / (TOP_TOOL_BAR_HEIGHT - TOP_TOOL_BAR_THRESHOLD);
+        }
+    }
+    else{
+        if (self.browserTopToolBar.height + 2 * (-offset) >= TOP_TOOL_BAR_HEIGHT) {
+            self.browserTopToolBar.height = TOP_TOOL_BAR_HEIGHT;
+            bottomRect.origin.y = self.view.height - BOTTOM_TOOL_BAR_HEIGHT;
+        }
+        else
+        {
+            self.browserTopToolBar.height += (-offset) * 2;
+            bottomRect.origin.y -= BOTTOM_TOOL_BAR_HEIGHT * offset * 2 / (TOP_TOOL_BAR_HEIGHT - TOP_TOOL_BAR_THRESHOLD);
+        }
+    }
+    
+    self.browserContainerView.top = self.browserTopToolBar.bottom;
+    
+    self.bottomToolBar.frame = bottomRect;
 }
 
 - (void)didReceiveMemoryWarning {

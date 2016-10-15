@@ -21,6 +21,7 @@
 		0E681F691D4B34EB003534F5 /* MenuHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E681F681D4B34EB003534F5 /* MenuHelper.m */; };
 		0E986A0B1D4CA6C10003900D /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E986A0A1D4CA6C10003900D /* BrowserViewController.m */; };
 		0E986A0F1D4D06170003900D /* TabManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E986A0E1D4D06170003900D /* TabManager.m */; };
+		0EA7DEE31DB0ABD8005C592E /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EA7DEE21DB0ABD8005C592E /* BaseViewController.m */; };
 		0EDD68E51DACFBF400265744 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0EDD68E41DACFBF400265744 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -72,10 +73,13 @@
 		0E681F651D4AFEAA003534F5 /* KeyboardHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyboardHelper.m; sourceTree = "<group>"; };
 		0E681F671D4B34EB003534F5 /* MenuHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuHelper.h; sourceTree = "<group>"; };
 		0E681F681D4B34EB003534F5 /* MenuHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuHelper.m; sourceTree = "<group>"; };
+		0E82A4481DAF8BCA00F13D4E /* BrowserHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BrowserHeader.h; sourceTree = "<group>"; };
 		0E986A091D4CA6C10003900D /* BrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserViewController.h; sourceTree = "<group>"; };
 		0E986A0A1D4CA6C10003900D /* BrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserViewController.m; sourceTree = "<group>"; };
 		0E986A0D1D4D06170003900D /* TabManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabManager.h; sourceTree = "<group>"; };
 		0E986A0E1D4D06170003900D /* TabManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabManager.m; sourceTree = "<group>"; };
+		0EA7DEE11DB0ABD8005C592E /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
+		0EA7DEE21DB0ABD8005C592E /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		0EDD68E41DACFBF400265744 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -234,6 +238,7 @@
 		0E681F5B1D4AF1A8003534F5 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				0EA7DEE01DB0ABB7005C592E /* Controller */,
 				0E2C53A01DAA31210077B9B4 /* Category */,
 				0E681F631D4AFE93003534F5 /* Helper */,
 				0E681F5C1D4AF1C8003534F5 /* Macro */,
@@ -270,9 +275,18 @@
 			name = Helper;
 			sourceTree = "<group>";
 		};
+		0E82A4471DAF8BB600F13D4E /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				0E82A4481DAF8BCA00F13D4E /* BrowserHeader.h */,
+			);
+			name = Header;
+			sourceTree = "<group>";
+		};
 		0E986A081D4CA6890003900D /* Browser */ = {
 			isa = PBXGroup;
 			children = (
+				0E82A4471DAF8BB600F13D4E /* Header */,
 				0E3C09981DAA8F7700993129 /* View */,
 				0E2C539B1DAA23A40077B9B4 /* Controller */,
 			);
@@ -287,6 +301,15 @@
 				0E986A0E1D4D06170003900D /* TabManager.m */,
 			);
 			name = Tab;
+			sourceTree = "<group>";
+		};
+		0EA7DEE01DB0ABB7005C592E /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				0EA7DEE11DB0ABD8005C592E /* BaseViewController.h */,
+				0EA7DEE21DB0ABD8005C592E /* BaseViewController.m */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -421,6 +444,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E986A0F1D4D06170003900D /* TabManager.m in Sources */,
+				0EA7DEE31DB0ABD8005C592E /* BaseViewController.m in Sources */,
 				0E2C539F1DAA24970077B9B4 /* BrowserContainerView.m in Sources */,
 				0E681F661D4AFEAA003534F5 /* KeyboardHelper.m in Sources */,
 				0E2C53A31DAA314C0077B9B4 /* UIView+Additions.m in Sources */,

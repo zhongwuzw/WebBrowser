@@ -8,6 +8,7 @@
 
 #import "BrowserTopToolBar.h"
 #import "TopToolBarShapeView.h"
+#import "BrowserHeader.h"
 
 #define SHAPE_VIEW_WIDTH 30
 #define SHAPE_VIEW_HEIGHT 24
@@ -44,6 +45,17 @@
         shapeView;
     });
     
+}
+
+- (void)setFrame:(CGRect)frame{
+    if (frame.size.height != self.height) {
+        CGFloat shapeViewHeight = fabs(frame.size.height * (TOP_TOOL_BAR_HEIGHT - SHAPE_VIEW_HEIGHT) / TOP_TOOL_BAR_HEIGHT);
+        self.shapeView.center = (CGPoint){frame.size.width/2, frame.size.height/2};
+        
+        self.shapeView.transform = CGAffineTransformMakeScale(shapeViewHeight / (TOP_TOOL_BAR_HEIGHT - SHAPE_VIEW_HEIGHT), shapeViewHeight / (TOP_TOOL_BAR_HEIGHT - SHAPE_VIEW_HEIGHT));
+    }
+    
+    [super setFrame:frame];
 }
 
 @end

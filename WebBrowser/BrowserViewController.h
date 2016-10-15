@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 
-@interface BrowserViewController : UIViewController
+@interface BrowserViewController : BaseViewController<UIScrollViewDelegate>
+
+SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(BrowserViewController)
 
 @end

@@ -8,6 +8,7 @@
 
 #import "TabManager.h"
 #import "BrowserWebView.h"
+#import "BrowserViewController.h"
 
 @interface TabManager ()
 
@@ -23,6 +24,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
     if (!_browserViewArray) {
         _browserViewArray = [NSMutableArray arrayWithCapacity:11];
         BrowserWebView *webView = [BrowserWebView new];
+        webView.scrollView.delegate = [BrowserViewController sharedInstance];
         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:@"https://m.baidu.com"]];
         
         [webView loadRequest:request];
