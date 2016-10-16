@@ -11,7 +11,7 @@
 #import "BrowserHeader.h"
 
 #define SHAPE_VIEW_WIDTH 30
-#define SHAPE_VIEW_HEIGHT 24
+#define SHAPE_VIEW_HEIGHT 44
 
 @interface BrowserTopToolBar ()
 

@@ -10,4 +10,6 @@
 
 @interface BrowserContainerView : UIView
 
+@property (nonatomic, readonly) UIScrollView *scrollView;
+
 @end

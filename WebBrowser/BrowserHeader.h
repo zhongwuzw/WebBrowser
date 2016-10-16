@@ -18,8 +18,8 @@ typedef enum ScrollDirection {
 } ScrollDirection;
 
 #define BOTTOM_TOOL_BAR_HEIGHT 44
-#define TOP_TOOL_BAR_HEIGHT 50
+#define TOP_TOOL_BAR_HEIGHT 70
 
-#define TOP_TOOL_BAR_THRESHOLD 20
+#define TOP_TOOL_BAR_THRESHOLD 40
 
 #endif /* BrowserHeader_h */

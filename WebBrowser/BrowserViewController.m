@@ -36,21 +36,23 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
 - (void)initializeView{
     self.view.backgroundColor = UIColorFromRGB(0xF8F8F8);
     
-    self.browserTopToolBar = ({
-        BrowserTopToolBar *browserTopToolBar = [[BrowserTopToolBar alloc] initWithFrame:CGRectMake(0, STATUS_BAR_HEIGHT, self.view.width, TOP_TOOL_BAR_HEIGHT)];
-        [self.view addSubview:browserTopToolBar];
-        browserTopToolBar.backgroundColor = UIColorFromRGB(0xF8F8F8);
-        
-        browserTopToolBar;
-    });
-    
     self.browserContainerView = ({
         BrowserContainerView *browserContainerView = [BrowserContainerView new];
         [self.view addSubview:browserContainerView];
         
-        browserContainerView.frame = CGRectMake(0, self.browserTopToolBar.bottom, self.view.width, self.view.height);
+        browserContainerView.frame = CGRectMake(0, 0, self.view.width, self.view.height);
+        
+        browserContainerView.scrollView.contentInset = UIEdgeInsetsMake(TOP_TOOL_BAR_HEIGHT, 0, 0, 0);
         
         browserContainerView;
+    });
+    
+    self.browserTopToolBar = ({
+        BrowserTopToolBar *browserTopToolBar = [[BrowserTopToolBar alloc] initWithFrame:CGRectMake(0, 0, self.view.width, TOP_TOOL_BAR_HEIGHT)];
+        [self.view addSubview:browserTopToolBar];
+        browserTopToolBar.backgroundColor = UIColorFromRGB(0xF8F8F8);
+        
+        browserTopToolBar;
     });
     
     self.bottomToolBar = ({
@@ -74,7 +76,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
 #pragma mark - Bottom ToolBar Button Clicked
 
 - (void)settingButtonClicked:(id)sender{
-
     
 }
 
@@ -110,7 +111,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
         }
         self.webViewScrollDirection = ScrollDirectionDown;
     }
-    else if (self.lastContentOffset < scrollView.contentOffset.y && scrollView.contentOffset.y >= 0)
+    else if (self.lastContentOffset < scrollView.contentOffset.y)
     {
         [self handleTopToolBarWithOffset:yOffset];
         self.webViewScrollDirection = ScrollDirectionUp;
@@ -134,30 +135,30 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
     CGRect bottomRect = self.bottomToolBar.frame;
     //缩小toolbar
     if (offset > 0) {
-        if (self.browserTopToolBar.height - offset * 2 <= TOP_TOOL_BAR_THRESHOLD) {
+        if (self.browserTopToolBar.height - offset <= TOP_TOOL_BAR_THRESHOLD) {
             self.browserTopToolBar.height = TOP_TOOL_BAR_THRESHOLD;
             
             bottomRect.origin.y = self.view.height;
         }
         else
         {
-            self.browserTopToolBar.height -= offset * 2;
-            bottomRect.origin.y += BOTTOM_TOOL_BAR_HEIGHT * offset * 2 / (TOP_TOOL_BAR_HEIGHT - TOP_TOOL_BAR_THRESHOLD);
+            self.browserTopToolBar.height -= offset;
+            bottomRect.origin.y += BOTTOM_TOOL_BAR_HEIGHT * offset / (TOP_TOOL_BAR_HEIGHT - TOP_TOOL_BAR_THRESHOLD);
         }
     }
     else{
-        if (self.browserTopToolBar.height + 2 * (-offset) >= TOP_TOOL_BAR_HEIGHT) {
+        if (self.browserTopToolBar.height + (-offset) >= TOP_TOOL_BAR_HEIGHT) {
             self.browserTopToolBar.height = TOP_TOOL_BAR_HEIGHT;
             bottomRect.origin.y = self.view.height - BOTTOM_TOOL_BAR_HEIGHT;
         }
         else
         {
-            self.browserTopToolBar.height += (-offset) * 2;
-            bottomRect.origin.y -= BOTTOM_TOOL_BAR_HEIGHT * offset * 2 / (TOP_TOOL_BAR_HEIGHT - TOP_TOOL_BAR_THRESHOLD);
+            self.browserTopToolBar.height += (-offset);
+            bottomRect.origin.y -= BOTTOM_TOOL_BAR_HEIGHT * offset / (TOP_TOOL_BAR_HEIGHT - TOP_TOOL_BAR_THRESHOLD);
         }
     }
     
-    self.browserContainerView.top = self.browserTopToolBar.bottom;
+//    self.browserContainerView.top = self.browserTopToolBar.bottom;
     
     self.bottomToolBar.frame = bottomRect;
 }

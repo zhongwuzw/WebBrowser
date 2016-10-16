@@ -10,6 +10,12 @@
 #import "TabManager.h"
 #import "BrowserWebView.h"
 
+@interface BrowserContainerView ()
+
+@property (nonatomic, weak) BrowserWebView *webView;
+
+@end
+
 @implementation BrowserContainerView
 
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -19,13 +25,19 @@
     return self;
 }
 
+- (UIScrollView *)scrollView{
+    return self.webView.scrollView;
+}
+
 - (void)setupWebView{
     NSMutableArray<BrowserWebView *> *browserArray = [[TabManager sharedInstance] getBrowserViewArray];
-    for (BrowserWebView *webView in browserArray) {
-        [self addSubview:webView];
-        webView.frame = CGRectMake(0, 0, self.width, self.height);
-        webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    }
+    
+    BrowserWebView *webView = [browserArray firstObject];
+    [self addSubview:webView];
+    webView.frame = CGRectMake(0, 0, self.width, self.height);
+    webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    
+    self.webView = webView;
 }
 
 @end
