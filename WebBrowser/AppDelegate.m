@@ -20,6 +20,7 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+
     BrowserViewController *browserViewController = [BrowserViewController new];
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:browserViewController];

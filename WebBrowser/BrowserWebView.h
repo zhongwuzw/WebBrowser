@@ -8,10 +8,29 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BrowserWebView : UIWebView
+@class BrowserWebView;
+
+@protocol WebViewDelegate <NSObject>
+
+@optional
+
+#pragma mark - UIWebViewDelegate
+
+- (BOOL)webView:(BrowserWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType;
+- (void)webViewDidStartLoad:(BrowserWebView *)webView;
+- (void)webViewDidFinishLoad:(BrowserWebView *)webView;
+- (void)webView:(BrowserWebView *)webView didFailLoadWithError:(NSError *)error;
+
+@end
+
+@interface BrowserWebView : UIWebView<UIWebViewDelegate>
+
+//MRC
+@property (nonatomic, unsafe_unretained) id<WebViewDelegate> webViewDelegate;
 
 - (void)evaluateJavaScript:(NSString *)javaScriptString completionHandler:(void (^)(id, NSError *))completionHandler;
 
 - (NSString *)mainFURL;
+- (NSString *)mainFTitle;
 
 @end

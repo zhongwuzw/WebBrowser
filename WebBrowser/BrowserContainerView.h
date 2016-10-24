@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BrowserWebView.h"
 
 @interface BrowserContainerView : UIView
 
 @property (nonatomic, readonly) UIScrollView *scrollView;
+@property (nonatomic, weak) id<WebViewDelegate> webViewDelegate;
 
 @end

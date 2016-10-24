@@ -9,17 +9,24 @@
 #ifndef BrowserHeader_h
 #define BrowserHeader_h
 
-typedef enum ScrollDirection {
+typedef NS_ENUM(NSInteger, ScrollDirection) {
     ScrollDirectionNone,
     ScrollDirectionRight,
     ScrollDirectionLeft,
     ScrollDirectionUp,
     ScrollDirectionDown,
-} ScrollDirection;
+};
+
+typedef NS_ENUM(NSInteger, BottomToolBarButtonTag) {
+    BottomToolBarBackButtonTag,
+    BottomToolBarForwardButtonTag,
+    BottomToolBarRefreshButtonTag,
+    BottomToolBarMoreButtonTag,
+};
 
 #define BOTTOM_TOOL_BAR_HEIGHT 44
 #define TOP_TOOL_BAR_HEIGHT 70
 
-#define TOP_TOOL_BAR_THRESHOLD 40
+#define TOP_TOOL_BAR_THRESHOLD 45
 
 #endif /* BrowserHeader_h */

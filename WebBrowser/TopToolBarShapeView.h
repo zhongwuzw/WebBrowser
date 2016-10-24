@@ -12,4 +12,6 @@
 
 @property (nonatomic, readonly) CAShapeLayer *shapeLayer;
 
+- (void)setTopURLOrTitle:(NSString *)urlOrTitle;
+
 @end

@@ -15,4 +15,12 @@
 #define MAIN_FRAME_URL__PROTO (id (*)(id, SEL))
 #define MAIN_FRAME_URL @"mainFrameURL" //_documentView - _webView - mainFrameURL
 
+#define DRAW_IN_WEB_THREAD @"_setDrawInWebThread" //_setDrawInWebThread
+#define DRAW_IN_WEB_THREAD__PROTO (void (*)(id, SEL, BOOL))
+#define DRAW_CHECKERED_PATTERN @"_setDrawsCheckeredPattern" //_setDrawsCheckeredPattern
+#define DRAW_CHECKERED_PATTERN__PROTO (void (*)(id, SEL, BOOL))
+
+#define MAIN_FRAME_TITLE @"mainFrameTitle" //_documentView - _webView - mainFrameTitle
+#define MAIN_FRAME_TITLE__PROTO (id (*)(id, SEL))
+
 #endif /* WebViewHeader_h */

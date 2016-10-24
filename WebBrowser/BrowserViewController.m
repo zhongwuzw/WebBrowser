@@ -11,7 +11,7 @@
 #import "BrowserTopToolBar.h"
 #import "BrowserHeader.h"
 
-@interface BrowserViewController ()
+@interface BrowserViewController () <WebViewDelegate>
 
 @property (nonatomic, strong) BrowserContainerView *browserContainerView;
 @property (nonatomic, strong) UIToolbar *bottomToolBar;
@@ -31,6 +31,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
     
     [self initializeView];
 
+    self.lastContentOffset = - TOP_TOOL_BAR_HEIGHT;
 }
 
 - (void)initializeView{
@@ -41,6 +42,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
         [self.view addSubview:browserContainerView];
         
         browserContainerView.frame = CGRectMake(0, 0, self.view.width, self.view.height);
+        browserContainerView.webViewDelegate = self;
         
         browserContainerView.scrollView.contentInset = UIEdgeInsetsMake(TOP_TOOL_BAR_HEIGHT, 0, 0, 0);
         
@@ -59,28 +61,33 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
         UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, self.view.height - BOTTOM_TOOL_BAR_HEIGHT, self.view.width, BOTTOM_TOOL_BAR_HEIGHT)];
         [self.view addSubview:toolBar];
         
-        UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"toolbar_goback_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClicked:)];
+        UIBarButtonItem *backItem = [self createBottomToolBarButtonWithImage:@"toolbar_goback_normal" tag:BottomToolBarBackButtonTag];
         
-        UIBarButtonItem *refreshItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"menu_refresh_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(settingButtonClicked:)];
+        UIBarButtonItem *forwardItem = [self createBottomToolBarButtonWithImage:@"toolbar_goforward_normal" tag:BottomToolBarForwardButtonTag];
         
-        UIBarButtonItem *settingItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"toolbar_more_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(refreshButtonClicked:)];
+        UIBarButtonItem *refreshItem = [self createBottomToolBarButtonWithImage:@"menu_refresh_normal" tag:BottomToolBarRefreshButtonTag];
+
+        UIBarButtonItem *settingItem = [self createBottomToolBarButtonWithImage:@"toolbar_more_normal" tag:BottomToolBarMoreButtonTag];
         
         UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
         
-        [toolBar setItems:@[backItem,flexibleItem,refreshItem,flexibleItem,settingItem] animated:YES];
+        [toolBar setItems:@[backItem,flexibleItem,forwardItem,flexibleItem,refreshItem,flexibleItem,settingItem] animated:YES];
         
         toolBar;
     });
 }
 
-#pragma mark - Bottom ToolBar Button Clicked
-
-- (void)settingButtonClicked:(id)sender{
+- (UIBarButtonItem *)createBottomToolBarButtonWithImage:(NSString *)imageName tag:(NSInteger)tag{
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:imageName] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(handleBottomToolBarButtonClicked:)];
+    item.tag = tag;
     
+    return item;
 }
 
-- (void)refreshButtonClicked:(id)sender{
-    
+#pragma mark - Bottom ToolBar Button Clicked
+
+- (void)handleBottomToolBarButtonClicked:(UIBarButtonItem *)item{
+    NSLog(@"%ld",(long)item.tag);
 }
 
 - (void)backButtonClicked:(id)sender{
@@ -106,12 +113,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
     CGFloat yOffset = scrollView.contentOffset.y - self.lastContentOffset;
     
     if (self.lastContentOffset > scrollView.contentOffset.y) {
-        if (_isWebViewDecelerate) {
+        if (_isWebViewDecelerate || (scrollView.contentOffset.y >= -TOP_TOOL_BAR_HEIGHT && scrollView.contentOffset.y <= 0)) {
             [self handleTopToolBarWithOffset:yOffset];
         }
         self.webViewScrollDirection = ScrollDirectionDown;
     }
-    else if (self.lastContentOffset < scrollView.contentOffset.y)
+    else if (self.lastContentOffset < scrollView.contentOffset.y && scrollView.contentOffset.y >= - TOP_TOOL_BAR_HEIGHT)
     {
         [self handleTopToolBarWithOffset:yOffset];
         self.webViewScrollDirection = ScrollDirectionUp;
@@ -158,9 +165,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
         }
     }
     
-//    self.browserContainerView.top = self.browserTopToolBar.bottom;
-    
     self.bottomToolBar.frame = bottomRect;
+}
+
+#pragma mark - WebViewDelegate
+- (void)webViewDidFinishLoad:(BrowserWebView *)webView{
+    [self.browserTopToolBar setTopURLOrTitle:[webView mainFTitle]];
 }
 
 - (void)didReceiveMemoryWarning {

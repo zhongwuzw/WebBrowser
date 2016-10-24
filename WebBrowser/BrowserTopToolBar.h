@@ -10,4 +10,6 @@
 
 @interface BrowserTopToolBar : UIView
 
+- (void)setTopURLOrTitle:(NSString *)urlOrTitle;
+
 @end
