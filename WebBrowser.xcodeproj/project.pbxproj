@@ -23,6 +23,7 @@
 		0E986A0F1D4D06170003900D /* TabManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E986A0E1D4D06170003900D /* TabManager.m */; };
 		0EA7DEE31DB0ABD8005C592E /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EA7DEE21DB0ABD8005C592E /* BaseViewController.m */; };
 		0EDD68E51DACFBF400265744 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0EDD68E41DACFBF400265744 /* Assets.xcassets */; };
+		0EED28311DC1A32100EC8581 /* ZWUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EED28301DC1A32100EC8581 /* ZWUtility.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,8 @@
 		0EA7DEE11DB0ABD8005C592E /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		0EA7DEE21DB0ABD8005C592E /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		0EDD68E41DACFBF400265744 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0EED282F1DC1A32100EC8581 /* ZWUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWUtility.h; sourceTree = "<group>"; };
+		0EED28301DC1A32100EC8581 /* ZWUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWUtility.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -271,6 +274,8 @@
 				0E681F651D4AFEAA003534F5 /* KeyboardHelper.m */,
 				0E681F671D4B34EB003534F5 /* MenuHelper.h */,
 				0E681F681D4B34EB003534F5 /* MenuHelper.m */,
+				0EED282F1DC1A32100EC8581 /* ZWUtility.h */,
+				0EED28301DC1A32100EC8581 /* ZWUtility.m */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -448,6 +453,7 @@
 				0E2C539F1DAA24970077B9B4 /* BrowserContainerView.m in Sources */,
 				0E681F661D4AFEAA003534F5 /* KeyboardHelper.m in Sources */,
 				0E2C53A31DAA314C0077B9B4 /* UIView+Additions.m in Sources */,
+				0EED28311DC1A32100EC8581 /* ZWUtility.m in Sources */,
 				0E2329311DADE07B007E9886 /* BrowserTopToolBar.m in Sources */,
 				0E2329341DAE19BB007E9886 /* TopToolBarShapeView.m in Sources */,
 				0E681F2D1D4AEC3F003534F5 /* AppDelegate.m in Sources */,

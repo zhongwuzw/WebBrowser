@@ -16,10 +16,6 @@
 #import <objc/message.h>
 #endif
 
-@interface UIWebView ()
--(id)webView:(id)view identifierForInitialRequest:(id)initialRequest fromDataSource:(id)dataSource;
-@end
-
 @interface BrowserWebView ()
 
 @property (nonatomic, assign) NSInteger webViewLoads;
@@ -45,6 +41,7 @@
     
     _webViewLoads = 0;
     [self setDrawInWebThread];
+    
 }
 
 - (void)evaluateJavaScript:(NSString *)javaScriptString completionHandler:(void (^)(id, NSError *))completionHandler
@@ -122,14 +119,6 @@
         return nil;
 }
 
-
--(id)webView:(id)view identifierForInitialRequest:(id)initialRequest fromDataSource:(id)dataSource
-{
-    NSURLRequest *request = (NSURLRequest *)initialRequest;
-    NSLog(@"initialRequest is %@",request.URL);
-    return [super webView:view identifierForInitialRequest:initialRequest fromDataSource:dataSource];
-}
-
 - (void)webViewDidStartLoad:(UIWebView *)webView{
     _webViewLoads++;
 }
@@ -150,7 +139,6 @@
 
     NSLog(@"webview is loading %d",webView.isLoading);
     NSLog(@"main Document is %@,%@",[webView.request mainDocumentURL],[webView.request URL]);
-    NSLog(@"title is %@",[self mainFTitle]);
     
     if (!_webViewLoads) {
         NSLog(@"finish load");
@@ -161,4 +149,111 @@
     }
 }
 
+#pragma mark - replaced method calling
+
+-(void)webViewGotTitle:(NSString*)titleName
+{
+    if([self.webViewDelegate respondsToSelector:@selector(webView:gotTitleName:)])
+    {
+        [self.webViewDelegate webView:self gotTitleName:titleName];
+    }
+}
+
 @end
+
+#pragma mark - Hook Functions
+
+//动态注入
+
+void (*gOrigGotT)(id,SEL, id view, id title, id frame);//原didrecivetitle函数
+void (*gOrigNewWin)(id,SEL,id view, id action, id request, id frame, id listener);//decidePolicyForNewWindowAction
+void (*gOrigNavAct)(id,SEL,id view,id action,id request,id framename,id listener);//decidePolicyForNavigationAction
+
+//得到title回调
+static void webGotTitle(id selfid, SEL sel, id view, id title, id frame) {
+    if(![title isKindOfClass:[NSString class]])
+        return;
+    
+    if(gOrigGotT)
+        gOrigGotT(selfid,sel,view,title,frame);
+    
+    
+    if(view && [view respondsToSelector:NSSelectorFromString(MAIN_FRAME)])
+    {
+        id mainFrame = (MAIN_FRAME__PROTO objc_msgSend)(view,NSSelectorFromString(MAIN_FRAME));
+        if(mainFrame == frame)
+        {
+            if(selfid && [selfid respondsToSelector:@selector(webViewGotTitle:)])
+                [selfid performSelector:@selector(webViewGotTitle:) withObject:(NSString*)title];
+        }
+    }
+    else
+    {
+        if(selfid && [selfid respondsToSelector:@selector(webViewGotTitle:)])
+            [selfid performSelector:@selector(webViewGotTitle:) withObject:(NSString*)title];
+    }
+}
+
+//new window 回调
+static void webNewWindow(id selfid, SEL sel, id view, id action, id request, id framename, id listener)
+{
+    if(![request isKindOfClass:[NSURLRequest class]])
+        return;
+    
+    if(![framename isKindOfClass:[NSString class]])
+        return;
+    
+    if(gOrigNewWin)
+        gOrigNewWin(selfid, sel , view ,action ,request, framename, listener);
+}
+
+//navigation 回调
+static void webNavgationAction(id selfid, SEL sel, id view, id action, id request, id frame, id listener)
+{
+    if(![request isKindOfClass:[NSURLRequest class]])
+        return;
+    
+    NSInteger intNaviType = 0;
+    if ([action isKindOfClass:[NSDictionary class]]) {
+        id naviType = [((NSDictionary*)action) objectForKey:WEB_ACTION_NAVI_TYPE_KEY];
+        if([naviType isKindOfClass:[NSNumber class]])
+        {
+            intNaviType = [(NSNumber*)naviType integerValue];
+        }
+    }
+    
+    if(gOrigNavAct)
+        gOrigNavAct(selfid,sel,view,action,request,frame,listener);
+}
+
+__attribute__((__constructor__)) static void $(){
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    Class webViewClass = objc_getClass([UIWEBVIEW cStringUsingEncoding:NSUTF8StringEncoding]);
+    
+    id classId = webViewClass;
+    
+    if(classId == nil){
+        [pool drain];
+        return;
+    }
+    
+    Method origMethod = class_getInstanceMethod(classId, NSSelectorFromString(WEB_GOT_TITLE));
+    if (origMethod) {
+        gOrigGotT = (void(*)(id,SEL, id, id, id))class_replaceMethod(classId,NSSelectorFromString(WEB_GOT_TITLE), (IMP)&webGotTitle,method_getTypeEncoding(origMethod));
+    }
+    
+    Method origMethodNewWin = class_getInstanceMethod(classId, NSSelectorFromString(WEB_NEW_WINDOW));
+    if(origMethodNewWin)
+    {
+        gOrigNewWin = (void(*)(id,SEL,id,id,id,id,id))class_replaceMethod(classId,NSSelectorFromString(WEB_NEW_WINDOW), (IMP)&webNewWindow, method_getTypeEncoding(origMethodNewWin));
+    }
+    
+    Method origMethodNavAct = class_getInstanceMethod(classId, NSSelectorFromString(WEB_ACTION_NAVIGATION));
+    if(origMethodNavAct)
+    {
+        gOrigNavAct = (void(*)(id,SEL,id,id,id,id,id))class_replaceMethod(classId, NSSelectorFromString(WEB_ACTION_NAVIGATION), (IMP)&webNavgationAction, method_getTypeEncoding(origMethodNavAct));
+    }
+    
+    [pool drain];
+}
+

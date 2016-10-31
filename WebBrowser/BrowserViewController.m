@@ -170,7 +170,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
 
 #pragma mark - WebViewDelegate
 - (void)webViewDidFinishLoad:(BrowserWebView *)webView{
-    [self.browserTopToolBar setTopURLOrTitle:[webView mainFTitle]];
+}
+
+- (void)webView:(BrowserWebView *)webView gotTitleName:(NSString *)titleName{
+    [self.browserTopToolBar setTopURLOrTitle:titleName];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -20,6 +20,7 @@
 - (void)webViewDidStartLoad:(BrowserWebView *)webView;
 - (void)webViewDidFinishLoad:(BrowserWebView *)webView;
 - (void)webView:(BrowserWebView *)webView didFailLoadWithError:(NSError *)error;
+- (void)webView:(BrowserWebView *)webView gotTitleName:(NSString*)titleName;
 
 @end
 

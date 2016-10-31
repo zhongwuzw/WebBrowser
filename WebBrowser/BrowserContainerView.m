@@ -52,8 +52,14 @@
     }
 }
 
+- (void)webView:(BrowserWebView *)webView gotTitleName:(NSString *)titleName{
+    if ([self.webViewDelegate respondsToSelector:@selector(webView:gotTitleName:)]) {
+        [self.webViewDelegate webView:webView gotTitleName:titleName];
+    }
+}
+
 - (void)dealloc{
-    self.webView.webViewDelegate = nil;
+    self.webView.webViewDelegate = nil; //BrowserWebView是在MRC下的，所以这里强行设置webViewDelegate为nil
     self.webView.delegate = nil;
     self.webView = nil;
 }

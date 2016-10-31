@@ -9,6 +9,7 @@
 #ifndef WebViewHeader_h
 #define WebViewHeader_h
 
+#define UIWEBVIEW @"UIWebView"
 #define DOCUMENT_VIEW @"_documentView"  //_documentView<UIWebBrowserView>
 #define DOCUMENT_VIEW__PROTO (id (*)(id, SEL))
 #define GOT_WEB_VIEW @"_webView"    //_documentView - _webView<WebView>
@@ -22,5 +23,14 @@
 
 #define MAIN_FRAME_TITLE @"mainFrameTitle" //_documentView - _webView - mainFrameTitle
 #define MAIN_FRAME_TITLE__PROTO (id (*)(id, SEL))
+
+#define WEB_GOT_TITLE @"webView:didReceiveTitle:forFrame:" //webView:didReceiveTitle:forFrame:
+
+#define MAIN_FRAME @"mainFrame" //_documentView - _webView - mainFrame
+#define MAIN_FRAME__PROTO (id (*)(id, SEL))
+
+#define WEB_NEW_WINDOW @"webView:decidePolicyForNewWindowAction:request:newFrameName:decisionListener:" //webView:decidePolicyForNewWindowAction:request:newFrameName:decisionListener:
+#define WEB_ACTION_NAVIGATION @"webView:decidePolicyForNavigationAction:request:frame:decisionListener:" //webView:decidePolicyForNavigationAction:request:frame:decisionListener:
+#define WEB_ACTION_NAVI_TYPE_KEY @"WebActionNavigationTypeKey" //WebActionNavigationTypeKey 用于页面跳转时使用
 
 #endif /* WebViewHeader_h */
