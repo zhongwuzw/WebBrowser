@@ -18,8 +18,6 @@
 
 @interface BrowserWebView ()
 
-@property (nonatomic, assign) NSInteger webViewLoads;
-
 @end
 
 @implementation BrowserWebView
@@ -39,7 +37,6 @@
     
     [self setScalesPageToFit:YES];
     
-    _webViewLoads = 0;
     [self setDrawInWebThread];
     
 }
@@ -120,29 +117,19 @@
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView{
-    _webViewLoads++;
+    
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
-    _webViewLoads--;
+    
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
-    NSLog(@"shouldStart is %@",webView.request.URL.absoluteString);
 
     return YES;
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView{
-    
-    _webViewLoads--;
-
-    NSLog(@"webview is loading %d",webView.isLoading);
-    NSLog(@"main Document is %@,%@",[webView.request mainDocumentURL],[webView.request URL]);
-    
-    if (!_webViewLoads) {
-        NSLog(@"finish load");
-    }
     
     if ([self.webViewDelegate respondsToSelector:@selector(webViewDidFinishLoad:)]) {
         [self.webViewDelegate webViewDidFinishLoad:self];
@@ -256,4 +243,6 @@ __attribute__((__constructor__)) static void $(){
     
     [pool drain];
 }
+
+
 
