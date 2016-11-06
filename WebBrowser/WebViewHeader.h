@@ -33,4 +33,9 @@
 #define WEB_ACTION_NAVIGATION @"webView:decidePolicyForNavigationAction:request:frame:decisionListener:" //webView:decidePolicyForNavigationAction:request:frame:decisionListener:
 #define WEB_ACTION_NAVI_TYPE_KEY @"WebActionNavigationTypeKey" //WebActionNavigationTypeKey 用于页面跳转时使用
 
+//main frame load
+#define MAIN_FRAME_COMMIT_LOAD @"webViewMainFrameDidCommitLoad:" //webViewMainFrameDidCommitLoad:
+#define MAIN_FRAME_FINISIH_LOAD @"webViewMainFrameDidFinishLoad:" //webViewMainFrameDidFinishLoad:
+#define MAIN_FRAME_FAILED_LOAD @"webViewMainFrameDidFailLoad:withError:" //webViewMainFrameDidFailLoad:withError:
+
 #endif /* WebViewHeader_h */

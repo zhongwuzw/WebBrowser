@@ -10,15 +10,17 @@
 #import "BrowserContainerView.h"
 #import "BrowserTopToolBar.h"
 #import "BrowserHeader.h"
+#import "BrowserBottomToolBar.h"
 
 @interface BrowserViewController () <WebViewDelegate>
 
 @property (nonatomic, strong) BrowserContainerView *browserContainerView;
-@property (nonatomic, strong) UIToolbar *bottomToolBar;
+@property (nonatomic, strong) BrowserBottomToolBar *bottomToolBar;
 @property (nonatomic, strong) BrowserTopToolBar *browserTopToolBar;
 @property (nonatomic, assign) CGFloat lastContentOffset;
 @property (nonatomic, assign) BOOL isWebViewDecelerate;
 @property (nonatomic, assign) ScrollDirection webViewScrollDirection;
+@property (nonatomic, weak) id<WebViewDelegate> bottomToolBarWebViewDelegate;
 
 @end
 
@@ -52,59 +54,20 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
     self.browserTopToolBar = ({
         BrowserTopToolBar *browserTopToolBar = [[BrowserTopToolBar alloc] initWithFrame:CGRectMake(0, 0, self.view.width, TOP_TOOL_BAR_HEIGHT)];
         [self.view addSubview:browserTopToolBar];
+        
         browserTopToolBar.backgroundColor = UIColorFromRGB(0xF8F8F8);
         
         browserTopToolBar;
     });
     
     self.bottomToolBar = ({
-        UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, self.view.height - BOTTOM_TOOL_BAR_HEIGHT, self.view.width, BOTTOM_TOOL_BAR_HEIGHT)];
+        BrowserBottomToolBar *toolBar = [[BrowserBottomToolBar alloc] initWithFrame:CGRectMake(0, self.view.height - BOTTOM_TOOL_BAR_HEIGHT, self.view.width, BOTTOM_TOOL_BAR_HEIGHT)];
         [self.view addSubview:toolBar];
         
-        UIBarButtonItem *backItem = [self createBottomToolBarButtonWithImage:@"toolbar_goback_normal" tag:BottomToolBarBackButtonTag];
-        
-        UIBarButtonItem *forwardItem = [self createBottomToolBarButtonWithImage:@"toolbar_goforward_normal" tag:BottomToolBarForwardButtonTag];
-        
-        UIBarButtonItem *refreshItem = [self createBottomToolBarButtonWithImage:@"menu_refresh_normal" tag:BottomToolBarRefreshButtonTag];
-
-        UIBarButtonItem *settingItem = [self createBottomToolBarButtonWithImage:@"toolbar_more_normal" tag:BottomToolBarMoreButtonTag];
-        
-        UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-        
-        [toolBar setItems:@[backItem,flexibleItem,forwardItem,flexibleItem,refreshItem,flexibleItem,settingItem] animated:YES];
-        
+        self.bottomToolBarWebViewDelegate = toolBar;
+    
         toolBar;
     });
-}
-
-- (UIBarButtonItem *)createBottomToolBarButtonWithImage:(NSString *)imageName tag:(NSInteger)tag{
-    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:imageName] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(handleBottomToolBarButtonClicked:)];
-    item.tag = tag;
-    
-    return item;
-}
-
-#pragma mark - Bottom ToolBar Button Clicked
-
-- (void)handleBottomToolBarButtonClicked:(UIBarButtonItem *)item{
-    NSLog(@"%ld",(long)item.tag);
-}
-
-- (void)backButtonClicked:(id)sender{
-    NSArray <UIBarButtonItem *>*items =  self.bottomToolBar.items;
-    
-    UIBarButtonItem *refreshItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"menu_refresh_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(settingButtonClicked:)];
-    
-    NSRange theRange;
-    
-    theRange.location = 1;
-    theRange.length = _bottomToolBar.items.count - 1;
-    
-    NSMutableArray *finalArray = [NSMutableArray arrayWithCapacity:_bottomToolBar.items.count];
-    [finalArray addObject:refreshItem];
-    [finalArray addObjectsFromArray:[items subarrayWithRange:theRange]];
-    
-    [self.bottomToolBar setItems:finalArray animated:NO];
 }
 
 #pragma mark - UIScrollViewDelegate Method
@@ -169,7 +132,27 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
 }
 
 #pragma mark - WebViewDelegate
+
 - (void)webViewDidFinishLoad:(BrowserWebView *)webView{
+    
+}
+
+- (void)webViewDidStartLoad:(BrowserWebView *)webView{
+//    if ([self.bottomToolBarWebViewDelegate respondsToSelector:@selector(webViewDidStartLoad:)]) {
+//        [self.bottomToolBarWebViewDelegate webViewDidStartLoad:webView];
+//    }
+}
+
+- (void)webViewMainFrameDidFinishLoad:(BrowserWebView *)webView{
+    if ([self.bottomToolBarWebViewDelegate respondsToSelector:@selector(webViewMainFrameDidFinishLoad:)]) {
+        [self.bottomToolBarWebViewDelegate webViewMainFrameDidFinishLoad:webView];
+    }
+}
+
+- (void)webViewMainFrameDidCommitLoad:(BrowserWebView *)webView{
+    if ([self.bottomToolBarWebViewDelegate respondsToSelector:@selector(webViewMainFrameDidCommitLoad:)]) {
+        [self.bottomToolBarWebViewDelegate webViewMainFrameDidCommitLoad:webView];
+    }
 }
 
 - (void)webView:(BrowserWebView *)webView gotTitleName:(NSString *)titleName{

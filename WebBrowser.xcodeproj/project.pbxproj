@@ -22,6 +22,9 @@
 		0E986A0B1D4CA6C10003900D /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E986A0A1D4CA6C10003900D /* BrowserViewController.m */; };
 		0E986A0F1D4D06170003900D /* TabManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E986A0E1D4D06170003900D /* TabManager.m */; };
 		0EA7DEE31DB0ABD8005C592E /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EA7DEE21DB0ABD8005C592E /* BaseViewController.m */; };
+		0EBF3A651DCF33ED00CD77C8 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EBF3A631DCF33ED00CD77C8 /* CocoaLumberjack.framework */; };
+		0EBF3A661DCF33ED00CD77C8 /* MBProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EBF3A641DCF33ED00CD77C8 /* MBProgressHUD.framework */; };
+		0EBF3A6A1DCF38D600CD77C8 /* BrowserBottomToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EBF3A691DCF38D600CD77C8 /* BrowserBottomToolBar.m */; };
 		0EDD68E51DACFBF400265744 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0EDD68E41DACFBF400265744 /* Assets.xcassets */; };
 		0EED28311DC1A32100EC8581 /* ZWUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EED28301DC1A32100EC8581 /* ZWUtility.m */; };
 /* End PBXBuildFile section */
@@ -81,6 +84,11 @@
 		0E986A0E1D4D06170003900D /* TabManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabManager.m; sourceTree = "<group>"; };
 		0EA7DEE11DB0ABD8005C592E /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		0EA7DEE21DB0ABD8005C592E /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
+		0EBF3A631DCF33ED00CD77C8 /* CocoaLumberjack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjack.framework; path = Carthage/Build/iOS/CocoaLumberjack.framework; sourceTree = "<group>"; };
+		0EBF3A641DCF33ED00CD77C8 /* MBProgressHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MBProgressHUD.framework; path = Carthage/Build/iOS/MBProgressHUD.framework; sourceTree = "<group>"; };
+		0EBF3A681DCF38D600CD77C8 /* BrowserBottomToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserBottomToolBar.h; sourceTree = "<group>"; };
+		0EBF3A691DCF38D600CD77C8 /* BrowserBottomToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserBottomToolBar.m; sourceTree = "<group>"; };
+		0EBF3A6B1DCF715200CD77C8 /* BrowserBottomToolBarHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BrowserBottomToolBarHeader.h; sourceTree = "<group>"; };
 		0EDD68E41DACFBF400265744 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0EED282F1DC1A32100EC8581 /* ZWUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWUtility.h; sourceTree = "<group>"; };
 		0EED28301DC1A32100EC8581 /* ZWUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWUtility.m; sourceTree = "<group>"; };
@@ -91,6 +99,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0EBF3A651DCF33ED00CD77C8 /* CocoaLumberjack.framework in Frameworks */,
+				0EBF3A661DCF33ED00CD77C8 /* MBProgressHUD.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,6 +155,8 @@
 				0E2329301DADE07B007E9886 /* BrowserTopToolBar.m */,
 				0E2329321DAE19BB007E9886 /* TopToolBarShapeView.h */,
 				0E2329331DAE19BB007E9886 /* TopToolBarShapeView.m */,
+				0EBF3A681DCF38D600CD77C8 /* BrowserBottomToolBar.h */,
+				0EBF3A691DCF38D600CD77C8 /* BrowserBottomToolBar.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -182,6 +194,7 @@
 				0E681F411D4AEC3F003534F5 /* WebBrowserTests */,
 				0E681F4C1D4AEC3F003534F5 /* WebBrowserUITests */,
 				0E681F261D4AEC3F003534F5 /* Products */,
+				0EBF3A621DCF33ED00CD77C8 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -284,6 +297,7 @@
 			isa = PBXGroup;
 			children = (
 				0E82A4481DAF8BCA00F13D4E /* BrowserHeader.h */,
+				0EBF3A6B1DCF715200CD77C8 /* BrowserBottomToolBarHeader.h */,
 			);
 			name = Header;
 			sourceTree = "<group>";
@@ -317,6 +331,15 @@
 			name = Controller;
 			sourceTree = "<group>";
 		};
+		0EBF3A621DCF33ED00CD77C8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0EBF3A631DCF33ED00CD77C8 /* CocoaLumberjack.framework */,
+				0EBF3A641DCF33ED00CD77C8 /* MBProgressHUD.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -327,6 +350,7 @@
 				0E681F211D4AEC3F003534F5 /* Sources */,
 				0E681F221D4AEC3F003534F5 /* Frameworks */,
 				0E681F231D4AEC3F003534F5 /* Resources */,
+				0EBF3A671DCF340000CD77C8 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -443,12 +467,31 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0EBF3A671DCF340000CD77C8 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/CocoaLumberjack.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/MBProgressHUD.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		0E681F211D4AEC3F003534F5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				0E986A0F1D4D06170003900D /* TabManager.m in Sources */,
+				0EBF3A6A1DCF38D600CD77C8 /* BrowserBottomToolBar.m in Sources */,
 				0EA7DEE31DB0ABD8005C592E /* BaseViewController.m in Sources */,
 				0E2C539F1DAA24970077B9B4 /* BrowserContainerView.m in Sources */,
 				0E681F661D4AFEAA003534F5 /* KeyboardHelper.m in Sources */,
@@ -600,6 +643,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 9R74JVS7P9;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = WebBrowser/WebBrowser.pch;
 				INFOPLIST_FILE = WebBrowser/Info.plist;
@@ -617,6 +664,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 9R74JVS7P9;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = WebBrowser/WebBrowser.pch;
 				INFOPLIST_FILE = WebBrowser/Info.plist;

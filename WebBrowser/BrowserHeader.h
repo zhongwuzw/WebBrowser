@@ -17,13 +17,6 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
     ScrollDirectionDown,
 };
 
-typedef NS_ENUM(NSInteger, BottomToolBarButtonTag) {
-    BottomToolBarBackButtonTag,
-    BottomToolBarForwardButtonTag,
-    BottomToolBarRefreshButtonTag,
-    BottomToolBarMoreButtonTag,
-};
-
 #define BOTTOM_TOOL_BAR_HEIGHT 44
 #define TOP_TOOL_BAR_HEIGHT 70
 

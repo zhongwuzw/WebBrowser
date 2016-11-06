@@ -80,7 +80,7 @@
     if(webView)
     {
         if([webView respondsToSelector:NSSelectorFromString(MAIN_FRAME_URL)])
-            return (MAIN_FRAME_URL__PROTO objc_msgSend)(webView, NSSelectorFromString(MAIN_FRAME_URL));
+            return [(MAIN_FRAME_URL__PROTO objc_msgSend)(webView, NSSelectorFromString(MAIN_FRAME_URL)) autorelease];
         else
             return nil;
     }
@@ -108,7 +108,7 @@
     if(webView)
     {
         if([webView respondsToSelector:NSSelectorFromString(MAIN_FRAME_TITLE)])
-            return (MAIN_FRAME_TITLE__PROTO objc_msgSend)(webView, NSSelectorFromString(MAIN_FRAME_TITLE));
+            return [(MAIN_FRAME_TITLE__PROTO objc_msgSend)(webView, NSSelectorFromString(MAIN_FRAME_TITLE)) autorelease];
         else
             return nil;
     }
@@ -116,23 +116,132 @@
         return nil;
 }
 
-- (void)webViewDidStartLoad:(UIWebView *)webView{
-    
+#pragma mark - UIWebViewDelegate
+
+- (void)webViewDidStartLoad:(BrowserWebView *)webView{
+    if ([self.webViewDelegate respondsToSelector:@selector(webViewDidStartLoad:)]) {
+        [self.webViewDelegate webViewDidStartLoad:webView];
+    }
 }
 
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
-    
+- (void)webView:(BrowserWebView *)webView didFailLoadWithError:(NSError *)error{
+    if ([self.webViewDelegate respondsToSelector:@selector(webView:didFailLoadWithError:)]) {
+        [self.webViewDelegate webView:webView didFailLoadWithError:error];
+    }
 }
 
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
+- (BOOL)webView:(BrowserWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
 
     return YES;
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView{
+- (void)webViewDidFinishLoad:(BrowserWebView *)webView{
     
     if ([self.webViewDelegate respondsToSelector:@selector(webViewDidFinishLoad:)]) {
-        [self.webViewDelegate webViewDidFinishLoad:self];
+        [self.webViewDelegate webViewDidFinishLoad:webView];
+    }
+}
+
+#pragma mark - private method
+
+//得到title回调
+- (void)zwWebView:(id)sender didReceiveTitle:(id)title forFrame:(id)frame{
+    if(![title isKindOfClass:[NSString class]])
+        return;
+
+    if ([self respondsToSelector:@selector(zwWebView:didReceiveTitle:forFrame:)]) {
+        ((void(*)(id, SEL, id, id, id)) objc_msgSend)(self, @selector(zwWebView:didReceiveTitle:forFrame:), sender, title, frame);
+    }
+    
+    
+    if([sender respondsToSelector:NSSelectorFromString(MAIN_FRAME)])
+    {
+        id mainFrame = (MAIN_FRAME__PROTO objc_msgSend)(sender,NSSelectorFromString(MAIN_FRAME));
+        if(mainFrame == frame)
+        {
+            [self webViewGotTitle:title];
+        }
+    }
+    else
+    {
+        [self webViewGotTitle:title];
+    }
+}
+
+#pragma mark - decidePolicy method
+
+//new window 回调
+- (void)zwWebView:(id)webView decidePolicyForNewWindowAction:(id)actionInformation request:(id)request newFrameName:(id)frameName decisionListener:(id)listener{
+    if ([self respondsToSelector:@selector(zwWebView:decidePolicyForNewWindowAction:request:newFrameName:decisionListener:)]) {
+        ((void(*)(id, SEL, id, id, id, id, id)) objc_msgSend)(self, @selector(zwWebView:decidePolicyForNewWindowAction:request:newFrameName:decisionListener:), webView, actionInformation, request, frameName, listener);
+    }
+    
+    if(![request isKindOfClass:[NSURLRequest class]])
+        return;
+    
+    if(![frameName isKindOfClass:[NSString class]])
+        return;
+    
+}
+
+//navigation 回调
+- (void)zwWebView:(id)webView decidePolicyForNavigationAction:(id)actionInformation request:(id)request frame:(id)frame decisionListener:(id)listener{
+    if(![request isKindOfClass:[NSURLRequest class]])
+        return;
+    
+    NSInteger intNaviType = 0;
+    if ([actionInformation isKindOfClass:[NSDictionary class]]) {
+        id naviType = [((NSDictionary*)actionInformation) objectForKey:WEB_ACTION_NAVI_TYPE_KEY];
+        if([naviType isKindOfClass:[NSNumber class]])
+        {
+            intNaviType = [(NSNumber*)naviType integerValue];
+        }
+    }
+    
+    if([self respondsToSelector:@selector(zwWebView:decidePolicyForNavigationAction:request:frame:decisionListener:)])
+        ((void(*)(id, SEL, id, id, id, id, id)) objc_msgSend)(self, @selector(zwWebView:decidePolicyForNavigationAction:request:frame:decisionListener:), webView, actionInformation, request, frame, listener);
+}
+
+#pragma mark - main frame load functions
+//webViewMainFrameDidCommitLoad:
+-(void)zwMainFrameCommitLoad:(id)arg1
+{
+    if([self respondsToSelector:@selector(zwMainFrameCommitLoad:)])
+    {
+        ((void(*)(id, SEL, id)) objc_msgSend)(self, @selector(zwMainFrameCommitLoad:),arg1);
+    }
+    
+    if([self respondsToSelector:@selector(mainFrameCommitLoad)])
+    {
+        ((void(*)(id, SEL)) objc_msgSend)(self, @selector(mainFrameCommitLoad));
+    }
+}
+
+-(void)mainFrameCommitLoad
+{
+    if ([self.webViewDelegate respondsToSelector:@selector(webViewMainFrameDidCommitLoad:)]) {
+        [self.webViewDelegate webViewMainFrameDidCommitLoad:self];
+    }
+}
+
+//webViewMainFrameDidFinishLoad:
+-(void)zwMainFrameFinishLoad:(id)arg1
+{
+    if([self respondsToSelector:@selector(zwMainFrameFinishLoad:)])
+    {
+        ((void(*)(id, SEL, id)) objc_msgSend)(self, @selector(zwMainFrameFinishLoad:),arg1);
+    }
+    
+    if([self respondsToSelector:@selector(mainFrameFinishLoad)])
+    {
+        ((void(*)(id, SEL)) objc_msgSend)(self, @selector(mainFrameFinishLoad));
+    }
+}
+
+-(void)mainFrameFinishLoad
+{
+    if ([self.webViewDelegate respondsToSelector:@selector(webViewMainFrameDidFinishLoad:)]) {
+        [self.webViewDelegate webViewMainFrameDidFinishLoad:self];
     }
 }
 
@@ -148,98 +257,18 @@
 
 @end
 
-#pragma mark - Hook Functions
-
-//动态注入
-
-void (*gOrigGotT)(id,SEL, id view, id title, id frame);//原didrecivetitle函数
-void (*gOrigNewWin)(id,SEL,id view, id action, id request, id frame, id listener);//decidePolicyForNewWindowAction
-void (*gOrigNavAct)(id,SEL,id view,id action,id request,id framename,id listener);//decidePolicyForNavigationAction
-
-//得到title回调
-static void webGotTitle(id selfid, SEL sel, id view, id title, id frame) {
-    if(![title isKindOfClass:[NSString class]])
-        return;
-    
-    if(gOrigGotT)
-        gOrigGotT(selfid,sel,view,title,frame);
-    
-    
-    if(view && [view respondsToSelector:NSSelectorFromString(MAIN_FRAME)])
-    {
-        id mainFrame = (MAIN_FRAME__PROTO objc_msgSend)(view,NSSelectorFromString(MAIN_FRAME));
-        if(mainFrame == frame)
-        {
-            if(selfid && [selfid respondsToSelector:@selector(webViewGotTitle:)])
-                [selfid performSelector:@selector(webViewGotTitle:) withObject:(NSString*)title];
-        }
-    }
-    else
-    {
-        if(selfid && [selfid respondsToSelector:@selector(webViewGotTitle:)])
-            [selfid performSelector:@selector(webViewGotTitle:) withObject:(NSString*)title];
-    }
-}
-
-//new window 回调
-static void webNewWindow(id selfid, SEL sel, id view, id action, id request, id framename, id listener)
-{
-    if(![request isKindOfClass:[NSURLRequest class]])
-        return;
-    
-    if(![framename isKindOfClass:[NSString class]])
-        return;
-    
-    if(gOrigNewWin)
-        gOrigNewWin(selfid, sel , view ,action ,request, framename, listener);
-}
-
-//navigation 回调
-static void webNavgationAction(id selfid, SEL sel, id view, id action, id request, id frame, id listener)
-{
-    if(![request isKindOfClass:[NSURLRequest class]])
-        return;
-    
-    NSInteger intNaviType = 0;
-    if ([action isKindOfClass:[NSDictionary class]]) {
-        id naviType = [((NSDictionary*)action) objectForKey:WEB_ACTION_NAVI_TYPE_KEY];
-        if([naviType isKindOfClass:[NSNumber class]])
-        {
-            intNaviType = [(NSNumber*)naviType integerValue];
-        }
-    }
-    
-    if(gOrigNavAct)
-        gOrigNavAct(selfid,sel,view,action,request,frame,listener);
-}
-
 __attribute__((__constructor__)) static void $(){
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    Class webViewClass = objc_getClass([UIWEBVIEW cStringUsingEncoding:NSUTF8StringEncoding]);
     
-    id classId = webViewClass;
+    MethodSwizzle([BrowserWebView class], NSSelectorFromString(WEB_GOT_TITLE), @selector(zwWebView:didReceiveTitle:forFrame:));
     
-    if(classId == nil){
-        [pool drain];
-        return;
-    }
+    MethodSwizzle([BrowserWebView class], NSSelectorFromString(WEB_NEW_WINDOW), @selector(zwWebView:decidePolicyForNewWindowAction:request:newFrameName:decisionListener:));
     
-    Method origMethod = class_getInstanceMethod(classId, NSSelectorFromString(WEB_GOT_TITLE));
-    if (origMethod) {
-        gOrigGotT = (void(*)(id,SEL, id, id, id))class_replaceMethod(classId,NSSelectorFromString(WEB_GOT_TITLE), (IMP)&webGotTitle,method_getTypeEncoding(origMethod));
-    }
+    MethodSwizzle([BrowserWebView class], NSSelectorFromString(WEB_ACTION_NAVIGATION), @selector(zwWebView:decidePolicyForNavigationAction:request:frame:decisionListener:));
+
+    MethodSwizzle([BrowserWebView class], NSSelectorFromString(MAIN_FRAME_COMMIT_LOAD), @selector(zwMainFrameCommitLoad:));
     
-    Method origMethodNewWin = class_getInstanceMethod(classId, NSSelectorFromString(WEB_NEW_WINDOW));
-    if(origMethodNewWin)
-    {
-        gOrigNewWin = (void(*)(id,SEL,id,id,id,id,id))class_replaceMethod(classId,NSSelectorFromString(WEB_NEW_WINDOW), (IMP)&webNewWindow, method_getTypeEncoding(origMethodNewWin));
-    }
-    
-    Method origMethodNavAct = class_getInstanceMethod(classId, NSSelectorFromString(WEB_ACTION_NAVIGATION));
-    if(origMethodNavAct)
-    {
-        gOrigNavAct = (void(*)(id,SEL,id,id,id,id,id))class_replaceMethod(classId, NSSelectorFromString(WEB_ACTION_NAVIGATION), (IMP)&webNavgationAction, method_getTypeEncoding(origMethodNavAct));
-    }
+    MethodSwizzle([BrowserWebView class], NSSelectorFromString(MAIN_FRAME_FINISIH_LOAD), @selector(zwMainFrameFinishLoad:));
     
     [pool drain];
 }

@@ -5,7 +5,9 @@ WebBrowser（iOS）
 
   
 ## Usage - 用法
-  - clone或直接下载zip，运行即可
+  1. `clone` or download zip file.
+  2. run command `carthage update`
+  3. just run project
   
 ## Requirements - 依赖
 * iOS 8.0 or higher

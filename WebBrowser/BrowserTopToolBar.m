@@ -15,7 +15,6 @@
 #define ShAPE_VIEW_Y_OFFSET 5
 
 @interface BrowserTopToolBar ()
-
 @property (nonatomic, strong) TopToolBarShapeView *shapeView;
 
 @end
