@@ -10,6 +10,7 @@
 #import "TabManager.h"
 #import "BrowserWebView.h"
 
+
 @interface BrowserContainerView () <WebViewDelegate>
 
 @property (nonatomic, weak) BrowserWebView *webView;
@@ -86,6 +87,27 @@
     self.webView.webViewDelegate = nil; //BrowserWebView是在MRC下的，所以这里强行设置webViewDelegate为nil
     self.webView.delegate = nil;
     self.webView = nil;
+}
+
+#pragma mark - BrowserBottomToolBarButtonClickedDelegate
+
+- (void)browserBottomToolBarButtonClickedWithTag:(BottomToolBarButtonTag)tag{
+    switch (tag) {
+        case BottomToolBarForwardButtonTag:
+            [self.webView goForward];
+            break;
+        case BottomToolBarBackButtonTag:
+            [self.webView goBack];
+            break;
+        case BottomToolBarRefreshButtonTag:
+            [self.webView reload];
+            break;
+        case BottomToolBarStopButtonTag:
+            [self.webView stopLoading];
+            break;
+        default:
+            break;
+    }
 }
 
 @end

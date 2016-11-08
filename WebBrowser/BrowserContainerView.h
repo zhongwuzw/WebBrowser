@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "BrowserWebView.h"
+#import "BrowserBottomToolBarHeader.h"
 
-@interface BrowserContainerView : UIView
+@interface BrowserContainerView : UIView <BrowserBottomToolBarButtonClickedDelegate>
 
 @property (nonatomic, readonly) UIScrollView *scrollView;
 @property (nonatomic, weak) id<WebViewDelegate> webViewDelegate;

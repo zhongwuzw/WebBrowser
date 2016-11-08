@@ -6,12 +6,13 @@ WebBrowser（iOS）
   
 ## Usage - 用法
   1. `clone` or download zip file.
-  2. run command `carthage update`
+  2. run command `carthage update --platform iOS`
   3. just run project
   
 ## Requirements - 依赖
 * iOS 8.0 or higher
 * ARC
+* [Carthage](https://github.com/Carthage/Carthage)
 
 
 ## License

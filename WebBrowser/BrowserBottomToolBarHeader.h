@@ -15,6 +15,10 @@ typedef NS_ENUM(NSInteger, BottomToolBarButtonTag) {
     BottomToolBarRefreshOrStopButtonTag,
     BottomToolBarMoreButtonTag,
     BottomToolBarFlexibleButtonTag,
+    
+    //用于准确识别刷新或停止
+    BottomToolBarRefreshButtonTag,
+    BottomToolBarStopButtonTag,
 };
 
 #define TOOLBAR_BUTTON_BACK_STRING @"toolbar_goback_normal"
@@ -22,5 +26,12 @@ typedef NS_ENUM(NSInteger, BottomToolBarButtonTag) {
 #define TOOLBAR_BUTTON_REFRESH_STRING @"menu_refresh_normal"
 #define TOOLBAR_BUTTON_STOP_STRING @"toolbar_stop_normal"
 #define TOOLBAR_BUTTON_MORE_STRING @"toolbar_more_normal"
+
+@protocol BrowserBottomToolBarButtonClickedDelegate <NSObject>
+
+@optional
+- (void)browserBottomToolBarButtonClickedWithTag:(BottomToolBarButtonTag)tag;
+
+@end
 
 #endif /* BrowserBottomToolBarHeader_h */

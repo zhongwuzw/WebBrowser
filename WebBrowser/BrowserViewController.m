@@ -12,7 +12,7 @@
 #import "BrowserHeader.h"
 #import "BrowserBottomToolBar.h"
 
-@interface BrowserViewController () <WebViewDelegate>
+@interface BrowserViewController () <WebViewDelegate, BrowserBottomToolBarButtonClickedDelegate>
 
 @property (nonatomic, strong) BrowserContainerView *browserContainerView;
 @property (nonatomic, strong) BrowserBottomToolBar *bottomToolBar;
@@ -21,6 +21,7 @@
 @property (nonatomic, assign) BOOL isWebViewDecelerate;
 @property (nonatomic, assign) ScrollDirection webViewScrollDirection;
 @property (nonatomic, weak) id<WebViewDelegate> bottomToolBarWebViewDelegate;
+@property (nonatomic, weak) id<BrowserBottomToolBarButtonClickedDelegate> browserButtonDelegate;
 
 @end
 
@@ -45,6 +46,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
         
         browserContainerView.frame = CGRectMake(0, 0, self.view.width, self.view.height);
         browserContainerView.webViewDelegate = self;
+        self.browserButtonDelegate = browserContainerView;
         
         browserContainerView.scrollView.contentInset = UIEdgeInsetsMake(TOP_TOOL_BAR_HEIGHT, 0, 0, 0);
         
@@ -65,6 +67,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
         [self.view addSubview:toolBar];
         
         self.bottomToolBarWebViewDelegate = toolBar;
+        toolBar.browserButtonDelegate = self;
     
         toolBar;
     });
@@ -138,9 +141,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
 }
 
 - (void)webViewDidStartLoad:(BrowserWebView *)webView{
-//    if ([self.bottomToolBarWebViewDelegate respondsToSelector:@selector(webViewDidStartLoad:)]) {
-//        [self.bottomToolBarWebViewDelegate webViewDidStartLoad:webView];
-//    }
+
 }
 
 - (void)webViewMainFrameDidFinishLoad:(BrowserWebView *)webView{
@@ -158,6 +159,16 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
 - (void)webView:(BrowserWebView *)webView gotTitleName:(NSString *)titleName{
     [self.browserTopToolBar setTopURLOrTitle:titleName];
 }
+
+#pragma mark - BrowserBottomToolBarButtonClickedDelegate
+
+- (void)browserBottomToolBarButtonClickedWithTag:(BottomToolBarButtonTag)tag{
+    if ([self.browserButtonDelegate respondsToSelector:@selector(browserBottomToolBarButtonClickedWithTag:)]) {
+        [self.browserButtonDelegate browserBottomToolBarButtonClickedWithTag:tag];
+    }
+}
+
+#pragma mark - Memory Warning Method
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

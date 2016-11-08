@@ -7,11 +7,13 @@
 //
 
 #import "BrowserBottomToolBar.h"
-#import "BrowserBottomToolBarHeader.h"
 
 @interface BrowserBottomToolBar () 
 
 @property (nonatomic, weak) UIBarButtonItem *refreshOrStopItem;
+@property (nonatomic, weak) UIBarButtonItem *backItem;
+@property (nonatomic, weak) UIBarButtonItem *forwardItem;
+@property (nonatomic, assign) BOOL isRefresh;
 
 @end
 
@@ -27,10 +29,13 @@
 
 - (void)initializeView{
     UIBarButtonItem *backItem = [self createBottomToolBarButtonWithImage:TOOLBAR_BUTTON_BACK_STRING tag:BottomToolBarBackButtonTag];
+    self.backItem = backItem;
     
     UIBarButtonItem *forwardItem = [self createBottomToolBarButtonWithImage:TOOLBAR_BUTTON_FORWARD_STRING tag:BottomToolBarForwardButtonTag];
+    self.forwardItem = forwardItem;
     
     UIBarButtonItem *refreshOrStopItem = [self createBottomToolBarButtonWithImage:TOOLBAR_BUTTON_STOP_STRING tag:BottomToolBarRefreshOrStopButtonTag];
+    self.isRefresh = false;
     refreshOrStopItem.width = 30;
     self.refreshOrStopItem = refreshOrStopItem;
     
@@ -51,15 +56,21 @@
 }
 
 - (void)handleBottomToolBarButtonClicked:(UIBarButtonItem *)item{
+    BottomToolBarButtonTag tag;
     
-}
-
-- (void)backButtonClicked:(id)sender{
+    if (item.tag == BottomToolBarRefreshOrStopButtonTag)
+        tag = self.isRefresh ? BottomToolBarRefreshButtonTag : BottomToolBarStopButtonTag;
+    else
+        tag = item.tag;
     
+    if ([self.browserButtonDelegate respondsToSelector:@selector(browserBottomToolBarButtonClickedWithTag:)]) {
+        [self.browserButtonDelegate browserBottomToolBarButtonClickedWithTag:tag];
+    }
 }
 
 - (void)setToolBarButtonRefreshOrStop:(BOOL)isRefresh{
     NSString *imageName = isRefresh ? TOOLBAR_BUTTON_REFRESH_STRING : TOOLBAR_BUTTON_STOP_STRING;
+    self.isRefresh = isRefresh;
     
     self.refreshOrStopItem.image = [[UIImage imageNamed:imageName] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 }
@@ -72,6 +83,9 @@
 
 - (void)webViewMainFrameDidFinishLoad:(BrowserWebView *)webView{
     [self setToolBarButtonRefreshOrStop:true];
+    
+    [self.backItem setEnabled:[webView canGoBack]];
+    [self.forwardItem setEnabled:[webView canGoForward]];
 }
 
 - (void)webViewMainFrameDidCommitLoad:(BrowserWebView *)webView{
