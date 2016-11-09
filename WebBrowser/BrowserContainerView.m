@@ -49,6 +49,7 @@
 }
 
 #pragma mark - WebViewDelegate Method
+
 - (void)webViewDidFinishLoad:(BrowserWebView *)webView{
     if ([self.webViewDelegate respondsToSelector:@selector(webViewDidFinishLoad:)]) {
         [self.webViewDelegate webViewDidFinishLoad:webView];
@@ -56,7 +57,16 @@
 }
 
 - (void)webView:(BrowserWebView *)webView didFailLoadWithError:(NSError *)error{
-    
+    if ([self.webViewDelegate respondsToSelector:@selector(webView:didFailLoadWithError:)]) {
+        [self.webViewDelegate webView:webView didFailLoadWithError:error];
+    }
+}
+
+- (BOOL)webView:(BrowserWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
+    if ([self.webViewDelegate respondsToSelector:@selector(webView:shouldStartLoadWithRequest:navigationType:)]) {
+        return [self.webViewDelegate webView:webView shouldStartLoadWithRequest:request navigationType:navigationType];
+    }
+    return YES;
 }
 
 - (void)webViewDidStartLoad:(BrowserWebView *)webView{
@@ -82,6 +92,8 @@
         [self.webViewDelegate webViewMainFrameDidCommitLoad:webView];
     }
 }
+
+#pragma mark - Dealloc
 
 - (void)dealloc{
     self.webView.webViewDelegate = nil; //BrowserWebView是在MRC下的，所以这里强行设置webViewDelegate为nil

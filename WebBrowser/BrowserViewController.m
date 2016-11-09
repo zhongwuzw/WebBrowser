@@ -21,6 +21,7 @@
 @property (nonatomic, assign) BOOL isWebViewDecelerate;
 @property (nonatomic, assign) ScrollDirection webViewScrollDirection;
 @property (nonatomic, weak) id<WebViewDelegate> bottomToolBarWebViewDelegate;
+@property (nonatomic, weak) id<WebViewDelegate> topToolBarWebViewDelegate;
 @property (nonatomic, weak) id<BrowserBottomToolBarButtonClickedDelegate> browserButtonDelegate;
 
 @end
@@ -58,6 +59,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
         [self.view addSubview:browserTopToolBar];
         
         browserTopToolBar.backgroundColor = UIColorFromRGB(0xF8F8F8);
+        self.topToolBarWebViewDelegate = browserTopToolBar;
         
         browserTopToolBar;
     });
@@ -136,12 +138,29 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
 
 #pragma mark - WebViewDelegate
 
+- (BOOL)webView:(BrowserWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
+    if ([self.topToolBarWebViewDelegate respondsToSelector:@selector(webView:shouldStartLoadWithRequest:navigationType:)]) {
+        return [self.topToolBarWebViewDelegate webView:webView shouldStartLoadWithRequest:request navigationType:navigationType];
+    }
+    return YES;
+}
+
 - (void)webViewDidFinishLoad:(BrowserWebView *)webView{
-    
+    if ([self.topToolBarWebViewDelegate respondsToSelector:@selector(webViewDidFinishLoad:)]) {
+        [self.topToolBarWebViewDelegate webViewDidFinishLoad:webView];
+    }
 }
 
 - (void)webViewDidStartLoad:(BrowserWebView *)webView{
+    if ([self.topToolBarWebViewDelegate respondsToSelector:@selector(webViewDidStartLoad:)]) {
+        [self.topToolBarWebViewDelegate webViewDidStartLoad:webView];
+    }
+}
 
+- (void)webView:(BrowserWebView *)webView didFailLoadWithError:(NSError *)error{
+    if ([self.topToolBarWebViewDelegate respondsToSelector:@selector(webView:didFailLoadWithError:)]) {
+        [self.topToolBarWebViewDelegate webView:webView didFailLoadWithError:error];
+    }
 }
 
 - (void)webViewMainFrameDidFinishLoad:(BrowserWebView *)webView{

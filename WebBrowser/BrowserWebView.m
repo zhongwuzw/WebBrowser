@@ -38,7 +38,6 @@
     [self setScalesPageToFit:YES];
     
     [self setDrawInWebThread];
-    
 }
 
 - (void)evaluateJavaScript:(NSString *)javaScriptString completionHandler:(void (^)(id, NSError *))completionHandler
@@ -131,7 +130,9 @@
 }
 
 - (BOOL)webView:(BrowserWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
-
+    if ([self.webViewDelegate respondsToSelector:@selector(webView:shouldStartLoadWithRequest:navigationType:)]) {
+        return [self.webViewDelegate webView:webView shouldStartLoadWithRequest:request navigationType:navigationType];
+    }
     return YES;
 }
 

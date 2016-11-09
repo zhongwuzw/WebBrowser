@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E1F9F9E1DD2D86E00FA84EA /* NJKWebViewProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1F9F9B1DD2D86E00FA84EA /* NJKWebViewProgress.m */; };
+		0E1F9F9F1DD2D86E00FA84EA /* NJKWebViewProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1F9F9D1DD2D86E00FA84EA /* NJKWebViewProgressView.m */; };
 		0E2329311DADE07B007E9886 /* BrowserTopToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E2329301DADE07B007E9886 /* BrowserTopToolBar.m */; };
 		0E2329341DAE19BB007E9886 /* TopToolBarShapeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E2329331DAE19BB007E9886 /* TopToolBarShapeView.m */; };
 		0E2C539F1DAA24970077B9B4 /* BrowserContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E2C539E1DAA24970077B9B4 /* BrowserContainerView.m */; };
@@ -47,6 +49,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0E1F9F9A1DD2D86E00FA84EA /* NJKWebViewProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJKWebViewProgress.h; sourceTree = "<group>"; };
+		0E1F9F9B1DD2D86E00FA84EA /* NJKWebViewProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJKWebViewProgress.m; sourceTree = "<group>"; };
+		0E1F9F9C1DD2D86E00FA84EA /* NJKWebViewProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJKWebViewProgressView.h; sourceTree = "<group>"; };
+		0E1F9F9D1DD2D86E00FA84EA /* NJKWebViewProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJKWebViewProgressView.m; sourceTree = "<group>"; };
 		0E23292F1DADE07B007E9886 /* BrowserTopToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserTopToolBar.h; sourceTree = "<group>"; };
 		0E2329301DADE07B007E9886 /* BrowserTopToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserTopToolBar.m; sourceTree = "<group>"; };
 		0E2329321DAE19BB007E9886 /* TopToolBarShapeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopToolBarShapeView.h; sourceTree = "<group>"; };
@@ -121,6 +127,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E1F9F981DD2D83400FA84EA /* Vendors */ = {
+			isa = PBXGroup;
+			children = (
+				0E1F9F991DD2D84500FA84EA /* NJKWebViewProgress */,
+			);
+			name = Vendors;
+			sourceTree = "<group>";
+		};
+		0E1F9F991DD2D84500FA84EA /* NJKWebViewProgress */ = {
+			isa = PBXGroup;
+			children = (
+				0E1F9F9A1DD2D86E00FA84EA /* NJKWebViewProgress.h */,
+				0E1F9F9B1DD2D86E00FA84EA /* NJKWebViewProgress.m */,
+				0E1F9F9C1DD2D86E00FA84EA /* NJKWebViewProgressView.h */,
+				0E1F9F9D1DD2D86E00FA84EA /* NJKWebViewProgressView.m */,
+			);
+			name = NJKWebViewProgress;
+			sourceTree = "<group>";
+		};
 		0E2C539B1DAA23A40077B9B4 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -159,15 +184,6 @@
 				0EBF3A691DCF38D600CD77C8 /* BrowserBottomToolBar.m */,
 			);
 			name = View;
-			sourceTree = "<group>";
-		};
-		0E48FAFD1DA3FCC100B8FCDB /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				0E48FB021DA4055A00B8FCDB /* Header */,
-				0E48FAFE1DA3FCCB00B8FCDB /* View */,
-			);
-			name = Utils;
 			sourceTree = "<group>";
 		};
 		0E48FAFE1DA3FCCB00B8FCDB /* View */ = {
@@ -211,7 +227,7 @@
 		0E681F271D4AEC3F003534F5 /* WebBrowser */ = {
 			isa = PBXGroup;
 			children = (
-				0E48FAFD1DA3FCC100B8FCDB /* Utils */,
+				0E1F9F981DD2D83400FA84EA /* Vendors */,
 				0E986A0C1D4D06030003900D /* Tab */,
 				0E986A081D4CA6890003900D /* Browser */,
 				0E681F5E1D4AF2A3003534F5 /* Application */,
@@ -254,6 +270,8 @@
 		0E681F5B1D4AF1A8003534F5 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				0E48FAFE1DA3FCCB00B8FCDB /* View */,
+				0E48FB021DA4055A00B8FCDB /* Header */,
 				0EA7DEE01DB0ABB7005C592E /* Controller */,
 				0E2C53A01DAA31210077B9B4 /* Category */,
 				0E681F631D4AFE93003534F5 /* Helper */,
@@ -500,10 +518,12 @@
 				0E2329311DADE07B007E9886 /* BrowserTopToolBar.m in Sources */,
 				0E2329341DAE19BB007E9886 /* TopToolBarShapeView.m in Sources */,
 				0E681F2D1D4AEC3F003534F5 /* AppDelegate.m in Sources */,
+				0E1F9F9E1DD2D86E00FA84EA /* NJKWebViewProgress.m in Sources */,
 				0E48FB011DA3FD4B00B8FCDB /* BrowserWebView.m in Sources */,
 				0E681F691D4B34EB003534F5 /* MenuHelper.m in Sources */,
 				0E681F2A1D4AEC3F003534F5 /* main.m in Sources */,
 				0E986A0B1D4CA6C10003900D /* BrowserViewController.m in Sources */,
+				0E1F9F9F1DD2D86E00FA84EA /* NJKWebViewProgressView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

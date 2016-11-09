@@ -9,13 +9,17 @@
 #import "BrowserTopToolBar.h"
 #import "TopToolBarShapeView.h"
 #import "BrowserHeader.h"
+#import "NJKWebViewProgressView.h"
 
 #define SHAPE_VIEW_WIDTH 30
 #define SHAPE_VIEW_HEIGHT 44
 #define ShAPE_VIEW_Y_OFFSET 5
 
 @interface BrowserTopToolBar ()
+
 @property (nonatomic, strong) TopToolBarShapeView *shapeView;
+@property (nonatomic, strong) NJKWebViewProgressView *progressView;
+@property (nonatomic, strong) NJKWebViewProgress *progressProxy;
 
 @end
 
@@ -45,6 +49,23 @@
         shapeView;
     });
     
+    self.progressView = ({
+        CGFloat progressBarHeight = 2.f;
+        NJKWebViewProgressView *progressView = [[NJKWebViewProgressView alloc] initWithFrame:CGRectMake(0, self.height - progressBarHeight, self.width, progressBarHeight)];
+        [self addSubview:progressView];
+        
+        progressView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+        
+        progressView;
+    });
+    
+    self.progressProxy = ({
+        NJKWebViewProgress *progressProxy = [NJKWebViewProgress new];
+        
+        progressProxy.progressDelegate = self;
+        
+        progressProxy;
+    });
 }
 
 - (void)setFrame:(CGRect)frame{
@@ -60,6 +81,40 @@
 
 - (void)setTopURLOrTitle:(NSString *)urlOrTitle{
     [self.shapeView setTopURLOrTitle:urlOrTitle];
+}
+
+#pragma mark - WebViewDelegate
+
+- (BOOL)webView:(BrowserWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+    if ([self.progressProxy respondsToSelector:@selector(webView:shouldStartLoadWithRequest:navigationType:)]) {
+        return [self.progressProxy webView:webView shouldStartLoadWithRequest:request navigationType:navigationType];
+    }
+    
+    return YES;
+}
+
+- (void)webViewDidFinishLoad:(BrowserWebView *)webView{
+    if ([self.progressProxy respondsToSelector:@selector(webViewDidFinishLoad:)]) {
+        [self.progressProxy webViewDidFinishLoad:webView];
+    }
+}
+
+- (void)webViewDidStartLoad:(BrowserWebView *)webView{
+    if ([self.progressProxy respondsToSelector:@selector(webViewDidStartLoad:)]) {
+        [self.progressProxy webViewDidFinishLoad:webView];
+    }
+}
+
+- (void)webView:(BrowserWebView *)webView didFailLoadWithError:(NSError *)error{
+    if ([self.progressProxy respondsToSelector:@selector(webView:didFailLoadWithError:)]) {
+        [self.progressProxy webView:webView didFailLoadWithError:error];
+    }
+}
+
+#pragma mark - NJKWebViewProgressDelegate
+-(void)webViewProgress:(NJKWebViewProgress *)webViewProgress updateProgress:(float)progress
+{
+    [_progressView setProgress:progress animated:YES];
 }
 
 @end

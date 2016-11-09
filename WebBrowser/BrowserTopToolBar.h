@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BrowserWebView.h"
+#import "NJKWebViewProgress.h"
 
-@interface BrowserTopToolBar : UIView
+@interface BrowserTopToolBar : UIView <WebViewDelegate, NJKWebViewProgressDelegate>
 
 - (void)setTopURLOrTitle:(NSString *)urlOrTitle;
 

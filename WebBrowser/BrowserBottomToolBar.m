@@ -35,7 +35,7 @@
     self.forwardItem = forwardItem;
     
     UIBarButtonItem *refreshOrStopItem = [self createBottomToolBarButtonWithImage:TOOLBAR_BUTTON_STOP_STRING tag:BottomToolBarRefreshOrStopButtonTag];
-    self.isRefresh = false;
+    self.isRefresh = NO;
     refreshOrStopItem.width = 30;
     self.refreshOrStopItem = refreshOrStopItem;
     
@@ -82,14 +82,14 @@
 }
 
 - (void)webViewMainFrameDidFinishLoad:(BrowserWebView *)webView{
-    [self setToolBarButtonRefreshOrStop:true];
+    [self setToolBarButtonRefreshOrStop:YES];
     
     [self.backItem setEnabled:[webView canGoBack]];
     [self.forwardItem setEnabled:[webView canGoForward]];
 }
 
 - (void)webViewMainFrameDidCommitLoad:(BrowserWebView *)webView{
-    [self setToolBarButtonRefreshOrStop:false];
+    [self setToolBarButtonRefreshOrStop:NO];
 }
 
 @end
