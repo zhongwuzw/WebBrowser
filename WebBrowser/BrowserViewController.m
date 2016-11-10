@@ -6,13 +6,15 @@
 //  Copyright © 2016年 钟武. All rights reserved.
 //
 
+#import <StoreKit/StoreKit.h>
+
 #import "BrowserViewController.h"
 #import "BrowserContainerView.h"
 #import "BrowserTopToolBar.h"
 #import "BrowserHeader.h"
 #import "BrowserBottomToolBar.h"
 
-@interface BrowserViewController () <WebViewDelegate, BrowserBottomToolBarButtonClickedDelegate>
+@interface BrowserViewController () <WebViewDelegate, BrowserBottomToolBarButtonClickedDelegate, SKStoreProductViewControllerDelegate>
 
 @property (nonatomic, strong) BrowserContainerView *browserContainerView;
 @property (nonatomic, strong) BrowserBottomToolBar *bottomToolBar;
@@ -34,6 +36,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
     [super viewDidLoad];
     
     [self initializeView];
+    
+    [self initializeNotification];
 
     self.lastContentOffset = - TOP_TOOL_BAR_HEIGHT;
 }
@@ -75,6 +79,52 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
     });
 }
 
+#pragma mark - Notification
+
+- (void)initializeNotification{
+    [Notifier addObserver:self selector:@selector(receiveOpenAppstore:) name:kModalAppstoreOpen object:nil];
+}
+
+- (void)receiveOpenAppstore:(NSNotification*)notification
+{
+    NSString* appstoreId = notification.object;
+    
+    if ([appstoreId isKindOfClass:[NSString class]]) {
+        NSNumberFormatter *f = [NSNumberFormatter new];
+        f.numberStyle = NSNumberFormatterDecimalStyle;
+        NSNumber *number = [f numberFromString:appstoreId];
+        [self openAppstoreWithURL:number];
+    }
+}
+
+- (void)openAppstoreWithURL:(NSNumber *)appstoreID{
+    if (!appstoreID) {
+        return;
+    }
+    
+    SKStoreProductViewController *storeViewController = [SKStoreProductViewController new];
+    storeViewController.delegate = self;
+    
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:1];
+    
+    [dict setObject:appstoreID forKey:SKStoreProductParameterITunesItemIdentifier];
+    
+    [storeViewController loadProductWithParameters:dict completionBlock:^(BOOL result, NSError *error){
+        if (result) {
+            [self.navigationController presentViewController:storeViewController animated:YES completion:nil];
+        }
+    }];
+}
+
+#pragma mark - SKStoreProductViewControllerDelegate
+
+- (void)productViewControllerDidFinish:(SKStoreProductViewController*)viewController
+{
+    if (viewController) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
 #pragma mark - UIScrollViewDelegate Method
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
@@ -82,13 +132,13 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
     
     if (self.lastContentOffset > scrollView.contentOffset.y) {
         if (_isWebViewDecelerate || (scrollView.contentOffset.y >= -TOP_TOOL_BAR_HEIGHT && scrollView.contentOffset.y <= 0)) {
-            [self handleTopToolBarWithOffset:yOffset];
+            [self handleToolBarWithOffset:yOffset];
         }
         self.webViewScrollDirection = ScrollDirectionDown;
     }
     else if (self.lastContentOffset < scrollView.contentOffset.y && scrollView.contentOffset.y >= - TOP_TOOL_BAR_HEIGHT)
     {
-        [self handleTopToolBarWithOffset:yOffset];
+        [self handleToolBarWithOffset:yOffset];
         self.webViewScrollDirection = ScrollDirectionUp;
     }
     
@@ -106,7 +156,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
 
 #pragma mark - Handle TopToolBar Scroll
 
-- (void)handleTopToolBarWithOffset:(CGFloat)offset{
+- (void)handleToolBarWithOffset:(CGFloat)offset{
     CGRect bottomRect = self.bottomToolBar.frame;
     //缩小toolbar
     if (offset > 0) {
@@ -129,7 +179,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
         else
         {
             self.browserTopToolBar.height += (-offset);
-            bottomRect.origin.y -= BOTTOM_TOOL_BAR_HEIGHT * offset / (TOP_TOOL_BAR_HEIGHT - TOP_TOOL_BAR_THRESHOLD);
+            bottomRect.origin.y -= BOTTOM_TOOL_BAR_HEIGHT * (-offset) / (TOP_TOOL_BAR_HEIGHT - TOP_TOOL_BAR_THRESHOLD);
         }
     }
     

@@ -24,11 +24,16 @@
 		0E986A0B1D4CA6C10003900D /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E986A0A1D4CA6C10003900D /* BrowserViewController.m */; };
 		0E986A0F1D4D06170003900D /* TabManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E986A0E1D4D06170003900D /* TabManager.m */; };
 		0EA7DEE31DB0ABD8005C592E /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EA7DEE21DB0ABD8005C592E /* BaseViewController.m */; };
+		0EAA18B91DD35D5D0072F9B3 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EAA18B81DD35D5D0072F9B3 /* WebKit.framework */; };
 		0EBF3A651DCF33ED00CD77C8 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EBF3A631DCF33ED00CD77C8 /* CocoaLumberjack.framework */; };
 		0EBF3A661DCF33ED00CD77C8 /* MBProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EBF3A641DCF33ED00CD77C8 /* MBProgressHUD.framework */; };
 		0EBF3A6A1DCF38D600CD77C8 /* BrowserBottomToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EBF3A691DCF38D600CD77C8 /* BrowserBottomToolBar.m */; };
 		0EDD68E51DACFBF400265744 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0EDD68E41DACFBF400265744 /* Assets.xcassets */; };
 		0EED28311DC1A32100EC8581 /* ZWUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EED28301DC1A32100EC8581 /* ZWUtility.m */; };
+		0EFDD3081DD423AC002AB3FB /* HttpHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EFDD3071DD423AC002AB3FB /* HttpHelper.m */; };
+		0EFDD30A1DD42861002AB3FB /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EFDD3091DD42861002AB3FB /* AVFoundation.framework */; };
+		0EFDD30C1DD42868002AB3FB /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EFDD30B1DD42868002AB3FB /* AudioToolbox.framework */; };
+		0EFDD30E1DD45764002AB3FB /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EFDD30D1DD45764002AB3FB /* StoreKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +95,7 @@
 		0E986A0E1D4D06170003900D /* TabManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabManager.m; sourceTree = "<group>"; };
 		0EA7DEE11DB0ABD8005C592E /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		0EA7DEE21DB0ABD8005C592E /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
+		0EAA18B81DD35D5D0072F9B3 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		0EBF3A631DCF33ED00CD77C8 /* CocoaLumberjack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjack.framework; path = Carthage/Build/iOS/CocoaLumberjack.framework; sourceTree = "<group>"; };
 		0EBF3A641DCF33ED00CD77C8 /* MBProgressHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MBProgressHUD.framework; path = Carthage/Build/iOS/MBProgressHUD.framework; sourceTree = "<group>"; };
 		0EBF3A681DCF38D600CD77C8 /* BrowserBottomToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserBottomToolBar.h; sourceTree = "<group>"; };
@@ -98,6 +104,11 @@
 		0EDD68E41DACFBF400265744 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0EED282F1DC1A32100EC8581 /* ZWUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWUtility.h; sourceTree = "<group>"; };
 		0EED28301DC1A32100EC8581 /* ZWUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWUtility.m; sourceTree = "<group>"; };
+		0EFDD3061DD423AC002AB3FB /* HttpHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpHelper.h; sourceTree = "<group>"; };
+		0EFDD3071DD423AC002AB3FB /* HttpHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpHelper.m; sourceTree = "<group>"; };
+		0EFDD3091DD42861002AB3FB /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		0EFDD30B1DD42868002AB3FB /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		0EFDD30D1DD45764002AB3FB /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +116,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0EFDD30E1DD45764002AB3FB /* StoreKit.framework in Frameworks */,
+				0EFDD30C1DD42868002AB3FB /* AudioToolbox.framework in Frameworks */,
+				0EFDD30A1DD42861002AB3FB /* AVFoundation.framework in Frameworks */,
+				0EAA18B91DD35D5D0072F9B3 /* WebKit.framework in Frameworks */,
 				0EBF3A651DCF33ED00CD77C8 /* CocoaLumberjack.framework in Frameworks */,
 				0EBF3A661DCF33ED00CD77C8 /* MBProgressHUD.framework in Frameworks */,
 			);
@@ -307,6 +322,8 @@
 				0E681F681D4B34EB003534F5 /* MenuHelper.m */,
 				0EED282F1DC1A32100EC8581 /* ZWUtility.h */,
 				0EED28301DC1A32100EC8581 /* ZWUtility.m */,
+				0EFDD3061DD423AC002AB3FB /* HttpHelper.h */,
+				0EFDD3071DD423AC002AB3FB /* HttpHelper.m */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -352,6 +369,10 @@
 		0EBF3A621DCF33ED00CD77C8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0EFDD30D1DD45764002AB3FB /* StoreKit.framework */,
+				0EFDD30B1DD42868002AB3FB /* AudioToolbox.framework */,
+				0EFDD3091DD42861002AB3FB /* AVFoundation.framework */,
+				0EAA18B81DD35D5D0072F9B3 /* WebKit.framework */,
 				0EBF3A631DCF33ED00CD77C8 /* CocoaLumberjack.framework */,
 				0EBF3A641DCF33ED00CD77C8 /* MBProgressHUD.framework */,
 			);
@@ -523,6 +544,7 @@
 				0E681F691D4B34EB003534F5 /* MenuHelper.m in Sources */,
 				0E681F2A1D4AEC3F003534F5 /* main.m in Sources */,
 				0E986A0B1D4CA6C10003900D /* BrowserViewController.m in Sources */,
+				0EFDD3081DD423AC002AB3FB /* HttpHelper.m in Sources */,
 				0E1F9F9F1DD2D86E00FA84EA /* NJKWebViewProgressView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

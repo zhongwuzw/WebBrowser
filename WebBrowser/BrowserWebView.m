@@ -8,6 +8,7 @@
 
 #import "BrowserWebView.h"
 #import "WebViewHeader.h"
+#import "HttpHelper.h"
 
 #if TARGET_IPHONE_SIMULATOR
 #import <objc/objc-runtime.h>
@@ -130,6 +131,12 @@
 }
 
 - (BOOL)webView:(BrowserWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
+    NSURL *url = request.URL;
+    
+    if ([HttpHelper canAppHandleURL:url]) {
+        return NO;
+    }
+    
     if ([self.webViewDelegate respondsToSelector:@selector(webView:shouldStartLoadWithRequest:navigationType:)]) {
         return [self.webViewDelegate webView:webView shouldStartLoadWithRequest:request navigationType:navigationType];
     }

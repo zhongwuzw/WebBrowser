@@ -11,6 +11,11 @@
 
 #import <objc/runtime.h>
 
+#define Notifier  [NSNotificationCenter defaultCenter]
+
+//打开appstore
+#define kModalAppstoreOpen          @"kModalAppstoreOpen"
+
 //颜色宏定义
 #define ColorRedGreenBlue(r, g, b)				[UIColor colorWithRed : (r) / 255.0f green : (g) / 255.0f blue : (b) / 255.0f alpha : 1.0f]
 #define ColorRedGreenBlueWithAlpha(r, g, b, a)	[UIColor colorWithRed : (r) / 255.0f green : (g) / 255.0f blue : (b) / 255.0f alpha : a]

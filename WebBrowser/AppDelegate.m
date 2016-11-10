@@ -7,6 +7,7 @@
 //
 
 #import <AVFoundation/AVFoundation.h>
+#import <AudioToolbox/AudioToolbox.h>
 
 #import "AppDelegate.h"
 #import "KeyboardHelper.h"
@@ -18,6 +19,18 @@
 @end
 
 @implementation AppDelegate
+
+- (void)setAudioPlayInBackgroundMode{
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+    
+    NSError *setCategoryError = nil;
+    BOOL success = [audioSession setCategory:AVAudioSessionCategoryPlayback error:&setCategoryError];
+    if (!success) { /* handle the error condition */ }
+    
+    NSError *activationError = nil;
+    success = [audioSession setActive:YES error:&activationError];
+    if (!success) { /* handle the error condition */ }
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
@@ -32,6 +45,8 @@
     
     //解决UIWebView首次加载页面时间过长问题
     [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent" : @"    Mozilla/5.0 (iPhone; CPU iPhone OS 10_0 like Mac OS X) AppleWebKit/602.1.38 (KHTML, like Gecko) Version/10.0 Mobile/14A300 Safari/602.1"}];
+    
+    [self setAudioPlayInBackgroundMode];
     
     return YES;
 }
