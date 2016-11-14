@@ -59,7 +59,10 @@
     BottomToolBarButtonTag tag;
     
     if (item.tag == BottomToolBarRefreshOrStopButtonTag)
+    {
         tag = self.isRefresh ? BottomToolBarRefreshButtonTag : BottomToolBarStopButtonTag;
+        [self setToolBarButtonRefreshOrStop:!_isRefresh];
+    }
     else
         tag = item.tag;
     

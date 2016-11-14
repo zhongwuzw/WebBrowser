@@ -25,7 +25,7 @@
 
 //weak、strong创建
 #define WEAK_REF(self) \
-__block __weak typeof(self) self##_ = self; (void) self##_
+__block __weak typeof(self) self##_ = self; (void) self##_;
 
 #define STRONG_REF(self) \
 __block __strong typeof(self) self##_ = self; (void) self##_;
@@ -52,6 +52,21 @@ __block __strong typeof(self) self##_ = self; (void) self##_;
 }\
 - (id)copyWithZone:(NSZone *)zone {\
     return self;\
+}
+
+//安全main queue 执行
+#define dispatch_main_sync_safe(block)\
+if ([NSThread isMainThread]) {\
+block();\
+} else {\
+dispatch_sync(dispatch_get_main_queue(), block);\
+}
+
+#define dispatch_main_async_safe(block)\
+if ([NSThread isMainThread]) {\
+block();\
+} else {\
+dispatch_async(dispatch_get_main_queue(), block);\
 }
 
 #endif /* MacroMethod_h */

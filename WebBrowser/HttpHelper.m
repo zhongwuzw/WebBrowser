@@ -17,6 +17,7 @@
     if ([url.absoluteString hasPrefix:@"http://itunes.apple.com/"]
         || [url.absoluteString hasPrefix:@"https://itunes.apple.com/"]
         ) {
+#ifndef AUTOMATION
         NSString* matched = [self appstoreIdFromURL:url.absoluteString];
         if(matched && [matched length] > 0)
         {
@@ -25,13 +26,16 @@
         else{
             [[UIApplication sharedApplication] openURL:url];
         }
+#endif
         return YES;
     }
     if (![url.scheme isEqualToString:@"http"]
         && ![url.scheme isEqualToString:@"https"]
         && ![url.scheme isEqualToString:@"file"]) {
         if ([[UIApplication sharedApplication] canOpenURL:url]) {
+#ifndef AUTOMATION
             [[UIApplication sharedApplication] openURL:url];
+#endif
             return YES;
         }
     }
@@ -54,6 +58,10 @@
     }
     
     return nil;
+}
+
++ (BOOL)isURL:(NSString *)content{
+    return YES;
 }
 
 @end

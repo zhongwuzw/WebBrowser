@@ -8,9 +8,11 @@
 
 #import "TopToolBarShapeView.h"
 
-@interface TopToolBarShapeView ()
+#define TEXT_FIELD_PLACEHOLDER   @"搜索或输入网址"
 
-@property (nonatomic, strong) UILabel *label;
+@interface TopToolBarShapeView () <UITextFieldDelegate>
+
+@property (nonatomic, strong) UITextField *textField;
 
 @end
 
@@ -25,11 +27,20 @@
 }
 
 - (void)initializeView{
-    self.label = ({
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height)];
-        label.textAlignment = NSTextAlignmentCenter;
-        [self addSubview:label];
-        label;
+    self.textField = ({
+        UITextField *textField = [[UITextField alloc] initWithFrame:self.bounds];
+        [self addSubview:textField];
+        
+        textField.textAlignment = NSTextAlignmentCenter;
+        textField.clearButtonMode = UITextFieldViewModeAlways;
+        textField.delegate = self;
+        textField.placeholder = TEXT_FIELD_PLACEHOLDER;
+        textField.returnKeyType = UIReturnKeySearch;
+        textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+        textField.autocorrectionType = UITextAutocorrectionTypeNo;
+        textField.enablesReturnKeyAutomatically = YES;
+        
+        textField;
     });
 }
 
@@ -44,7 +55,26 @@
 }
 
 - (void)setTopURLOrTitle:(NSString *)urlOrTitle{
-    [self.label setText:urlOrTitle];
+    [self.textField setText:urlOrTitle];
+}
+
+#pragma mark -  UITextFieldDelegate
+
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [textField resignFirstResponder];
+    return YES;
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    if ([textField.text length] > 0) {
+        
+    }
+    
+    return NO;
 }
 
 @end

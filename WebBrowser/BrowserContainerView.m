@@ -39,7 +39,7 @@
     _webView.frame = CGRectMake(0, 0, self.width, self.height);
     _webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
-    [self startLoadWebViewWithURL:@"https://www.baidu.com"];
+    [self startLoadWebViewWithURL:@"https://m.baidu.com/"];
 }
 
 - (void)startLoadWebViewWithURL:(NSString *)url{

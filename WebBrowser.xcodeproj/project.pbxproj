@@ -30,6 +30,14 @@
 		0EBF3A6A1DCF38D600CD77C8 /* BrowserBottomToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EBF3A691DCF38D600CD77C8 /* BrowserBottomToolBar.m */; };
 		0EDD68E51DACFBF400265744 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0EDD68E41DACFBF400265744 /* Assets.xcassets */; };
 		0EED28311DC1A32100EC8581 /* ZWUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EED28301DC1A32100EC8581 /* ZWUtility.m */; };
+		0EF025651DD951EB0011019F /* HTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF025601DD951EB0011019F /* HTTPClient.m */; };
+		0EF025661DD951EB0011019F /* HTTPManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF025621DD951EB0011019F /* HTTPManager.m */; };
+		0EF025671DD951EB0011019F /* HTTPURLConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF025641DD951EB0011019F /* HTTPURLConfiguration.m */; };
+		0EF0256A1DD9554F0011019F /* HTTPClient+SearchSug.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF025691DD9554F0011019F /* HTTPClient+SearchSug.m */; };
+		0EF0256C1DD9578F0011019F /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EF0256B1DD9578F0011019F /* AFNetworking.framework */; };
+		0EF025701DD957EC0011019F /* BaseResponseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF0256F1DD957EC0011019F /* BaseResponseModel.m */; };
+		0EF025721DD95B1E0011019F /* Mantle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EF025711DD95B1E0011019F /* Mantle.framework */; };
+		0EF025751DD99FAC0011019F /* BaiduSugResponseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF025741DD99FAC0011019F /* BaiduSugResponseModel.m */; };
 		0EFDD3081DD423AC002AB3FB /* HttpHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EFDD3071DD423AC002AB3FB /* HttpHelper.m */; };
 		0EFDD30A1DD42861002AB3FB /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EFDD3091DD42861002AB3FB /* AVFoundation.framework */; };
 		0EFDD30C1DD42868002AB3FB /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EFDD30B1DD42868002AB3FB /* AudioToolbox.framework */; };
@@ -104,6 +112,21 @@
 		0EDD68E41DACFBF400265744 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0EED282F1DC1A32100EC8581 /* ZWUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWUtility.h; sourceTree = "<group>"; };
 		0EED28301DC1A32100EC8581 /* ZWUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWUtility.m; sourceTree = "<group>"; };
+		0EF0255E1DD951D10011019F /* HTTPErrorCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPErrorCode.h; sourceTree = "<group>"; };
+		0EF0255F1DD951EB0011019F /* HTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPClient.h; sourceTree = "<group>"; };
+		0EF025601DD951EB0011019F /* HTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPClient.m; sourceTree = "<group>"; };
+		0EF025611DD951EB0011019F /* HTTPManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPManager.h; sourceTree = "<group>"; };
+		0EF025621DD951EB0011019F /* HTTPManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPManager.m; sourceTree = "<group>"; };
+		0EF025631DD951EB0011019F /* HTTPURLConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPURLConfiguration.h; sourceTree = "<group>"; };
+		0EF025641DD951EB0011019F /* HTTPURLConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPURLConfiguration.m; sourceTree = "<group>"; };
+		0EF025681DD9554F0011019F /* HTTPClient+SearchSug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HTTPClient+SearchSug.h"; sourceTree = "<group>"; };
+		0EF025691DD9554F0011019F /* HTTPClient+SearchSug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "HTTPClient+SearchSug.m"; sourceTree = "<group>"; };
+		0EF0256B1DD9578F0011019F /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AFNetworking.framework; path = Carthage/Build/iOS/AFNetworking.framework; sourceTree = "<group>"; };
+		0EF0256E1DD957EC0011019F /* BaseResponseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseResponseModel.h; sourceTree = "<group>"; };
+		0EF0256F1DD957EC0011019F /* BaseResponseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseResponseModel.m; sourceTree = "<group>"; };
+		0EF025711DD95B1E0011019F /* Mantle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mantle.framework; path = Carthage/Build/iOS/Mantle.framework; sourceTree = "<group>"; };
+		0EF025731DD99FAC0011019F /* BaiduSugResponseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaiduSugResponseModel.h; sourceTree = "<group>"; };
+		0EF025741DD99FAC0011019F /* BaiduSugResponseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaiduSugResponseModel.m; sourceTree = "<group>"; };
 		0EFDD3061DD423AC002AB3FB /* HttpHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpHelper.h; sourceTree = "<group>"; };
 		0EFDD3071DD423AC002AB3FB /* HttpHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpHelper.m; sourceTree = "<group>"; };
 		0EFDD3091DD42861002AB3FB /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -116,6 +139,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0EF025721DD95B1E0011019F /* Mantle.framework in Frameworks */,
+				0EF0256C1DD9578F0011019F /* AFNetworking.framework in Frameworks */,
 				0EFDD30E1DD45764002AB3FB /* StoreKit.framework in Frameworks */,
 				0EFDD30C1DD42868002AB3FB /* AudioToolbox.framework in Frameworks */,
 				0EFDD30A1DD42861002AB3FB /* AVFoundation.framework in Frameworks */,
@@ -242,6 +267,7 @@
 		0E681F271D4AEC3F003534F5 /* WebBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				0EF0255D1DD94FCF0011019F /* Network */,
 				0E1F9F981DD2D83400FA84EA /* Vendors */,
 				0E986A0C1D4D06030003900D /* Tab */,
 				0E986A081D4CA6890003900D /* Browser */,
@@ -369,6 +395,8 @@
 		0EBF3A621DCF33ED00CD77C8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0EF025711DD95B1E0011019F /* Mantle.framework */,
+				0EF0256B1DD9578F0011019F /* AFNetworking.framework */,
 				0EFDD30D1DD45764002AB3FB /* StoreKit.framework */,
 				0EFDD30B1DD42868002AB3FB /* AudioToolbox.framework */,
 				0EFDD3091DD42861002AB3FB /* AVFoundation.framework */,
@@ -377,6 +405,34 @@
 				0EBF3A641DCF33ED00CD77C8 /* MBProgressHUD.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		0EF0255D1DD94FCF0011019F /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				0EF0256D1DD957DD0011019F /* Models */,
+				0EF0255E1DD951D10011019F /* HTTPErrorCode.h */,
+				0EF0255F1DD951EB0011019F /* HTTPClient.h */,
+				0EF025601DD951EB0011019F /* HTTPClient.m */,
+				0EF025681DD9554F0011019F /* HTTPClient+SearchSug.h */,
+				0EF025691DD9554F0011019F /* HTTPClient+SearchSug.m */,
+				0EF025611DD951EB0011019F /* HTTPManager.h */,
+				0EF025621DD951EB0011019F /* HTTPManager.m */,
+				0EF025631DD951EB0011019F /* HTTPURLConfiguration.h */,
+				0EF025641DD951EB0011019F /* HTTPURLConfiguration.m */,
+			);
+			name = Network;
+			sourceTree = "<group>";
+		};
+		0EF0256D1DD957DD0011019F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				0EF0256E1DD957EC0011019F /* BaseResponseModel.h */,
+				0EF0256F1DD957EC0011019F /* BaseResponseModel.m */,
+				0EF025731DD99FAC0011019F /* BaiduSugResponseModel.h */,
+				0EF025741DD99FAC0011019F /* BaiduSugResponseModel.m */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -447,7 +503,7 @@
 				TargetAttributes = {
 					0E681F241D4AEC3F003534F5 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 9R74JVS7P9;
+						DevelopmentTeam = P6LCGC9VU2;
 						ProvisioningStyle = Automatic;
 					};
 					0E681F3D1D4AEC3F003534F5 = {
@@ -515,6 +571,8 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/CocoaLumberjack.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/MBProgressHUD.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/AFNetworking.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Mantle.framework",
 			);
 			outputPaths = (
 			);
@@ -529,20 +587,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0EF025671DD951EB0011019F /* HTTPURLConfiguration.m in Sources */,
 				0E986A0F1D4D06170003900D /* TabManager.m in Sources */,
 				0EBF3A6A1DCF38D600CD77C8 /* BrowserBottomToolBar.m in Sources */,
+				0EF025651DD951EB0011019F /* HTTPClient.m in Sources */,
 				0EA7DEE31DB0ABD8005C592E /* BaseViewController.m in Sources */,
 				0E2C539F1DAA24970077B9B4 /* BrowserContainerView.m in Sources */,
 				0E681F661D4AFEAA003534F5 /* KeyboardHelper.m in Sources */,
+				0EF025701DD957EC0011019F /* BaseResponseModel.m in Sources */,
 				0E2C53A31DAA314C0077B9B4 /* UIView+Additions.m in Sources */,
 				0EED28311DC1A32100EC8581 /* ZWUtility.m in Sources */,
+				0EF025751DD99FAC0011019F /* BaiduSugResponseModel.m in Sources */,
 				0E2329311DADE07B007E9886 /* BrowserTopToolBar.m in Sources */,
 				0E2329341DAE19BB007E9886 /* TopToolBarShapeView.m in Sources */,
 				0E681F2D1D4AEC3F003534F5 /* AppDelegate.m in Sources */,
 				0E1F9F9E1DD2D86E00FA84EA /* NJKWebViewProgress.m in Sources */,
 				0E48FB011DA3FD4B00B8FCDB /* BrowserWebView.m in Sources */,
+				0EF0256A1DD9554F0011019F /* HTTPClient+SearchSug.m in Sources */,
 				0E681F691D4B34EB003534F5 /* MenuHelper.m in Sources */,
 				0E681F2A1D4AEC3F003534F5 /* main.m in Sources */,
+				0EF025661DD951EB0011019F /* HTTPManager.m in Sources */,
 				0E986A0B1D4CA6C10003900D /* BrowserViewController.m in Sources */,
 				0EFDD3081DD423AC002AB3FB /* HttpHelper.m in Sources */,
 				0E1F9F9F1DD2D86E00FA84EA /* NJKWebViewProgressView.m in Sources */,
@@ -684,7 +748,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 9R74JVS7P9;
+				DEVELOPMENT_TEAM = P6LCGC9VU2;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -694,7 +758,7 @@
 				INFOPLIST_FILE = WebBrowser/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = zhongwu.WebBrowser;
+				PRODUCT_BUNDLE_IDENTIFIER = cn.zhongwu.WebBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -705,7 +769,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 9R74JVS7P9;
+				DEVELOPMENT_TEAM = P6LCGC9VU2;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -715,7 +779,7 @@
 				INFOPLIST_FILE = WebBrowser/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = zhongwu.WebBrowser;
+				PRODUCT_BUNDLE_IDENTIFIER = cn.zhongwu.WebBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

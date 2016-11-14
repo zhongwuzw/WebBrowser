@@ -14,4 +14,6 @@
 
 + (NSString *)appstoreIdFromURL:(NSString *)url;
 
++ (BOOL)isURL:(NSString *)content;
+
 @end
