@@ -98,6 +98,9 @@
 - (void)dealloc{
     self.webView.webViewDelegate = nil; //BrowserWebView是在MRC下的，所以这里强行设置webViewDelegate为nil
     self.webView.delegate = nil;
+    self.webView.scrollView.delegate = nil;
+    [self.webView loadHTMLString:@"" baseURL:nil];
+    [self.webView stopLoading];
     self.webView = nil;
 }
 

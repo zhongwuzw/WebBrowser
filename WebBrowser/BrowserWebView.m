@@ -35,6 +35,7 @@
     self.backgroundColor = [UIColor clearColor];
     self.opaque = NO;
     self.delegate = self;
+    self.allowsInlineMediaPlayback = YES;
     
     [self setScalesPageToFit:YES];
     

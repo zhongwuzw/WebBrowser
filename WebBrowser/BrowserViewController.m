@@ -13,6 +13,7 @@
 #import "BrowserTopToolBar.h"
 #import "BrowserHeader.h"
 #import "BrowserBottomToolBar.h"
+#import "CardMainView.h"
 
 @interface BrowserViewController () <WebViewDelegate, BrowserBottomToolBarButtonClickedDelegate, SKStoreProductViewControllerDelegate>
 
@@ -25,12 +26,20 @@
 @property (nonatomic, weak) id<WebViewDelegate> bottomToolBarWebViewDelegate;
 @property (nonatomic, weak) id<WebViewDelegate> topToolBarWebViewDelegate;
 @property (nonatomic, weak) id<BrowserBottomToolBarButtonClickedDelegate> browserButtonDelegate;
+@property (nonatomic, strong) CardMainView *cardMainView;
 
 @end
 
 @implementation BrowserViewController
 
 SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
+
+- (CardMainView *)cardMainView{
+    if (!_cardMainView) {
+        _cardMainView = [[CardMainView alloc] initWithFrame:self.view.bounds];
+    }
+    return _cardMainView;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -234,6 +243,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
 - (void)browserBottomToolBarButtonClickedWithTag:(BottomToolBarButtonTag)tag{
     if ([self.browserButtonDelegate respondsToSelector:@selector(browserBottomToolBarButtonClickedWithTag:)]) {
         [self.browserButtonDelegate browserBottomToolBarButtonClickedWithTag:tag];
+    }
+    if (tag == BottomToolBarMoreButtonTag) {
+        [self.view addSubview:self.cardMainView];
     }
 }
 
