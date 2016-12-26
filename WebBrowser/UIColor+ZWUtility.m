@@ -12,9 +12,9 @@
 
 + (UIColor *)randomColor
 {
-    CGFloat hue = (arc4random() % 100) / 100;
-    CGFloat saturation = (arc4random() % 100) / 100;
-    CGFloat brightness = (arc4random() % 100) / 100;
+    CGFloat hue = (arc4random() % 100) / 100.0;
+    CGFloat saturation = (arc4random() % 100) / 100.0;
+    CGFloat brightness = (arc4random() % 100) / 100.0;
     
     return [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1.0];
 }

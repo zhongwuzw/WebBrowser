@@ -14,6 +14,7 @@
 #import "BrowserHeader.h"
 #import "BrowserBottomToolBar.h"
 #import "CardMainView.h"
+#import "SettingsViewController.h"
 
 @interface BrowserViewController () <WebViewDelegate, BrowserBottomToolBarButtonClickedDelegate, SKStoreProductViewControllerDelegate>
 
@@ -245,7 +246,18 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
         [self.browserButtonDelegate browserBottomToolBarButtonClickedWithTag:tag];
     }
     if (tag == BottomToolBarMoreButtonTag) {
-        [self.view addSubview:self.cardMainView];
+        NSArray<SettingsMenuItem *> *items =
+        @[
+          [SettingsMenuItem itemWithText:@"书签" image:[UIImage imageNamed:@"album"] action:nil],
+          [SettingsMenuItem itemWithText:@"历史" image:[UIImage imageNamed:@"album"] action:nil],
+          [SettingsMenuItem itemWithText:@"设置" image:[UIImage imageNamed:@"album"] action:nil],
+          [SettingsMenuItem itemWithText:@"多窗口" image:[UIImage imageNamed:@"album"] action:^{
+              [self.view addSubview:self.cardMainView];
+          }],
+          [SettingsMenuItem itemWithText:@"分享" image:[UIImage imageNamed:@"album"] action:nil]
+          ];
+        
+        [SettingsViewController presentFromViewController:self withItems:items completion:nil];
     }
 }
 

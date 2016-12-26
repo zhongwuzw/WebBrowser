@@ -9,6 +9,7 @@
 #import "CardCollectionViewLayout.h"
 
 static CGFloat BottomPercent = 0.85;
+#define TitleHeight 100
 
 @interface CardCollectionViewLayout ()
 
@@ -24,7 +25,7 @@ static CGFloat BottomPercent = 0.85;
 
 - (instancetype)init{
     if (self = [super init]) {
-        self.titleHeight = 80;
+        self.titleHeight = TitleHeight;
         self.insertPath = [NSMutableArray array];
         self.deletePath = [NSMutableArray array];
         self.attributesList = [NSMutableArray array];
@@ -61,6 +62,7 @@ static CGFloat BottomPercent = 0.85;
     [[self.attributesList subarrayWithRange:NSMakeRange(0, count)] enumerateObjectsUsingBlock:^(CardLayoutAttributes *attribute, NSUInteger idx, BOOL *stop){
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:idx inSection:0];
         attribute.indexPath = indexPath;
+//        attribute.zIndex = idx;
         [self applyAttribute:attribute];
     }];
 }
@@ -68,14 +70,13 @@ static CGFloat BottomPercent = 0.85;
 - (void)applyAttribute:(CardLayoutAttributes *)attribute{
     NSInteger shitIdx = self.collectionView.contentOffset.y / self.titleHeight;
     NSInteger index = attribute.indexPath.row;
-    CGRect currentFrame = CGRectMake(self.collectionView.frame.origin.x, self.titleHeight * index, self.cellSize.width, self.cellSize.height);
+    CGRect currentFrame = CGRectMake(self.collectionView.bounds.origin.x, self.titleHeight * index, self.cellSize.width, self.cellSize.height);
     CGRect attributeFrame = CGRectMake(currentFrame.origin.x, self.collectionView.contentOffset.y, self.cellSize.width, self.cellSize.height);
     
     if ((index <= shitIdx && index >= shitIdx - 2) || index == 0) {
         attribute.frame = attributeFrame;
     }
     else if (index < shitIdx - 2){
-        attribute.hidden = YES;
         attribute.frame = attributeFrame;
     }
     else{

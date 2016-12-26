@@ -17,7 +17,9 @@
 		0E32E2FB1E08C69E00CFBBB5 /* CardCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E32E2FA1E08C69E00CFBBB5 /* CardCollectionViewCell.m */; };
 		0E32E2FF1E08C8F600CFBBB5 /* CardCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E32E2FE1E08C8F600CFBBB5 /* CardCollectionViewLayout.m */; };
 		0E32E3071E08D4FB00CFBBB5 /* CardMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E32E3061E08D4FB00CFBBB5 /* CardMainView.m */; };
+		0E3A6B731E11102C00071397 /* SettingsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3A6B721E11102C00071397 /* SettingsCollectionViewCell.m */; };
 		0E48FB011DA3FD4B00B8FCDB /* BrowserWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E48FB001DA3FD4B00B8FCDB /* BrowserWebView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		0E5000511E0B6D60004BA658 /* CardMainBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E5000501E0B6D60004BA658 /* CardMainBottomView.m */; };
 		0E681F2A1D4AEC3F003534F5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E681F291D4AEC3F003534F5 /* main.m */; };
 		0E681F2D1D4AEC3F003534F5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E681F2C1D4AEC3F003534F5 /* AppDelegate.m */; };
 		0E681F381D4AEC3F003534F5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E681F361D4AEC3F003534F5 /* LaunchScreen.storyboard */; };
@@ -25,6 +27,8 @@
 		0E681F4E1D4AEC3F003534F5 /* WebBrowserUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E681F4D1D4AEC3F003534F5 /* WebBrowserUITests.m */; };
 		0E681F661D4AFEAA003534F5 /* KeyboardHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E681F651D4AFEAA003534F5 /* KeyboardHelper.m */; };
 		0E681F691D4B34EB003534F5 /* MenuHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E681F681D4B34EB003534F5 /* MenuHelper.m */; };
+		0E8EE8311E11123600B6DADF /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8EE8301E11123600B6DADF /* SettingsViewController.m */; };
+		0E8EE8351E11277100B6DADF /* SettingAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8EE8341E11277100B6DADF /* SettingAnimator.m */; };
 		0E986A0B1D4CA6C10003900D /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E986A0A1D4CA6C10003900D /* BrowserViewController.m */; };
 		0E986A0F1D4D06170003900D /* TabManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E986A0E1D4D06170003900D /* TabManager.m */; };
 		0EA7DEE31DB0ABD8005C592E /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EA7DEE21DB0ABD8005C592E /* BaseViewController.m */; };
@@ -86,9 +90,13 @@
 		0E32E2FE1E08C8F600CFBBB5 /* CardCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardCollectionViewLayout.m; sourceTree = "<group>"; };
 		0E32E3051E08D4FB00CFBBB5 /* CardMainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardMainView.h; sourceTree = "<group>"; };
 		0E32E3061E08D4FB00CFBBB5 /* CardMainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardMainView.m; sourceTree = "<group>"; };
+		0E3A6B711E11102C00071397 /* SettingsCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsCollectionViewCell.h; sourceTree = "<group>"; };
+		0E3A6B721E11102C00071397 /* SettingsCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsCollectionViewCell.m; sourceTree = "<group>"; };
 		0E48FAFF1DA3FD4B00B8FCDB /* BrowserWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserWebView.h; sourceTree = "<group>"; };
 		0E48FB001DA3FD4B00B8FCDB /* BrowserWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserWebView.m; sourceTree = "<group>"; };
 		0E48FB031DA4058300B8FCDB /* WebViewHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebViewHeader.h; sourceTree = "<group>"; };
+		0E50004F1E0B6D60004BA658 /* CardMainBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardMainBottomView.h; sourceTree = "<group>"; };
+		0E5000501E0B6D60004BA658 /* CardMainBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardMainBottomView.m; sourceTree = "<group>"; };
 		0E681F251D4AEC3F003534F5 /* WebBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E681F291D4AEC3F003534F5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0E681F2B1D4AEC3F003534F5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -109,6 +117,10 @@
 		0E681F671D4B34EB003534F5 /* MenuHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuHelper.h; sourceTree = "<group>"; };
 		0E681F681D4B34EB003534F5 /* MenuHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuHelper.m; sourceTree = "<group>"; };
 		0E82A4481DAF8BCA00F13D4E /* BrowserHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BrowserHeader.h; sourceTree = "<group>"; };
+		0E8EE82F1E11123600B6DADF /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		0E8EE8301E11123600B6DADF /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		0E8EE8331E11277100B6DADF /* SettingAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingAnimator.h; sourceTree = "<group>"; };
+		0E8EE8341E11277100B6DADF /* SettingAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingAnimator.m; sourceTree = "<group>"; };
 		0E986A091D4CA6C10003900D /* BrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserViewController.h; sourceTree = "<group>"; };
 		0E986A0A1D4CA6C10003900D /* BrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserViewController.m; sourceTree = "<group>"; };
 		0E986A0D1D4D06170003900D /* TabManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabManager.h; sourceTree = "<group>"; };
@@ -244,6 +256,8 @@
 				0E32E2FA1E08C69E00CFBBB5 /* CardCollectionViewCell.m */,
 				0E32E3051E08D4FB00CFBBB5 /* CardMainView.h */,
 				0E32E3061E08D4FB00CFBBB5 /* CardMainView.m */,
+				0E50004F1E0B6D60004BA658 /* CardMainBottomView.h */,
+				0E5000501E0B6D60004BA658 /* CardMainBottomView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -255,6 +269,34 @@
 				0E32E2FE1E08C8F600CFBBB5 /* CardCollectionViewLayout.m */,
 			);
 			name = Layout;
+			sourceTree = "<group>";
+		};
+		0E3A6B6E1E110F1C00071397 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				0E8EE8321E11275F00B6DADF /* Model */,
+				0E3A6B701E110F6500071397 /* View */,
+				0E3A6B6F1E110F5100071397 /* Controller */,
+			);
+			name = Setting;
+			sourceTree = "<group>";
+		};
+		0E3A6B6F1E110F5100071397 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				0E8EE82F1E11123600B6DADF /* SettingsViewController.h */,
+				0E8EE8301E11123600B6DADF /* SettingsViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		0E3A6B701E110F6500071397 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0E3A6B711E11102C00071397 /* SettingsCollectionViewCell.h */,
+				0E3A6B721E11102C00071397 /* SettingsCollectionViewCell.m */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 		0E3C09981DAA8F7700993129 /* View */ = {
@@ -318,6 +360,7 @@
 		0E681F271D4AEC3F003534F5 /* WebBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				0E3A6B6E1E110F1C00071397 /* Setting */,
 				0E32E2F71E08C5DC00CFBBB5 /* MultiWindow */,
 				0EF0255D1DD94FCF0011019F /* Network */,
 				0E1F9F981DD2D83400FA84EA /* Vendors */,
@@ -413,6 +456,15 @@
 				0EBF3A6B1DCF715200CD77C8 /* BrowserBottomToolBarHeader.h */,
 			);
 			name = Header;
+			sourceTree = "<group>";
+		};
+		0E8EE8321E11275F00B6DADF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0E8EE8331E11277100B6DADF /* SettingAnimator.h */,
+				0E8EE8341E11277100B6DADF /* SettingAnimator.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 		0E986A081D4CA6890003900D /* Browser */ = {
@@ -647,6 +699,7 @@
 				0EA7DEE31DB0ABD8005C592E /* BaseViewController.m in Sources */,
 				0E2C539F1DAA24970077B9B4 /* BrowserContainerView.m in Sources */,
 				0E681F661D4AFEAA003534F5 /* KeyboardHelper.m in Sources */,
+				0E3A6B731E11102C00071397 /* SettingsCollectionViewCell.m in Sources */,
 				0EF025701DD957EC0011019F /* BaseResponseModel.m in Sources */,
 				0E2C53A31DAA314C0077B9B4 /* UIView+Additions.m in Sources */,
 				0EED28311DC1A32100EC8581 /* ZWUtility.m in Sources */,
@@ -655,8 +708,10 @@
 				0E2329311DADE07B007E9886 /* BrowserTopToolBar.m in Sources */,
 				0E2329341DAE19BB007E9886 /* TopToolBarShapeView.m in Sources */,
 				0E681F2D1D4AEC3F003534F5 /* AppDelegate.m in Sources */,
+				0E8EE8351E11277100B6DADF /* SettingAnimator.m in Sources */,
 				0E1F9F9E1DD2D86E00FA84EA /* NJKWebViewProgress.m in Sources */,
 				0E32E2FF1E08C8F600CFBBB5 /* CardCollectionViewLayout.m in Sources */,
+				0E5000511E0B6D60004BA658 /* CardMainBottomView.m in Sources */,
 				0E48FB011DA3FD4B00B8FCDB /* BrowserWebView.m in Sources */,
 				0EF0256A1DD9554F0011019F /* HTTPClient+SearchSug.m in Sources */,
 				0E681F691D4B34EB003534F5 /* MenuHelper.m in Sources */,
@@ -664,6 +719,7 @@
 				0EF025661DD951EB0011019F /* HTTPManager.m in Sources */,
 				0E986A0B1D4CA6C10003900D /* BrowserViewController.m in Sources */,
 				0EFDD3081DD423AC002AB3FB /* HttpHelper.m in Sources */,
+				0E8EE8311E11123600B6DADF /* SettingsViewController.m in Sources */,
 				0E1F9F9F1DD2D86E00FA84EA /* NJKWebViewProgressView.m in Sources */,
 				0E2CC0171E0988AE0078EB91 /* UIColor+ZWUtility.m in Sources */,
 			);

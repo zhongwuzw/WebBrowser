@@ -7,12 +7,15 @@
 //
 
 #import "TopToolBarShapeView.h"
+#import "HTTPClient+SearchSug.h"
+#import "BaiduSugResponseModel.h"
 
 #define TEXT_FIELD_PLACEHOLDER   @"搜索或输入网址"
 
 @interface TopToolBarShapeView () <UITextFieldDelegate>
 
 @property (nonatomic, strong) UITextField *textField;
+@property (nonatomic, strong) NSURLSessionDataTask *bdRecoTask;
 
 @end
 
@@ -39,6 +42,8 @@
         textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
         textField.autocorrectionType = UITextAutocorrectionTypeNo;
         textField.enablesReturnKeyAutomatically = YES;
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleTextFieldTextChanged:) name:UITextFieldTextDidChangeNotification object:nil];
         
         textField;
     });
@@ -69,12 +74,25 @@
     return YES;
 }
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
-    if ([textField.text length] > 0) {
-        
+- (void)handleTextFieldTextChanged:(NSNotification *)notification{
+    if ([[notification object] isKindOfClass:[UITextField class]] && (UITextField *)[notification object] == _textField) {
+        if ([_textField.text length] > 0) {
+            if (self.bdRecoTask && (self.bdRecoTask.state == NSURLSessionTaskStateRunning || self.bdRecoTask.state == NSURLSessionTaskStateSuspended)) {
+                [self.bdRecoTask cancel];
+            }
+            self.bdRecoTask = [[HTTPClient sharedInstance] getSugWithKeyword:_textField.text success:^(NSURLSessionDataTask *task, BaseResponseModel *model){
+                BaiduSugResponseModel *bdModel = (BaiduSugResponseModel *)model;
+                
+            }fail:^(NSURLSessionDataTask *task, BaseResponseModel *model){
+                ;
+            }];
+        }
     }
-    
-    return NO;
+
+}
+
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end
