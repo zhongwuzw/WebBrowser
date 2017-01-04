@@ -17,6 +17,9 @@
 #import <objc/message.h>
 #endif
 
+// Arguments 0 and 1 are self and _cmd always
+const unsigned int kNumberOfImplicitArgs = 2;
+
 @interface BrowserWebView ()
 
 @end
@@ -120,15 +123,11 @@
 #pragma mark - UIWebViewDelegate
 
 - (void)webViewDidStartLoad:(BrowserWebView *)webView{
-    if ([self.webViewDelegate respondsToSelector:@selector(webViewDidStartLoad:)]) {
-        [self.webViewDelegate webViewDidStartLoad:webView];
-    }
+    [self performSelector:@selector(webViewDidStartLoad:) onObject:self withArguments:@[webView]];
 }
 
 - (void)webView:(BrowserWebView *)webView didFailLoadWithError:(NSError *)error{
-    if ([self.webViewDelegate respondsToSelector:@selector(webView:didFailLoadWithError:)]) {
-        [self.webViewDelegate webView:webView didFailLoadWithError:error];
-    }
+    [self performSelector:@selector(webView:didFailLoadWithError:) onObject:self withArguments:@[webView,error]];
 }
 
 - (BOOL)webView:(BrowserWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
@@ -145,10 +144,7 @@
 }
 
 - (void)webViewDidFinishLoad:(BrowserWebView *)webView{
-    
-    if ([self.webViewDelegate respondsToSelector:@selector(webViewDidFinishLoad:)]) {
-        [self.webViewDelegate webViewDidFinishLoad:webView];
-    }
+    [self performSelector:@selector(webViewDidFinishLoad:) onObject:self withArguments:@[webView]];
 }
 
 #pragma mark - private method
@@ -168,12 +164,12 @@
         id mainFrame = (MAIN_FRAME__PROTO objc_msgSend)(sender,NSSelectorFromString(MAIN_FRAME));
         if(mainFrame == frame)
         {
-            [self webViewGotTitle:title];
+            [self webView:self gotTitleName:title];
         }
     }
     else
     {
-        [self webViewGotTitle:title];
+        [self webView:self gotTitleName:title];
     }
 }
 
@@ -213,55 +209,122 @@
 
 #pragma mark - main frame load functions
 //webViewMainFrameDidCommitLoad:
--(void)zwMainFrameCommitLoad:(id)arg1
+- (void)zwMainFrameCommitLoad:(id)arg1
 {
     if([self respondsToSelector:@selector(zwMainFrameCommitLoad:)])
     {
         ((void(*)(id, SEL, id)) objc_msgSend)(self, @selector(zwMainFrameCommitLoad:),arg1);
     }
     
-    if([self respondsToSelector:@selector(mainFrameCommitLoad)])
-    {
-        ((void(*)(id, SEL)) objc_msgSend)(self, @selector(mainFrameCommitLoad));
-    }
+    [self webViewForMainFrameDidCommitLoad:self];
 }
 
--(void)mainFrameCommitLoad
-{
-    if ([self.webViewDelegate respondsToSelector:@selector(webViewMainFrameDidCommitLoad:)]) {
-        [self.webViewDelegate webViewMainFrameDidCommitLoad:self];
-    }
+- (void)webViewForMainFrameDidCommitLoad:(BrowserWebView *)webView{
+    [self performSelector:@selector(webViewForMainFrameDidCommitLoad:) onObject:self withArguments:@[self]];
 }
 
 //webViewMainFrameDidFinishLoad:
--(void)zwMainFrameFinishLoad:(id)arg1
+- (void)zwMainFrameFinishLoad:(id)arg1
 {
     if([self respondsToSelector:@selector(zwMainFrameFinishLoad:)])
     {
         ((void(*)(id, SEL, id)) objc_msgSend)(self, @selector(zwMainFrameFinishLoad:),arg1);
     }
     
-    if([self respondsToSelector:@selector(mainFrameFinishLoad)])
-    {
-        ((void(*)(id, SEL)) objc_msgSend)(self, @selector(mainFrameFinishLoad));
-    }
+    [self webViewForMainFrameDidFinishLoad:self];
 }
 
--(void)mainFrameFinishLoad
-{
-    if ([self.webViewDelegate respondsToSelector:@selector(webViewMainFrameDidFinishLoad:)]) {
-        [self.webViewDelegate webViewMainFrameDidFinishLoad:self];
-    }
+- (void)webViewForMainFrameDidFinishLoad:(BrowserWebView *)webView{
+    [self performSelector:@selector(webViewForMainFrameDidFinishLoad:) onObject:self  withArguments:@[self]];
 }
 
 #pragma mark - replaced method calling
 
--(void)webViewGotTitle:(NSString*)titleName
-{
-    if([self.webViewDelegate respondsToSelector:@selector(webView:gotTitleName:)])
-    {
-        [self.webViewDelegate webView:self gotTitleName:titleName];
+- (void)webView:(BrowserWebView *)webView gotTitleName:(NSString*)titleName{
+        [self performSelector:@selector(webView:gotTitleName:) onObject:self withArguments:@[webView,titleName]];
+}
+
+#pragma mark - Method Calling
+
+- (void)performSelector:(SEL)selector onObject:(id)object withArguments:(NSArray *)arguments{
+    NSMethodSignature *methodSignature = [object methodSignatureForSelector:selector];
+    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:methodSignature];
+    [invocation setSelector:selector];
+//    [invocation setTarget:object];
+    [invocation retainArguments];
+    
+    NSUInteger numberOfArguments = [methodSignature numberOfArguments];
+    for (NSUInteger argumentIndex = kNumberOfImplicitArgs; argumentIndex < numberOfArguments; argumentIndex++) {
+        NSUInteger argumentsArrayIndex = argumentIndex - kNumberOfImplicitArgs;
+        id argumentObject = [arguments count] > argumentsArrayIndex ? [arguments objectAtIndex:argumentsArrayIndex] : nil;
+        
+        if (argumentObject && ![argumentObject isKindOfClass:[NSNull class]]) {
+            const char *typeEncodingCString = [methodSignature getArgumentTypeAtIndex:argumentIndex];
+            if (typeEncodingCString[0] == @encode(id)[0] || typeEncodingCString[0] == @encode(Class)[0] || [self isTollFreeBridgedValue:argumentObject forCFType:typeEncodingCString]) {
+                [invocation setArgument:&argumentObject atIndex:argumentIndex];
+            } else if (strcmp(typeEncodingCString, @encode(CGColorRef)) == 0 && [argumentObject isKindOfClass:[UIColor class]]) {
+                CGColorRef colorRef = [argumentObject CGColor];
+                [invocation setArgument:&colorRef atIndex:argumentIndex];
+            } else if ([argumentObject isKindOfClass:[NSValue class]]){
+                NSValue *argumentValue = (NSValue *)argumentObject;
+                
+                if (strcmp([argumentValue objCType], typeEncodingCString) != 0) {
+                    return;
+                }
+                
+                NSUInteger bufferSize = 0;
+                @try {
+                    NSGetSizeAndAlignment(typeEncodingCString, &bufferSize, NULL);
+                } @catch (NSException *exception) { }
+                
+                if (bufferSize > 0) {
+                    void *buffer = calloc(bufferSize, 1);
+                    [argumentValue getValue:buffer];
+                    [invocation setArgument:buffer atIndex:argumentIndex];
+                    free(buffer);
+                }
+            }
+        }
     }
+    [[DelegateManager sharedInstance] callInvocation:invocation withKey:NSStringFromProtocol(@protocol(WebViewDelegate))];
+}
+
+- (BOOL)isTollFreeBridgedValue:(id)value forCFType:(const char *)typeEncoding
+{
+    // See https://developer.apple.com/library/ios/documentation/general/conceptual/CocoaEncyclopedia/Toll-FreeBridgin/Toll-FreeBridgin.html
+#define CASE(cftype, foundationClass) \
+if(strcmp(typeEncoding, @encode(cftype)) == 0) { \
+return [value isKindOfClass:[foundationClass class]]; \
+}
+    
+    CASE(CFArrayRef, NSArray);
+    CASE(CFAttributedStringRef, NSAttributedString);
+    CASE(CFCalendarRef, NSCalendar);
+    CASE(CFCharacterSetRef, NSCharacterSet);
+    CASE(CFDataRef, NSData);
+    CASE(CFDateRef, NSDate);
+    CASE(CFDictionaryRef, NSDictionary);
+    CASE(CFErrorRef, NSError);
+    CASE(CFLocaleRef, NSLocale);
+    CASE(CFMutableArrayRef, NSMutableArray);
+    CASE(CFMutableAttributedStringRef, NSMutableAttributedString);
+    CASE(CFMutableCharacterSetRef, NSMutableCharacterSet);
+    CASE(CFMutableDataRef, NSMutableData);
+    CASE(CFMutableDictionaryRef, NSMutableDictionary);
+    CASE(CFMutableSetRef, NSMutableSet);
+    CASE(CFMutableStringRef, NSMutableString);
+    CASE(CFNumberRef, NSNumber);
+    CASE(CFReadStreamRef, NSInputStream);
+    CASE(CFRunLoopTimerRef, NSTimer);
+    CASE(CFSetRef, NSSet);
+    CASE(CFStringRef, NSString);
+    CASE(CFTimeZoneRef, NSTimeZone);
+    CASE(CFURLRef, NSURL);
+    CASE(CFWriteStreamRef, NSOutputStream);
+    
+#undef CASE
+    
+    return NO;
 }
 
 @end

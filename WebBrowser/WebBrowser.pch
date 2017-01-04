@@ -18,6 +18,7 @@
 #import "MacroUIConstants.h"
 #import "UIView+Additions.h"
 #import "ZWUtility.h"
+#import "DelegateManager.h"
 
 #if DEBUG
 static const DDLogLevel ddLogLevel = DDLogLevelDebug;

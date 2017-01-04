@@ -82,8 +82,6 @@ static NSString * const CellId = @"SettingsMenuCell";
 
 @property (nonatomic, strong) SettingAnimator *transitionController;
 
-@property (nonatomic, assign) BOOL isInPopover;
-
 @end
 
 @implementation SettingsViewController
@@ -294,12 +292,8 @@ static NSString * const CellId = @"SettingsMenuCell";
     
     for (NSInteger idx = 0; idx < self.items.count; ++idx)
     {
-        // [UIView animateWithDuration:0.3 delay:0.02 * idx options:UIViewAnimationOptionCurveEaseInOut animations:^{
         CGFloat delay = 0.02 * idx;
-        if (!self.isInPopover)
-        {
-            delay += 0.05; // wait for backgroundView
-        }
+        delay += 0.05;
         [UIView animateWithDuration:0.8 delay:delay usingSpringWithDamping:0.6 initialSpringVelocity:1 options:0 animations:^{
             UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:idx inSection:0]];
             cell.transform = CGAffineTransformIdentity;

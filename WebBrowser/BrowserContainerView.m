@@ -50,47 +50,11 @@
 
 #pragma mark - WebViewDelegate Method
 
-- (void)webViewDidFinishLoad:(BrowserWebView *)webView{
-    if ([self.webViewDelegate respondsToSelector:@selector(webViewDidFinishLoad:)]) {
-        [self.webViewDelegate webViewDidFinishLoad:webView];
-    }
-}
-
-- (void)webView:(BrowserWebView *)webView didFailLoadWithError:(NSError *)error{
-    if ([self.webViewDelegate respondsToSelector:@selector(webView:didFailLoadWithError:)]) {
-        [self.webViewDelegate webView:webView didFailLoadWithError:error];
-    }
-}
-
 - (BOOL)webView:(BrowserWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
     if ([self.webViewDelegate respondsToSelector:@selector(webView:shouldStartLoadWithRequest:navigationType:)]) {
         return [self.webViewDelegate webView:webView shouldStartLoadWithRequest:request navigationType:navigationType];
     }
     return YES;
-}
-
-- (void)webViewDidStartLoad:(BrowserWebView *)webView{
-    if ([self.webViewDelegate respondsToSelector:@selector(webViewDidStartLoad:)]) {
-        [self.webViewDelegate webViewDidStartLoad:webView];
-    }
-}
-
-- (void)webView:(BrowserWebView *)webView gotTitleName:(NSString *)titleName{
-    if ([self.webViewDelegate respondsToSelector:@selector(webView:gotTitleName:)]) {
-        [self.webViewDelegate webView:webView gotTitleName:titleName];
-    }
-}
-
-- (void)webViewMainFrameDidFinishLoad:(BrowserWebView *)webView{
-    if ([self.webViewDelegate respondsToSelector:@selector(webViewMainFrameDidFinishLoad:)]) {
-        [self.webViewDelegate webViewMainFrameDidFinishLoad:webView];
-    }
-}
-
-- (void)webViewMainFrameDidCommitLoad:(BrowserWebView *)webView{
-    if ([self.webViewDelegate respondsToSelector:@selector(webViewMainFrameDidCommitLoad:)]) {
-        [self.webViewDelegate webViewMainFrameDidCommitLoad:webView];
-    }
 }
 
 #pragma mark - Dealloc

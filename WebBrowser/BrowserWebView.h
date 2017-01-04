@@ -21,8 +21,8 @@
 - (void)webViewDidFinishLoad:(BrowserWebView *)webView;
 - (void)webView:(BrowserWebView *)webView didFailLoadWithError:(NSError *)error;
 - (void)webView:(BrowserWebView *)webView gotTitleName:(NSString*)titleName;
-- (void)webViewMainFrameDidCommitLoad:(BrowserWebView *)webView;
-- (void)webViewMainFrameDidFinishLoad:(BrowserWebView *)webView;
+- (void)webViewForMainFrameDidCommitLoad:(BrowserWebView *)webView;
+- (void)webViewForMainFrameDidFinishLoad:(BrowserWebView *)webView;
 
 @end
 

@@ -17,6 +17,7 @@
 		0E32E2FB1E08C69E00CFBBB5 /* CardCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E32E2FA1E08C69E00CFBBB5 /* CardCollectionViewCell.m */; };
 		0E32E2FF1E08C8F600CFBBB5 /* CardCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E32E2FE1E08C8F600CFBBB5 /* CardCollectionViewLayout.m */; };
 		0E32E3071E08D4FB00CFBBB5 /* CardMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E32E3061E08D4FB00CFBBB5 /* CardMainView.m */; };
+		0E39F9AA1E14C8AA007B5681 /* SearchInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E39F9A91E14C8AA007B5681 /* SearchInputView.m */; };
 		0E3A6B731E11102C00071397 /* SettingsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3A6B721E11102C00071397 /* SettingsCollectionViewCell.m */; };
 		0E48FB011DA3FD4B00B8FCDB /* BrowserWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E48FB001DA3FD4B00B8FCDB /* BrowserWebView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		0E5000511E0B6D60004BA658 /* CardMainBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E5000501E0B6D60004BA658 /* CardMainBottomView.m */; };
@@ -27,6 +28,8 @@
 		0E681F4E1D4AEC3F003534F5 /* WebBrowserUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E681F4D1D4AEC3F003534F5 /* WebBrowserUITests.m */; };
 		0E681F661D4AFEAA003534F5 /* KeyboardHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E681F651D4AFEAA003534F5 /* KeyboardHelper.m */; };
 		0E681F691D4B34EB003534F5 /* MenuHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E681F681D4B34EB003534F5 /* MenuHelper.m */; };
+		0E70784C1E18A89500A91048 /* DelegateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E70784B1E18A89500A91048 /* DelegateManager.m */; };
+		0E829CD71E12075B008FF0A8 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E829CD61E12075B008FF0A8 /* SearchViewController.m */; };
 		0E8EE8311E11123600B6DADF /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8EE8301E11123600B6DADF /* SettingsViewController.m */; };
 		0E8EE8351E11277100B6DADF /* SettingAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8EE8341E11277100B6DADF /* SettingAnimator.m */; };
 		0E986A0B1D4CA6C10003900D /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E986A0A1D4CA6C10003900D /* BrowserViewController.m */; };
@@ -90,6 +93,8 @@
 		0E32E2FE1E08C8F600CFBBB5 /* CardCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardCollectionViewLayout.m; sourceTree = "<group>"; };
 		0E32E3051E08D4FB00CFBBB5 /* CardMainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardMainView.h; sourceTree = "<group>"; };
 		0E32E3061E08D4FB00CFBBB5 /* CardMainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardMainView.m; sourceTree = "<group>"; };
+		0E39F9A81E14C8AA007B5681 /* SearchInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchInputView.h; sourceTree = "<group>"; };
+		0E39F9A91E14C8AA007B5681 /* SearchInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchInputView.m; sourceTree = "<group>"; };
 		0E3A6B711E11102C00071397 /* SettingsCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsCollectionViewCell.h; sourceTree = "<group>"; };
 		0E3A6B721E11102C00071397 /* SettingsCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsCollectionViewCell.m; sourceTree = "<group>"; };
 		0E48FAFF1DA3FD4B00B8FCDB /* BrowserWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserWebView.h; sourceTree = "<group>"; };
@@ -116,6 +121,10 @@
 		0E681F651D4AFEAA003534F5 /* KeyboardHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyboardHelper.m; sourceTree = "<group>"; };
 		0E681F671D4B34EB003534F5 /* MenuHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuHelper.h; sourceTree = "<group>"; };
 		0E681F681D4B34EB003534F5 /* MenuHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuHelper.m; sourceTree = "<group>"; };
+		0E70784A1E18A89500A91048 /* DelegateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DelegateManager.h; sourceTree = "<group>"; };
+		0E70784B1E18A89500A91048 /* DelegateManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DelegateManager.m; sourceTree = "<group>"; };
+		0E829CD51E12075B008FF0A8 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		0E829CD61E12075B008FF0A8 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		0E82A4481DAF8BCA00F13D4E /* BrowserHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BrowserHeader.h; sourceTree = "<group>"; };
 		0E8EE82F1E11123600B6DADF /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		0E8EE8301E11123600B6DADF /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
@@ -271,6 +280,15 @@
 			name = Layout;
 			sourceTree = "<group>";
 		};
+		0E39F9A71E14B9D9007B5681 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0E39F9A81E14C8AA007B5681 /* SearchInputView.h */,
+				0E39F9A91E14C8AA007B5681 /* SearchInputView.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		0E3A6B6E1E110F1C00071397 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
@@ -360,6 +378,7 @@
 		0E681F271D4AEC3F003534F5 /* WebBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				0E829CD31E12073B008FF0A8 /* Search */,
 				0E3A6B6E1E110F1C00071397 /* Setting */,
 				0E32E2F71E08C5DC00CFBBB5 /* MultiWindow */,
 				0EF0255D1DD94FCF0011019F /* Network */,
@@ -406,6 +425,7 @@
 		0E681F5B1D4AF1A8003534F5 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				0E7078491E18A87100A91048 /* Manager */,
 				0E48FAFE1DA3FCCB00B8FCDB /* View */,
 				0E48FB021DA4055A00B8FCDB /* Header */,
 				0EA7DEE01DB0ABB7005C592E /* Controller */,
@@ -447,6 +467,33 @@
 				0EFDD3071DD423AC002AB3FB /* HttpHelper.m */,
 			);
 			name = Helper;
+			sourceTree = "<group>";
+		};
+		0E7078491E18A87100A91048 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				0E70784A1E18A89500A91048 /* DelegateManager.h */,
+				0E70784B1E18A89500A91048 /* DelegateManager.m */,
+			);
+			name = Manager;
+			sourceTree = "<group>";
+		};
+		0E829CD31E12073B008FF0A8 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				0E39F9A71E14B9D9007B5681 /* View */,
+				0E829CD41E120744008FF0A8 /* Controller */,
+			);
+			name = Search;
+			sourceTree = "<group>";
+		};
+		0E829CD41E120744008FF0A8 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				0E829CD51E12075B008FF0A8 /* SearchViewController.h */,
+				0E829CD61E12075B008FF0A8 /* SearchViewController.m */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 		0E82A4471DAF8BB600F13D4E /* Header */ = {
@@ -697,6 +744,7 @@
 				0EF025651DD951EB0011019F /* HTTPClient.m in Sources */,
 				0E32E2FB1E08C69E00CFBBB5 /* CardCollectionViewCell.m in Sources */,
 				0EA7DEE31DB0ABD8005C592E /* BaseViewController.m in Sources */,
+				0E829CD71E12075B008FF0A8 /* SearchViewController.m in Sources */,
 				0E2C539F1DAA24970077B9B4 /* BrowserContainerView.m in Sources */,
 				0E681F661D4AFEAA003534F5 /* KeyboardHelper.m in Sources */,
 				0E3A6B731E11102C00071397 /* SettingsCollectionViewCell.m in Sources */,
@@ -716,9 +764,11 @@
 				0EF0256A1DD9554F0011019F /* HTTPClient+SearchSug.m in Sources */,
 				0E681F691D4B34EB003534F5 /* MenuHelper.m in Sources */,
 				0E681F2A1D4AEC3F003534F5 /* main.m in Sources */,
+				0E70784C1E18A89500A91048 /* DelegateManager.m in Sources */,
 				0EF025661DD951EB0011019F /* HTTPManager.m in Sources */,
 				0E986A0B1D4CA6C10003900D /* BrowserViewController.m in Sources */,
 				0EFDD3081DD423AC002AB3FB /* HttpHelper.m in Sources */,
+				0E39F9AA1E14C8AA007B5681 /* SearchInputView.m in Sources */,
 				0E8EE8311E11123600B6DADF /* SettingsViewController.m in Sources */,
 				0E1F9F9F1DD2D86E00FA84EA /* NJKWebViewProgressView.m in Sources */,
 				0E2CC0171E0988AE0078EB91 /* UIColor+ZWUtility.m in Sources */,

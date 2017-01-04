@@ -22,6 +22,7 @@
 - (instancetype)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]) {
         [self initializeView];
+        [[DelegateManager sharedInstance] registerDelegate:self forKey:NSStringFromProtocol(@protocol(WebViewDelegate))];
     }
     
     return self;
@@ -80,18 +81,14 @@
 
 #pragma mark - WebViewDelegate
 
-- (void)webViewDidStartLoad:(BrowserWebView *)webView{
-    
-}
-
-- (void)webViewMainFrameDidFinishLoad:(BrowserWebView *)webView{
+- (void)webViewForMainFrameDidFinishLoad:(BrowserWebView *)webView{
     [self setToolBarButtonRefreshOrStop:YES];
     
     [self.backItem setEnabled:[webView canGoBack]];
     [self.forwardItem setEnabled:[webView canGoForward]];
 }
 
-- (void)webViewMainFrameDidCommitLoad:(BrowserWebView *)webView{
+- (void)webViewForMainFrameDidCommitLoad:(BrowserWebView *)webView{
     [self setToolBarButtonRefreshOrStop:NO];
 }
 

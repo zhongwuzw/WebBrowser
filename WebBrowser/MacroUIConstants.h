@@ -11,4 +11,6 @@
 
 #define STATUS_BAR_HEIGHT 20
 
+#define TEXT_FIELD_PLACEHOLDER   @"搜索或输入网址"
+
 #endif /* MacroUIConstants_h */

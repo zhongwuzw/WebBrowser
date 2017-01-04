@@ -28,6 +28,7 @@
 - (instancetype)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]) {
         [self initializeView];
+        [[DelegateManager sharedInstance] registerDelegate:self forKey:NSStringFromProtocol(@protocol(WebViewDelegate))];
     }
     return self;
 }
@@ -84,6 +85,10 @@
 }
 
 #pragma mark - WebViewDelegate
+
+- (void)webView:(BrowserWebView *)webView gotTitleName:(NSString *)titleName{
+    [self setTopURLOrTitle:titleName];
+}
 
 - (BOOL)webView:(BrowserWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     if ([self.progressProxy respondsToSelector:@selector(webView:shouldStartLoadWithRequest:navigationType:)]) {
