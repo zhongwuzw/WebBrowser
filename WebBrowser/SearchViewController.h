@@ -10,4 +10,6 @@
 
 @interface SearchViewController : UIViewController
 
+@property (nonatomic, copy) NSString *origTextFieldString;
+
 @end

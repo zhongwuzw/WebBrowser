@@ -29,6 +29,9 @@
 		0E681F661D4AFEAA003534F5 /* KeyboardHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E681F651D4AFEAA003534F5 /* KeyboardHelper.m */; };
 		0E681F691D4B34EB003534F5 /* MenuHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E681F681D4B34EB003534F5 /* MenuHelper.m */; };
 		0E70784C1E18A89500A91048 /* DelegateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E70784B1E18A89500A91048 /* DelegateManager.m */; };
+		0E7795931E20F8C800CE86BE /* SearchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E7795911E20F8C800CE86BE /* SearchTableViewCell.m */; };
+		0E7795941E20F8C900CE86BE /* SearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E7795921E20F8C800CE86BE /* SearchTableViewCell.xib */; };
+		0E7795971E21042300CE86BE /* NSString+ZWUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E7795961E21042300CE86BE /* NSString+ZWUtility.m */; };
 		0E829CD71E12075B008FF0A8 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E829CD61E12075B008FF0A8 /* SearchViewController.m */; };
 		0E8EE8311E11123600B6DADF /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8EE8301E11123600B6DADF /* SettingsViewController.m */; };
 		0E8EE8351E11277100B6DADF /* SettingAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8EE8341E11277100B6DADF /* SettingAnimator.m */; };
@@ -36,6 +39,8 @@
 		0E986A0F1D4D06170003900D /* TabManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E986A0E1D4D06170003900D /* TabManager.m */; };
 		0EA7DEE31DB0ABD8005C592E /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EA7DEE21DB0ABD8005C592E /* BaseViewController.m */; };
 		0EAA18B91DD35D5D0072F9B3 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EAA18B81DD35D5D0072F9B3 /* WebKit.framework */; };
+		0EBDC6241E1DDEC100B6A4DB /* SearchInputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0EBDC6231E1DDEC100B6A4DB /* SearchInputView.xib */; };
+		0EBDC6271E1DE49700B6A4DB /* CharacterSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EBDC6261E1DE49700B6A4DB /* CharacterSelectView.m */; };
 		0EBF3A651DCF33ED00CD77C8 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EBF3A631DCF33ED00CD77C8 /* CocoaLumberjack.framework */; };
 		0EBF3A661DCF33ED00CD77C8 /* MBProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EBF3A641DCF33ED00CD77C8 /* MBProgressHUD.framework */; };
 		0EBF3A6A1DCF38D600CD77C8 /* BrowserBottomToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EBF3A691DCF38D600CD77C8 /* BrowserBottomToolBar.m */; };
@@ -123,6 +128,11 @@
 		0E681F681D4B34EB003534F5 /* MenuHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuHelper.m; sourceTree = "<group>"; };
 		0E70784A1E18A89500A91048 /* DelegateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DelegateManager.h; sourceTree = "<group>"; };
 		0E70784B1E18A89500A91048 /* DelegateManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DelegateManager.m; sourceTree = "<group>"; };
+		0E7795901E20F8C800CE86BE /* SearchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchTableViewCell.h; sourceTree = "<group>"; };
+		0E7795911E20F8C800CE86BE /* SearchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchTableViewCell.m; sourceTree = "<group>"; };
+		0E7795921E20F8C800CE86BE /* SearchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchTableViewCell.xib; sourceTree = "<group>"; };
+		0E7795951E21042300CE86BE /* NSString+ZWUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ZWUtility.h"; sourceTree = "<group>"; };
+		0E7795961E21042300CE86BE /* NSString+ZWUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ZWUtility.m"; sourceTree = "<group>"; };
 		0E829CD51E12075B008FF0A8 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
 		0E829CD61E12075B008FF0A8 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		0E82A4481DAF8BCA00F13D4E /* BrowserHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BrowserHeader.h; sourceTree = "<group>"; };
@@ -137,6 +147,9 @@
 		0EA7DEE11DB0ABD8005C592E /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		0EA7DEE21DB0ABD8005C592E /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		0EAA18B81DD35D5D0072F9B3 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		0EBDC6231E1DDEC100B6A4DB /* SearchInputView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchInputView.xib; sourceTree = "<group>"; };
+		0EBDC6251E1DE49700B6A4DB /* CharacterSelectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CharacterSelectView.h; sourceTree = "<group>"; };
+		0EBDC6261E1DE49700B6A4DB /* CharacterSelectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CharacterSelectView.m; sourceTree = "<group>"; };
 		0EBF3A631DCF33ED00CD77C8 /* CocoaLumberjack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjack.framework; path = Carthage/Build/iOS/CocoaLumberjack.framework; sourceTree = "<group>"; };
 		0EBF3A641DCF33ED00CD77C8 /* MBProgressHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MBProgressHUD.framework; path = Carthage/Build/iOS/MBProgressHUD.framework; sourceTree = "<group>"; };
 		0EBF3A681DCF38D600CD77C8 /* BrowserBottomToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserBottomToolBar.h; sourceTree = "<group>"; };
@@ -244,6 +257,8 @@
 				0E2C53A21DAA314C0077B9B4 /* UIView+Additions.m */,
 				0E2CC0151E0988AE0078EB91 /* UIColor+ZWUtility.h */,
 				0E2CC0161E0988AE0078EB91 /* UIColor+ZWUtility.m */,
+				0E7795951E21042300CE86BE /* NSString+ZWUtility.h */,
+				0E7795961E21042300CE86BE /* NSString+ZWUtility.m */,
 			);
 			name = Category;
 			sourceTree = "<group>";
@@ -285,6 +300,12 @@
 			children = (
 				0E39F9A81E14C8AA007B5681 /* SearchInputView.h */,
 				0E39F9A91E14C8AA007B5681 /* SearchInputView.m */,
+				0EBDC6231E1DDEC100B6A4DB /* SearchInputView.xib */,
+				0EBDC6251E1DE49700B6A4DB /* CharacterSelectView.h */,
+				0EBDC6261E1DE49700B6A4DB /* CharacterSelectView.m */,
+				0E7795901E20F8C800CE86BE /* SearchTableViewCell.h */,
+				0E7795911E20F8C800CE86BE /* SearchTableViewCell.m */,
+				0E7795921E20F8C800CE86BE /* SearchTableViewCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -693,6 +714,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				0EDD68E51DACFBF400265744 /* Assets.xcassets in Resources */,
+				0E7795941E20F8C900CE86BE /* SearchTableViewCell.xib in Resources */,
+				0EBDC6241E1DDEC100B6A4DB /* SearchInputView.xib in Resources */,
 				0E681F381D4AEC3F003534F5 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -743,6 +766,7 @@
 				0EBF3A6A1DCF38D600CD77C8 /* BrowserBottomToolBar.m in Sources */,
 				0EF025651DD951EB0011019F /* HTTPClient.m in Sources */,
 				0E32E2FB1E08C69E00CFBBB5 /* CardCollectionViewCell.m in Sources */,
+				0E7795931E20F8C800CE86BE /* SearchTableViewCell.m in Sources */,
 				0EA7DEE31DB0ABD8005C592E /* BaseViewController.m in Sources */,
 				0E829CD71E12075B008FF0A8 /* SearchViewController.m in Sources */,
 				0E2C539F1DAA24970077B9B4 /* BrowserContainerView.m in Sources */,
@@ -752,6 +776,7 @@
 				0E2C53A31DAA314C0077B9B4 /* UIView+Additions.m in Sources */,
 				0EED28311DC1A32100EC8581 /* ZWUtility.m in Sources */,
 				0E32E3071E08D4FB00CFBBB5 /* CardMainView.m in Sources */,
+				0EBDC6271E1DE49700B6A4DB /* CharacterSelectView.m in Sources */,
 				0EF025751DD99FAC0011019F /* BaiduSugResponseModel.m in Sources */,
 				0E2329311DADE07B007E9886 /* BrowserTopToolBar.m in Sources */,
 				0E2329341DAE19BB007E9886 /* TopToolBarShapeView.m in Sources */,
@@ -768,6 +793,7 @@
 				0EF025661DD951EB0011019F /* HTTPManager.m in Sources */,
 				0E986A0B1D4CA6C10003900D /* BrowserViewController.m in Sources */,
 				0EFDD3081DD423AC002AB3FB /* HttpHelper.m in Sources */,
+				0E7795971E21042300CE86BE /* NSString+ZWUtility.m in Sources */,
 				0E39F9AA1E14C8AA007B5681 /* SearchInputView.m in Sources */,
 				0E8EE8311E11123600B6DADF /* SettingsViewController.m in Sources */,
 				0E1F9F9F1DD2D86E00FA84EA /* NJKWebViewProgressView.m in Sources */,

@@ -170,24 +170,32 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
     if (offset > 0) {
         if (self.browserTopToolBar.height - offset <= TOP_TOOL_BAR_THRESHOLD) {
             self.browserTopToolBar.height = TOP_TOOL_BAR_THRESHOLD;
-            
+            self.browserContainerView.scrollView.contentInset = UIEdgeInsetsMake(TOP_TOOL_BAR_THRESHOLD, 0, 0, 0);
+
             bottomRect.origin.y = self.view.height;
         }
         else
         {
             self.browserTopToolBar.height -= offset;
             bottomRect.origin.y += BOTTOM_TOOL_BAR_HEIGHT * offset / (TOP_TOOL_BAR_HEIGHT - TOP_TOOL_BAR_THRESHOLD);
+            UIEdgeInsets insets = self.browserContainerView.scrollView.contentInset;
+            insets.top -= offset;
+            self.browserContainerView.scrollView.contentInset = insets;
         }
     }
     else{
         if (self.browserTopToolBar.height + (-offset) >= TOP_TOOL_BAR_HEIGHT) {
             self.browserTopToolBar.height = TOP_TOOL_BAR_HEIGHT;
             bottomRect.origin.y = self.view.height - BOTTOM_TOOL_BAR_HEIGHT;
+            self.browserContainerView.scrollView.contentInset = UIEdgeInsetsMake(TOP_TOOL_BAR_HEIGHT, 0, 0, 0);
         }
         else
         {
             self.browserTopToolBar.height += (-offset);
             bottomRect.origin.y -= BOTTOM_TOOL_BAR_HEIGHT * (-offset) / (TOP_TOOL_BAR_HEIGHT - TOP_TOOL_BAR_THRESHOLD);
+            UIEdgeInsets insets = self.browserContainerView.scrollView.contentInset;
+            insets.top += (-offset);
+            self.browserContainerView.scrollView.contentInset = insets;
         }
     }
     

@@ -40,6 +40,7 @@
     _webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
     [self startLoadWebViewWithURL:@"https://m.baidu.com/"];
+//    [self startLoadWebViewWithURL:@"http://i.ifeng.com"];
 }
 
 - (void)startLoadWebViewWithURL:(NSString *)url{

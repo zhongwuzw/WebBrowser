@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CharacterSelectView.h"
 
 @interface SearchInputView : UIView
 
-@property (nonatomic, strong) UITextField *textField;
+@property (weak, nonatomic) IBOutlet UITextField *textField;
+@property (weak, nonatomic) IBOutlet UIButton *cacelButton;
+@property (weak, nonatomic) IBOutlet CharacterSelectView *slider;
 
 @end
