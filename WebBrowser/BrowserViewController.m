@@ -146,7 +146,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
     }
     else if (self.lastContentOffset < scrollView.contentOffset.y && scrollView.contentOffset.y >= - TOP_TOOL_BAR_HEIGHT)
     {
-        [self handleToolBarWithOffset:yOffset];
+        if (!(scrollView.contentOffset.y < 0 && scrollView.decelerating)) {
+            [self handleToolBarWithOffset:yOffset];
+        }
         self.webViewScrollDirection = ScrollDirectionUp;
     }
     
