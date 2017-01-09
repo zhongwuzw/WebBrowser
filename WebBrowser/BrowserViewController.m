@@ -136,24 +136,40 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
 #pragma mark - UIScrollViewDelegate Method
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    CGFloat yOffset = scrollView.contentOffset.y - self.lastContentOffset;
-    
-    if (self.lastContentOffset > scrollView.contentOffset.y) {
-        if (_isWebViewDecelerate || (scrollView.contentOffset.y >= -TOP_TOOL_BAR_HEIGHT && scrollView.contentOffset.y <= 0)) {
-            [self handleToolBarWithOffset:yOffset];
+    //点击新链接或返回时，scrollView会调用该方法
+    if (!(!scrollView.decelerating && !scrollView.dragging && !scrollView.tracking)) {
+        CGFloat yOffset = scrollView.contentOffset.y - self.lastContentOffset;
+        
+        if (self.lastContentOffset > scrollView.contentOffset.y) {
+            if (_isWebViewDecelerate || (scrollView.contentOffset.y >= -TOP_TOOL_BAR_HEIGHT && scrollView.contentOffset.y <= 0)) {
+                //浮点数不能做精确匹配，不过此处用等于满足我的需求
+                if (!(self.browserTopToolBar.height == TOP_TOOL_BAR_HEIGHT)) {
+                    [self recoverToolBar];
+                }
+            }
+            self.webViewScrollDirection = ScrollDirectionDown;
         }
-        self.webViewScrollDirection = ScrollDirectionDown;
-    }
-    else if (self.lastContentOffset < scrollView.contentOffset.y && scrollView.contentOffset.y >= - TOP_TOOL_BAR_HEIGHT)
-    {
-        if (!(scrollView.contentOffset.y < 0 && scrollView.decelerating)) {
-            [self handleToolBarWithOffset:yOffset];
+        else if (self.lastContentOffset < scrollView.contentOffset.y && scrollView.contentOffset.y >= - TOP_TOOL_BAR_HEIGHT)
+        {
+            if (!(scrollView.contentOffset.y < 0 && scrollView.decelerating)) {
+                [self handleToolBarWithOffset:yOffset];
+            }
+            self.webViewScrollDirection = ScrollDirectionUp;
         }
-        self.webViewScrollDirection = ScrollDirectionUp;
     }
     
     self.lastContentOffset = scrollView.contentOffset.y;
     
+}
+
+- (void)recoverToolBar{
+    [UIView animateWithDuration:.2 animations:^{
+        self.browserTopToolBar.height = TOP_TOOL_BAR_HEIGHT;
+        CGRect bottomRect = self.bottomToolBar.frame;
+        bottomRect.origin.y = self.view.height - BOTTOM_TOOL_BAR_HEIGHT;
+        self.bottomToolBar.frame = bottomRect;
+        self.browserContainerView.scrollView.contentInset = UIEdgeInsetsMake(TOP_TOOL_BAR_HEIGHT, 0, 0, 0);
+    }];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
@@ -207,6 +223,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
 #pragma mark - WebViewDelegate
 
 - (BOOL)webView:(BrowserWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
+    if (navigationType == UIWebViewNavigationTypeLinkClicked || navigationType == UIWebViewNavigationTypeOther) {
+        [self recoverToolBar];
+    }
     if ([self.browserTopToolBar respondsToSelector:@selector(webView:shouldStartLoadWithRequest:navigationType:)]) {
         return [self.browserTopToolBar webView:webView shouldStartLoadWithRequest:request navigationType:navigationType];
     }
