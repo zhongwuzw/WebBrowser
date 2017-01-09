@@ -15,7 +15,7 @@
 #import <CocoaLumberjack/CocoaLumberjack.h>
 
 #import "MacroMethod.h"
-#import "MacroUIConstants.h"
+#import "MacroConstants.h"
 #import "UIView+Additions.h"
 #import "ZWUtility.h"
 #import "DelegateManager.h"

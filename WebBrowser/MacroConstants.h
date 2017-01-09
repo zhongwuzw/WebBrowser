@@ -6,11 +6,13 @@
 //  Copyright © 2016年 钟武. All rights reserved.
 //
 
-#ifndef MacroUIConstants_h
-#define MacroUIConstants_h
+#ifndef MacroConstants_h
+#define MacroConstants_h
 
 #define STATUS_BAR_HEIGHT 20
 
 #define TEXT_FIELD_PLACEHOLDER   @"搜索或输入网址"
 
-#endif /* MacroUIConstants_h */
+#define BAIDU_SEARCH_URL @"https://m.baidu.com/s?word=%@&ie=utf-8"
+
+#endif /* MacroConstants_h */

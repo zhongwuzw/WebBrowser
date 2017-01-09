@@ -10,7 +10,7 @@
 #import "BrowserWebView.h"
 #import "BrowserBottomToolBarHeader.h"
 
-@interface BrowserBottomToolBar : UIToolbar <WebViewDelegate>
+@interface BrowserBottomToolBar : UIToolbar
 
 @property (nonatomic, weak) id<BrowserBottomToolBarButtonClickedDelegate> browserButtonDelegate;
 

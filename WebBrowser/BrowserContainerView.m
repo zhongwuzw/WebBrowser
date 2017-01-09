@@ -10,7 +10,6 @@
 #import "TabManager.h"
 #import "BrowserWebView.h"
 
-
 @interface BrowserContainerView () <WebViewDelegate>
 
 @property (nonatomic, weak) BrowserWebView *webView;
@@ -41,6 +40,8 @@
 
     [self startLoadWebViewWithURL:@"https://m.baidu.com/"];
 //    [self startLoadWebViewWithURL:@"http://i.ifeng.com"];
+    
+    [[DelegateManager sharedInstance] registerDelegate:self forKey:DelegateManagerBrowserContainerLoadURL];
 }
 
 - (void)startLoadWebViewWithURL:(NSString *)url{
@@ -88,6 +89,14 @@
         default:
             break;
     }
+}
+
+#pragma mark - BrowserContainerLoadURLDelegate
+
+- (void)browserContainerViewLoadWebViewWithSug:(NSString *)text{
+    NSString *urlString = [NSString stringWithFormat:BAIDU_SEARCH_URL,[text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    NSURL *url = [NSURL URLWithString:urlString];
+    [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
 @end

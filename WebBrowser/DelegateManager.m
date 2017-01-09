@@ -7,6 +7,10 @@
 //
 
 #import "DelegateManager.h"
+#import "DelegateManager+Delegate.h"
+
+// Arguments 0 and 1 are self and _cmd always
+const unsigned int kNumberOfImplicitArgs = 2;
 
 @interface DelegateManager ()
 
@@ -67,6 +71,99 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DelegateManager)
             })
         }
     }];
+}
+
+#pragma mark - Method Calling
+
+- (void)performSelector:(SEL)selector arguments:(NSArray *)arguments key:(NSString *)key{
+    NSMethodSignature *methodSignature = [self methodSignatureForSelector:selector];
+    
+    if (!methodSignature || ![arguments isKindOfClass:[NSArray class]] || !key) {
+        return;
+    }
+    
+    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:methodSignature];
+    [invocation setSelector:selector];
+    [invocation retainArguments];
+    
+    NSUInteger numberOfArguments = [methodSignature numberOfArguments];
+    
+    if (arguments.count != numberOfArguments - kNumberOfImplicitArgs) {
+        return;
+    }
+    
+    for (NSUInteger argumentIndex = kNumberOfImplicitArgs; argumentIndex < numberOfArguments; argumentIndex++) {
+        NSUInteger argumentsArrayIndex = argumentIndex - kNumberOfImplicitArgs;
+        id argumentObject = [arguments count] > argumentsArrayIndex ? [arguments objectAtIndex:argumentsArrayIndex] : nil;
+        
+        if (argumentObject && ![argumentObject isKindOfClass:[NSNull class]]) {
+            const char *typeEncodingCString = [methodSignature getArgumentTypeAtIndex:argumentIndex];
+            if (typeEncodingCString[0] == @encode(id)[0] || typeEncodingCString[0] == @encode(Class)[0] || [self isTollFreeBridgedValue:argumentObject forCFType:typeEncodingCString]) {
+                [invocation setArgument:&argumentObject atIndex:argumentIndex];
+            } else if (strcmp(typeEncodingCString, @encode(CGColorRef)) == 0 && [argumentObject isKindOfClass:[UIColor class]]) {
+                CGColorRef colorRef = [argumentObject CGColor];
+                [invocation setArgument:&colorRef atIndex:argumentIndex];
+            } else if ([argumentObject isKindOfClass:[NSValue class]]){
+                NSValue *argumentValue = (NSValue *)argumentObject;
+                
+                if (strcmp([argumentValue objCType], typeEncodingCString) != 0) {
+                    return;
+                }
+                
+                NSUInteger bufferSize = 0;
+                @try {
+                    NSGetSizeAndAlignment(typeEncodingCString, &bufferSize, NULL);
+                } @catch (NSException *exception) { }
+                
+                if (bufferSize > 0) {
+                    void *buffer = calloc(bufferSize, 1);
+                    [argumentValue getValue:buffer];
+                    [invocation setArgument:buffer atIndex:argumentIndex];
+                    free(buffer);
+                }
+            }
+        }
+    }
+    
+    [self callInvocation:invocation withKey:key];
+}
+
+- (BOOL)isTollFreeBridgedValue:(id)value forCFType:(const char *)typeEncoding
+{
+    // See https://developer.apple.com/library/ios/documentation/general/conceptual/CocoaEncyclopedia/Toll-FreeBridgin/Toll-FreeBridgin.html
+#define CASE(cftype, foundationClass) \
+if(strcmp(typeEncoding, @encode(cftype)) == 0) { \
+return [value isKindOfClass:[foundationClass class]]; \
+}
+    
+    CASE(CFArrayRef, NSArray);
+    CASE(CFAttributedStringRef, NSAttributedString);
+    CASE(CFCalendarRef, NSCalendar);
+    CASE(CFCharacterSetRef, NSCharacterSet);
+    CASE(CFDataRef, NSData);
+    CASE(CFDateRef, NSDate);
+    CASE(CFDictionaryRef, NSDictionary);
+    CASE(CFErrorRef, NSError);
+    CASE(CFLocaleRef, NSLocale);
+    CASE(CFMutableArrayRef, NSMutableArray);
+    CASE(CFMutableAttributedStringRef, NSMutableAttributedString);
+    CASE(CFMutableCharacterSetRef, NSMutableCharacterSet);
+    CASE(CFMutableDataRef, NSMutableData);
+    CASE(CFMutableDictionaryRef, NSMutableDictionary);
+    CASE(CFMutableSetRef, NSMutableSet);
+    CASE(CFMutableStringRef, NSMutableString);
+    CASE(CFNumberRef, NSNumber);
+    CASE(CFReadStreamRef, NSInputStream);
+    CASE(CFRunLoopTimerRef, NSTimer);
+    CASE(CFSetRef, NSSet);
+    CASE(CFStringRef, NSString);
+    CASE(CFTimeZoneRef, NSTimeZone);
+    CASE(CFURLRef, NSURL);
+    CASE(CFWriteStreamRef, NSOutputStream);
+    
+#undef CASE
+    
+    return NO;
 }
 
 @end

@@ -120,6 +120,11 @@ typedef enum : NSUInteger {
 #pragma mark - UITextFieldDelegate Method
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    NSString *text = textField.text;
+    if (text) {
+        [[DelegateManager sharedInstance] performSelector:NSSelectorFromString(@"browserContainerViewLoadWebViewWithSug:") arguments:@[text] key:DelegateManagerBrowserContainerLoadURL];
+    }
+    [[[BrowserViewController sharedInstance] navigationController] popViewControllerAnimated:NO];
     [textField resignFirstResponder];
     return YES;
 }

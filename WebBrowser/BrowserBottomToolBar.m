@@ -22,7 +22,7 @@
 - (instancetype)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]) {
         [self initializeView];
-        [[DelegateManager sharedInstance] registerDelegate:self forKey:NSStringFromProtocol(@protocol(WebViewDelegate))];
+        [[DelegateManager sharedInstance] registerDelegate:self forKey:DelegateManagerWebView];
     }
     
     return self;

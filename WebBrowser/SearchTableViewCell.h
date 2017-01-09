@@ -11,5 +11,6 @@
 @interface SearchTableViewCell : UITableViewCell
 
 - (void)updateCellWithString:(NSString *)text;
+- (NSString *)cellText;
 
 @end

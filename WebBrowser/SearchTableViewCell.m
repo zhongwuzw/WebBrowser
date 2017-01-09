@@ -18,12 +18,6 @@
 
 @implementation SearchTableViewCell
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    
-    
-}
-
 - (void)updateCellWithString:(NSString *)text{
     self.searchResultLabel.text = text;
     
@@ -31,6 +25,10 @@
         [self.leftImageView setImage:[UIImage imageNamed:@"search_list_url"]];
     else
         [self.leftImageView setImage:[UIImage imageNamed:@"search_list_search"]];
+}
+
+- (NSString *)cellText{
+    return self.searchResultLabel.text;
 }
 
 @end

@@ -134,6 +134,14 @@ static NSString * const CELL = @"CELL";
 #pragma mark - UITableViewDelegate Method
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    SearchTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    NSString *text = [cell cellText];
+    if (text) {
+        [[DelegateManager sharedInstance] performSelector:NSSelectorFromString(@"browserContainerViewLoadWebViewWithSug:") arguments:@[text] key:DelegateManagerBrowserContainerLoadURL];
+    }
+    [self.navigationController popViewControllerAnimated:NO];
 }
 
 - (void)dealloc{

@@ -7,11 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DelegateKeyHeader.h"
+
+@class BrowserWebView;
 
 @interface DelegateManager : NSObject
 
 SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(DelegateManager)
 - (void)registerDelegate:(id)delegate forKey:(NSString *)key;
-- (void)callInvocation:(NSInvocation *)anInvocation withKey:(NSString *)key;
+- (void)performSelector:(SEL)selector arguments:(NSArray *)arguments key:(NSString *)key;
 
 @end

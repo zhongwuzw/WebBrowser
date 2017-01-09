@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0E19A4D41E232FA8009DAF9A /* NSNumber+ZWUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E19A4D31E232FA8009DAF9A /* NSNumber+ZWUtility.m */; };
+		0E19A4D91E237D35009DAF9A /* DelegateManager+Delegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E19A4D81E237D35009DAF9A /* DelegateManager+Delegate.m */; };
 		0E1F9F9E1DD2D86E00FA84EA /* NJKWebViewProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1F9F9B1DD2D86E00FA84EA /* NJKWebViewProgress.m */; };
 		0E1F9F9F1DD2D86E00FA84EA /* NJKWebViewProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1F9F9D1DD2D86E00FA84EA /* NJKWebViewProgressView.m */; };
 		0E2329311DADE07B007E9886 /* BrowserTopToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E2329301DADE07B007E9886 /* BrowserTopToolBar.m */; };
@@ -81,6 +82,9 @@
 /* Begin PBXFileReference section */
 		0E19A4D21E232FA8009DAF9A /* NSNumber+ZWUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+ZWUtility.h"; sourceTree = "<group>"; };
 		0E19A4D31E232FA8009DAF9A /* NSNumber+ZWUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+ZWUtility.m"; sourceTree = "<group>"; };
+		0E19A4D71E237D35009DAF9A /* DelegateManager+Delegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DelegateManager+Delegate.h"; sourceTree = "<group>"; };
+		0E19A4D81E237D35009DAF9A /* DelegateManager+Delegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DelegateManager+Delegate.m"; sourceTree = "<group>"; };
+		0E19A4DA1E238161009DAF9A /* DelegateKeyHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DelegateKeyHeader.h; sourceTree = "<group>"; };
 		0E1F9F9A1DD2D86E00FA84EA /* NJKWebViewProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJKWebViewProgress.h; sourceTree = "<group>"; };
 		0E1F9F9B1DD2D86E00FA84EA /* NJKWebViewProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJKWebViewProgress.m; sourceTree = "<group>"; };
 		0E1F9F9C1DD2D86E00FA84EA /* NJKWebViewProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJKWebViewProgressView.h; sourceTree = "<group>"; };
@@ -124,7 +128,7 @@
 		0E681F4F1D4AEC3F003534F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0E681F5D1D4AF218003534F5 /* MacroMethod.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacroMethod.h; sourceTree = "<group>"; };
 		0E681F5F1D4AF2D5003534F5 /* WebBrowser.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebBrowser.pch; sourceTree = "<group>"; };
-		0E681F621D4AF8DB003534F5 /* MacroUIConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacroUIConstants.h; sourceTree = "<group>"; };
+		0E681F621D4AF8DB003534F5 /* MacroConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacroConstants.h; sourceTree = "<group>"; };
 		0E681F641D4AFEAA003534F5 /* KeyboardHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardHelper.h; sourceTree = "<group>"; };
 		0E681F651D4AFEAA003534F5 /* KeyboardHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeyboardHelper.m; sourceTree = "<group>"; };
 		0E681F671D4B34EB003534F5 /* MenuHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuHelper.h; sourceTree = "<group>"; };
@@ -216,6 +220,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E19A4D51E236464009DAF9A /* DelegateManager */ = {
+			isa = PBXGroup;
+			children = (
+				0E70784A1E18A89500A91048 /* DelegateManager.h */,
+				0E70784B1E18A89500A91048 /* DelegateManager.m */,
+				0E19A4D71E237D35009DAF9A /* DelegateManager+Delegate.h */,
+				0E19A4D81E237D35009DAF9A /* DelegateManager+Delegate.m */,
+				0E19A4DA1E238161009DAF9A /* DelegateKeyHeader.h */,
+			);
+			name = DelegateManager;
+			sourceTree = "<group>";
+		};
 		0E1F9F981DD2D83400FA84EA /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
@@ -466,7 +482,7 @@
 			isa = PBXGroup;
 			children = (
 				0E681F5D1D4AF218003534F5 /* MacroMethod.h */,
-				0E681F621D4AF8DB003534F5 /* MacroUIConstants.h */,
+				0E681F621D4AF8DB003534F5 /* MacroConstants.h */,
 			);
 			name = Macro;
 			sourceTree = "<group>";
@@ -498,8 +514,7 @@
 		0E7078491E18A87100A91048 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
-				0E70784A1E18A89500A91048 /* DelegateManager.h */,
-				0E70784B1E18A89500A91048 /* DelegateManager.m */,
+				0E19A4D51E236464009DAF9A /* DelegateManager */,
 			);
 			name = Manager;
 			sourceTree = "<group>";
@@ -781,6 +796,7 @@
 				0E2C53A31DAA314C0077B9B4 /* UIView+Additions.m in Sources */,
 				0EED28311DC1A32100EC8581 /* ZWUtility.m in Sources */,
 				0E32E3071E08D4FB00CFBBB5 /* CardMainView.m in Sources */,
+				0E19A4D91E237D35009DAF9A /* DelegateManager+Delegate.m in Sources */,
 				0EBDC6271E1DE49700B6A4DB /* CharacterSelectView.m in Sources */,
 				0EF025751DD99FAC0011019F /* BaiduSugResponseModel.m in Sources */,
 				0E2329311DADE07B007E9886 /* BrowserTopToolBar.m in Sources */,

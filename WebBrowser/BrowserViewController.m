@@ -49,7 +49,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
 
     self.lastContentOffset = - TOP_TOOL_BAR_HEIGHT;
     
-    [[DelegateManager sharedInstance] registerDelegate:self forKey:NSStringFromProtocol(@protocol(WebViewDelegate))];
+    [[DelegateManager sharedInstance] registerDelegate:self forKey:DelegateManagerWebView];
 }
 
 - (void)initializeView{
@@ -223,6 +223,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
 #pragma mark - WebViewDelegate
 
 - (BOOL)webView:(BrowserWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
+    //点击链接或加载页面等情况下重新恢复界面
     if (navigationType == UIWebViewNavigationTypeLinkClicked || navigationType == UIWebViewNavigationTypeOther) {
         [self recoverToolBar];
     }
