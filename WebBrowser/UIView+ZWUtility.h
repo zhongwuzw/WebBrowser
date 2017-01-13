@@ -2,7 +2,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@interface UIView (Additions)
+@interface UIView (ZWUtility)
 
 /**
  * Shortcut for frame.origin.x.
@@ -118,5 +118,16 @@
  */
 - (CGPoint)offsetFromView:(UIView*)otherView;
 
+
+/**
+ * Get WebBrowser Snapshot
+ */
+- (UIImage *)snapshotForBrowserWebView;
+
+
+/**
+ * Get UIView Snapshot
+ */
+- (UIImage *)snapshot;
 
 @end

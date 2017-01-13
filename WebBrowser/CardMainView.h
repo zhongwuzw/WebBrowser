@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @class CardCollectionViewCell;
+@class WebModel;
 
 @interface CardMainView : UIView
 
-- (void)setCardsWithArray:(NSArray<NSString *> *)array;
+- (void)reloadCardMainView;
 
 @end

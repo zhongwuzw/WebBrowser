@@ -14,13 +14,16 @@
 		0E2329311DADE07B007E9886 /* BrowserTopToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E2329301DADE07B007E9886 /* BrowserTopToolBar.m */; };
 		0E2329341DAE19BB007E9886 /* TopToolBarShapeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E2329331DAE19BB007E9886 /* TopToolBarShapeView.m */; };
 		0E2C539F1DAA24970077B9B4 /* BrowserContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E2C539E1DAA24970077B9B4 /* BrowserContainerView.m */; };
-		0E2C53A31DAA314C0077B9B4 /* UIView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E2C53A21DAA314C0077B9B4 /* UIView+Additions.m */; };
+		0E2C53A31DAA314C0077B9B4 /* UIView+ZWUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E2C53A21DAA314C0077B9B4 /* UIView+ZWUtility.m */; };
 		0E2CC0171E0988AE0078EB91 /* UIColor+ZWUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E2CC0161E0988AE0078EB91 /* UIColor+ZWUtility.m */; };
 		0E32E2FB1E08C69E00CFBBB5 /* CardCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E32E2FA1E08C69E00CFBBB5 /* CardCollectionViewCell.m */; };
 		0E32E2FF1E08C8F600CFBBB5 /* CardCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E32E2FE1E08C8F600CFBBB5 /* CardCollectionViewLayout.m */; };
 		0E32E3071E08D4FB00CFBBB5 /* CardMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E32E3061E08D4FB00CFBBB5 /* CardMainView.m */; };
 		0E39F9AA1E14C8AA007B5681 /* SearchInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E39F9A91E14C8AA007B5681 /* SearchInputView.m */; };
 		0E3A6B731E11102C00071397 /* SettingsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3A6B721E11102C00071397 /* SettingsCollectionViewCell.m */; };
+		0E3D2B711E24836700364B69 /* NSFileManager+ZWUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3D2B701E24836700364B69 /* NSFileManager+ZWUtility.m */; };
+		0E3D2B741E248D5E00364B69 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3D2B731E248D5E00364B69 /* SettingsTableViewController.m */; };
+		0E3D2B771E24CD3000364B69 /* UIImage+ZWUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3D2B761E24CD3000364B69 /* UIImage+ZWUtility.m */; };
 		0E48FB011DA3FD4B00B8FCDB /* BrowserWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E48FB001DA3FD4B00B8FCDB /* BrowserWebView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		0E5000511E0B6D60004BA658 /* CardMainBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E5000501E0B6D60004BA658 /* CardMainBottomView.m */; };
 		0E681F2A1D4AEC3F003534F5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E681F291D4AEC3F003534F5 /* main.m */; };
@@ -95,8 +98,8 @@
 		0E2329331DAE19BB007E9886 /* TopToolBarShapeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopToolBarShapeView.m; sourceTree = "<group>"; };
 		0E2C539D1DAA24970077B9B4 /* BrowserContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserContainerView.h; sourceTree = "<group>"; };
 		0E2C539E1DAA24970077B9B4 /* BrowserContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserContainerView.m; sourceTree = "<group>"; };
-		0E2C53A11DAA314C0077B9B4 /* UIView+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Additions.h"; sourceTree = "<group>"; };
-		0E2C53A21DAA314C0077B9B4 /* UIView+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Additions.m"; sourceTree = "<group>"; };
+		0E2C53A11DAA314C0077B9B4 /* UIView+ZWUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ZWUtility.h"; sourceTree = "<group>"; };
+		0E2C53A21DAA314C0077B9B4 /* UIView+ZWUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ZWUtility.m"; sourceTree = "<group>"; };
 		0E2CC0151E0988AE0078EB91 /* UIColor+ZWUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+ZWUtility.h"; sourceTree = "<group>"; };
 		0E2CC0161E0988AE0078EB91 /* UIColor+ZWUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+ZWUtility.m"; sourceTree = "<group>"; };
 		0E32E2F91E08C69E00CFBBB5 /* CardCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardCollectionViewCell.h; sourceTree = "<group>"; };
@@ -109,6 +112,12 @@
 		0E39F9A91E14C8AA007B5681 /* SearchInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchInputView.m; sourceTree = "<group>"; };
 		0E3A6B711E11102C00071397 /* SettingsCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsCollectionViewCell.h; sourceTree = "<group>"; };
 		0E3A6B721E11102C00071397 /* SettingsCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsCollectionViewCell.m; sourceTree = "<group>"; };
+		0E3D2B6F1E24836700364B69 /* NSFileManager+ZWUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+ZWUtility.h"; sourceTree = "<group>"; };
+		0E3D2B701E24836700364B69 /* NSFileManager+ZWUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+ZWUtility.m"; sourceTree = "<group>"; };
+		0E3D2B721E248D5E00364B69 /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
+		0E3D2B731E248D5E00364B69 /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
+		0E3D2B751E24CD3000364B69 /* UIImage+ZWUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ZWUtility.h"; sourceTree = "<group>"; };
+		0E3D2B761E24CD3000364B69 /* UIImage+ZWUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ZWUtility.m"; sourceTree = "<group>"; };
 		0E48FAFF1DA3FD4B00B8FCDB /* BrowserWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserWebView.h; sourceTree = "<group>"; };
 		0E48FB001DA3FD4B00B8FCDB /* BrowserWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserWebView.m; sourceTree = "<group>"; };
 		0E48FB031DA4058300B8FCDB /* WebViewHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebViewHeader.h; sourceTree = "<group>"; };
@@ -272,14 +281,18 @@
 		0E2C53A01DAA31210077B9B4 /* Category */ = {
 			isa = PBXGroup;
 			children = (
-				0E2C53A11DAA314C0077B9B4 /* UIView+Additions.h */,
-				0E2C53A21DAA314C0077B9B4 /* UIView+Additions.m */,
 				0E2CC0151E0988AE0078EB91 /* UIColor+ZWUtility.h */,
 				0E2CC0161E0988AE0078EB91 /* UIColor+ZWUtility.m */,
 				0E7795951E21042300CE86BE /* NSString+ZWUtility.h */,
 				0E7795961E21042300CE86BE /* NSString+ZWUtility.m */,
 				0E19A4D21E232FA8009DAF9A /* NSNumber+ZWUtility.h */,
 				0E19A4D31E232FA8009DAF9A /* NSNumber+ZWUtility.m */,
+				0E3D2B6F1E24836700364B69 /* NSFileManager+ZWUtility.h */,
+				0E3D2B701E24836700364B69 /* NSFileManager+ZWUtility.m */,
+				0E2C53A11DAA314C0077B9B4 /* UIView+ZWUtility.h */,
+				0E2C53A21DAA314C0077B9B4 /* UIView+ZWUtility.m */,
+				0E3D2B751E24CD3000364B69 /* UIImage+ZWUtility.h */,
+				0E3D2B761E24CD3000364B69 /* UIImage+ZWUtility.m */,
 			);
 			name = Category;
 			sourceTree = "<group>";
@@ -287,6 +300,7 @@
 		0E32E2F71E08C5DC00CFBBB5 /* MultiWindow */ = {
 			isa = PBXGroup;
 			children = (
+				0E3D2B781E24F23D00364B69 /* Manager */,
 				0E3CD34D1E093F2700BC77FC /* Model */,
 				0E32E2FC1E08C8BE00CFBBB5 /* Layout */,
 				0E32E2F81E08C5F900CFBBB5 /* View */,
@@ -346,6 +360,8 @@
 			children = (
 				0E8EE82F1E11123600B6DADF /* SettingsViewController.h */,
 				0E8EE8301E11123600B6DADF /* SettingsViewController.m */,
+				0E3D2B721E248D5E00364B69 /* SettingsTableViewController.h */,
+				0E3D2B731E248D5E00364B69 /* SettingsTableViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -377,6 +393,13 @@
 			children = (
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		0E3D2B781E24F23D00364B69 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Manager;
 			sourceTree = "<group>";
 		};
 		0E48FAFE1DA3FCCB00B8FCDB /* View */ = {
@@ -420,11 +443,11 @@
 		0E681F271D4AEC3F003534F5 /* WebBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				0E1F9F981DD2D83400FA84EA /* Vendors */,
+				0EF0255D1DD94FCF0011019F /* Network */,
 				0E829CD31E12073B008FF0A8 /* Search */,
 				0E3A6B6E1E110F1C00071397 /* Setting */,
 				0E32E2F71E08C5DC00CFBBB5 /* MultiWindow */,
-				0EF0255D1DD94FCF0011019F /* Network */,
-				0E1F9F981DD2D83400FA84EA /* Vendors */,
 				0E986A0C1D4D06030003900D /* Tab */,
 				0E986A081D4CA6890003900D /* Browser */,
 				0E681F5E1D4AF2A3003534F5 /* Application */,
@@ -781,6 +804,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E3D2B711E24836700364B69 /* NSFileManager+ZWUtility.m in Sources */,
 				0EF025671DD951EB0011019F /* HTTPURLConfiguration.m in Sources */,
 				0E986A0F1D4D06170003900D /* TabManager.m in Sources */,
 				0EBF3A6A1DCF38D600CD77C8 /* BrowserBottomToolBar.m in Sources */,
@@ -793,7 +817,7 @@
 				0E681F661D4AFEAA003534F5 /* KeyboardHelper.m in Sources */,
 				0E3A6B731E11102C00071397 /* SettingsCollectionViewCell.m in Sources */,
 				0EF025701DD957EC0011019F /* BaseResponseModel.m in Sources */,
-				0E2C53A31DAA314C0077B9B4 /* UIView+Additions.m in Sources */,
+				0E2C53A31DAA314C0077B9B4 /* UIView+ZWUtility.m in Sources */,
 				0EED28311DC1A32100EC8581 /* ZWUtility.m in Sources */,
 				0E32E3071E08D4FB00CFBBB5 /* CardMainView.m in Sources */,
 				0E19A4D91E237D35009DAF9A /* DelegateManager+Delegate.m in Sources */,
@@ -804,12 +828,14 @@
 				0E681F2D1D4AEC3F003534F5 /* AppDelegate.m in Sources */,
 				0E8EE8351E11277100B6DADF /* SettingAnimator.m in Sources */,
 				0E1F9F9E1DD2D86E00FA84EA /* NJKWebViewProgress.m in Sources */,
+				0E3D2B741E248D5E00364B69 /* SettingsTableViewController.m in Sources */,
 				0E32E2FF1E08C8F600CFBBB5 /* CardCollectionViewLayout.m in Sources */,
 				0E5000511E0B6D60004BA658 /* CardMainBottomView.m in Sources */,
 				0E48FB011DA3FD4B00B8FCDB /* BrowserWebView.m in Sources */,
 				0E19A4D41E232FA8009DAF9A /* NSNumber+ZWUtility.m in Sources */,
 				0EF0256A1DD9554F0011019F /* HTTPClient+SearchSug.m in Sources */,
 				0E681F691D4B34EB003534F5 /* MenuHelper.m in Sources */,
+				0E3D2B771E24CD3000364B69 /* UIImage+ZWUtility.m in Sources */,
 				0E681F2A1D4AEC3F003534F5 /* main.m in Sources */,
 				0E70784C1E18A89500A91048 /* DelegateManager.m in Sources */,
 				0EF025661DD951EB0011019F /* HTTPManager.m in Sources */,

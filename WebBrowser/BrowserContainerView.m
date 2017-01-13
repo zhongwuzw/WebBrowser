@@ -9,6 +9,7 @@
 #import "BrowserContainerView.h"
 #import "TabManager.h"
 #import "BrowserWebView.h"
+#import "HttpHelper.h"
 
 @interface BrowserContainerView () <WebViewDelegate>
 
@@ -30,7 +31,7 @@
 }
 
 - (void)setupWebView{
-    NSMutableArray<BrowserWebView *> *browserArray = [[TabManager sharedInstance] getBrowserViewArray];
+    NSMutableArray<BrowserWebView *> *browserArray = [[TabManager sharedInstance] browserViewArray];
     
     self.webView = [browserArray firstObject];
     _webView.webViewDelegate = self;
@@ -94,7 +95,19 @@
 #pragma mark - BrowserContainerLoadURLDelegate
 
 - (void)browserContainerViewLoadWebViewWithSug:(NSString *)text{
-    NSString *urlString = [NSString stringWithFormat:BAIDU_SEARCH_URL,[text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    if (!text) {
+        return;
+    }
+    NSString *urlString = text;
+    if (![HttpHelper isURL:text]) {
+        urlString = [NSString stringWithFormat:BAIDU_SEARCH_URL,[text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    }
+    else{
+        if (![text hasPrefix:@"http://"] && ![text hasPrefix:@"https://"]) {
+            urlString = [NSString stringWithFormat:@"http://%@",text];
+        }
+    }
+    
     NSURL *url = [NSURL URLWithString:urlString];
     [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
 }

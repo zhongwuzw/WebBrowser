@@ -11,6 +11,7 @@
 #import "CardCollectionViewCell.h"
 #import "CardMainBottomView.h"
 #import "BrowserHeader.h"
+#import "TabManager.h"
 
 #define CardCellIdentifier @"cell"
 #define CollectionViewTopMargin 50
@@ -19,7 +20,7 @@
 @interface CardMainView () <UICollectionViewDelegate, UICollectionViewDataSource, CardBottomClickedDelegate>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
-@property (nonatomic, strong) NSMutableArray<NSString *> *cardArr;
+@property (nonatomic, strong) NSMutableArray<WebModel *> *cardArr;
 @property (nonatomic, strong) CardMainBottomView *cardBottomView;
 
 @end
@@ -27,14 +28,14 @@
 @implementation CardMainView
 @synthesize cardArr = _cardArr;
 
-- (NSMutableArray<NSString *> *)cardArr{
+- (NSMutableArray<WebModel *> *)cardArr{
     if (!_cardArr) {
         _cardArr = [NSMutableArray array];
     }
     return _cardArr;
 }
 
-- (void)setCardsWithArray:(NSArray<NSString *> *)array{
+- (void)setCardsWithArray:(NSArray<WebModel *> *)array{
     [self.cardArr removeAllObjects];
     [self.cardArr addObjectsFromArray:array];
     
@@ -86,11 +87,21 @@
         
         bottomView;
     });
-    
-    [self setCardsWithArray:[NSArray arrayWithObjects:@"sss",@"sdd",@"dds",@"sss",@"sdd",@"dds",@"sss",@"sdd",@"dds", nil]];
+}
+
+- (void)reloadCardMainView{
+    NSArray<WebModel *> *model = [[TabManager sharedInstance] getWebViewSnapshot];
+    [self setCardsWithArray:model];
 }
 
 #pragma mark - UICollectionViewDelegate
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    [self.cardArr removeObjectAtIndex:indexPath.row];
+    [self.collectionView performBatchUpdates:^{
+        [self.collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:indexPath.row inSection:0]]];
+    }completion:nil];
+}
 
 #pragma mark - UICollectionViewDataSource
 
@@ -103,6 +114,15 @@
     
     cell.collectionView = collectionView;
     
+//    cell.closeBlock = ^{
+//        [self.cardArr removeObjectAtIndex:indexPath.row];
+//        [self.collectionView performBatchUpdates:^{
+//            [self.collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:indexPath.row inSection:0]]];
+//        }completion:nil];
+//    };
+    
+    [cell updateModelWithImage:self.cardArr[indexPath.row].image title:@"www.baidu.com"];
+    
     return cell;
 }
 
@@ -114,10 +134,23 @@
             [self removeFromSuperview];
             break;
         case AddButtonClicked:
+            [self addCollectionViewCell];
             break;
         default:
             break;
     }
+}
+
+- (void)addCollectionViewCell{
+    NSInteger num = [self.collectionView numberOfItemsInSection:0];
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        WebModel *webModel = [WebModel new];
+        webModel.title = @"test";
+        webModel.image = [UIImage imageNamed:@"baidu"];
+        [self.cardArr addObject:webModel];
+        [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:num inSection:0]]];
+    });
 }
 
 @end

@@ -50,6 +50,8 @@
 	</array>
 	<key>UIStatusBarHidden</key>
 	<false/>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>使用定位获取附近信息，为您提供更精准的本地服务</string>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleLightContent</string>
 	<key>UISupportedInterfaceOrientations</key>

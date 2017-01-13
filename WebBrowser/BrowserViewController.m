@@ -240,13 +240,17 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
         [self.browserButtonDelegate browserBottomToolBarButtonClickedWithTag:tag];
     }
     if (tag == BottomToolBarMoreButtonTag) {
+        WEAK_REF(self)
         NSArray<SettingsMenuItem *> *items =
         @[
           [SettingsMenuItem itemWithText:@"书签" image:[UIImage imageNamed:@"album"] action:nil],
           [SettingsMenuItem itemWithText:@"历史" image:[UIImage imageNamed:@"album"] action:nil],
           [SettingsMenuItem itemWithText:@"设置" image:[UIImage imageNamed:@"album"] action:nil],
           [SettingsMenuItem itemWithText:@"多窗口" image:[UIImage imageNamed:@"album"] action:^{
-              [self.view addSubview:self.cardMainView];
+              [self_.cardMainView reloadCardMainView];
+              [UIView transitionWithView:self_.view duration:.5 options:UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionCurveEaseInOut animations:^{
+                  [self_.view addSubview:self_.cardMainView];
+              }completion:nil];
           }],
           [SettingsMenuItem itemWithText:@"分享" image:[UIImage imageNamed:@"album"] action:nil]
           ];
@@ -259,6 +263,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+    
+    if (!self.cardMainView.superview) {
+        self.cardMainView = nil;
+    }
 }
 
 @end

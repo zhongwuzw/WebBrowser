@@ -16,7 +16,7 @@
 
 #import "MacroMethod.h"
 #import "MacroConstants.h"
-#import "UIView+Additions.h"
+#import "UIView+ZWUtility.h"
 #import "ZWUtility.h"
 #import "DelegateManager.h"
 

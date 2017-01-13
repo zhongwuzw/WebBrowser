@@ -8,11 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
+@interface WebModel : NSObject
+
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, strong) UIImage *image;
+
+@end
+
 @class BrowserWebView;
 
 @interface TabManager : NSObject
 
+@property (nonatomic, strong, readonly) NSMutableArray<BrowserWebView *> *browserViewArray;
+
 SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(TabManager)
-- (NSMutableArray<BrowserWebView *> *)getBrowserViewArray;
+- (NSArray<WebModel *> *)getWebViewSnapshot;
 
 @end

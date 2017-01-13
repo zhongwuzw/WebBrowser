@@ -7,7 +7,6 @@
 //
 
 #import "DelegateManager.h"
-#import "DelegateManager+Delegate.h"
 
 // Arguments 0 and 1 are self and _cmd always
 const unsigned int kNumberOfImplicitArgs = 2;

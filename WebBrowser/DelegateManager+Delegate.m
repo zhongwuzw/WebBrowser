@@ -23,6 +23,6 @@
 #pragma mark - BrowserContainerLoadURLDelegate
 
 //ContainerView Load URL Delegate
-- (void)browserContainerViewLoadWebViewWithURL:(NSURL *)url{}
 - (void)browserContainerViewLoadWebViewWithSug:(NSString *)text{}
+
 @end
