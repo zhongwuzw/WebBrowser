@@ -8,9 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-@interface WebModel : NSObject
+@interface WebModel : NSObject <NSSecureCoding>
 
 @property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *url;
 @property (nonatomic, strong) UIImage *image;
 
 @end

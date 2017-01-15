@@ -96,12 +96,12 @@
 
 #pragma mark - UICollectionViewDelegate
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    [self.cardArr removeObjectAtIndex:indexPath.row];
-    [self.collectionView performBatchUpdates:^{
-        [self.collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:indexPath.row inSection:0]]];
-    }completion:nil];
-}
+//- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+//    [self.cardArr removeObjectAtIndex:indexPath.row];
+//    [self.collectionView performBatchUpdates:^{
+//        [self.collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:indexPath.row inSection:0]]];
+//    }completion:nil];
+//}
 
 #pragma mark - UICollectionViewDataSource
 
@@ -114,14 +114,17 @@
     
     cell.collectionView = collectionView;
     
-//    cell.closeBlock = ^{
-//        [self.cardArr removeObjectAtIndex:indexPath.row];
-//        [self.collectionView performBatchUpdates:^{
-//            [self.collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:indexPath.row inSection:0]]];
-//        }completion:nil];
-//    };
+    WEAK_REF(self)
+    cell.closeBlock = ^(NSIndexPath *index){
+        [self_.cardArr removeObjectAtIndex:index.row];
+        [self_.collectionView performBatchUpdates:^{
+            [self_.collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index.row inSection:0]]];
+        }completion:nil];
+    };
     
-    [cell updateModelWithImage:self.cardArr[indexPath.row].image title:@"www.baidu.com"];
+    WebModel *webModel = self_.cardArr[indexPath.row];
+    
+    [cell updateModelWithImage:webModel.image title:webModel.title];
     
     return cell;
 }
@@ -131,8 +134,15 @@
 - (void)cardBottomBtnClickedWithTag:(ButtonClicked)tag{
     switch (tag) {
         case ReturnButtonClicked:
-            [self removeFromSuperview];
+        {
+            [UIView animateWithDuration:.5 animations:^{
+                self.alpha = 0;
+            }completion:^(BOOL finished){
+                [self removeFromSuperview];
+                self.alpha = 1;
+            }];
             break;
+        }
         case AddButtonClicked:
             [self addCollectionViewCell];
             break;
@@ -144,6 +154,10 @@
 - (void)addCollectionViewCell{
     NSInteger num = [self.collectionView numberOfItemsInSection:0];
 
+    if (num >= 1) {
+        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:num - 1 inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:YES];
+    }
+    
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         WebModel *webModel = [WebModel new];
         webModel.title = @"test";

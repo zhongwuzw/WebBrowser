@@ -10,11 +10,11 @@
 
 @class CardMainView;
 
-typedef void(^closeBlock)();
+typedef void(^CloseBlock)(NSIndexPath *indexPath);
 
 @interface CardCollectionViewCell : UICollectionViewCell
 
-@property (nonatomic, copy) closeBlock closeBlock;
+@property (nonatomic, copy) CloseBlock closeBlock;
 @property (nonatomic, weak) UICollectionView *collectionView;
 
 - (void)updateModelWithImage:(UIImage *)image title:(NSString *)title;

@@ -15,10 +15,11 @@
 #define TOP_TOOL_BAR_HEIGHT 70
 #define TOP_TOOL_BAR_THRESHOLD 45
 
+#define Card_Cell_Close_Width 22
+#define Card_Cell_Close_Height 22
+
 #define TEXT_FIELD_PLACEHOLDER   @"搜索或输入网址"
 
 #define BAIDU_SEARCH_URL @"https://m.baidu.com/s?word=%@&ie=utf-8"
-
-#define homePath NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES)[0]
 
 #endif /* MacroConstants_h */

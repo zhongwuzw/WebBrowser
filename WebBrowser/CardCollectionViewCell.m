@@ -11,6 +11,8 @@
 #import "UIColor+ZWUtility.h"
 #import "UIImage+ZWUtility.h"
 
+#define Cell_Corner_Radius 10
+
 @interface CardCollectionViewCell () <UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) UIImageView *imageView;
@@ -32,15 +34,15 @@
     [super layoutSubviews];
     CGRect rect = self.bounds;
     rect.size.width -= 9;
-    self.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:10].CGPath;
+    self.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:Cell_Corner_Radius].CGPath;
     self.layer.shadowOffset = CGSizeMake(4, -2);
     self.layer.shadowOpacity = 0.5;
     self.layer.shadowColor = [[UIColor blackColor] colorWithAlphaComponent:0.5].CGColor;
 }
 
 - (void)commonInit{
-    self.backgroundColor = [UIColor lightGrayColor];
-    self.layer.cornerRadius = 10;
+    self.backgroundColor = UIColorFromRGB(0xE6E6E7);
+    self.layer.cornerRadius = Cell_Corner_Radius;
     
     self.imageView = ({
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.bounds];
@@ -84,7 +86,7 @@
             self.transform = CGAffineTransformMakeTranslation(shiftX, 0);
             break;
         default:
-            [UIView animateWithDuration:.4 delay:0 usingSpringWithDamping:0.4 initialSpringVelocity:.9 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            [UIView animateWithDuration:.4 delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:.1 options:UIViewAnimationOptionCurveEaseInOut animations:^{
                 self.transform = CGAffineTransformIdentity;
             }completion:nil];
             break;
@@ -92,11 +94,11 @@
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event{
-    CGRect rect = CGRectMake(self.contentView.width - 50, 0, 50, 40);
+    CGRect rect = CGRectMake(self.contentView.width - Card_Cell_Close_Width, 0, Card_Cell_Close_Width, Card_Cell_Close_Height);
     if (CGRectContainsPoint(rect, point)) {
         if (self.closeBlock)
         {
-            self.closeBlock();
+            self.closeBlock([self.collectionView indexPathForCell:self]);
             self.closeBlock = nil;
         }
     }

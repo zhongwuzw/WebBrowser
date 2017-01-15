@@ -69,4 +69,7 @@ block();\
 dispatch_async(dispatch_get_main_queue(), block);\
 }
 
+#define homePath NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES)[0]
+#define DocumentPath NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0]
+
 #endif /* MacroMethod_h */
