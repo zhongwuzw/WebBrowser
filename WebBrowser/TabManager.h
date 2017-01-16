@@ -8,11 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
+@class WebModel;
+
+typedef void(^MultiWebViewOperationBlock)(NSArray<WebModel *> *);
+typedef void(^CurWebViewOperationBlock)(WebModel *, BrowserWebView *);
+
 @interface WebModel : NSObject <NSSecureCoding>
 
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *url;
 @property (nonatomic, strong) UIImage *image;
+@property (nonatomic, copy) NSString *imageURL;
 
 @end
 
@@ -20,9 +26,9 @@
 
 @interface TabManager : NSObject
 
-@property (nonatomic, strong, readonly) NSMutableArray<BrowserWebView *> *browserViewArray;
-
 SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(TabManager)
 - (NSArray<WebModel *> *)getWebViewSnapshot;
+- (void)setMultiWebViewOperationBlockWith:(MultiWebViewOperationBlock)block;
+- (void)setCurWebViewOperationBlockWith:(CurWebViewOperationBlock)block;
 
 @end

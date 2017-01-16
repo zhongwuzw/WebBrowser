@@ -25,7 +25,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DelegateManager)
 - (instancetype)init{
     if (self = [super init]) {
         NSString *queueName = [NSString stringWithFormat:@"com.zhongwu.delegateManager-%@", [[NSUUID UUID] UUIDString]];
-        self.synchronizationQueue = dispatch_queue_create([queueName cStringUsingEncoding:NSASCIIStringEncoding], DISPATCH_QUEUE_SERIAL);
+        _synchronizationQueue = dispatch_queue_create([queueName cStringUsingEncoding:NSASCIIStringEncoding], DISPATCH_QUEUE_SERIAL);
     }
     return self;
 }

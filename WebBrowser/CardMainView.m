@@ -90,8 +90,9 @@
 }
 
 - (void)reloadCardMainView{
-    NSArray<WebModel *> *model = [[TabManager sharedInstance] getWebViewSnapshot];
-    [self setCardsWithArray:model];
+    [[TabManager sharedInstance] setMultiWebViewOperationBlockWith:^(NSArray<WebModel *> *modelArray){
+        [self setCardsWithArray:modelArray];
+    }];
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -124,7 +125,7 @@
     
     WebModel *webModel = self_.cardArr[indexPath.row];
     
-    [cell updateModelWithImage:webModel.image title:webModel.title];
+    [cell updateWithWebModel:webModel];
     
     return cell;
 }
@@ -161,7 +162,7 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         WebModel *webModel = [WebModel new];
         webModel.title = @"test";
-        webModel.image = [UIImage imageNamed:@"baidu"];
+        webModel.url = @"https://m.baidu.com/";
         [self.cardArr addObject:webModel];
         [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:num inSection:0]]];
     });

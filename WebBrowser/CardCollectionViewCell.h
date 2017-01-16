@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class CardMainView;
+@class WebModel;
 
 typedef void(^CloseBlock)(NSIndexPath *indexPath);
 
@@ -17,6 +18,6 @@ typedef void(^CloseBlock)(NSIndexPath *indexPath);
 @property (nonatomic, copy) CloseBlock closeBlock;
 @property (nonatomic, weak) UICollectionView *collectionView;
 
-- (void)updateModelWithImage:(UIImage *)image title:(NSString *)title;
+- (void)updateWithWebModel:(WebModel *)webModel;
 
 @end

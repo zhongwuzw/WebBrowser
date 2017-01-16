@@ -62,8 +62,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
         browserContainerView.frame = CGRectMake(0, 0, self.view.width, self.view.height);
         browserContainerView.webViewDelegate = self;
         self.browserButtonDelegate = browserContainerView;
-        
-        browserContainerView.scrollView.contentInset = UIEdgeInsetsMake(TOP_TOOL_BAR_HEIGHT, 0, 0, 0);
+
         
         browserContainerView;
     });

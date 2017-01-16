@@ -31,15 +31,21 @@
 }
 
 - (void)setupWebView{
-    NSMutableArray<BrowserWebView *> *browserArray = [[TabManager sharedInstance] browserViewArray];
-    
-    self.webView = [browserArray firstObject];
-    _webView.webViewDelegate = self;
-    [self addSubview:_webView];
-    _webView.frame = CGRectMake(0, 0, self.width, self.height);
-    _webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    WEAK_REF(self)
+    [[TabManager sharedInstance] setCurWebViewOperationBlockWith:^(WebModel *webModel, BrowserWebView *browserWebView){
+        STRONG_REF(self_)
+        if (self__) {
+            [self__ addSubview:browserWebView];
+            self__.webView = browserWebView;
+            self__.webView.webViewDelegate = self__;
+            self__.webView.frame = CGRectMake(0, 0, self__.width, self__.height);
+            self__.webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+            
+            [self__ startLoadWebViewWithURL:webModel.url];
+        }
+    }];
 
-    [self startLoadWebViewWithURL:@"https://m.baidu.com/"];
+//    [self startLoadWebViewWithURL:@"https://m.baidu.com/"];
 //    [self startLoadWebViewWithURL:@"http://i.ifeng.com"];
     
     [[DelegateManager sharedInstance] registerDelegate:self forKey:DelegateManagerBrowserContainerLoadURL];

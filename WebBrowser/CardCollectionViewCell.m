@@ -10,6 +10,7 @@
 #import "CardCollectionViewLayout.h"
 #import "UIColor+ZWUtility.h"
 #import "UIImage+ZWUtility.h"
+#import "TabManager.h"
 
 #define Cell_Corner_Radius 10
 
@@ -63,14 +64,25 @@
     });
 }
 
-- (void)updateModelWithImage:(UIImage *)image title:(NSString *)title{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        UIImage *finalImage;
-        finalImage = [image getCornerImageWithFrame:self.imageView.bounds cornerRadius:10 text:title atPoint:CGPointMake(15, 5)];
-        dispatch_main_async_safe(^{
-            [self.imageView setImage:finalImage];
-        })
-    });
+- (void)updateWithWebModel:(WebModel *)webModel{
+    if (webModel.image) {
+        [self.imageView setImage:webModel.image];
+    }
+    else
+    {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            UIImage *image = [UIImage imageWithContentsOfFile:webModel.imageURL];
+            if (!image) {
+                image = [UIImage imageNamed:@"baidu"];
+            }
+            UIImage *finalImage;
+            finalImage = [image getCornerImageWithFrame:self.imageView.bounds cornerRadius:10 text:webModel.title atPoint:CGPointMake(15, 5)];
+            webModel.image = finalImage;
+            dispatch_main_async_safe(^{
+                [self.imageView setImage:finalImage];
+            })
+        });
+    }
 }
 
 - (void)handlePanGesture:(UIPanGestureRecognizer *)pan{
