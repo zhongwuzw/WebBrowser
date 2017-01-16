@@ -53,7 +53,6 @@
 
 @interface TabManager ()
 
-@property (nonatomic, strong) NSMutableArray *browserViewArray;
 @property (nonatomic, strong) NSMutableArray<WebModel *> *webModelArray;
 @property (nonatomic, copy)   NSString *filePath;
 @property (nonatomic, strong) dispatch_queue_t synchQueue;
@@ -69,7 +68,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
         _filePath = [DocumentPath stringByAppendingPathComponent:MULTI_WINDOW_FILE_NAME];
         NSString *queueName = [NSString stringWithFormat:@"com.zhongwu.TabManager-%@", [[NSUUID UUID] UUIDString]];
         _synchQueue = dispatch_queue_create([queueName cStringUsingEncoding:NSASCIIStringEncoding], DISPATCH_QUEUE_SERIAL);
-        _browserViewArray = [NSMutableArray arrayWithCapacity:4];
         _webModelArray = [NSMutableArray arrayWithCapacity:4];
         [self loadWebModelArray];
     }
@@ -89,9 +87,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
                     
                     if (array && [array isKindOfClass:[NSArray<WebModel *> class]] && array.count > 0) {
                         [_webModelArray addObjectsFromArray:array];
-                        [_webModelArray enumerateObjectsUsingBlock:^(WebModel *model, NSUInteger idx, BOOL *stop){
-                            [_browserViewArray addObject:[NSNull null]];
-                        }];
                     }
                     else
                         [self setDefaultWebArray];
@@ -105,9 +100,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
     });
 }
 
-- (void)saveData{
+- (void)saveWebModelData{
     dispatch_async(self.synchQueue, ^{
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             NSMutableData *data = [NSMutableData data];
             NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
             [archiver encodeObject:_webModelArray forKey:MY_HISTORY_DATA_KEY];
@@ -120,10 +115,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
 
 - (void)setDefaultWebArray{
     [_webModelArray removeAllObjects];
-    [_browserViewArray removeAllObjects];
-    
     [_webModelArray addObject:[self getDefaultWebModel]];
-    [_browserViewArray addObject:[NSNull null]];
 }
 
 - (WebModel *)getDefaultWebModel{
@@ -136,9 +128,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
 
 - (void)setMultiWebViewOperationBlockWith:(MultiWebViewOperationBlock)block{
     dispatch_async(self.synchQueue, ^{
-        dispatch_main_async_safe(^{
+        dispatch_main_sync_safe(^{
             if (block) {
-                
                 block([_webModelArray copy]);
             }
         })
@@ -149,22 +140,37 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
 
 - (void)setCurWebViewOperationBlockWith:(CurWebViewOperationBlock)block{
     dispatch_async(self.synchQueue, ^{
-        dispatch_main_async_safe(^{
+        dispatch_main_sync_safe(^{
+            BrowserWebView *browserWebView;
+            WebModel *curModel = [_webModelArray lastObject];
+            if (!curModel.webView) {
+                browserWebView = [BrowserWebView new];
+                browserWebView.scrollView.contentInset = UIEdgeInsetsMake(TOP_TOOL_BAR_HEIGHT, 0, 0, 0);
+                _webModelArray[_webModelArray.count - 1].webView = browserWebView;
+            }
+            else
+                browserWebView = curModel.webView;
+            
+            browserWebView.scrollView.delegate = [BrowserViewController sharedInstance];
             if (block) {
-                BrowserWebView *browserWebView;
-                if ([[_browserViewArray lastObject] isKindOfClass:[NSNull class]]) {
-                    browserWebView = [BrowserWebView new];
-                    browserWebView.scrollView.contentInset = UIEdgeInsetsMake(TOP_TOOL_BAR_HEIGHT, 0, 0, 0);
-                    _browserViewArray[_browserViewArray.count - 1] = browserWebView;
-                }
-                else
-                    browserWebView = [_browserViewArray lastObject];
-                
-                browserWebView.scrollView.delegate = [BrowserViewController sharedInstance];
-                
                 block([_webModelArray lastObject], browserWebView);
             }
         })
+    });
+}
+
+- (void)setWebModelArray:(NSArray<WebModel *> *)webArray{
+    NSArray *copyArray = [webArray copy];
+    
+    dispatch_async(self.synchQueue, ^{
+        if (!copyArray.count) {
+            [self setDefaultWebArray];
+        }
+        else
+        {
+            [self.webModelArray removeAllObjects];
+            [self.webModelArray addObjectsFromArray:copyArray];
+        }
     });
 }
 

@@ -118,6 +118,7 @@
     WEAK_REF(self)
     cell.closeBlock = ^(NSIndexPath *index){
         [self_.cardArr removeObjectAtIndex:index.row];
+        [[TabManager sharedInstance] setWebModelArray:self_.cardArr];
         [self_.collectionView performBatchUpdates:^{
             [self_.collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index.row inSection:0]]];
         }completion:nil];
@@ -136,12 +137,7 @@
     switch (tag) {
         case ReturnButtonClicked:
         {
-            [UIView animateWithDuration:.5 animations:^{
-                self.alpha = 0;
-            }completion:^(BOOL finished){
-                [self removeFromSuperview];
-                self.alpha = 1;
-            }];
+            [self removeSelfFromSuperView];
             break;
         }
         case AddButtonClicked:
@@ -150,6 +146,16 @@
         default:
             break;
     }
+}
+
+- (void)removeSelfFromSuperView{
+    [UIView animateWithDuration:.5 animations:^{
+        self.alpha = 0;
+    }completion:^(BOOL finished){
+        [self removeFromSuperview];
+        self.alpha = 1;
+        [[TabManager sharedInstance] saveWebModelData];
+    }];
 }
 
 - (void)addCollectionViewCell{
@@ -161,10 +167,11 @@
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         WebModel *webModel = [WebModel new];
-        webModel.title = @"test";
+        webModel.title = @"百度一下";
         webModel.url = @"https://m.baidu.com/";
         [self.cardArr addObject:webModel];
         [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:num inSection:0]]];
+        [[TabManager sharedInstance] setWebModelArray:self.cardArr];
     });
 }
 

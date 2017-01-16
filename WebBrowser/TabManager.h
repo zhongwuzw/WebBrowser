@@ -19,6 +19,7 @@ typedef void(^CurWebViewOperationBlock)(WebModel *, BrowserWebView *);
 @property (nonatomic, copy) NSString *url;
 @property (nonatomic, strong) UIImage *image;
 @property (nonatomic, copy) NSString *imageURL;
+@property (nonatomic, strong) BrowserWebView *webView;
 
 @end
 
@@ -27,8 +28,9 @@ typedef void(^CurWebViewOperationBlock)(WebModel *, BrowserWebView *);
 @interface TabManager : NSObject
 
 SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(TabManager)
-- (NSArray<WebModel *> *)getWebViewSnapshot;
 - (void)setMultiWebViewOperationBlockWith:(MultiWebViewOperationBlock)block;
 - (void)setCurWebViewOperationBlockWith:(CurWebViewOperationBlock)block;
+- (void)setWebModelArray:(NSArray<WebModel *> *)webArray;
+- (void)saveWebModelData;
 
 @end

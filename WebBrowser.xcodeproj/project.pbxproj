@@ -542,6 +542,15 @@
 			name = Manager;
 			sourceTree = "<group>";
 		};
+		0E8059861E2D0C0D000DDA42 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				0E986A0D1D4D06170003900D /* TabManager.h */,
+				0E986A0E1D4D06170003900D /* TabManager.m */,
+			);
+			name = Manager;
+			sourceTree = "<group>";
+		};
 		0E829CD31E12073B008FF0A8 /* Search */ = {
 			isa = PBXGroup;
 			children = (
@@ -591,9 +600,8 @@
 		0E986A0C1D4D06030003900D /* Tab */ = {
 			isa = PBXGroup;
 			children = (
+				0E8059861E2D0C0D000DDA42 /* Manager */,
 				0E2C539C1DAA245A0077B9B4 /* View */,
-				0E986A0D1D4D06170003900D /* TabManager.h */,
-				0E986A0E1D4D06170003900D /* TabManager.m */,
 			);
 			name = Tab;
 			sourceTree = "<group>";
