@@ -9,16 +9,19 @@
 #import <Foundation/Foundation.h>
 
 @class WebModel;
+@class BrowserContainerView;
 
 typedef void(^MultiWebViewOperationBlock)(NSArray<WebModel *> *);
 typedef void(^CurWebViewOperationBlock)(WebModel *, BrowserWebView *);
+typedef void(^WebBrowserNoParamsBlock)();
 
 @interface WebModel : NSObject <NSSecureCoding>
 
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *url;
 @property (nonatomic, strong) UIImage *image;
-@property (nonatomic, copy) NSString *imageURL;
+@property (nonatomic, copy) NSString *imageKey;
+@property (nonatomic, assign) BOOL isImageFromDisk;
 @property (nonatomic, strong) BrowserWebView *webView;
 
 @end
@@ -27,10 +30,13 @@ typedef void(^CurWebViewOperationBlock)(WebModel *, BrowserWebView *);
 
 @interface TabManager : NSObject
 
+@property (nonatomic, weak) BrowserContainerView *browserContainerView;
+
 SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(TabManager)
 - (void)setMultiWebViewOperationBlockWith:(MultiWebViewOperationBlock)block;
 - (void)setCurWebViewOperationBlockWith:(CurWebViewOperationBlock)block;
-- (void)setWebModelArray:(NSArray<WebModel *> *)webArray;
+- (void)updateWebModelArray:(NSArray<WebModel *> *)webArray;
+- (void)updateWebModelArray:(NSArray<WebModel *> *)webArray completion:(WebBrowserNoParamsBlock)block;
 - (void)saveWebModelData;
 
 @end

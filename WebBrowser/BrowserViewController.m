@@ -25,20 +25,12 @@
 @property (nonatomic, assign) BOOL isWebViewDecelerate;
 @property (nonatomic, assign) ScrollDirection webViewScrollDirection;
 @property (nonatomic, weak) id<BrowserBottomToolBarButtonClickedDelegate> browserButtonDelegate;
-@property (nonatomic, strong) CardMainView *cardMainView;
 
 @end
 
 @implementation BrowserViewController
 
 SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
-
-- (CardMainView *)cardMainView{
-    if (!_cardMainView) {
-        _cardMainView = [[CardMainView alloc] initWithFrame:self.view.bounds];
-    }
-    return _cardMainView;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -246,9 +238,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
           [SettingsMenuItem itemWithText:@"历史" image:[UIImage imageNamed:@"album"] action:nil],
           [SettingsMenuItem itemWithText:@"设置" image:[UIImage imageNamed:@"album"] action:nil],
           [SettingsMenuItem itemWithText:@"多窗口" image:[UIImage imageNamed:@"album"] action:^{
-              [self_.cardMainView reloadCardMainView];
+              CardMainView *cardMainView = [[CardMainView alloc] initWithFrame:self.view.bounds];
+              [cardMainView reloadCardMainView];
               [UIView transitionWithView:self_.view duration:.5 options:UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionCurveEaseInOut animations:^{
-                  [self_.view addSubview:self_.cardMainView];
+                  [self_.view addSubview:cardMainView];
               }completion:nil];
           }],
           [SettingsMenuItem itemWithText:@"分享" image:[UIImage imageNamed:@"album"] action:nil]
@@ -262,10 +255,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    
-    if (!self.cardMainView.superview) {
-        self.cardMainView = nil;
-    }
 }
 
 @end

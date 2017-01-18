@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class BrowserWebView;
+@class WebModel;
 
 @protocol WebViewDelegate <NSObject>
 
@@ -24,6 +25,7 @@
 
 //MRC
 @property (nonatomic, unsafe_unretained) id<WebViewDelegate> webViewDelegate;
+@property (nonatomic, unsafe_unretained) WebModel *webModel;
 
 - (void)evaluateJavaScript:(NSString *)javaScriptString completionHandler:(void (^)(id, NSError *))completionHandler;
 

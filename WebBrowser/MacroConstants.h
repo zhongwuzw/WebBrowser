@@ -22,4 +22,6 @@
 
 #define BAIDU_SEARCH_URL @"https://m.baidu.com/s?word=%@&ie=utf-8"
 
+#define DEFAULT_CARD_CELL_IMAGE @"baidu"
+
 #endif /* MacroConstants_h */

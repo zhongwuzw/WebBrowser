@@ -12,6 +12,8 @@
 #import "CardMainBottomView.h"
 #import "BrowserHeader.h"
 #import "TabManager.h"
+#import "BrowserWebView.h"
+#import "BrowserContainerView.h"
 
 #define CardCellIdentifier @"cell"
 #define CollectionViewTopMargin 50
@@ -90,19 +92,32 @@
 }
 
 - (void)reloadCardMainView{
+    WEAK_REF(self)
     [[TabManager sharedInstance] setMultiWebViewOperationBlockWith:^(NSArray<WebModel *> *modelArray){
-        [self setCardsWithArray:modelArray];
+        STRONG_REF(self_)
+        if (self__) {
+            [self__ setCardsWithArray:modelArray];
+        }
     }];
 }
 
 #pragma mark - UICollectionViewDelegate
 
-//- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-//    [self.cardArr removeObjectAtIndex:indexPath.row];
-//    [self.collectionView performBatchUpdates:^{
-//        [self.collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:indexPath.row inSection:0]]];
-//    }completion:nil];
-//}
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.row < [self collectionView:collectionView numberOfItemsInSection:0] - 1) {
+        WebModel *webModel = [self.cardArr objectAtIndex:indexPath.row];
+        [self.cardArr removeObjectAtIndex:indexPath.row];
+        [self.cardArr addObject:webModel];
+        WEAK_REF(self)
+        [[TabManager sharedInstance] updateWebModelArray:self.cardArr completion:^{
+            [[TabManager sharedInstance].browserContainerView needUpdateWebView];
+            [self removeSelfFromSuperView];
+        }];
+    }
+    else{
+        [self removeSelfFromSuperView];
+    }
+}
 
 #pragma mark - UICollectionViewDataSource
 
@@ -118,7 +133,7 @@
     WEAK_REF(self)
     cell.closeBlock = ^(NSIndexPath *index){
         [self_.cardArr removeObjectAtIndex:index.row];
-        [[TabManager sharedInstance] setWebModelArray:self_.cardArr];
+        [[TabManager sharedInstance] updateWebModelArray:self_.cardArr];
         [self_.collectionView performBatchUpdates:^{
             [self_.collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index.row inSection:0]]];
         }completion:nil];
@@ -169,9 +184,10 @@
         WebModel *webModel = [WebModel new];
         webModel.title = @"百度一下";
         webModel.url = @"https://m.baidu.com/";
+        webModel.image = [UIImage imageNamed:DEFAULT_CARD_CELL_IMAGE];
         [self.cardArr addObject:webModel];
         [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:num inSection:0]]];
-        [[TabManager sharedInstance] setWebModelArray:self.cardArr];
+        [[TabManager sharedInstance] updateWebModelArray:self.cardArr];
     });
 }
 

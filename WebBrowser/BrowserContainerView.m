@@ -31,23 +31,11 @@
 }
 
 - (void)setupWebView{
-    WEAK_REF(self)
-    [[TabManager sharedInstance] setCurWebViewOperationBlockWith:^(WebModel *webModel, BrowserWebView *browserWebView){
-        STRONG_REF(self_)
-        if (self__) {
-            [self__ addSubview:browserWebView];
-            self__.webView = browserWebView;
-            self__.webView.webViewDelegate = self__;
-            self__.webView.frame = CGRectMake(0, 0, self__.width, self__.height);
-            self__.webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-            
-            [self__ startLoadWebViewWithURL:webModel.url];
-        }
-    }];
+    [TabManager sharedInstance].browserContainerView = self;
 
 //    [self startLoadWebViewWithURL:@"https://m.baidu.com/"];
 //    [self startLoadWebViewWithURL:@"http://i.ifeng.com"];
-    
+    [self needUpdateWebView];
     [[DelegateManager sharedInstance] registerDelegate:self forKey:DelegateManagerBrowserContainerLoadURL];
 }
 
@@ -55,6 +43,28 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
     
     [self.webView loadRequest:request];
+}
+
+- (void)needUpdateWebView{
+    WEAK_REF(self)
+    [[TabManager sharedInstance] setCurWebViewOperationBlockWith:^(WebModel *webModel, BrowserWebView *browserWebView){
+        STRONG_REF(self_)
+        if (self__) {
+            if (self__.webView != browserWebView) {
+                [self__.webView removeFromSuperview];
+                self__.webView = browserWebView;
+                [self__ addSubview:browserWebView];
+                [self__ bringSubviewToFront:browserWebView];
+                self__.webView.webViewDelegate = self__;
+                self__.webView.frame = CGRectMake(0, 0, self__.width, self__.height);
+                self__.webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+                
+                if (!browserWebView.request) {
+                    [self__ startLoadWebViewWithURL:webModel.url];
+                }
+            }
+        }
+    }];
 }
 
 #pragma mark - WebViewDelegate Method
@@ -66,16 +76,16 @@
     return YES;
 }
 
-#pragma mark - Dealloc
-
-- (void)dealloc{
-    self.webView.webViewDelegate = nil; //BrowserWebView是在MRC下的，所以这里强行设置webViewDelegate为nil
-    self.webView.delegate = nil;
-    self.webView.scrollView.delegate = nil;
-    [self.webView loadHTMLString:@"" baseURL:nil];
-    [self.webView stopLoading];
-    self.webView = nil;
-}
+//#pragma mark - Dealloc
+//
+//- (void)dealloc{
+//    self.webView.webViewDelegate = nil; //BrowserWebView是在MRC下的，所以这里强行设置webViewDelegate为nil
+//    self.webView.delegate = nil;
+//    self.webView.scrollView.delegate = nil;
+//    [self.webView loadHTMLString:@"" baseURL:nil];
+//    [self.webView stopLoading];
+//    self.webView = nil;
+//}
 
 #pragma mark - BrowserBottomToolBarButtonClickedDelegate
 

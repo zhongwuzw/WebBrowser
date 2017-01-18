@@ -65,24 +65,17 @@
 }
 
 - (void)updateWithWebModel:(WebModel *)webModel{
-    if (webModel.image) {
-        [self.imageView setImage:webModel.image];
-    }
-    else
-    {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-            UIImage *image = [UIImage imageWithContentsOfFile:webModel.imageURL];
-            if (!image) {
-                image = [UIImage imageNamed:@"baidu"];
-            }
+    //because of user may operate on webView,so needs update image every time.
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        if (!webModel.isImageFromDisk) {
             UIImage *finalImage;
-            finalImage = [image getCornerImageWithFrame:self.imageView.bounds cornerRadius:10 text:webModel.title atPoint:CGPointMake(15, 5)];
+            finalImage = [webModel.image getCornerImageWithFrame:self.imageView.bounds cornerRadius:10 text:webModel.title atPoint:CGPointMake(15, 5)];
             webModel.image = finalImage;
-            dispatch_main_async_safe(^{
-                [self.imageView setImage:finalImage];
-            })
-        });
-    }
+        }
+        dispatch_main_async_safe(^{
+            [self.imageView setImage:webModel.image];
+        })
+    });
 }
 
 - (void)handlePanGesture:(UIPanGestureRecognizer *)pan{
