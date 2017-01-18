@@ -155,8 +155,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
 
 - (WebModel *)getDefaultWebModel{
     WebModel *webModel = [WebModel new];
-    webModel.title = @"百度一下";
-    webModel.url = @"https://m.baidu.com/";
+    webModel.title = DEFAULT_CARD_CELL_TITLE;
+    webModel.url = DEFAULT_CARD_CELL_URL;
     
     return webModel;
 }
@@ -164,6 +164,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
 - (void)setMultiWebViewOperationBlockWith:(MultiWebViewOperationBlock)block{
     dispatch_async(self.synchQueue, ^{
         [_webModelArray enumerateObjectsUsingBlock:^(WebModel *webModel, NSUInteger idx, BOOL *stop){
+            webModel.isImageFromDisk = NO;
             UIImage *image = [webModel.webView snapshotForBrowserWebView];
             if (!image) {
                 image = [self imageFromDiskCacheForKey:webModel.imageKey];
@@ -295,7 +296,17 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
 #pragma mark - Notification Method
 
 - (void)clearMemory{
-    
+    dispatch_async(self.synchQueue, ^{
+        __block WebModel *toDeleteWebModel;
+        [self.webModelArray enumerateObjectsUsingBlock:^(WebModel *webModel, NSUInteger idx, BOOL *stop){
+            if (webModel.webView && idx < self.webModelArray.count - 1) {
+                toDeleteWebModel = webModel;
+                *stop = YES;
+            }
+        }];
+        
+        toDeleteWebModel.webView = nil;
+    });
 }
 
 - (void)cleanDisk{

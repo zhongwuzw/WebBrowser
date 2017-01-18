@@ -23,5 +23,7 @@
 #define BAIDU_SEARCH_URL @"https://m.baidu.com/s?word=%@&ie=utf-8"
 
 #define DEFAULT_CARD_CELL_IMAGE @"baidu"
+#define DEFAULT_CARD_CELL_URL   @"https://m.baidu.com/"
+#define DEFAULT_CARD_CELL_TITLE @"百度一下"
 
 #endif /* MacroConstants_h */

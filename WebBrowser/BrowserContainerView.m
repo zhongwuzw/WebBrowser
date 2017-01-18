@@ -59,9 +59,9 @@
                 self__.webView.frame = CGRectMake(0, 0, self__.width, self__.height);
                 self__.webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
                 
-                if (!browserWebView.request) {
-                    [self__ startLoadWebViewWithURL:webModel.url];
-                }
+            }
+            if (!browserWebView.request) {
+                [self__ startLoadWebViewWithURL:webModel.url];
             }
         }
     }];

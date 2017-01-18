@@ -145,7 +145,16 @@ static CGFloat BottomPercent = 0.85;
     UICollectionViewLayoutAttributes *attributes = self.attributesList[itemIndexPath.row];
     
     if ([self.deletePath containsObject:itemIndexPath]) {
-        NSInteger randomLoc = (itemIndexPath.row % 2 == 0) ? 1 : -1;
+        NSInteger randomLoc;
+        CGAffineTransform transform = [self.collectionView cellForItemAtIndexPath:itemIndexPath].transform;
+        if (transform.tx < 0) {
+            randomLoc = -1;
+        }
+        else if (transform.tx > 0){
+            randomLoc = 1;
+        }
+        else
+            randomLoc = (itemIndexPath.row % 2 == 0) ? 1 : -1;
         CGFloat x = self.collectionView.width * randomLoc;
         
         attributes.transform = CGAffineTransformMakeTranslation(x, 0);

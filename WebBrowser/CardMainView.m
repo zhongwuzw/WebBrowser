@@ -110,8 +110,10 @@
         [self.cardArr addObject:webModel];
         WEAK_REF(self)
         [[TabManager sharedInstance] updateWebModelArray:self.cardArr completion:^{
-            [[TabManager sharedInstance].browserContainerView needUpdateWebView];
-            [self removeSelfFromSuperView];
+            STRONG_REF(self_)
+            if (self__) {
+                [self__ removeSelfFromSuperView];
+            }
         }];
     }
     else{
@@ -132,14 +134,17 @@
     
     WEAK_REF(self)
     cell.closeBlock = ^(NSIndexPath *index){
-        [self_.cardArr removeObjectAtIndex:index.row];
-        [[TabManager sharedInstance] updateWebModelArray:self_.cardArr];
-        [self_.collectionView performBatchUpdates:^{
-            [self_.collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index.row inSection:0]]];
-        }completion:nil];
+        STRONG_REF(self_)
+        if (self__) {
+            [self__.cardArr removeObjectAtIndex:index.row];
+            [[TabManager sharedInstance] updateWebModelArray:self__.cardArr];
+            [self__.collectionView performBatchUpdates:^{
+                [self__.collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index.row inSection:0]]];
+            }completion:nil];
+        }
     };
     
-    WebModel *webModel = self_.cardArr[indexPath.row];
+    WebModel *webModel = self.cardArr[indexPath.row];
     
     [cell updateWithWebModel:webModel];
     
@@ -164,6 +169,8 @@
 }
 
 - (void)removeSelfFromSuperView{
+    [[TabManager sharedInstance].browserContainerView needUpdateWebView];
+    
     [UIView animateWithDuration:.5 animations:^{
         self.alpha = 0;
     }completion:^(BOOL finished){
@@ -182,8 +189,8 @@
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         WebModel *webModel = [WebModel new];
-        webModel.title = @"百度一下";
-        webModel.url = @"https://m.baidu.com/";
+        webModel.title = DEFAULT_CARD_CELL_TITLE;
+        webModel.url = DEFAULT_CARD_CELL_URL;
         webModel.image = [UIImage imageNamed:DEFAULT_CARD_CELL_IMAGE];
         [self.cardArr addObject:webModel];
         [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:num inSection:0]]];

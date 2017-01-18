@@ -9,6 +9,7 @@
 #import "BrowserWebView.h"
 #import "WebViewHeader.h"
 #import "HttpHelper.h"
+#import "TabManager.h"
 
 #if TARGET_IPHONE_SIMULATOR
 #import <objc/objc-runtime.h>
@@ -81,7 +82,7 @@
     if(webView)
     {
         if([webView respondsToSelector:NSSelectorFromString(MAIN_FRAME_URL)])
-            return [(MAIN_FRAME_URL__PROTO objc_msgSend)(webView, NSSelectorFromString(MAIN_FRAME_URL)) autorelease];
+            return [[(MAIN_FRAME_URL__PROTO objc_msgSend)(webView, NSSelectorFromString(MAIN_FRAME_URL)) retain] autorelease];
         else
             return nil;
     }
@@ -217,6 +218,7 @@
 }
 
 - (void)webViewForMainFrameDidCommitLoad:(BrowserWebView *)webView{
+    self.webModel.url = [self mainFURL];
     [[DelegateManager sharedInstance] performSelector:@selector(webViewForMainFrameDidCommitLoad:) arguments:@[self] key:DelegateManagerWebView];
 }
 
@@ -238,7 +240,19 @@
 #pragma mark - replaced method calling
 
 - (void)webView:(BrowserWebView *)webView gotTitleName:(NSString*)titleName{
+    self.webModel.title = titleName;
     [[DelegateManager sharedInstance] performSelector:@selector(webView:gotTitleName:) arguments:@[webView,titleName] key:DelegateManagerWebView];
+}
+
+- (void)dealloc{
+    self.webViewDelegate = nil; //BrowserWebView是在MRC下的，所以这里强行设置webViewDelegate为nil
+    self.webModel = nil;
+    self.delegate = nil;
+    self.scrollView.delegate = nil;
+    [self stopLoading];
+    [self loadHTMLString:@"" baseURL:nil];
+    
+    [super dealloc];
 }
 
 @end

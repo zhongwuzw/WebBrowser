@@ -91,10 +91,20 @@
             self.transform = CGAffineTransformMakeTranslation(shiftX, 0);
             break;
         default:
-            [UIView animateWithDuration:.4 delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:.1 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-                self.transform = CGAffineTransformIdentity;
-            }completion:nil];
+        {
+            if (fabs(shiftX) > self.contentView.width / 4) {
+                if (self.closeBlock) {
+                    self.closeBlock([self.collectionView indexPathForCell:self]);
+                    self.closeBlock = nil;
+                }
+            }
+            else{
+                [UIView animateWithDuration:.4 delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:.1 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                    self.transform = CGAffineTransformIdentity;
+                }completion:nil];
+            }
             break;
+        }
     }
 }
 
