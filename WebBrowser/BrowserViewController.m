@@ -15,6 +15,7 @@
 #import "BrowserBottomToolBar.h"
 #import "CardMainView.h"
 #import "SettingsViewController.h"
+#import "SettingsTableViewController.h"
 
 @interface BrowserViewController () <WebViewDelegate, BrowserBottomToolBarButtonClickedDelegate, SKStoreProductViewControllerDelegate>
 
@@ -236,7 +237,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
         @[
           [SettingsMenuItem itemWithText:@"书签" image:[UIImage imageNamed:@"album"] action:nil],
           [SettingsMenuItem itemWithText:@"历史" image:[UIImage imageNamed:@"album"] action:nil],
-          [SettingsMenuItem itemWithText:@"设置" image:[UIImage imageNamed:@"album"] action:nil],
+          [SettingsMenuItem itemWithText:@"设置" image:[UIImage imageNamed:@"album"] action:^{
+              SettingsTableViewController *settingsTableVC = [[SettingsTableViewController alloc] initWithStyle:UITableViewStylePlain];
+              [self_.navigationController pushViewController:settingsTableVC animated:YES];
+          }],
           [SettingsMenuItem itemWithText:@"多窗口" image:[UIImage imageNamed:@"album"] action:^{
               CardMainView *cardMainView = [[CardMainView alloc] initWithFrame:self.view.bounds];
               [cardMainView reloadCardMainView];

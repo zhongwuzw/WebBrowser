@@ -27,7 +27,6 @@
     if (self = [super init]) {
         _title = [aDecoder decodeObjectOfClass:[NSString class] forKey:KEY_WEB_TITLE];
         _url = [aDecoder decodeObjectOfClass:[NSString class] forKey:KEY_WEB_URL];
-//        _image = [aDecoder decodeObjectOfClass:[UIImage class] forKey:KEY_WEB_IMAGE];
         _imageKey = [aDecoder decodeObjectOfClass:[NSString class] forKey:KEY_WEB_IMAGE_URL];
     }
     
@@ -37,7 +36,6 @@
 - (void)encodeWithCoder:(NSCoder *)aCoder{
     [aCoder encodeObject:self.title forKey:KEY_WEB_TITLE];
     [aCoder encodeObject:self.url forKey:KEY_WEB_URL];
-//    [aCoder encodeObject:self.image forKey:KEY_WEB_IMAGE];
     [aCoder encodeObject:self.imageKey forKey:KEY_WEB_IMAGE_URL];
 }
 
@@ -184,8 +182,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
         })
     });
 }
-
-# warning 每次赋值后都需要对两个数组做判空处理，避免数组出现为空的情况
 
 - (void)setCurWebViewOperationBlockWith:(CurWebViewOperationBlock)block{
     dispatch_async(self.synchQueue, ^{

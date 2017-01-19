@@ -26,6 +26,8 @@
 		0E3D2B771E24CD3000364B69 /* UIImage+ZWUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3D2B761E24CD3000364B69 /* UIImage+ZWUtility.m */; };
 		0E48FB011DA3FD4B00B8FCDB /* BrowserWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E48FB001DA3FD4B00B8FCDB /* BrowserWebView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		0E5000511E0B6D60004BA658 /* CardMainBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E5000501E0B6D60004BA658 /* CardMainBottomView.m */; };
+		0E5988A51E2F8070003259C0 /* SettingActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E5988A31E2F8070003259C0 /* SettingActivityTableViewCell.m */; };
+		0E5988A61E2F8070003259C0 /* SettingActivityTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E5988A41E2F8070003259C0 /* SettingActivityTableViewCell.xib */; };
 		0E681F2A1D4AEC3F003534F5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E681F291D4AEC3F003534F5 /* main.m */; };
 		0E681F2D1D4AEC3F003534F5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E681F2C1D4AEC3F003534F5 /* AppDelegate.m */; };
 		0E681F381D4AEC3F003534F5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E681F361D4AEC3F003534F5 /* LaunchScreen.storyboard */; };
@@ -123,6 +125,9 @@
 		0E48FB031DA4058300B8FCDB /* WebViewHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebViewHeader.h; sourceTree = "<group>"; };
 		0E50004F1E0B6D60004BA658 /* CardMainBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardMainBottomView.h; sourceTree = "<group>"; };
 		0E5000501E0B6D60004BA658 /* CardMainBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardMainBottomView.m; sourceTree = "<group>"; };
+		0E5988A21E2F8070003259C0 /* SettingActivityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingActivityTableViewCell.h; sourceTree = "<group>"; };
+		0E5988A31E2F8070003259C0 /* SettingActivityTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingActivityTableViewCell.m; sourceTree = "<group>"; };
+		0E5988A41E2F8070003259C0 /* SettingActivityTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingActivityTableViewCell.xib; sourceTree = "<group>"; };
 		0E681F251D4AEC3F003534F5 /* WebBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E681F291D4AEC3F003534F5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0E681F2B1D4AEC3F003534F5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -371,6 +376,9 @@
 			children = (
 				0E3A6B711E11102C00071397 /* SettingsCollectionViewCell.h */,
 				0E3A6B721E11102C00071397 /* SettingsCollectionViewCell.m */,
+				0E5988A21E2F8070003259C0 /* SettingActivityTableViewCell.h */,
+				0E5988A31E2F8070003259C0 /* SettingActivityTableViewCell.m */,
+				0E5988A41E2F8070003259C0 /* SettingActivityTableViewCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -768,6 +776,7 @@
 				0E7795941E20F8C900CE86BE /* SearchTableViewCell.xib in Resources */,
 				0EBDC6241E1DDEC100B6A4DB /* SearchInputView.xib in Resources */,
 				0E681F381D4AEC3F003534F5 /* LaunchScreen.storyboard in Resources */,
+				0E5988A61E2F8070003259C0 /* SettingActivityTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -833,6 +842,7 @@
 				0EF025751DD99FAC0011019F /* BaiduSugResponseModel.m in Sources */,
 				0E2329311DADE07B007E9886 /* BrowserTopToolBar.m in Sources */,
 				0E2329341DAE19BB007E9886 /* TopToolBarShapeView.m in Sources */,
+				0E5988A51E2F8070003259C0 /* SettingActivityTableViewCell.m in Sources */,
 				0E681F2D1D4AEC3F003534F5 /* AppDelegate.m in Sources */,
 				0E8EE8351E11277100B6DADF /* SettingAnimator.m in Sources */,
 				0E1F9F9E1DD2D86E00FA84EA /* NJKWebViewProgress.m in Sources */,

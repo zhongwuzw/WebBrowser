@@ -41,6 +41,7 @@
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:browserViewController];
     navigationController.navigationBarHidden = YES;
+    navigationController.view.backgroundColor = [UIColor whiteColor];
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.rootViewController = navigationController;
