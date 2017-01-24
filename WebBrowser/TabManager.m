@@ -357,7 +357,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
             }
             
             if (completionBlock) {
-                dispatch_main_async_safe(completionBlock)
+                dispatch_main_async_safe(^{
+                    completionBlock();
+                })
             }
         });
     });

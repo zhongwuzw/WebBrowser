@@ -110,7 +110,7 @@
     if(webView)
     {
         if([webView respondsToSelector:NSSelectorFromString(MAIN_FRAME_TITLE)])
-            return [(MAIN_FRAME_TITLE__PROTO objc_msgSend)(webView, NSSelectorFromString(MAIN_FRAME_TITLE)) autorelease];
+            return [[(MAIN_FRAME_TITLE__PROTO objc_msgSend)(webView, NSSelectorFromString(MAIN_FRAME_TITLE)) retain] autorelease];
         else
             return nil;
     }

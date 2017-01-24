@@ -10,6 +10,28 @@
 
 @implementation NSFileManager (ZWUtility)
 
+- (long long)getAllocatedSizeOfDirectoryAtURLS:(NSArray<NSURL *> *)directoryURLs error:(NSError * _Nullable *)error{
+    __block unsigned long long accumulatedSize = 0;
+    
+    __block BOOL isError = NO;
+    [directoryURLs enumerateObjectsUsingBlock:^(NSURL *url, NSUInteger idx, BOOL *stop){
+        long long size = 0;
+        if ((size = [self getAllocatedSizeOfDirectoryAtURL:url error:error]) != -1) {
+            accumulatedSize += size;
+        }
+        else{
+            isError = YES;
+            *stop = YES;
+        }
+    }];
+    
+    if (isError) {
+        return -1;
+    }
+    
+    return accumulatedSize;
+}
+
 - (long long)getAllocatedSizeOfDirectoryAtURL:(NSURL *)directoryURL error:(NSError * _Nullable *)error{
     unsigned long long accumulatedSize = 0;
     

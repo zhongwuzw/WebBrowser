@@ -10,4 +10,8 @@
 
 @interface NSFileManager (ZWUtility)
 
+- (long long)getAllocatedSizeOfDirectoryAtURL:(NSURL *)directoryURL error:(NSError **)error;
+
+- (long long)getAllocatedSizeOfDirectoryAtURLS:(NSArray<NSURL *> *)directoryURLs error:(NSError **)error;
+
 @end

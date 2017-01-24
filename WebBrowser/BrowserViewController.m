@@ -16,6 +16,7 @@
 #import "CardMainView.h"
 #import "SettingsViewController.h"
 #import "SettingsTableViewController.h"
+#import "HistoryTableViewController.h"
 
 @interface BrowserViewController () <WebViewDelegate, BrowserBottomToolBarButtonClickedDelegate, SKStoreProductViewControllerDelegate>
 
@@ -236,7 +237,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
         NSArray<SettingsMenuItem *> *items =
         @[
           [SettingsMenuItem itemWithText:@"书签" image:[UIImage imageNamed:@"album"] action:nil],
-          [SettingsMenuItem itemWithText:@"历史" image:[UIImage imageNamed:@"album"] action:nil],
+          [SettingsMenuItem itemWithText:@"历史" image:[UIImage imageNamed:@"album"] action:^{
+              HistoryTableViewController *hisTableVC = [[HistoryTableViewController alloc] initWithStyle:UITableViewStylePlain];
+              [self_.navigationController pushViewController:hisTableVC animated:YES];
+          }],
           [SettingsMenuItem itemWithText:@"设置" image:[UIImage imageNamed:@"album"] action:^{
               SettingsTableViewController *settingsTableVC = [[SettingsTableViewController alloc] initWithStyle:UITableViewStylePlain];
               [self_.navigationController pushViewController:settingsTableVC animated:YES];

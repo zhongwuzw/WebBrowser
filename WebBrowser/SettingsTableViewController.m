@@ -8,13 +8,14 @@
 
 #import "SettingsTableViewController.h"
 #import "SettingActivityTableViewCell.h"
+#import "NSFileManager+ZWUtility.h"
 
 #define CELL_IDENTIFIER @"CELL_IDENTIFIER"
 
 @interface SettingsTableViewController ()
 
 @property (nonatomic, copy) NSArray *dataArray;
-@property (nonatomic, copy) NSArray *selArray;
+@property (nonatomic, copy) NSArray *handleSelArray;
 
 @end
 
@@ -28,7 +29,6 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     self.dataArray = @[@"清除缓存"];
-    self.dataArray = @[@"cleanCache"];
     
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([SettingActivityTableViewCell class]) bundle:nil] forCellReuseIdentifier:CELL_IDENTIFIER];
     self.tableView.tableFooterView = [UIView new];
@@ -49,7 +49,18 @@
 - (void)handleTableViewSelectAt:(NSInteger)index{
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"您确定清除缓存？" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
-    UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action){}];
+    UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action){
+        SettingActivityTableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+        [cell.activityIndicatorView startAnimating];
+        cell.rightLabel.text = @"";
+        WEAK_REF(self)
+        [self cleanCacheWithURLs:[NSArray arrayWithObjects:[NSURL URLWithString:CachePath], [NSURL URLWithString:TempPath], nil] completionBlock:^{
+            STRONG_REF(self_)
+            if (self__) {
+                [self__.tableView reloadData];
+            }
+        }];
+    }];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){}];
     
     [alert addAction:defaultAction];
@@ -64,14 +75,22 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CELL_IDENTIFIER forIndexPath:indexPath];
+    SettingActivityTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CELL_IDENTIFIER forIndexPath:indexPath];
     
-    cell.textLabel.text = self.dataArray[indexPath.row];
+    cell.leftLabel.text = self.dataArray[indexPath.row];
+    [cell.activityIndicatorView startAnimating];
     
-    NSString *sel = self.selArray[indexPath.row];
-    if ([self respondsToSelector:NSSelectorFromString(sel)]) {
-        [self performSelector:NSSelectorFromString(sel)];
-    }
+    [cell setCalculateBlock:^{
+        NSArray *urlArray = [NSArray arrayWithObjects:[NSURL URLWithString:CachePath], [NSURL URLWithString:TempPath], nil];
+        long long size = [[NSFileManager defaultManager] getAllocatedSizeOfDirectoryAtURLS:urlArray error:nil];
+        
+        if (size == -1)
+            return @"0M";
+        
+        NSString *sizeStr = [NSByteCountFormatter stringFromByteCount:size countStyle:NSByteCountFormatterCountStyleBinary];
+        
+        return sizeStr;
+    }];
     
     return cell;
 }
@@ -83,10 +102,43 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-#pragma mark - SEL Method
+#pragma mark - Clean Cache Method
 
-- (void)cleanCache{
-    
+- (void)cleanCacheWithURLs:(NSArray<NSURL *> *)array completionBlock:(SettingVoidReturnNoParamsBlock)completionBlock{
+    if (array.count == 0) {
+        return;
+    }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        [array enumerateObjectsUsingBlock:^(NSURL *diskCacheURL, NSUInteger idx, BOOL *stop){
+            @autoreleasepool {
+                NSArray *resourceKeys = @[NSURLIsDirectoryKey];
+                
+                NSDirectoryEnumerator *fileEnumerator = [[NSFileManager defaultManager] enumeratorAtURL:diskCacheURL includingPropertiesForKeys:resourceKeys options:NSDirectoryEnumerationSkipsHiddenFiles errorHandler:NULL];
+                
+                NSMutableArray *urlsToDelete = [NSMutableArray array];
+                for (NSURL *fileURL in fileEnumerator) {
+                    NSDictionary *resourceValues = [fileURL resourceValuesForKeys:resourceKeys error:NULL];
+                    
+                    if ([resourceValues[NSURLIsDirectoryKey] boolValue]) {
+                        continue;
+                    }
+                    
+                    [urlsToDelete addObject:fileURL];
+                }
+                
+                for (NSURL *fileURL in urlsToDelete) {
+                    [[NSFileManager defaultManager] removeItemAtURL:fileURL error:nil];
+                }
+
+            }
+        }];
+        
+        if (completionBlock) {
+            dispatch_main_async_safe(^{
+                completionBlock();
+            })
+        }
+    });
 }
 
 @end

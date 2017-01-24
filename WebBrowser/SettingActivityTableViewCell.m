@@ -10,10 +10,6 @@
 
 @interface SettingActivityTableViewCell ()
 
-@property (weak, nonatomic) IBOutlet UILabel *leftLabel;
-@property (weak, nonatomic) IBOutlet UILabel *rightLabel;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicatorView;
-
 @end
 
 @implementation SettingActivityTableViewCell
@@ -21,6 +17,25 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
+    [self.activityIndicatorView setHidesWhenStopped:YES];
+}
+
+- (void)setCalculateBlock:(SettingNoParamsBlock)block{
+    if (block) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            NSString *result = block();
+            if ([result isKindOfClass:[NSString class]]) {
+                WEAK_REF(self)
+                dispatch_main_async_safe(^{
+                    STRONG_REF(self_)
+                    if (self__) {
+                        [self__.activityIndicatorView stopAnimating];
+                        self__.rightLabel.text = result;
+                    }
+                });
+            }
+        });
+    }
 }
 
 @end

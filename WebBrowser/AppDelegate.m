@@ -35,7 +35,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
     [DDLog addLogger:[DDASLLogger sharedInstance]];
-    DDLogDebug(@"Home Path : %@", homePath);
+    DDLogDebug(@"Home Path : %@", HomePath);
 
     BrowserViewController *browserViewController = [BrowserViewController new];
     
