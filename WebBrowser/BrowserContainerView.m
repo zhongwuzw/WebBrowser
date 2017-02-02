@@ -11,7 +11,7 @@
 #import "BrowserWebView.h"
 #import "HttpHelper.h"
 
-@interface BrowserContainerView () <WebViewDelegate>
+@interface BrowserContainerView ()
 
 @property (nonatomic, weak) BrowserWebView *webView;
 
@@ -55,7 +55,6 @@
                 self__.webView = browserWebView;
                 [self__ addSubview:browserWebView];
                 [self__ bringSubviewToFront:browserWebView];
-                self__.webView.webViewDelegate = self__;
                 self__.webView.frame = CGRectMake(0, 0, self__.width, self__.height);
                 self__.webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
                 
@@ -68,13 +67,6 @@
 }
 
 #pragma mark - WebViewDelegate Method
-
-- (BOOL)webView:(BrowserWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
-    if ([self.webViewDelegate respondsToSelector:@selector(webView:shouldStartLoadWithRequest:navigationType:)]) {
-        return [self.webViewDelegate webView:webView shouldStartLoadWithRequest:request navigationType:navigationType];
-    }
-    return YES;
-}
 
 //#pragma mark - Dealloc
 //

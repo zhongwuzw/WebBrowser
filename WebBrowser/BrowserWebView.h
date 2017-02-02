@@ -23,8 +23,6 @@
 
 @interface BrowserWebView : UIWebView<UIWebViewDelegate>
 
-//MRC
-@property (nonatomic, unsafe_unretained) id<WebViewDelegate> webViewDelegate;
 @property (nonatomic, unsafe_unretained) WebModel *webModel;
 
 - (void)evaluateJavaScript:(NSString *)javaScriptString completionHandler:(void (^)(id, NSError *))completionHandler;

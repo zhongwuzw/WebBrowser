@@ -17,6 +17,7 @@
 #import "SettingsViewController.h"
 #import "SettingsTableViewController.h"
 #import "HistoryTableViewController.h"
+#import "DelegateManager+WebViewDelegate.h"
 
 @interface BrowserViewController () <WebViewDelegate, BrowserBottomToolBarButtonClickedDelegate, SKStoreProductViewControllerDelegate>
 
@@ -44,6 +45,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
     self.lastContentOffset = - TOP_TOOL_BAR_HEIGHT;
     
     [[DelegateManager sharedInstance] registerDelegate:self forKey:DelegateManagerWebView];
+    
+    [[DelegateManager sharedInstance] addDelegate:self];
 }
 
 - (void)initializeView{
@@ -54,10 +57,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
         [self.view addSubview:browserContainerView];
         
         browserContainerView.frame = CGRectMake(0, 0, self.view.width, self.view.height);
-        browserContainerView.webViewDelegate = self;
         self.browserButtonDelegate = browserContainerView;
 
-        
         browserContainerView;
     });
     
@@ -219,9 +220,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
     //点击链接或加载页面等情况下重新恢复界面
     if (navigationType == UIWebViewNavigationTypeLinkClicked || navigationType == UIWebViewNavigationTypeOther) {
         [self recoverToolBar];
-    }
-    if ([self.browserTopToolBar respondsToSelector:@selector(webView:shouldStartLoadWithRequest:navigationType:)]) {
-        return [self.browserTopToolBar webView:webView shouldStartLoadWithRequest:request navigationType:navigationType];
     }
     return YES;
 }

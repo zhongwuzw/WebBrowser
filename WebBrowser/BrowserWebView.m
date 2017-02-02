@@ -10,6 +10,7 @@
 #import "WebViewHeader.h"
 #import "HttpHelper.h"
 #import "TabManager.h"
+#import "DelegateManager+WebViewDelegate.h"
 
 #if TARGET_IPHONE_SIMULATOR
 #import <objc/objc-runtime.h>
@@ -19,7 +20,6 @@
 #endif
 
 @interface BrowserWebView ()
-
 @end
 
 @implementation BrowserWebView
@@ -135,10 +135,19 @@
         return NO;
     }
     
-    if ([self.webViewDelegate respondsToSelector:@selector(webView:shouldStartLoadWithRequest:navigationType:)]) {
-        return [self.webViewDelegate webView:webView shouldStartLoadWithRequest:request navigationType:navigationType];
+    BOOL isShouldStart = YES;
+    
+    NSArray<WeakWebBrowserDelegate *> *delegates = [[DelegateManager sharedInstance] webViewDelegates];
+    for (WeakWebBrowserDelegate *delegate in delegates) {
+        if ([delegate.delegate respondsToSelector:@selector(webView:shouldStartLoadWithRequest:navigationType:)]) {
+            isShouldStart = [delegate.delegate webView:webView shouldStartLoadWithRequest:request navigationType:navigationType];
+            if (!isShouldStart) {
+                return isShouldStart;
+            }
+        }
     }
-    return YES;
+    
+    return isShouldStart;
 }
 
 - (void)webViewDidFinishLoad:(BrowserWebView *)webView{
@@ -245,7 +254,6 @@
 }
 
 - (void)dealloc{
-    self.webViewDelegate = nil; //BrowserWebView是在MRC下的，所以这里强行设置webViewDelegate为nil
     self.webModel = nil;
     self.delegate = nil;
     self.scrollView.delegate = nil;

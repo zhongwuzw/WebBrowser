@@ -13,7 +13,6 @@
 @interface BrowserContainerView : UIView <BrowserBottomToolBarButtonClickedDelegate>
 
 @property (nonatomic, readonly) UIScrollView *scrollView;
-@property (nonatomic, weak) id<WebViewDelegate> webViewDelegate;
 
 - (void)needUpdateWebView;
 

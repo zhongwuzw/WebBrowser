@@ -10,6 +10,7 @@
 #import "TopToolBarShapeView.h"
 #import "BrowserHeader.h"
 #import "NJKWebViewProgressView.h"
+#import "DelegateManager+WebViewDelegate.h"
 
 #define SHAPE_VIEW_WIDTH 30
 #define SHAPE_VIEW_HEIGHT 44
@@ -29,6 +30,7 @@
     if (self = [super initWithFrame:frame]) {
         [self initializeView];
         [[DelegateManager sharedInstance] registerDelegate:self forKey:DelegateManagerWebView];
+        [[DelegateManager sharedInstance] addDelegate:self];
     }
     return self;
 }

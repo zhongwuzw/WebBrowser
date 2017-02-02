@@ -29,6 +29,8 @@
 }
 
 - (void)initializeView{
+    self.backgroundColor = [UIColor whiteColor];
+    
     UIBarButtonItem *backItem = [self createBottomToolBarButtonWithImage:TOOLBAR_BUTTON_BACK_STRING tag:BottomToolBarBackButtonTag];
     self.backItem = backItem;
     
