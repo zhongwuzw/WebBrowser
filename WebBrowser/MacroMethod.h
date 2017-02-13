@@ -11,10 +11,15 @@
 
 #import <objc/runtime.h>
 
+#pragma mark - Notification
+
 #define Notifier  [NSNotificationCenter defaultCenter]
 
 //打开appstore
 #define kModalAppstoreOpen          @"kModalAppstoreOpen"
+#define kNoImageMode
+
+#pragma mark Color
 
 //颜色宏定义
 #define ColorRedGreenBlue(r, g, b)				[UIColor colorWithRed : (r) / 255.0f green : (g) / 255.0f blue : (b) / 255.0f alpha : 1.0f]
@@ -23,6 +28,8 @@
 #define UIColorFromRGB(rgbValue)				[UIColor colorWithRed : ((float)((rgbValue & 0xFF0000) >> 16)) / 255.0 green : ((float)((rgbValue & 0xFF00) >> 8)) / 255.0 blue : ((float)(rgbValue & 0xFF)) / 255.0 alpha : 1.0]
 #define UIColorFromRGBAndAlpha(rgbValue,a)				[UIColor colorWithRed : ((float)((rgbValue & 0xFF0000) >> 16)) / 255.0 green : ((float)((rgbValue & 0xFF00) >> 8)) / 255.0 blue : ((float)(rgbValue & 0xFF)) / 255.0 alpha : a]
 
+#pragma mark - WEAK、STRONG
+
 //weak、strong创建
 #define WEAK_REF(self) \
 __block __weak typeof(self) self##_ = self; (void) self##_;
@@ -30,7 +37,7 @@ __block __weak typeof(self) self##_ = self; (void) self##_;
 #define STRONG_REF(self) \
 __block __strong typeof(self) self##_ = self; (void) self##_;
 
-
+#pragma mark - SharedInstance
 
 #define SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(__CLASSNAME__)	\
     \
@@ -54,6 +61,8 @@ __block __strong typeof(self) self##_ = self; (void) self##_;
     return self;\
 }
 
+#pragma mark - Safe Main Queue
+
 //安全main queue 执行
 #define dispatch_main_sync_safe(block)\
 if ([NSThread isMainThread]) {\
@@ -68,6 +77,8 @@ block();\
 } else {\
 dispatch_async(dispatch_get_main_queue(), block);\
 }
+
+#pragma mark - PATH
 
 #define HomePath NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES)[0]
 #define DocumentPath NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0]

@@ -43,13 +43,19 @@
     [self setDrawInWebThread];
 }
 
-- (void)evaluateJavaScript:(NSString *)javaScriptString completionHandler:(void (^)(id, NSError *))completionHandler
+- (void)evaluateJavaScript:(NSString *)javaScriptString completionHandler:(WebCompletionBlock)completionHandler
 {
+    if (!javaScriptString || [javaScriptString length] == 0) {
+        return;
+    }
+    __block WebCompletionBlock block = [completionHandler copy];
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSString* result = [self stringByEvaluatingJavaScriptFromString:javaScriptString];
+        NSString* result = [[self stringByEvaluatingJavaScriptFromString:javaScriptString] autorelease];
         
-        if (completionHandler) {
-            completionHandler(result,nil);
+        if (block) {
+            block(result,nil);
+            [block release];
+            block = nil;
         }
     });
 }

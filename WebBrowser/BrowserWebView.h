@@ -11,6 +11,8 @@
 @class BrowserWebView;
 @class WebModel;
 
+typedef void (^WebCompletionBlock)(id, NSError *);
+
 @protocol WebViewDelegate <NSObject>
 
 @optional
@@ -25,7 +27,7 @@
 
 @property (nonatomic, unsafe_unretained) WebModel *webModel;
 
-- (void)evaluateJavaScript:(NSString *)javaScriptString completionHandler:(void (^)(id, NSError *))completionHandler;
+- (void)evaluateJavaScript:(NSString *)javaScriptString completionHandler:(WebCompletionBlock)completionHandler;
 
 - (NSString *)mainFURL;
 - (NSString *)mainFTitle;

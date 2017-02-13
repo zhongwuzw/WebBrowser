@@ -15,6 +15,7 @@
 
 SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(DelegateManager)
 - (void)registerDelegate:(id)delegate forKey:(NSString *)key;
+- (void)registerDelegate:(id)delegate forKeys:(NSArray<NSString *> *)keys;
 - (void)performSelector:(SEL)selector arguments:(NSArray *)arguments key:(NSString *)key;
 
 @end

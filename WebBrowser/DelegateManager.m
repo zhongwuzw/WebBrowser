@@ -37,6 +37,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DelegateManager)
     return _delegateDic;
 }
 
+- (void)registerDelegate:(id)delegate forKeys:(NSArray<NSString *> *)keys{
+    [keys enumerateObjectsUsingBlock:^(NSString *key, NSUInteger idx, BOOL *stop){
+        [self registerDelegate:delegate forKey:key];
+    }];
+}
+
 - (void)registerDelegate:(id)delegate forKey:(NSString *)key{
     if (!delegate || !key) {
         return;

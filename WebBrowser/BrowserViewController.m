@@ -162,7 +162,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
         CGRect bottomRect = self.bottomToolBar.frame;
         bottomRect.origin.y = self.view.height - BOTTOM_TOOL_BAR_HEIGHT;
         self.bottomToolBar.frame = bottomRect;
-        self.browserContainerView.scrollView.contentInset = UIEdgeInsetsMake(TOP_TOOL_BAR_HEIGHT, 0, 0, 0);
+        self.browserContainerView.scrollView.contentInset = UIEdgeInsetsMake(TOP_TOOL_BAR_HEIGHT, 0, BOTTOM_TOOL_BAR_HEIGHT, 0);
     }];
 }
 
@@ -189,9 +189,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
         else
         {
             self.browserTopToolBar.height -= offset;
-            bottomRect.origin.y += BOTTOM_TOOL_BAR_HEIGHT * offset / (TOP_TOOL_BAR_HEIGHT - TOP_TOOL_BAR_THRESHOLD);
+            CGFloat bottomRectYoffset = BOTTOM_TOOL_BAR_HEIGHT * offset / (TOP_TOOL_BAR_HEIGHT - TOP_TOOL_BAR_THRESHOLD);
+            bottomRect.origin.y += bottomRectYoffset;
             UIEdgeInsets insets = self.browserContainerView.scrollView.contentInset;
             insets.top -= offset;
+            insets.bottom -= bottomRectYoffset;
             self.browserContainerView.scrollView.contentInset = insets;
         }
     }
@@ -199,14 +201,16 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
         if (self.browserTopToolBar.height + (-offset) >= TOP_TOOL_BAR_HEIGHT) {
             self.browserTopToolBar.height = TOP_TOOL_BAR_HEIGHT;
             bottomRect.origin.y = self.view.height - BOTTOM_TOOL_BAR_HEIGHT;
-            self.browserContainerView.scrollView.contentInset = UIEdgeInsetsMake(TOP_TOOL_BAR_HEIGHT, 0, 0, 0);
+            self.browserContainerView.scrollView.contentInset = UIEdgeInsetsMake(TOP_TOOL_BAR_HEIGHT, 0, BOTTOM_TOOL_BAR_HEIGHT, 0);
         }
         else
         {
             self.browserTopToolBar.height += (-offset);
-            bottomRect.origin.y -= BOTTOM_TOOL_BAR_HEIGHT * (-offset) / (TOP_TOOL_BAR_HEIGHT - TOP_TOOL_BAR_THRESHOLD);
+            CGFloat bottomRectYoffset = BOTTOM_TOOL_BAR_HEIGHT * (-offset) / (TOP_TOOL_BAR_HEIGHT - TOP_TOOL_BAR_THRESHOLD);
+            bottomRect.origin.y -= bottomRectYoffset;
             UIEdgeInsets insets = self.browserContainerView.scrollView.contentInset;
             insets.top += (-offset);
+            insets.bottom += bottomRectYoffset;
             self.browserContainerView.scrollView.contentInset = insets;
         }
     }
@@ -234,7 +238,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
         WEAK_REF(self)
         NSArray<SettingsMenuItem *> *items =
         @[
-          [SettingsMenuItem itemWithText:@"书签" image:[UIImage imageNamed:@"album"] action:nil],
+          [SettingsMenuItem itemWithText:@"书签" image:[UIImage imageNamed:@"album"] action:^{
+              
+          }],
           [SettingsMenuItem itemWithText:@"历史" image:[UIImage imageNamed:@"album"] action:^{
               HistoryTableViewController *hisTableVC = [[HistoryTableViewController alloc] initWithStyle:UITableViewStylePlain];
               [self_.navigationController pushViewController:hisTableVC animated:YES];
@@ -255,6 +261,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
         
         [SettingsViewController presentFromViewController:self withItems:items completion:nil];
     }
+}
+
+#pragma mark - Dealloc Method
+
+- (void)dealloc{
+    [Notifier removeObserver:self];
 }
 
 #pragma mark - Memory Warning Method
