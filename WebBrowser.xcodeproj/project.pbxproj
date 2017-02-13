@@ -69,6 +69,7 @@
 		0EF025701DD957EC0011019F /* BaseResponseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF0256F1DD957EC0011019F /* BaseResponseModel.m */; };
 		0EF025721DD95B1E0011019F /* Mantle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EF025711DD95B1E0011019F /* Mantle.framework */; };
 		0EF025751DD99FAC0011019F /* BaiduSugResponseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF025741DD99FAC0011019F /* BaiduSugResponseModel.m */; };
+		0EFCB9DE1E4F62A60094C466 /* NoImageModeHelper.js in Resources */ = {isa = PBXBuildFile; fileRef = 0EFCB9DD1E4F62A60094C466 /* NoImageModeHelper.js */; };
 		0EFDD3081DD423AC002AB3FB /* HttpHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EFDD3071DD423AC002AB3FB /* HttpHelper.m */; };
 		0EFDD30A1DD42861002AB3FB /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EFDD3091DD42861002AB3FB /* AVFoundation.framework */; };
 		0EFDD30C1DD42868002AB3FB /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EFDD30B1DD42868002AB3FB /* AudioToolbox.framework */; };
@@ -218,6 +219,7 @@
 		0EF025711DD95B1E0011019F /* Mantle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mantle.framework; path = Carthage/Build/iOS/Mantle.framework; sourceTree = "<group>"; };
 		0EF025731DD99FAC0011019F /* BaiduSugResponseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaiduSugResponseModel.h; sourceTree = "<group>"; };
 		0EF025741DD99FAC0011019F /* BaiduSugResponseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaiduSugResponseModel.m; sourceTree = "<group>"; };
+		0EFCB9DD1E4F62A60094C466 /* NoImageModeHelper.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = NoImageModeHelper.js; sourceTree = "<group>"; };
 		0EFDD3061DD423AC002AB3FB /* HttpHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpHelper.h; sourceTree = "<group>"; };
 		0EFDD3071DD423AC002AB3FB /* HttpHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpHelper.m; sourceTree = "<group>"; };
 		0EFDD3091DD42861002AB3FB /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -487,10 +489,10 @@
 				0E986A081D4CA6890003900D /* Browser */,
 				0E681F5E1D4AF2A3003534F5 /* Application */,
 				0E681F5B1D4AF1A8003534F5 /* Utils */,
+				0EFCB9DB1E4F62520094C466 /* Assets */,
 				0E681F361D4AEC3F003534F5 /* LaunchScreen.storyboard */,
 				0E681F391D4AEC3F003534F5 /* Info.plist */,
 				0E681F5F1D4AF2D5003534F5 /* WebBrowser.pch */,
-				0EDD68E41DACFBF400265744 /* Assets.xcassets */,
 				0E681F281D4AEC3F003534F5 /* Supporting Files */,
 			);
 			path = WebBrowser;
@@ -731,6 +733,23 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		0EFCB9DB1E4F62520094C466 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				0EFCB9DC1E4F628B0094C466 /* JavaScript */,
+				0EDD68E41DACFBF400265744 /* Assets.xcassets */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		0EFCB9DC1E4F628B0094C466 /* JavaScript */ = {
+			isa = PBXGroup;
+			children = (
+				0EFCB9DD1E4F62A60094C466 /* NoImageModeHelper.js */,
+			);
+			name = JavaScript;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -839,6 +858,7 @@
 			files = (
 				0EDD68E51DACFBF400265744 /* Assets.xcassets in Resources */,
 				0E7795941E20F8C900CE86BE /* SearchTableViewCell.xib in Resources */,
+				0EFCB9DE1E4F62A60094C466 /* NoImageModeHelper.js in Resources */,
 				0EBDC6241E1DDEC100B6A4DB /* SearchInputView.xib in Resources */,
 				0E681F381D4AEC3F003534F5 /* LaunchScreen.storyboard in Resources */,
 				0E5988A61E2F8070003259C0 /* SettingActivityTableViewCell.xib in Resources */,
