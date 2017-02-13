@@ -36,7 +36,8 @@
 //    [self startLoadWebViewWithURL:@"https://m.baidu.com/"];
 //    [self startLoadWebViewWithURL:@"http://i.ifeng.com"];
     [self needUpdateWebView];
-    [[DelegateManager sharedInstance] registerDelegate:self forKey:DelegateManagerBrowserContainerLoadURL];
+    
+    [[DelegateManager sharedInstance] registerDelegate:self forKeys:@[DelegateManagerWebView,DelegateManagerBrowserContainerLoadURL]];
 }
 
 - (void)startLoadWebViewWithURL:(NSString *)url{
