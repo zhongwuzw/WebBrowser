@@ -33,8 +33,6 @@
 - (void)setupWebView{
     [TabManager sharedInstance].browserContainerView = self;
 
-//    [self startLoadWebViewWithURL:@"https://m.baidu.com/"];
-//    [self startLoadWebViewWithURL:@"http://i.ifeng.com"];
     [self needUpdateWebView];
     
     [[DelegateManager sharedInstance] registerDelegate:self forKeys:@[DelegateManagerWebView,DelegateManagerBrowserContainerLoadURL]];
@@ -68,6 +66,24 @@
 }
 
 #pragma mark - WebViewDelegate Method
+
+- (void)webViewDidStartLoad:(BrowserWebView *)webView{
+}
+
+- (void)webViewDidFinishLoad:(BrowserWebView *)webView{
+}
+
+//当解析完head标签后注入无图模式js
+- (void)webView:(BrowserWebView *)webView gotTitleName:(NSString*)titleName{
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"NoImageModeHelper" ofType:@"js"];
+    NSString *source = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+    if (source) {
+        BOOL enabled = YES;
+        [webView evaluateJavaScript:source completionHandler:nil];
+        //        [webView stringByEvaluatingJavaScriptFromString:source];
+        [webView evaluateJavaScript:[NSString stringWithFormat:@"window.__firefox__.NoImageMode.setEnabled(%d)",enabled] completionHandler:nil];
+    }
+}
 
 //#pragma mark - Dealloc
 //
