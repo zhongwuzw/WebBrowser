@@ -9,17 +9,19 @@
 #import "TabManager.h"
 #import "BrowserWebView.h"
 #import "BrowserViewController.h"
+#import "JavaScriptHelper.h"
+#import "PreferenceHelper.h"
 
 #import <CommonCrypto/CommonDigest.h>
 
-#define MULTI_WINDOW_FILE_NAME      @"multiWindowHis.plist"
-#define MY_HISTORY_DATA_KEY         @"multiWindowHisData"
-#define MULTI_WINDOW_IMAGE_FOLDER   @"multiWindowImages"
+static NSString *const MULTI_WINDOW_FILE_NAME    = @"multiWindowHis.plist";
+static NSString *const MY_HISTORY_DATA_KEY       = @"multiWindowHisData";
+static NSString *const MULTI_WINDOW_IMAGE_FOLDER = @"multiWindowImages";
 
-#define KEY_WEB_TITLE   @"KEY_WEB_TITLE"
-#define KEY_WEB_URL     @"KEY_WEB_URL"
-#define KEY_WEB_IMAGE   @"KEY_WEB_IMAGE"
-#define KEY_WEB_IMAGE_URL   @"KEY_WEB_IMAGE_URL"
+static NSString *const KEY_WEB_TITLE        = @"KEY_WEB_TITLE";
+static NSString *const KEY_WEB_URL          = @"KEY_WEB_URL";
+static NSString *const KEY_WEB_IMAGE        = @"KEY_WEB_IMAGE";
+static NSString *const KEY_WEB_IMAGE_URL    = @"KEY_WEB_IMAGE_URL";
 
 @implementation WebModel
 
@@ -75,30 +77,38 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
         NSString *queueName = [NSString stringWithFormat:@"com.zhongwu.TabManager-%@", [[NSUUID UUID] UUIDString]];
         _synchQueue = dispatch_queue_create([queueName cStringUsingEncoding:NSASCIIStringEncoding], DISPATCH_QUEUE_SERIAL);
         
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(clearMemory)
-                                                     name:UIApplicationDidReceiveMemoryWarningNotification
-                                                   object:nil];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(cleanDisk)
-                                                     name:UIApplicationWillTerminateNotification
-                                                   object:nil];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(backgroundCleanDisk)
-                                                     name:UIApplicationDidEnterBackgroundNotification
-                                                   object:nil];
-        
         _webModelArray = [NSMutableArray arrayWithCapacity:4];
         [self loadWebModelArray];
+        
+        [self registerObserver];
     }
     
     return self;
 }
 
+- (void)registerObserver{
+    [Notifier addObserver:self
+                                             selector:@selector(clearMemory)
+                                                 name:UIApplicationDidReceiveMemoryWarningNotification
+                                               object:nil];
+    
+    [Notifier addObserver:self
+                                             selector:@selector(cleanDisk)
+                                                 name:UIApplicationWillTerminateNotification
+                                               object:nil];
+    
+    [Notifier addObserver:self
+                                             selector:@selector(backgroundCleanDisk)
+                                                 name:UIApplicationDidEnterBackgroundNotification
+                                               object:nil];
+    
+    [Notifier addObserver:self selector:@selector(noImageModeChanged) name:kNoImageModeChanged object:nil];
+    
+    [[DelegateManager sharedInstance] registerDelegate:self forKey:DelegateManagerWebView];
+}
+
 - (void)loadWebModelArray{
-    dispatch_async(self.synchQueue, ^{
+    dispatch_async(_synchQueue, ^{
         dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             if ([[NSFileManager defaultManager] fileExistsAtPath:_filePath]) {
                 NSData *data = [NSData dataWithContentsOfFile:_filePath options:NSDataReadingUncached error:nil];
@@ -189,7 +199,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
             WebModel *curModel = [_webModelArray lastObject];
             if (!curModel.webView) {
                 browserWebView = [BrowserWebView new];
-                browserWebView.scrollView.contentInset = UIEdgeInsetsMake(TOP_TOOL_BAR_HEIGHT, 0, 0, 0);
+                browserWebView.scrollView.contentInset = UIEdgeInsetsMake(TOP_TOOL_BAR_HEIGHT, 0, BOTTOM_TOOL_BAR_HEIGHT, 0);
                 _webModelArray[_webModelArray.count - 1].webView = browserWebView;
                 browserWebView.webModel = curModel;
             }
@@ -364,8 +374,27 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
     });
 }
 
+- (void)noImageModeChanged{
+    [[self.webModelArray copy] enumerateObjectsUsingBlock:^(WebModel *webModel, NSUInteger idx, BOOL *stop){
+        if (webModel.webView) {
+            dispatch_main_async_safe(^{
+                [JavaScriptHelper setNoImageMode:[PreferenceHelper boolForKey:KeyNoImageModeStatus] webView:webModel.webView loadPrimaryScript:NO];
+            })
+        }
+    }];
+}
+
+#pragma mark - WebViewDelegate Method
+
+//当解析完head标签后注入无图模式js,需要注意的是，当启用无图模式时，UIWebView依然会进行图片网络请求
+- (void)webView:(BrowserWebView *)webView gotTitleName:(NSString*)titleName{
+    [JavaScriptHelper setNoImageMode:[PreferenceHelper boolForKey:KeyNoImageModeStatus] webView:webView loadPrimaryScript:YES];
+}
+
+#pragma mark - Dealloc
+
 - (void)dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [Notifier removeObserver:self];
 }
 
 @end

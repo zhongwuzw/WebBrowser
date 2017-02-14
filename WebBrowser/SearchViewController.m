@@ -12,11 +12,12 @@
 #import "BaiduSugResponseModel.h"
 #import "SearchTableViewCell.h"
 #import "HttpHelper.h"
+#import "KeyboardHelper.h"
 
 #define SEARCH_INPUTVIEW_HEIGHT 76
 static NSString * const CELL = @"CELL";
 
-@interface SearchViewController ()<UITableViewDelegate, UITableViewDataSource>
+@interface SearchViewController ()<UITableViewDelegate, UITableViewDataSource, KeyboardHelperDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) SearchInputView *searchInputView;
@@ -49,8 +50,8 @@ static NSString * const CELL = @"CELL";
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.edgesForExtendedLayout = UIRectEdgeNone;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeSearchInputViewPoint:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeSearchInputViewPoint:) name:UIKeyboardWillHideNotification object:nil];
+    
+    [[KeyboardHelper sharedInstance] addDelegate:self];
     
     [self commonUIInit];
 }
@@ -62,7 +63,7 @@ static NSString * const CELL = @"CELL";
         inputView.frame = CGRectMake(self.view.bounds.origin.x, self.view.height - SEARCH_INPUTVIEW_HEIGHT, self.view.width, SEARCH_INPUTVIEW_HEIGHT);
         [self.view addSubview:inputView];
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldTextDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
+        [Notifier addObserver:self selector:@selector(textFieldTextDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
         
         [inputView.textField setText:self.origTextFieldString];
         inputView.slider.enabled = (self.origTextFieldString.length > 0);
@@ -97,18 +98,25 @@ static NSString * const CELL = @"CELL";
     }
 }
 
-- (void)changeSearchInputViewPoint:(NSNotification *)notification{
-    NSDictionary *userInfo = [notification userInfo];
+#pragma mark - KeyboardHelperDelegate
+
+- (void)keyboardHelper:(KeyboardHelper *)keyboardHelper keyboardWillShowWithState:(KeyboardState *)state{
+    [self changeSearchInputViewPoint:state];
+}
+
+- (void)keyboardHelper:(KeyboardHelper *)keyboardHelper keyboardWillHideWithState:(KeyboardState *)state{
+    [self changeSearchInputViewPoint:state];
+}
+
+- (void)changeSearchInputViewPoint:(KeyboardState *)state{
+    NSDictionary *userInfo = [state userInfo];
     NSValue *value = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
     CGFloat keyBoardEndY = value.CGRectValue.origin.y;  // 得到键盘弹出后的键盘视图所在y坐标
     
-    NSNumber *duration = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
-    NSNumber *curve = [userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
-    
     // 添加移动动画，使视图跟随键盘移动
-    [UIView animateWithDuration:duration.doubleValue animations:^{
+    [UIView animateWithDuration:state.animationDuration animations:^{
         [UIView setAnimationBeginsFromCurrentState:YES];
-        [UIView setAnimationCurve:[curve intValue]];
+        [UIView setAnimationCurve:state.animationCurve];
         
         self.searchInputView.center = CGPointMake(self.searchInputView.centerX, keyBoardEndY - self.searchInputView.height/2.0);
         if (self.isTextChanged) {
@@ -145,7 +153,7 @@ static NSString * const CELL = @"CELL";
 }
 
 - (void)dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [Notifier removeObserver:self];
 }
 
 @end

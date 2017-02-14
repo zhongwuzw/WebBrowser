@@ -35,7 +35,7 @@
 
     [self needUpdateWebView];
     
-    [[DelegateManager sharedInstance] registerDelegate:self forKeys:@[DelegateManagerWebView,DelegateManagerBrowserContainerLoadURL]];
+    [[DelegateManager sharedInstance] registerDelegate:self forKey:DelegateManagerBrowserContainerLoadURL];
 }
 
 - (void)startLoadWebViewWithURL:(NSString *)url{
@@ -64,37 +64,6 @@
         }
     }];
 }
-
-#pragma mark - WebViewDelegate Method
-
-- (void)webViewDidStartLoad:(BrowserWebView *)webView{
-}
-
-- (void)webViewDidFinishLoad:(BrowserWebView *)webView{
-}
-
-//当解析完head标签后注入无图模式js
-- (void)webView:(BrowserWebView *)webView gotTitleName:(NSString*)titleName{
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"NoImageModeHelper" ofType:@"js"];
-    NSString *source = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
-    if (source) {
-        BOOL enabled = YES;
-        [webView evaluateJavaScript:source completionHandler:nil];
-        //        [webView stringByEvaluatingJavaScriptFromString:source];
-        [webView evaluateJavaScript:[NSString stringWithFormat:@"window.__firefox__.NoImageMode.setEnabled(%d)",enabled] completionHandler:nil];
-    }
-}
-
-//#pragma mark - Dealloc
-//
-//- (void)dealloc{
-//    self.webView.webViewDelegate = nil; //BrowserWebView是在MRC下的，所以这里强行设置webViewDelegate为nil
-//    self.webView.delegate = nil;
-//    self.webView.scrollView.delegate = nil;
-//    [self.webView loadHTMLString:@"" baseURL:nil];
-//    [self.webView stopLoading];
-//    self.webView = nil;
-//}
 
 #pragma mark - BrowserBottomToolBarButtonClickedDelegate
 

@@ -8,7 +8,26 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol KeyboardHelperDelegate;
+@class KeyboardHelper,KeyboardState;
+
+@protocol KeyboardHelperDelegate <NSObject>
+
+@optional
+- (void)keyboardHelper:(KeyboardHelper *)keyboardHelper keyboardWillShowWithState:(KeyboardState *)state;
+- (void)keyboardHelper:(KeyboardHelper *)keyboardHelper keyboardDidShowWithState:(KeyboardState *)state;
+- (void)keyboardHelper:(KeyboardHelper *)keyboardHelper keyboardWillHideWithState:(KeyboardState *)state;
+
+@end
+
+@interface KeyboardState : NSObject
+
+@property (nonatomic, assign) double animationDuration;
+@property (nonatomic, assign) UIViewAnimationCurve animationCurve;
+@property (nonatomic, copy) NSDictionary *userInfo;
+
+- (CGFloat)intersectionHeightForView:(UIView *)view;
+
+@end
 
 @interface KeyboardHelper : NSObject
 

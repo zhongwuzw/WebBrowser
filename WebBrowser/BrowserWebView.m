@@ -37,6 +37,7 @@
     self.opaque = NO;
     self.delegate = self;
     self.allowsInlineMediaPlayback = YES;
+    self.mediaPlaybackRequiresUserAction = NO;
     
     [self setScalesPageToFit:YES];
     

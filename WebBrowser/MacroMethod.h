@@ -17,7 +17,8 @@
 
 //打开appstore
 #define kModalAppstoreOpen          @"kModalAppstoreOpen"
-#define kNoImageMode
+//无图模式
+#define kNoImageModeChanged         @"kNoImageModeChanged"
 
 #pragma mark Color
 

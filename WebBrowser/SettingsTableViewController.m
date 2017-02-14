@@ -8,14 +8,21 @@
 
 #import "SettingsTableViewController.h"
 #import "SettingActivityTableViewCell.h"
+#import "SettingSwitchTableViewCell.h"
 #import "NSFileManager+ZWUtility.h"
+#import "PreferenceHelper.h"
 
-#define CELL_IDENTIFIER @"CELL_IDENTIFIER"
+typedef enum : NSUInteger {
+    CellKindForCache,
+    CellKindForNoImage,
+} CellKind;
+
+static NSString *const SettingActivityTableViewCellIdentifier = @"SettingActivityTableViewCellIdentifier";
+static NSString *const SettingSwitchTableViewCellIdentifier   = @"SettingSwitchTableViewCellIdentifier";
 
 @interface SettingsTableViewController ()
 
 @property (nonatomic, copy) NSArray *dataArray;
-@property (nonatomic, copy) NSArray *handleSelArray;
 
 @end
 
@@ -28,9 +35,11 @@
     self.title = @"设置";
     self.view.backgroundColor = [UIColor whiteColor];
     
-    self.dataArray = @[@"清除缓存"];
+    self.dataArray = @[@"清除缓存",@"无图浏览模式"];
     
-    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([SettingActivityTableViewCell class]) bundle:nil] forCellReuseIdentifier:CELL_IDENTIFIER];
+    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([SettingActivityTableViewCell class]) bundle:nil] forCellReuseIdentifier:SettingActivityTableViewCellIdentifier];
+    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([SettingSwitchTableViewCell class]) bundle:nil] forCellReuseIdentifier:SettingSwitchTableViewCellIdentifier];
+    
     self.tableView.tableFooterView = [UIView new];
 }
 
@@ -53,12 +62,10 @@
         SettingActivityTableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
         [cell.activityIndicatorView startAnimating];
         cell.rightLabel.text = @"";
-        WEAK_REF(self)
+    
         [self cleanCacheWithURLs:[NSArray arrayWithObjects:[NSURL URLWithString:CachePath], [NSURL URLWithString:TempPath], nil] completionBlock:^{
-            STRONG_REF(self_)
-            if (self__) {
-                [self__.tableView reloadData];
-            }
+            [cell.activityIndicatorView stopAnimating];
+            [cell.rightLabel setText:@"0M"];
         }];
     }];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){}];
@@ -68,14 +75,10 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 
-#pragma mark - Table view data source
+#pragma mark - Helper Method
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.dataArray.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    SettingActivityTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CELL_IDENTIFIER forIndexPath:indexPath];
+- (UITableViewCell *)cacheCellWithIndexPath:(NSIndexPath *)indexPath{
+    SettingActivityTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:SettingActivityTableViewCellIdentifier];
     
     cell.leftLabel.text = self.dataArray[indexPath.row];
     [cell.activityIndicatorView startAnimating];
@@ -92,6 +95,38 @@
         return sizeStr;
     }];
     
+    return cell;
+}
+
+- (UITableViewCell *)noImageModeCellWithIndexPath:(NSIndexPath *)indexPath{
+    SettingSwitchTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:SettingSwitchTableViewCellIdentifier];
+    cell.leftLabel.text = self.dataArray[indexPath.row];
+    [cell.switchControl setOn:[PreferenceHelper boolForKey:KeyNoImageModeStatus]];
+    cell.valueChangedBlock = ^(UISwitch *switchControl){
+        [PreferenceHelper setBool:switchControl.on forKey:KeyNoImageModeStatus];
+        [Notifier postNotification:[NSNotification notificationWithName:kNoImageModeChanged object:nil]];
+    };
+    
+    return cell;
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.dataArray.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = nil;
+    switch (indexPath.row) {
+        case CellKindForCache:
+            cell = [self cacheCellWithIndexPath:indexPath];
+            break;
+        case CellKindForNoImage:
+            cell = [self noImageModeCellWithIndexPath:indexPath];
+        default:
+            break;
+    }
     return cell;
 }
 
@@ -139,6 +174,10 @@
             })
         }
     });
+}
+
+- (void)dealloc{
+    DDLogDebug(@"SettingsTableViewController dealloc");
 }
 
 @end

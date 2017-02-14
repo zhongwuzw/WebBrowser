@@ -40,7 +40,7 @@ typedef enum : NSUInteger {
     
     self.quickState = QuickInputButtonStateFirst;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldTextDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
+    [Notifier addObserver:self selector:@selector(textFieldTextDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
 }
 
 - (void)commonUIInit{
@@ -139,7 +139,7 @@ typedef enum : NSUInteger {
 }
 
 - (void)dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [Notifier removeObserver:self];
 }
 
 @end

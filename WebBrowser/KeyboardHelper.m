@@ -8,16 +8,6 @@
 
 #import "KeyboardHelper.h"
 
-@interface KeyboardState : NSObject
-
-@property (nonatomic, assign) double animationDuration;
-@property (nonatomic, assign) UIViewAnimationCurve animationCurve;
-@property (nonatomic, copy) NSDictionary *userInfo;
-
-- (CGFloat)intersectionHeightForView:(UIView *)view;
-
-@end
-
 @implementation KeyboardState
 
 - (instancetype)initWithUserInfo:(NSDictionary *)userInfo{
@@ -38,14 +28,6 @@
     
     return intersection.size.height;
 }
-
-@end
-
-@protocol KeyboardHelperDelegate <NSObject>
-
-- (void)keyboardHelper:(KeyboardHelper *)keyboardHelper keyboardWillShowWithState:(KeyboardState *)state;
-- (void)keyboardHelper:(KeyboardHelper *)keyboardHelper keyboardDidShowWithState:(KeyboardState *)state;
-- (void)keyboardHelper:(KeyboardHelper *)keyboardHelper keyboardWillHideWithState:(KeyboardState *)state;
 
 @end
 
@@ -77,10 +59,17 @@
 
 SYNTHESIZE_SINGLETON_FOR_CLASS(KeyboardHelper)
 
+- (instancetype)init{
+    if (self = [super init]) {
+        _delegates = [NSMutableArray arrayWithCapacity:3];
+    }
+    return self;
+}
+
 - (void)startObserving{
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [Notifier addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [Notifier addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    [Notifier addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)addDelegate:(id<KeyboardHelperDelegate>)delegate{
@@ -99,7 +88,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KeyboardHelper)
     _currentState = [[KeyboardState alloc] initWithUserInfo:userInfo];
     
     for (WeakKeyboardDelegate *weakDelegate in _delegates) {
-        [weakDelegate.delegate keyboardHelper:self keyboardWillShowWithState:_currentState];
+        if ([weakDelegate.delegate respondsToSelector:@selector(keyboardHelper:keyboardWillShowWithState:)]) {
+            [weakDelegate.delegate keyboardHelper:self keyboardWillShowWithState:_currentState];
+        }
     }
 }
 
@@ -108,7 +99,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KeyboardHelper)
     _currentState = [[KeyboardState alloc] initWithUserInfo:userInfo];
     
     for (WeakKeyboardDelegate *weakDelegate in _delegates) {
-        [weakDelegate.delegate keyboardHelper:self keyboardDidShowWithState:_currentState];
+        if ([weakDelegate.delegate respondsToSelector:@selector(keyboardHelper:keyboardDidShowWithState:)]) {
+            [weakDelegate.delegate keyboardHelper:self keyboardDidShowWithState:_currentState];
+        }
     }
 }
 
@@ -117,12 +110,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KeyboardHelper)
     _currentState = [[KeyboardState alloc] initWithUserInfo:userInfo];
     
     for (WeakKeyboardDelegate *weakDelegate in _delegates) {
-        [weakDelegate.delegate keyboardHelper:self keyboardWillHideWithState:_currentState];
+        if ([weakDelegate.delegate respondsToSelector:@selector(keyboardHelper:keyboardWillHideWithState:)]) {
+            [weakDelegate.delegate keyboardHelper:self keyboardWillHideWithState:_currentState];
+        }
     }
 }
 
 - (void)dealloc{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [Notifier removeObserver:self];
 }
 
 @end

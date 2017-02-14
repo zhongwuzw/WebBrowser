@@ -32,6 +32,11 @@
     if (!success) { /* handle the error condition */ }
 }
 
+- (void)applicationStartPrepare{
+    [self setAudioPlayInBackgroundMode];
+    [[KeyboardHelper sharedInstance] startObserving];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
     [DDLog addLogger:[DDASLLogger sharedInstance]];
@@ -48,11 +53,17 @@
     [self.window makeKeyAndVisible];
     
     //解决UIWebView首次加载页面时间过长问题
-    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent" : @"    Mozilla/5.0 (iPhone; CPU iPhone OS 10_0 like Mac OS X) AppleWebKit/602.1.38 (KHTML, like Gecko) Version/10.0 Mobile/14A300 Safari/602.1"}];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent" : @"Mozilla/5.0 (iPhone; CPU iPhone OS 10_0 like Mac OS X) AppleWebKit/602.1.38 (KHTML, like Gecko) Version/10.0 Mobile/14A300 Safari/602.1"}];
     
-    [self setAudioPlayInBackgroundMode];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self applicationStartPrepare];
+    });
     
     return YES;
+}
+
+- (void)applicationWillResignActive:(UIApplication *)application{
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end
