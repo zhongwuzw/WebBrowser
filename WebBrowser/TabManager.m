@@ -11,6 +11,7 @@
 #import "BrowserViewController.h"
 #import "JavaScriptHelper.h"
 #import "PreferenceHelper.h"
+#import "ErrorPageHelper.h"
 
 #import <CommonCrypto/CommonDigest.h>
 
@@ -389,6 +390,19 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
 //当解析完head标签后注入无图模式js,需要注意的是，当启用无图模式时，UIWebView依然会进行图片网络请求
 - (void)webView:(BrowserWebView *)webView gotTitleName:(NSString*)titleName{
     [JavaScriptHelper setNoImageMode:[PreferenceHelper boolForKey:KeyNoImageModeStatus] webView:webView loadPrimaryScript:YES];
+}
+
+- (void)webView:(BrowserWebView *)webView didFailLoadWithError:(NSError *)error{
+    if ([error.domain isEqualToString:@"WebKitErrorDomain"] && error.code == 102) {
+        return;
+    }
+    
+    if (error.code == kCFURLErrorCancelled) {
+        return;
+    }
+    
+    NSURL *url = error.userInfo[NSURLErrorFailingURLErrorKey];
+    [ErrorPageHelper showPageWithError:error URL:url inWebView:webView];
 }
 
 #pragma mark - Dealloc

@@ -10,8 +10,10 @@
 #import "TabManager.h"
 #import "BrowserWebView.h"
 #import "HttpHelper.h"
+#import "NSURL+ZWUtility.h"
+#import "DelegateManager+WebViewDelegate.h"
 
-@interface BrowserContainerView ()
+@interface BrowserContainerView () <WebViewDelegate>
 
 @property (nonatomic, weak) BrowserWebView *webView;
 
@@ -36,6 +38,7 @@
     [self needUpdateWebView];
     
     [[DelegateManager sharedInstance] registerDelegate:self forKey:DelegateManagerBrowserContainerLoadURL];
+    [[DelegateManager sharedInstance] addWebViewDelegate:self];
 }
 
 - (void)startLoadWebViewWithURL:(NSString *)url{
@@ -76,14 +79,36 @@
             [self.webView goBack];
             break;
         case BottomToolBarRefreshButtonTag:
-            [self.webView reload];
+        {
+            if ([self.webView.request.URL isLocal]) {
+                NSURL *url = [self.webView.request.URL originalURLFromErrorURL];
+                [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
+            }
+            else{
+                [self.webView reload];
+            }
             break;
+        }
         case BottomToolBarStopButtonTag:
             [self.webView stopLoading];
             break;
         default:
             break;
     }
+}
+
+#pragma mark - WebViewDelegate
+
+- (BOOL)webView:(BrowserWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
+    if (webView == self.webView) {
+        NSURL *url = request.URL;
+        if ([url.scheme isEqualToString:@"zwerror"] && [url.host isEqualToString:@"reload"]) {
+            [self browserBottomToolBarButtonClickedWithTag:BottomToolBarRefreshButtonTag];
+            return NO;
+        }
+    }
+
+    return YES;
 }
 
 #pragma mark - BrowserContainerLoadURLDelegate

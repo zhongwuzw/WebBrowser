@@ -46,7 +46,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
     
     [[DelegateManager sharedInstance] registerDelegate:self forKey:DelegateManagerWebView];
     
-    [[DelegateManager sharedInstance] addDelegate:self];
+    [[DelegateManager sharedInstance] addWebViewDelegate:self];
 }
 
 - (void)initializeView{

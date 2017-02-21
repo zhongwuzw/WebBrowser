@@ -20,7 +20,9 @@
         }
     }
     
-    [webView evaluateJavaScript:[NSString stringWithFormat:@"window.__firefox__.NoImageMode.setEnabled(%d)",enabled] completionHandler:nil];
+    [webView evaluateJavaScript:[NSString stringWithFormat:@"window.__firefox__.NoImageMode.setEnabled(%d)",enabled] completionHandler:^(NSString *result, NSError *error){
+        
+    }];
 }
 
 @end

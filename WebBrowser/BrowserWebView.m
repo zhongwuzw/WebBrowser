@@ -38,8 +38,7 @@
     self.delegate = self;
     self.allowsInlineMediaPlayback = YES;
     self.mediaPlaybackRequiresUserAction = NO;
-    
-    [self setScalesPageToFit:YES];
+    self.scalesPageToFit = YES;
     
     [self setDrawInWebThread];
 }
@@ -49,9 +48,13 @@
     if (!javaScriptString || [javaScriptString length] == 0) {
         return;
     }
+    
+    NSString *cpJSString = [javaScriptString copy];
     __block WebCompletionBlock block = [completionHandler copy];
+    
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSString* result = [[self stringByEvaluatingJavaScriptFromString:javaScriptString] autorelease];
+        NSString* result = [self stringByEvaluatingJavaScriptFromString:cpJSString];
+        [cpJSString release];
         
         if (block) {
             block(result,nil);
@@ -73,7 +76,7 @@
     id webView = nil;
     id selfid = self;
     if([selfid respondsToSelector:NSSelectorFromString(DOCUMENT_VIEW)])
-        webDocumentView = (DOCUMENT_VIEW__PROTO objc_msgSend)(selfid,NSSelectorFromString(DOCUMENT_VIEW));
+        webDocumentView = [[(DOCUMENT_VIEW__PROTO objc_msgSend)(selfid,NSSelectorFromString(DOCUMENT_VIEW)) retain] autorelease];
     else
         return nil;
     
@@ -103,13 +106,14 @@
     id webView = nil;
     id selfid = self;
     if([selfid respondsToSelector:NSSelectorFromString(DOCUMENT_VIEW)])
-        webDocumentView = (DOCUMENT_VIEW__PROTO objc_msgSend)(selfid, NSSelectorFromString(DOCUMENT_VIEW));
+        webDocumentView = [[(DOCUMENT_VIEW__PROTO objc_msgSend)(selfid, NSSelectorFromString(DOCUMENT_VIEW)) retain] autorelease];
     else
         return nil;
     
     if(webDocumentView)
     {
         object_getInstanceVariable(webDocumentView,[GOT_WEB_VIEW cStringUsingEncoding:NSUTF8StringEncoding], (void**)&webView);
+        [[webView retain] autorelease];
     }
     else
         return nil;
@@ -175,7 +179,7 @@
     
     if([sender respondsToSelector:NSSelectorFromString(MAIN_FRAME)])
     {
-        id mainFrame = (MAIN_FRAME__PROTO objc_msgSend)(sender,NSSelectorFromString(MAIN_FRAME));
+        id mainFrame = [[(MAIN_FRAME__PROTO objc_msgSend)(sender,NSSelectorFromString(MAIN_FRAME)) retain] autorelease];
         if(mainFrame == frame)
         {
             [self webView:self gotTitleName:title];
@@ -266,6 +270,8 @@
     self.scrollView.delegate = nil;
     [self stopLoading];
     [self loadHTMLString:@"" baseURL:nil];
+    
+    DDLogDebug(@"BrowserWebView dealloc");
     
     [super dealloc];
 }

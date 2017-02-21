@@ -20,6 +20,6 @@
 @interface DelegateManager (WebViewDelegate)
 
 - (NSArray<WeakWebBrowserDelegate *> *)webViewDelegates;
-- (void)addDelegate:(id<WebViewDelegate>)delegate;
+- (void)addWebViewDelegate:(id<WebViewDelegate>)delegate;
 
 @end

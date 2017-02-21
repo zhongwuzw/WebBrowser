@@ -77,18 +77,28 @@ static NSString * const CELL = @"CELL";
     [self.searchInputView.textField becomeFirstResponder];
 }
 
+- (void)cancelRecoTaskIfNeeded{
+    if (self.bdRecoTask && (self.bdRecoTask.state == NSURLSessionTaskStateRunning || self.bdRecoTask.state == NSURLSessionTaskStateSuspended)) {
+        [self.bdRecoTask cancel];
+    }
+}
+
 - (void)textFieldTextDidChange:(NSNotification *)notify{
     self.isTextChanged = YES;
     UITextField *textField = [notify object];
     if (textField.text.length > 0) {
         self.searchInputView.slider.enabled = YES;
-        if (self.bdRecoTask && (self.bdRecoTask.state == NSURLSessionTaskStateRunning || self.bdRecoTask.state == NSURLSessionTaskStateSuspended)) {
-            [self.bdRecoTask cancel];
-        }
+        
+        [self cancelRecoTaskIfNeeded];
+        
+        WEAK_REF(self)
         self.bdRecoTask = [[HTTPClient sharedInstance] getSugWithKeyword:textField.text success:^(NSURLSessionDataTask *task, BaseResponseModel *model){
-            BaiduSugResponseModel *bdModel = (BaiduSugResponseModel *)model;
-            self.searchResultArray = bdModel.sugArray;
-            [self.tableView reloadData];
+            STRONG_REF(self_)
+            if (self__) {
+                BaiduSugResponseModel *bdModel = (BaiduSugResponseModel *)model;
+                self__.searchResultArray = bdModel.sugArray;
+                [self__.tableView reloadData];
+            }
         }fail:^(NSURLSessionDataTask *task, BaseResponseModel *model){
             ;
         }];
@@ -153,7 +163,9 @@ static NSString * const CELL = @"CELL";
 }
 
 - (void)dealloc{
+    [self cancelRecoTaskIfNeeded];
     [Notifier removeObserver:self];
+    DDLogDebug(@"SearchViewController dealloc");
 }
 
 @end

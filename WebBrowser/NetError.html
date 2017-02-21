@@ -1,0 +1,59 @@
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>%error_title%</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="NetError.css" type="text/css" media="all" />
+
+    <script type="application/javascript">
+        function ZWBridge(){
+            this.sendMsg = function (msg) {
+                this.send('zwerror://msg/' + msg);
+            };
+            this.send = function (dst) {
+                var bridge = document.createElement('iframe');
+                bridge.setAttribute('style', 'display:none');
+                bridge.setAttribute('height', '0px');
+                bridge.setAttribute('width', '0px');
+                bridge.setAttribute('frameloader', '0');
+                bridge.src = dst;
+                document.body.appendChild(bridge);
+            }
+        }
+        function zwFireReloadButton(){
+            new ZWBridge().send('zwerror://reload');
+        }
+    </script>
+  </head>
+
+  <body dir="&locale.dir;">
+
+    <!-- PAGE CONTAINER (for styling purposes only) -->
+    <div id="errorPageContainer">
+
+      <!-- Error Title -->
+      <div id="errorTitle">
+        <h1 id="errorTitleText">%error_title%</h1>
+      </div>
+
+      <!-- LONG CONTENT (the section most likely to require scrolling) -->
+      <div id="errorLongContent">
+
+        <!-- Short Description -->
+        <div id="errorShortDesc">
+          <p id="errorShortDescText">%short_description%</p>
+        </div>
+
+        <!-- Buttons -->
+        <div id="actions">%actions%</div>
+      </div>
+
+    </div>
+  </div>
+  <div id="decoration"></div>
+
+  </body>
+</html>

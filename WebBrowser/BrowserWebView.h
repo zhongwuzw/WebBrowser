@@ -11,7 +11,7 @@
 @class BrowserWebView;
 @class WebModel;
 
-typedef void (^WebCompletionBlock)(id, NSError *);
+typedef void (^WebCompletionBlock)(NSString *, NSError *);
 
 @protocol WebViewDelegate <NSObject>
 

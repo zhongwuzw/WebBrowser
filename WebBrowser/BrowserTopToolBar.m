@@ -30,7 +30,7 @@
     if (self = [super initWithFrame:frame]) {
         [self initializeView];
         [[DelegateManager sharedInstance] registerDelegate:self forKey:DelegateManagerWebView];
-        [[DelegateManager sharedInstance] addDelegate:self];
+        [[DelegateManager sharedInstance] addWebViewDelegate:self];
     }
     return self;
 }

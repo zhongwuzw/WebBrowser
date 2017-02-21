@@ -10,7 +10,7 @@
 
 @implementation DelegateManager (Delegate)
 
-#pragma mark - UIWebViewDelegate
+#pragma mark - WebViewDelegate
 
 - (void)webViewDidStartLoad:(BrowserWebView *)webView{}
 - (void)webViewDidFinishLoad:(BrowserWebView *)webView{}
