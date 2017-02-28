@@ -14,10 +14,9 @@
 
 #define Cell_Corner_Radius 10
 
-@interface CardCollectionViewCell () <UIGestureRecognizerDelegate>
+@interface CardCollectionViewCell ()
 
 @property (nonatomic, strong) UIImageView *imageView;
-@property (nonatomic, strong) UIPanGestureRecognizer *panGestureReg;
 @property (nonatomic, assign) CGFloat originTouchX;
 
 @end
@@ -54,14 +53,6 @@
         
         imageView;
     });
-    
-    self.panGestureReg = ({
-        UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGesture:)];
-        pan.delegate = self;
-        [self addGestureRecognizer:pan];
-        
-        pan;
-    });
 }
 
 - (void)updateWithWebModel:(WebModel *)webModel{
@@ -78,8 +69,7 @@
     });
 }
 
-- (void)handlePanGesture:(UIPanGestureRecognizer *)pan{
-    CGPoint point = [pan locationInView:self.collectionView];
+- (void)handlePanGesture:(UIPanGestureRecognizer *)pan point:(CGPoint)point{
     
     CGFloat shiftX = point.x - _originTouchX;
     
@@ -118,12 +108,6 @@
         }
     }
     return [super hitTest:point withEvent:event];
-}
-
-#pragma mark - UIGestureRecognizerDelegate Method
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
-    return YES;
 }
 
 @end

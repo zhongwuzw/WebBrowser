@@ -19,5 +19,6 @@ typedef void(^CloseBlock)(NSIndexPath *indexPath);
 @property (nonatomic, weak) UICollectionView *collectionView;
 
 - (void)updateWithWebModel:(WebModel *)webModel;
+- (void)handlePanGesture:(UIPanGestureRecognizer *)pan point:(CGPoint)point;
 
 @end

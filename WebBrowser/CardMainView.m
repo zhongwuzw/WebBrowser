@@ -19,7 +19,7 @@
 #define CollectionViewTopMargin 50
 #define CollectionViewSideMargin 50
 
-@interface CardMainView () <UICollectionViewDelegate, UICollectionViewDataSource, CardBottomClickedDelegate>
+@interface CardMainView () <UICollectionViewDelegate, UICollectionViewDataSource, UIGestureRecognizerDelegate,  CardBottomClickedDelegate>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray<WebModel *> *cardArr;
@@ -74,6 +74,12 @@
         [self addConstraint:[NSLayoutConstraint constraintWithItem:collectionView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
         [self addConstraint:[NSLayoutConstraint constraintWithItem:collectionView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
         [self addConstraint:[NSLayoutConstraint constraintWithItem:collectionView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeWidth multiplier:0.98 constant:0]];
+        
+        UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognized:)];
+        panGestureRecognizer.minimumNumberOfTouches = 1;
+        panGestureRecognizer.maximumNumberOfTouches = 1;
+        panGestureRecognizer.delegate = self;
+        [collectionView addGestureRecognizer:panGestureRecognizer];
 
         collectionView;
     });
@@ -196,6 +202,30 @@
         [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:num inSection:0]]];
         [[TabManager sharedInstance] updateWebModelArray:self.cardArr];
     });
+}
+
+#pragma mark - PanGesture Method
+
+- (void)panGestureRecognized:(UIPanGestureRecognizer *)recognizer{
+    CGPoint point = [recognizer locationInView:self.collectionView];
+    
+    NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:point];
+    if (indexPath) {
+        CardCollectionViewCell *cell = (CardCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
+        [cell handlePanGesture:recognizer point:point];
+    }
+}
+
+#pragma mark - UIGestureRecognizerDelegate
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+    CGPoint velocity = [(UIPanGestureRecognizer *)gestureRecognizer velocityInView:self.collectionView];
+    if (fabs(velocity.x) > fabs(velocity.y)) {
+        return YES;
+    }
+    
+    return NO;
 }
 
 @end

@@ -56,7 +56,7 @@ static char delegatesKey;
 }
 
 - (NSArray<WeakWebBrowserDelegate *> *)webViewDelegates{
-    return [self.delegates copy];
+    return [NSArray arrayWithArray:self.delegates];
 }
 
 @end
