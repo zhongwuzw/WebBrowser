@@ -1,0 +1,24 @@
+language: objective-c
+osx_image: xcode8.2
+xcode_project: WebBrowser.xcodeproj
+xcode_scheme: WebBrowser
+xcode_sdk: iphonesimulator10.1
+env:
+  global:
+  - FRAMEWORK_NAME=WebBrowser
+before_install:
+- brew update
+- brew outdated carthage || brew upgrade carthage
+before_script:
+- carthage bootstrap
+before_deploy:
+- carthage build --no-skip-current
+- carthage archive $FRAMEWORK_NAME
+deploy:
+  provider: releases
+  api_key: 116849b32e1d983eae522065a6726bbb6aed84da
+  file: WebBrowser.framework.zip
+  skip_cleanup: true
+  on:
+    repo: zhongwuzw/WebBrowser
+    tags: true
