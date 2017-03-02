@@ -249,17 +249,29 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
               SettingsTableViewController *settingsTableVC = [[SettingsTableViewController alloc] initWithStyle:UITableViewStylePlain];
               [self_.navigationController pushViewController:settingsTableVC animated:YES];
           }],
-          [SettingsMenuItem itemWithText:@"多窗口" image:[UIImage imageNamed:@"album"] action:^{
-              CardMainView *cardMainView = [[CardMainView alloc] initWithFrame:self.view.bounds];
-              [cardMainView reloadCardMainView];
-              [UIView transitionWithView:self_.view duration:.5 options:UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionCurveEaseInOut animations:^{
-                  [self_.view addSubview:cardMainView];
-              }completion:nil];
-          }],
           [SettingsMenuItem itemWithText:@"分享" image:[UIImage imageNamed:@"album"] action:nil]
           ];
         
         [SettingsViewController presentFromViewController:self withItems:items completion:nil];
+    }
+    if (tag == BottomToolBarMultiWindowButtonTag) {
+        CardMainView *cardMainView = [[CardMainView alloc] initWithFrame:self.view.bounds];
+        
+        [cardMainView reloadCardMainViewWithCompletionBlock:^{
+            [UIView transitionWithView:self.view duration:.3 options:UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionCurveEaseInOut animations:^{
+                UIImage *image = [self.view snapshot];
+                UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+                imageView.frame = cardMainView.bounds;
+                [cardMainView addSubview:imageView];
+                [self.view addSubview:cardMainView];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [imageView removeFromSuperview];
+                });
+            }completion:^(BOOL finished){
+                [cardMainView changeCollectionViewLayout];
+            }];
+        }];
+
     }
 }
 

@@ -42,12 +42,14 @@
     refreshOrStopItem.width = 30;
     self.refreshOrStopItem = refreshOrStopItem;
     
+    UIBarButtonItem *multiWindowItem = [self createBottomToolBarButtonWithImage:TOOLBAR_BUTTON_MULTIWINDOW_STRING tag:BottomToolBarMultiWindowButtonTag];
+    
     UIBarButtonItem *settingItem = [self createBottomToolBarButtonWithImage:TOOLBAR_BUTTON_MORE_STRING tag:BottomToolBarMoreButtonTag];
     
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     flexibleItem.tag = BottomToolBarFlexibleButtonTag;
     
-    [self setItems:@[backItem,flexibleItem,forwardItem,flexibleItem,refreshOrStopItem,flexibleItem,settingItem] animated:YES];
+    [self setItems:@[backItem,flexibleItem,forwardItem,flexibleItem,refreshOrStopItem,flexibleItem,multiWindowItem,flexibleItem,settingItem] animated:YES];
     
 }
 

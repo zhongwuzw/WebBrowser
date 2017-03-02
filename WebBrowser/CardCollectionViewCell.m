@@ -7,7 +7,6 @@
 //
 
 #import "CardCollectionViewCell.h"
-#import "CardCollectionViewLayout.h"
 #import "UIColor+ZWUtility.h"
 #import "UIImage+ZWUtility.h"
 #import "TabManager.h"
@@ -32,6 +31,14 @@
 
 - (void)layoutSubviews{
     [super layoutSubviews];
+    
+//    self.contentView.layer.shadowColor = [UIColor blackColor].CGColor;
+//    self.contentView.layer.shadowOffset = CGSizeMake(0.0, -20.0);
+//    self.contentView.layer.shadowOpacity = 0.6;
+//    self.contentView.layer.shadowRadius = 20.0;
+//    self.contentView.layer.shadowPath = [UIBezierPath bezierPathWithRect:self.contentView.bounds].CGPath;
+//    self.contentView.layer.shouldRasterize = YES;
+//    
     CGRect rect = self.bounds;
     rect.size.width -= 9;
     self.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:Cell_Corner_Radius].CGPath;
@@ -41,7 +48,8 @@
 }
 
 - (void)commonInit{
-    self.backgroundColor = UIColorFromRGB(0xE6E6E7);
+//    self.backgroundColor = UIColorFromRGB(0xE6E6E7);
+    self.backgroundColor = [UIColor whiteColor];
     self.layer.cornerRadius = Cell_Corner_Radius;
     
     self.imageView = ({
@@ -67,35 +75,6 @@
             [self.imageView setImage:webModel.image];
         })
     });
-}
-
-- (void)handlePanGesture:(UIPanGestureRecognizer *)pan point:(CGPoint)point{
-    
-    CGFloat shiftX = point.x - _originTouchX;
-    
-    switch (pan.state) {
-        case UIGestureRecognizerStateBegan:
-            self.originTouchX = point.x;
-            break;
-        case UIGestureRecognizerStateChanged:
-            self.transform = CGAffineTransformMakeTranslation(shiftX, 0);
-            break;
-        default:
-        {
-            if (fabs(shiftX) > self.contentView.width / 4) {
-                if (self.closeBlock) {
-                    self.closeBlock([self.collectionView indexPathForCell:self]);
-                    self.closeBlock = nil;
-                }
-            }
-            else{
-                [UIView animateWithDuration:.4 delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:.1 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-                    self.transform = CGAffineTransformIdentity;
-                }completion:nil];
-            }
-            break;
-        }
-    }
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event{

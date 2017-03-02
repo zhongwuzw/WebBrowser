@@ -9,7 +9,7 @@ env:
   - EXAMPLE_SCHEME="WebBrowser"
   - IOS_SDK=iphonesimulator10.2
   matrix:
-  - DESTINATION="platform=iOS Simulator,OS=10.2,name=iPhone 7 Plus" SDK="$IOS_SDK"
+  - DESTINATION="platform=iOS Simulator,id=8188B40E-F57F-4519-AC47-E43D884B9016,OS=10.2,name=iPhone 7 Plus" SDK="$IOS_SDK"
 before_install:
 - brew update
 - brew outdated carthage || brew upgrade carthage

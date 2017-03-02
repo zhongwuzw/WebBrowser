@@ -7,7 +7,8 @@
 //
 
 #import "CardMainView.h"
-#import "CardCollectionViewLayout.h"
+#import "CardBrowserFlatLayout.h"
+#import "CardBrowserCollectionViewLayout.h"
 #import "CardCollectionViewCell.h"
 #import "CardMainBottomView.h"
 #import "BrowserHeader.h"
@@ -24,6 +25,8 @@
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) NSMutableArray<WebModel *> *cardArr;
 @property (nonatomic, strong) CardMainBottomView *cardBottomView;
+@property (nonatomic, strong) CardBrowserFlatLayout *flatLayout;
+@property (nonatomic, strong) CardBrowserCollectionViewLayout *browserLayout;
 
 @end
 
@@ -58,22 +61,18 @@
     self.backgroundColor = [UIColor whiteColor];
     
     self.collectionView = ({
-        CardCollectionViewLayout *layout = [CardCollectionViewLayout new];
+        self.flatLayout = [CardBrowserFlatLayout new];
+        self.browserLayout = [CardBrowserCollectionViewLayout new];
     
-        UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
-        collectionView.translatesAutoresizingMaskIntoConstraints = NO;
+        UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:self.flatLayout];
 
-        collectionView.backgroundColor = [UIColor whiteColor];
+        collectionView.backgroundColor = [UIColor lightGrayColor];
         collectionView.showsVerticalScrollIndicator = NO;
         collectionView.delegate = self;
         collectionView.dataSource = self;
         [collectionView registerClass:[CardCollectionViewCell class] forCellWithReuseIdentifier:CardCellIdentifier];
         
         [self addSubview:collectionView];
-        
-        [self addConstraint:[NSLayoutConstraint constraintWithItem:collectionView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
-        [self addConstraint:[NSLayoutConstraint constraintWithItem:collectionView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
-        [self addConstraint:[NSLayoutConstraint constraintWithItem:collectionView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeWidth multiplier:0.98 constant:0]];
         
         UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognized:)];
         panGestureRecognizer.minimumNumberOfTouches = 1;
@@ -85,25 +84,32 @@
     });
     
     self.cardBottomView = ({
-        CardMainBottomView *bottomView = [CardMainBottomView new];
+        CardMainBottomView *bottomView = [[CardMainBottomView alloc] initWithFrame:CGRectMake(0, self.height - BOTTOM_TOOL_BAR_HEIGHT, self.width, BOTTOM_TOOL_BAR_HEIGHT)];
         [self addSubview:bottomView];
-        [bottomView setTranslatesAutoresizingMaskIntoConstraints:NO];
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[bottomView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(bottomView)]];
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_collectionView]-0-[bottomView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_collectionView,bottomView)]];
-        [self addConstraint:[NSLayoutConstraint constraintWithItem:bottomView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0 constant:BOTTOM_TOOL_BAR_HEIGHT]];
         bottomView.delegate = self;
         
         bottomView;
     });
 }
 
-- (void)reloadCardMainView{
+- (void)reloadCardMainViewWithCompletionBlock:(CompletionBlock)completion{
     WEAK_REF(self)
     [[TabManager sharedInstance] setMultiWebViewOperationBlockWith:^(NSArray<WebModel *> *modelArray){
         STRONG_REF(self_)
         if (self__) {
             [self__ setCardsWithArray:modelArray];
+            [self__.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self__.cardArr.count - 1 inSection:0] atScrollPosition:UICollectionViewScrollPositionBottom animated:NO];
+            if (completion) {
+                completion();
+            }
         }
+    }];
+}
+
+- (void)changeCollectionViewLayout{
+    UICollectionViewLayout *layout = self.collectionView.collectionViewLayout == self.flatLayout ? self.browserLayout : self.flatLayout;
+    [self.collectionView setCollectionViewLayout:layout animated:YES completion:^(BOOL finished){
+        ;
     }];
 }
 
@@ -177,11 +183,12 @@
 - (void)removeSelfFromSuperView{
     [[TabManager sharedInstance].browserContainerView needUpdateWebView];
     
-    [UIView animateWithDuration:.5 animations:^{
-        self.alpha = 0;
-    }completion:^(BOOL finished){
-        [self removeFromSuperview];
-        self.alpha = 1;
+    WEAK_REF(self)
+    [self.collectionView setCollectionViewLayout:self.flatLayout animated:YES completion:^(BOOL finished){
+        STRONG_REF(self_)
+        if (self__) {
+            [self__ removeFromSuperview];
+        }
         [[TabManager sharedInstance] saveWebModelData];
     }];
 }
@@ -206,13 +213,34 @@
 
 #pragma mark - PanGesture Method
 
-- (void)panGestureRecognized:(UIPanGestureRecognizer *)recognizer{
+- (void)panGestureRecognized:(UIPanGestureRecognizer *)recognizer{    
     CGPoint point = [recognizer locationInView:self.collectionView];
     
     NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:point];
-    if (indexPath) {
-        CardCollectionViewCell *cell = (CardCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
-        [cell handlePanGesture:recognizer point:point];
+    
+    if (recognizer.state == UIGestureRecognizerStateBegan) {
+        self.browserLayout.pannedItemIndexPath = indexPath;
+        self.browserLayout.panStartPoint = point;
+        return;
+        
+    } else if (recognizer.state == UIGestureRecognizerStateChanged) {
+        self.browserLayout.panUpdatePoint = point;
+        [self.browserLayout invalidateLayout];
+    } else {
+        if (fabs(point.x - self.browserLayout.panStartPoint.x) > self.collectionView.frame.size.width / 4 && point.x < self.browserLayout.panStartPoint.x && self.browserLayout.pannedItemIndexPath) {
+            NSIndexPath *copyPannedIndexPath = self.browserLayout.pannedItemIndexPath;
+            self.browserLayout.pannedItemIndexPath = nil;
+            CardCollectionViewCell *cell = (CardCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:copyPannedIndexPath];
+            if (cell.closeBlock) {
+                cell.closeBlock(copyPannedIndexPath);
+                cell.closeBlock = nil;
+            }
+        }
+        else{
+            self.browserLayout.pannedItemIndexPath = nil;
+            [self.browserLayout invalidateLayout];
+        }
+        
     }
 }
 
@@ -226,6 +254,12 @@
     }
     
     return NO;
+}
+
+#pragma mark - Dealloc Method
+
+- (void)dealloc{
+    DDLogDebug(@"CardMainView dealloced");
 }
 
 @end

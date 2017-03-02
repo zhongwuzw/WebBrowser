@@ -28,6 +28,8 @@
 		0E3D2B771E24CD3000364B69 /* UIImage+ZWUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3D2B761E24CD3000364B69 /* UIImage+ZWUtility.m */; };
 		0E48FB011DA3FD4B00B8FCDB /* BrowserWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E48FB001DA3FD4B00B8FCDB /* BrowserWebView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		0E5000511E0B6D60004BA658 /* CardMainBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E5000501E0B6D60004BA658 /* CardMainBottomView.m */; };
+		0E512D431E6675ED008A8AFA /* CardBrowserCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E512D421E6675ED008A8AFA /* CardBrowserCollectionViewLayout.m */; };
+		0E512D461E66BCA9008A8AFA /* CardBrowserFlatLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E512D451E66BCA9008A8AFA /* CardBrowserFlatLayout.m */; };
 		0E5988A51E2F8070003259C0 /* SettingActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E5988A31E2F8070003259C0 /* SettingActivityTableViewCell.m */; };
 		0E5988A61E2F8070003259C0 /* SettingActivityTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E5988A41E2F8070003259C0 /* SettingActivityTableViewCell.xib */; };
 		0E681F2A1D4AEC3F003534F5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E681F291D4AEC3F003534F5 /* main.m */; };
@@ -150,6 +152,10 @@
 		0E48FB031DA4058300B8FCDB /* WebViewHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebViewHeader.h; sourceTree = "<group>"; };
 		0E50004F1E0B6D60004BA658 /* CardMainBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardMainBottomView.h; sourceTree = "<group>"; };
 		0E5000501E0B6D60004BA658 /* CardMainBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardMainBottomView.m; sourceTree = "<group>"; };
+		0E512D411E6675ED008A8AFA /* CardBrowserCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardBrowserCollectionViewLayout.h; sourceTree = "<group>"; };
+		0E512D421E6675ED008A8AFA /* CardBrowserCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardBrowserCollectionViewLayout.m; sourceTree = "<group>"; };
+		0E512D441E66BCA9008A8AFA /* CardBrowserFlatLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardBrowserFlatLayout.h; sourceTree = "<group>"; };
+		0E512D451E66BCA9008A8AFA /* CardBrowserFlatLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardBrowserFlatLayout.m; sourceTree = "<group>"; };
 		0E5988A21E2F8070003259C0 /* SettingActivityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingActivityTableViewCell.h; sourceTree = "<group>"; };
 		0E5988A31E2F8070003259C0 /* SettingActivityTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingActivityTableViewCell.m; sourceTree = "<group>"; };
 		0E5988A41E2F8070003259C0 /* SettingActivityTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingActivityTableViewCell.xib; sourceTree = "<group>"; };
@@ -399,6 +405,10 @@
 			children = (
 				0E32E2FD1E08C8F600CFBBB5 /* CardCollectionViewLayout.h */,
 				0E32E2FE1E08C8F600CFBBB5 /* CardCollectionViewLayout.m */,
+				0E512D411E6675ED008A8AFA /* CardBrowserCollectionViewLayout.h */,
+				0E512D421E6675ED008A8AFA /* CardBrowserCollectionViewLayout.m */,
+				0E512D441E66BCA9008A8AFA /* CardBrowserFlatLayout.h */,
+				0E512D451E66BCA9008A8AFA /* CardBrowserFlatLayout.m */,
 			);
 			name = Layout;
 			sourceTree = "<group>";
@@ -1014,6 +1024,7 @@
 				0E2329311DADE07B007E9886 /* BrowserTopToolBar.m in Sources */,
 				0E2329341DAE19BB007E9886 /* TopToolBarShapeView.m in Sources */,
 				0E5988A51E2F8070003259C0 /* SettingActivityTableViewCell.m in Sources */,
+				0E512D461E66BCA9008A8AFA /* CardBrowserFlatLayout.m in Sources */,
 				0E681F2D1D4AEC3F003534F5 /* AppDelegate.m in Sources */,
 				0E8EE8351E11277100B6DADF /* SettingAnimator.m in Sources */,
 				0E1F9F9E1DD2D86E00FA84EA /* NJKWebViewProgress.m in Sources */,
@@ -1025,6 +1036,7 @@
 				0EF0256A1DD9554F0011019F /* HTTPClient+SearchSug.m in Sources */,
 				0EBFFE731E5299A500404199 /* JavaScriptHelper.m in Sources */,
 				0EC14F501E31B97900A44D05 /* FMDatabase.m in Sources */,
+				0E512D431E6675ED008A8AFA /* CardBrowserCollectionViewLayout.m in Sources */,
 				0E681F691D4B34EB003534F5 /* MenuHelper.m in Sources */,
 				0E3D2B771E24CD3000364B69 /* UIImage+ZWUtility.m in Sources */,
 				0E681F2A1D4AEC3F003534F5 /* main.m in Sources */,

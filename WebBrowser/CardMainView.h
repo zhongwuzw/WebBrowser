@@ -8,11 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^CompletionBlock)();
+
 @class CardCollectionViewCell;
 @class WebModel;
 
 @interface CardMainView : UIView
 
-- (void)reloadCardMainView;
+- (void)reloadCardMainViewWithCompletionBlock:(CompletionBlock)completion;
+- (void)changeCollectionViewLayout;
 
 @end
