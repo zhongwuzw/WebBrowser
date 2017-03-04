@@ -26,6 +26,7 @@
 }
 
 - (void)commonInit{
+    self.backgroundColor = [UIColor whiteColor];
     self.returnButton = ({
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [self addSubview:button];

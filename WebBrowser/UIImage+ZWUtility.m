@@ -21,8 +21,9 @@
     imageRect.size.height -= UIImage_Text_Height;
     [self drawInRect:imageRect];
     
-    CGRect closeRect = CGRectMake(rect.size.width - Card_Cell_Close_Width, 0, Card_Cell_Close_Width, Card_Cell_Close_Height);
-    [[UIImage imageNamed:@"card-delete"] drawInRect:closeRect];
+//    CGRect closeRect = CGRectMake(rect.size.width - Card_Cell_Close_Width - 10, 0, Card_Cell_Close_Width, Card_Cell_Close_Height);
+//    DDLogDebug(@"close button x is: %f",closeRect.origin.x);
+//    [[UIImage imageNamed:@"card-delete"] drawInRect:closeRect];
     
     CGRect textRect = CGRectMake(point.x, point.y, rect.size.width, UIImage_Text_Height);
     UIFont *font = [UIFont boldSystemFontOfSize:12];

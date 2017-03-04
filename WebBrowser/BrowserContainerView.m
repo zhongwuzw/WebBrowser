@@ -42,6 +42,10 @@
 }
 
 - (void)startLoadWebViewWithURL:(NSString *)url{
+    if ([[NSURL URLWithString:url] isLocal]) {
+        NSURL *originalUrl = [[NSURL URLWithString:url] originalURLFromErrorURL];
+        url = originalUrl.absoluteString;
+    }
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
     
     [self.webView loadRequest:request];

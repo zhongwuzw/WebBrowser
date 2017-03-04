@@ -207,7 +207,7 @@ static NSString * const CellId = @"SettingsMenuCell";
     
     cell.tintColor = self.view.tintColor;
     
-    SettingsMenuItem *item = self.items[indexPath.row];
+    SettingsMenuItem *item = self.items[indexPath.item];
     if (item.text && item.text.length > 0) {
         cell.textLabel.text = item.text;
     }
@@ -222,7 +222,7 @@ static NSString * const CellId = @"SettingsMenuCell";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     double delayInSeconds = 0.15;
-    SettingsMenuItem *item = self.items[indexPath.row];
+    SettingsMenuItem *item = self.items[indexPath.item];
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [self dismissViewControllerAnimated:YES completion:^{

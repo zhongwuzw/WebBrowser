@@ -29,28 +29,29 @@
     return self;
 }
 
-- (void)layoutSubviews{
-    [super layoutSubviews];
-    
-//    self.contentView.layer.shadowColor = [UIColor blackColor].CGColor;
-//    self.contentView.layer.shadowOffset = CGSizeMake(0.0, -20.0);
-//    self.contentView.layer.shadowOpacity = 0.6;
-//    self.contentView.layer.shadowRadius = 20.0;
-//    self.contentView.layer.shadowPath = [UIBezierPath bezierPathWithRect:self.contentView.bounds].CGPath;
-//    self.contentView.layer.shouldRasterize = YES;
+//- (void)layoutSubviews{
+//    [super layoutSubviews];
 //    
-    CGRect rect = self.bounds;
-    rect.size.width -= 9;
-    self.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:Cell_Corner_Radius].CGPath;
-    self.layer.shadowOffset = CGSizeMake(4, -2);
-    self.layer.shadowOpacity = 0.5;
-    self.layer.shadowColor = [[UIColor blackColor] colorWithAlphaComponent:0.5].CGColor;
-}
+////    self.contentView.layer.shadowColor = [UIColor blackColor].CGColor;
+////    self.contentView.layer.shadowOffset = CGSizeMake(0.0, -20.0);
+////    self.contentView.layer.shadowOpacity = 0.6;
+////    self.contentView.layer.shadowRadius = 20.0;
+////    self.contentView.layer.shadowPath = [UIBezierPath bezierPathWithRect:self.contentView.bounds].CGPath;
+////    self.contentView.layer.shouldRasterize = YES;
+////    
+////    CGRect rect = self.bounds;
+////    rect.size.width -= 9;
+////    self.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:Cell_Corner_Radius].CGPath;
+////    self.layer.shadowOffset = CGSizeMake(4, -2);
+////    self.layer.shadowOpacity = 0.5;
+////    self.layer.shadowColor = [[UIColor blackColor] colorWithAlphaComponent:0.5].CGColor;
+//}
 
 - (void)commonInit{
 //    self.backgroundColor = UIColorFromRGB(0xE6E6E7);
     self.backgroundColor = [UIColor whiteColor];
-    self.layer.cornerRadius = Cell_Corner_Radius;
+    self.contentView.clipsToBounds = YES;
+//    self.layer.cornerRadius = Cell_Corner_Radius;
     
     self.imageView = ({
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.bounds];
@@ -61,15 +62,24 @@
         
         imageView;
     });
+
+    UIImageView *closeImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"card-delete"]];
+    [self.contentView addSubview:closeImage];
+    
+    closeImage.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[closeImage(22)]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(closeImage)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[closeImage(22)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(closeImage)]];
 }
 
 - (void)updateWithWebModel:(WebModel *)webModel{
     //because of user may operate on webView,so needs update image every time.
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        if (!webModel.isImageFromDisk) {
+        if (!webModel.isImageProcessed) {
             UIImage *finalImage;
-            finalImage = [webModel.image getCornerImageWithFrame:self.imageView.bounds cornerRadius:10 text:webModel.title atPoint:CGPointMake(15, 5)];
+            finalImage = [webModel.image getCornerImageWithFrame:self.imageView.bounds cornerRadius:0 text:webModel.title atPoint:CGPointMake(15, 5)];
             webModel.image = finalImage;
+            webModel.isImageProcessed = YES;
+            
         }
         dispatch_main_async_safe(^{
             [self.imageView setImage:webModel.image];

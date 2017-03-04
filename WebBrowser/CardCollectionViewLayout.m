@@ -69,7 +69,7 @@ static CGFloat BottomPercent = 0.85;
 }
 
 - (void)applyAttribute:(CardLayoutAttributes *)attribute{
-    NSInteger index = attribute.indexPath.row;
+    NSInteger index = attribute.indexPath.item;
     CGRect currentFrame = CGRectMake(self.collectionView.bounds.origin.x, self.titleHeight * index, self.cellSize.width, self.cellSize.height);
     
     CGFloat yOffset = (self.collectionView.contentOffset.y >= self.titleHeight * index) ? self.collectionView.contentOffset.y : self.titleHeight * index;
@@ -92,7 +92,7 @@ static CGFloat BottomPercent = 0.85;
 }
 
 - (CardLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath{
-    return self.attributesList[indexPath.row];
+    return self.attributesList[indexPath.item];
 }
 
 - (NSArray<CardLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect{
@@ -125,14 +125,14 @@ static CGFloat BottomPercent = 0.85;
 
 - (UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingItemAtIndexPath:(NSIndexPath *)itemIndexPath{
     UICollectionViewLayoutAttributes *attributes;
-    if (itemIndexPath.row > self.attributesList.count - 1) {
+    if (itemIndexPath.item > self.attributesList.count - 1) {
         attributes = [super initialLayoutAttributesForAppearingItemAtIndexPath:itemIndexPath];
     }
     else
-        attributes = self.attributesList[itemIndexPath.row];
+        attributes = self.attributesList[itemIndexPath.item];
     
     if ([self.insertPath containsObject:itemIndexPath]) {
-        NSInteger randomLoc = (itemIndexPath.row % 2 == 0) ? 1 : -1;
+        NSInteger randomLoc = (itemIndexPath.item % 2 == 0) ? 1 : -1;
         CGFloat x = self.collectionView.width * randomLoc;
         
         attributes.transform = CGAffineTransformMakeTranslation(x, 0);
@@ -142,7 +142,7 @@ static CGFloat BottomPercent = 0.85;
 }
 
 - (UICollectionViewLayoutAttributes *)finalLayoutAttributesForDisappearingItemAtIndexPath:(NSIndexPath *)itemIndexPath{
-    UICollectionViewLayoutAttributes *attributes = self.attributesList[itemIndexPath.row];
+    UICollectionViewLayoutAttributes *attributes = self.attributesList[itemIndexPath.item];
     
     if ([self.deletePath containsObject:itemIndexPath]) {
         NSInteger randomLoc;
@@ -154,7 +154,7 @@ static CGFloat BottomPercent = 0.85;
             randomLoc = 1;
         }
         else
-            randomLoc = (itemIndexPath.row % 2 == 0) ? 1 : -1;
+            randomLoc = (itemIndexPath.item % 2 == 0) ? 1 : -1;
         CGFloat x = self.collectionView.width * randomLoc;
         
         attributes.transform = CGAffineTransformMakeTranslation(x, 0);

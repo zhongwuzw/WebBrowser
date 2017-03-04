@@ -68,6 +68,7 @@
 
         collectionView.backgroundColor = [UIColor lightGrayColor];
         collectionView.showsVerticalScrollIndicator = NO;
+        collectionView.alwaysBounceVertical = YES;
         collectionView.delegate = self;
         collectionView.dataSource = self;
         [collectionView registerClass:[CardCollectionViewCell class] forCellWithReuseIdentifier:CardCellIdentifier];
@@ -116,9 +117,9 @@
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row < [self collectionView:collectionView numberOfItemsInSection:0] - 1) {
-        WebModel *webModel = [self.cardArr objectAtIndex:indexPath.row];
-        [self.cardArr removeObjectAtIndex:indexPath.row];
+    if (indexPath.item < [self collectionView:collectionView numberOfItemsInSection:0]) {
+        WebModel *webModel = [self.cardArr objectAtIndex:indexPath.item];
+        [self.cardArr removeObjectAtIndex:indexPath.item];
         [self.cardArr addObject:webModel];
         WEAK_REF(self)
         [[TabManager sharedInstance] updateWebModelArray:self.cardArr completion:^{
@@ -148,15 +149,15 @@
     cell.closeBlock = ^(NSIndexPath *index){
         STRONG_REF(self_)
         if (self__) {
-            [self__.cardArr removeObjectAtIndex:index.row];
+            [self__.cardArr removeObjectAtIndex:index.item];
             [[TabManager sharedInstance] updateWebModelArray:self__.cardArr];
             [self__.collectionView performBatchUpdates:^{
-                [self__.collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index.row inSection:0]]];
+                [self__.collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index.item inSection:0]]];
             }completion:nil];
         }
     };
     
-    WebModel *webModel = self.cardArr[indexPath.row];
+    WebModel *webModel = self.cardArr[indexPath.item];
     
     [cell updateWithWebModel:webModel];
     
@@ -169,6 +170,7 @@
     switch (tag) {
         case ReturnButtonClicked:
         {
+            [self.collectionView selectItemAtIndexPath:[NSIndexPath indexPathForItem:[self.collectionView numberOfItemsInSection:0] - 1 inSection:0] animated:YES scrollPosition:UICollectionViewScrollPositionBottom];
             [self removeSelfFromSuperView];
             break;
         }

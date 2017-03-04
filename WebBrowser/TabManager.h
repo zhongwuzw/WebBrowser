@@ -19,10 +19,10 @@ typedef void(^WebBrowserNoParamsBlock)();
 
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *url;
-@property (nonatomic, strong) UIImage *image;
 @property (nonatomic, copy) NSString *imageKey;
-@property (nonatomic, assign) BOOL isImageFromDisk;
+@property (nonatomic, strong) UIImage *image;
 @property (nonatomic, strong) BrowserWebView *webView;
+@property (nonatomic, assign) BOOL isImageProcessed;
 
 @end
 
