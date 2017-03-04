@@ -15,7 +15,7 @@ typedef enum : NSUInteger {
 } SearchButton;
 
 typedef enum : NSUInteger {
-    QuickInputButtonStateFirst,
+    QuickInputButtonStateFirst = 0,
     QuickInputButtonStateSecond,
 } QuickInputButtonState;
 
@@ -100,7 +100,7 @@ typedef enum : NSUInteger {
             break;
         case SearchButtonBottomButton:
             [self.textField insertText:sender.titleLabel.text];
-            if (self.quickState == QuickInputButtonStateFirst) {
+            if (self.quickState == QuickInputButtonStateFirst && ![@[@"http://",@"https://"] containsObject:sender.titleLabel.text]) {
                 [self switchInputViewButtonState];
             }
             break;

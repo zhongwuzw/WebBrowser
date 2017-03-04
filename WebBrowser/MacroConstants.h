@@ -26,4 +26,13 @@
 #define DEFAULT_CARD_CELL_URL   @"https://m.baidu.com/"
 #define DEFAULT_CARD_CELL_TITLE @"百度一下"
 
+#pragma mark - Notification
+//打开appstore
+#define kModalAppstoreOpen          @"kModalAppstoreOpen"
+//无图模式
+#define kNoImageModeChanged         @"kNoImageModeChanged"
+//tab switch
+#define kWebTabSwitch               @"kWebTabSwitch"
+
+
 #endif /* MacroConstants_h */

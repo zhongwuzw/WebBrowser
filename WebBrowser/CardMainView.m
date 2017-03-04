@@ -170,7 +170,10 @@
     switch (tag) {
         case ReturnButtonClicked:
         {
-            [self.collectionView selectItemAtIndexPath:[NSIndexPath indexPathForItem:[self.collectionView numberOfItemsInSection:0] - 1 inSection:0] animated:YES scrollPosition:UICollectionViewScrollPositionBottom];
+            if ([self.collectionView numberOfItemsInSection:0]) {
+                [self.collectionView selectItemAtIndexPath:[NSIndexPath indexPathForItem:[self.collectionView numberOfItemsInSection:0] - 1 inSection:0] animated:YES scrollPosition:UICollectionViewScrollPositionBottom];
+            }
+
             [self removeSelfFromSuperView];
             break;
         }

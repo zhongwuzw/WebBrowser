@@ -247,7 +247,7 @@
 //    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
 //    UIGraphicsEndImageContext();
     
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(self.width, self.height), YES, 0);
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(self.width, self.height), YES, 0.0f);
     [self.layer renderInContext:UIGraphicsGetCurrentContext()];
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
@@ -272,7 +272,7 @@
 
 
 - (UIImage *)snapshot{
-    UIGraphicsBeginImageContext(self.bounds.size);
+    UIGraphicsBeginImageContextWithOptions(self.bounds.size, YES, 0.0f);
     
     [self.layer renderInContext:UIGraphicsGetCurrentContext()];
     UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();

@@ -7,7 +7,6 @@
 
   if (!window.__firefox__) {
     window.__firefox__ = {};
-    window.__zhongwu__ = "sssssss";
   }
 
   window.__firefox__.NoImageMode = {

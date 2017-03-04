@@ -23,6 +23,7 @@
     if (self = [super initWithFrame:frame]) {
         [self initializeView];
         [[DelegateManager sharedInstance] registerDelegate:self forKey:DelegateManagerWebView];
+        [Notifier addObserver:self selector:@selector(handletabSwitch:) name:kWebTabSwitch object:nil];
     }
     
     return self;
@@ -94,6 +95,22 @@
 
 - (void)webViewForMainFrameDidCommitLoad:(BrowserWebView *)webView{
     [self setToolBarButtonRefreshOrStop:NO];
+}
+
+#pragma mark - kWebTabSwitch notification handler
+
+- (void)handletabSwitch:(NSNotification *)notification{
+    BrowserWebView *webView = [notification.userInfo objectForKey:@"webView"];
+    if ([webView isKindOfClass:[BrowserWebView class]]) {
+        [self.backItem setEnabled:[webView canGoBack]];
+        [self.forwardItem setEnabled:[webView canGoForward]];
+    }
+}
+
+#pragma mark - Dealloc
+
+- (void)dealloc{
+    [Notifier removeObserver:self name:kWebTabSwitch object:nil];
 }
 
 @end

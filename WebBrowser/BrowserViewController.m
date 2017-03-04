@@ -242,8 +242,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
               
           }],
           [SettingsMenuItem itemWithText:@"历史" image:[UIImage imageNamed:@"album"] action:^{
-              HistoryTableViewController *hisTableVC = [[HistoryTableViewController alloc] initWithStyle:UITableViewStylePlain];
-              [self_.navigationController pushViewController:hisTableVC animated:YES];
+//              HistoryTableViewController *hisTableVC = [[HistoryTableViewController alloc] initWithStyle:UITableViewStylePlain];
+//              [self_.navigationController pushViewController:hisTableVC animated:YES];
           }],
           [SettingsMenuItem itemWithText:@"设置" image:[UIImage imageNamed:@"album"] action:^{
               SettingsTableViewController *settingsTableVC = [[SettingsTableViewController alloc] initWithStyle:UITableViewStylePlain];
@@ -258,20 +258,16 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
         CardMainView *cardMainView = [[CardMainView alloc] initWithFrame:self.view.bounds];
         
         [cardMainView reloadCardMainViewWithCompletionBlock:^{
-            [UIView transitionWithView:self.view duration:.3 options:UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionCurveEaseInOut animations:^{
-                UIImage *image = [self.view snapshot];
-                UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-                imageView.frame = cardMainView.bounds;
-                [cardMainView addSubview:imageView];
-                [self.view addSubview:cardMainView];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [imageView removeFromSuperview];
-                });
-            }completion:^(BOOL finished){
+            UIImage *image = [self.view snapshot];
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+            imageView.frame = cardMainView.bounds;
+            [cardMainView addSubview:imageView];
+            [self.view addSubview:cardMainView];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [imageView removeFromSuperview];
                 [cardMainView changeCollectionViewLayout];
-            }];
+            });
         }];
-
     }
 }
 

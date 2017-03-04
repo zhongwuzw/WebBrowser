@@ -15,11 +15,6 @@
 
 #define Notifier  [NSNotificationCenter defaultCenter]
 
-//打开appstore
-#define kModalAppstoreOpen          @"kModalAppstoreOpen"
-//无图模式
-#define kNoImageModeChanged         @"kNoImageModeChanged"
-
 #pragma mark Color
 
 //颜色宏定义

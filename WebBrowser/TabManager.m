@@ -383,6 +383,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
             })
         }
     }];
+    [[self.webModelArray lastObject].webView reload];
 }
 
 #pragma mark - WebViewDelegate Method
