@@ -19,7 +19,7 @@
 #import "HistoryTableViewController.h"
 #import "DelegateManager+WebViewDelegate.h"
 
-@interface BrowserViewController () <WebViewDelegate, BrowserBottomToolBarButtonClickedDelegate, SKStoreProductViewControllerDelegate>
+@interface BrowserViewController () <BrowserBottomToolBarButtonClickedDelegate, SKStoreProductViewControllerDelegate>
 
 @property (nonatomic, strong) BrowserContainerView *browserContainerView;
 @property (nonatomic, strong) BrowserBottomToolBar *bottomToolBar;
@@ -46,7 +46,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
     
     [[DelegateManager sharedInstance] registerDelegate:self forKey:DelegateManagerWebView];
     
-    [[DelegateManager sharedInstance] addWebViewDelegate:self];
 }
 
 - (void)initializeView{
@@ -113,7 +112,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
     
     [storeViewController loadProductWithParameters:dict completionBlock:^(BOOL result, NSError *error){
         if (result) {
-            [self.navigationController presentViewController:storeViewController animated:YES completion:nil];
+            //prevent calls for multi times
+            if (self.presentedViewController) {
+                [self dismissViewControllerAnimated:NO completion:nil];
+            }
+            
+            [self presentViewController:storeViewController animated:YES completion:nil];
         }
     }];
 }
@@ -216,16 +220,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
     }
     
     self.bottomToolBar.frame = bottomRect;
-}
-
-#pragma mark - WebViewDelegate
-
-- (BOOL)webView:(BrowserWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
-    //点击链接或加载页面等情况下重新恢复界面
-    if (navigationType == UIWebViewNavigationTypeLinkClicked || navigationType == UIWebViewNavigationTypeOther) {
-        [self recoverToolBar];
-    }
-    return YES;
 }
 
 #pragma mark - BrowserBottomToolBarButtonClickedDelegate
