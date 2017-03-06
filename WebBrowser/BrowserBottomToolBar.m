@@ -7,6 +7,7 @@
 //
 
 #import "BrowserBottomToolBar.h"
+#import "TabManager.h"
 
 @interface BrowserBottomToolBar () 
 
@@ -87,14 +88,18 @@
 #pragma mark - WebViewDelegate
 
 - (void)webViewForMainFrameDidFinishLoad:(BrowserWebView *)webView{
-    [self setToolBarButtonRefreshOrStop:YES];
-    
-    [self.backItem setEnabled:[webView canGoBack]];
-    [self.forwardItem setEnabled:[webView canGoForward]];
+    if ([[TabManager sharedInstance] isCurrentWebView:webView]) {
+        [self setToolBarButtonRefreshOrStop:YES];
+        
+        [self.backItem setEnabled:[webView canGoBack]];
+        [self.forwardItem setEnabled:[webView canGoForward]];
+    }
 }
 
 - (void)webViewForMainFrameDidCommitLoad:(BrowserWebView *)webView{
-    [self setToolBarButtonRefreshOrStop:NO];
+    if ([[TabManager sharedInstance] isCurrentWebView:webView]) {
+        [self setToolBarButtonRefreshOrStop:NO];
+    }
 }
 
 #pragma mark - kWebTabSwitch notification handler
@@ -104,6 +109,8 @@
     if ([webView isKindOfClass:[BrowserWebView class]]) {
         [self.backItem setEnabled:[webView canGoBack]];
         [self.forwardItem setEnabled:[webView canGoForward]];
+        
+        [self setToolBarButtonRefreshOrStop:webView.isMainFrameLoaded];
     }
 }
 

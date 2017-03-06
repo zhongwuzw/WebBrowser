@@ -118,7 +118,10 @@
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return self.attributes[indexPath.item];
+    if (indexPath.item < self.attributes.count) {
+        return self.attributes[indexPath.item];
+    }
+    return nil;
 }
 
 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds

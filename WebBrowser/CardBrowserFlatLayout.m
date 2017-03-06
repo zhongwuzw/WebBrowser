@@ -78,7 +78,10 @@
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return self.attributes[indexPath.item];
+    if (indexPath.item < self.attributes.count) {
+        return self.attributes[indexPath.item];
+    }
+    return nil;
 }
 
 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds
@@ -88,7 +91,10 @@
 
 - (UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingItemAtIndexPath:(NSIndexPath *)itemIndexPath
 {
-    return self.attributes[itemIndexPath.item];
+    if (itemIndexPath.item < self.attributes.count) {
+        return self.attributes[itemIndexPath.item];
+    }
+    return nil;
 }
 
 @end

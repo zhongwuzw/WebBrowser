@@ -26,6 +26,7 @@ typedef void (^WebCompletionBlock)(NSString *, NSError *);
 @interface BrowserWebView : UIWebView<UIWebViewDelegate>
 
 @property (nonatomic, unsafe_unretained) WebModel *webModel;
+@property (nonatomic, assign, readonly) BOOL isMainFrameLoaded;
 
 - (void)evaluateJavaScript:(NSString *)javaScriptString completionHandler:(WebCompletionBlock)completionHandler;
 

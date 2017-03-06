@@ -11,6 +11,7 @@
 #import "BrowserHeader.h"
 #import "NJKWebViewProgressView.h"
 #import "DelegateManager+WebViewDelegate.h"
+#import "TabManager.h"
 
 #define SHAPE_VIEW_WIDTH 30
 #define SHAPE_VIEW_HEIGHT 44
@@ -31,6 +32,7 @@
         [self initializeView];
         [[DelegateManager sharedInstance] registerDelegate:self forKey:DelegateManagerWebView];
         [[DelegateManager sharedInstance] addWebViewDelegate:self];
+        [Notifier addObserver:self selector:@selector(handletabSwitch:) name:kWebTabSwitch object:nil];
     }
     return self;
 }
@@ -89,39 +91,58 @@
 #pragma mark - WebViewDelegate
 
 - (void)webView:(BrowserWebView *)webView gotTitleName:(NSString *)titleName{
-    [self setTopURLOrTitle:titleName];
+    if ([[TabManager sharedInstance] isCurrentWebView:webView]) {
+        [self setTopURLOrTitle:titleName];
+    }
 }
 
 - (BOOL)webView:(BrowserWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-    if ([self.progressProxy respondsToSelector:@selector(webView:shouldStartLoadWithRequest:navigationType:)]) {
+    if ([[TabManager sharedInstance] isCurrentWebView:webView] && [self.progressProxy respondsToSelector:@selector(webView:shouldStartLoadWithRequest:navigationType:)]) {
         return [self.progressProxy webView:webView shouldStartLoadWithRequest:request navigationType:navigationType];
     }
-    
+
     return YES;
 }
 
 - (void)webViewDidFinishLoad:(BrowserWebView *)webView{
-    if ([self.progressProxy respondsToSelector:@selector(webViewDidFinishLoad:)]) {
+    if ([[TabManager sharedInstance] isCurrentWebView:webView] && [self.progressProxy respondsToSelector:@selector(webViewDidFinishLoad:)]) {
         [self.progressProxy webViewDidFinishLoad:webView];
     }
 }
 
 - (void)webViewDidStartLoad:(BrowserWebView *)webView{
-    if ([self.progressProxy respondsToSelector:@selector(webViewDidStartLoad:)]) {
+    if ([[TabManager sharedInstance] isCurrentWebView:webView] && [self.progressProxy respondsToSelector:@selector(webViewDidStartLoad:)]) {
         [self.progressProxy webViewDidFinishLoad:webView];
     }
 }
 
 - (void)webView:(BrowserWebView *)webView didFailLoadWithError:(NSError *)error{
-    if ([self.progressProxy respondsToSelector:@selector(webView:didFailLoadWithError:)]) {
+    if ([[TabManager sharedInstance] isCurrentWebView:webView] && [self.progressProxy respondsToSelector:@selector(webView:didFailLoadWithError:)]) {
         [self.progressProxy webView:webView didFailLoadWithError:error];
     }
 }
 
 #pragma mark - NJKWebViewProgressDelegate
+
 -(void)webViewProgress:(NJKWebViewProgress *)webViewProgress updateProgress:(float)progress
 {
     [_progressView setProgress:progress animated:YES];
+}
+
+#pragma mark - kWebTabSwitch notification handler
+
+- (void)handletabSwitch:(NSNotification *)notification{
+    BrowserWebView *webView = [notification.userInfo objectForKey:@"webView"];
+    if ([webView isKindOfClass:[BrowserWebView class]]) {
+        NSString *title = [webView mainFTitle];
+        [self setTopURLOrTitle:title];
+    }
+}
+
+#pragma mark - Dealloc
+
+- (void)dealloc{
+    [Notifier removeObserver:self name:kWebTabSwitch object:nil];
 }
 
 @end

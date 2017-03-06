@@ -20,6 +20,9 @@
 #endif
 
 @interface BrowserWebView ()
+
+@property (nonatomic, assign, readwrite) BOOL isMainFrameLoaded;
+
 @end
 
 @implementation BrowserWebView
@@ -239,6 +242,8 @@
 
 - (void)webViewForMainFrameDidCommitLoad:(BrowserWebView *)webView{
     self.webModel.url = [self mainFURL];
+    self.isMainFrameLoaded = NO;
+    
     [[DelegateManager sharedInstance] performSelector:@selector(webViewForMainFrameDidCommitLoad:) arguments:@[self] key:DelegateManagerWebView];
 }
 
@@ -254,6 +259,8 @@
 }
 
 - (void)webViewForMainFrameDidFinishLoad:(BrowserWebView *)webView{
+    self.isMainFrameLoaded = YES;
+    
     [[DelegateManager sharedInstance] performSelector:@selector(webViewForMainFrameDidFinishLoad:) arguments:@[self] key:DelegateManagerWebView];
 }
 

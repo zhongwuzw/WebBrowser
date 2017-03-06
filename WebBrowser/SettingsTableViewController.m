@@ -19,6 +19,7 @@ typedef enum : NSUInteger {
 
 static NSString *const SettingActivityTableViewCellIdentifier = @"SettingActivityTableViewCellIdentifier";
 static NSString *const SettingSwitchTableViewCellIdentifier   = @"SettingSwitchTableViewCellIdentifier";
+static NSString *const SettingPlaceholderTableViewCellIdentifier   = @"SettingPlaceholderTableViewCellIdentifier";
 
 @interface SettingsTableViewController ()
 
@@ -39,6 +40,7 @@ static NSString *const SettingSwitchTableViewCellIdentifier   = @"SettingSwitchT
     
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([SettingActivityTableViewCell class]) bundle:nil] forCellReuseIdentifier:SettingActivityTableViewCellIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([SettingSwitchTableViewCell class]) bundle:nil] forCellReuseIdentifier:SettingSwitchTableViewCellIdentifier];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:SettingPlaceholderTableViewCellIdentifier];
     
     self.tableView.tableFooterView = [UIView new];
 }
@@ -127,6 +129,8 @@ static NSString *const SettingSwitchTableViewCellIdentifier   = @"SettingSwitchT
         case CellKindForNoImage:
             cell = [self noImageModeCellWithIndexPath:indexPath];
         default:
+            //never called
+            cell = [tableView dequeueReusableCellWithIdentifier:SettingPlaceholderTableViewCellIdentifier];
             break;
     }
     return cell;

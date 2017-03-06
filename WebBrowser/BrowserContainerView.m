@@ -15,7 +15,7 @@
 
 @interface BrowserContainerView () <WebViewDelegate>
 
-@property (nonatomic, weak) BrowserWebView *webView;
+@property (nonatomic, readwrite, weak) BrowserWebView *webView;
 
 @end
 
@@ -62,7 +62,6 @@
                 [self__ addSubview:browserWebView];
                 [self__ bringSubviewToFront:browserWebView];
                 self__.webView.frame = CGRectMake(0, 0, self__.width, self__.height);
-                self__.webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
                 NSNotification *notify = [NSNotification notificationWithName:kWebTabSwitch object:self userInfo:@{@"webView":browserWebView}];
                 [Notifier postNotification:notify];
                 

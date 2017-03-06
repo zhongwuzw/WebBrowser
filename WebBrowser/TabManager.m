@@ -12,6 +12,7 @@
 #import "JavaScriptHelper.h"
 #import "PreferenceHelper.h"
 #import "ErrorPageHelper.h"
+#import "BrowserContainerView.h"
 
 #import <CommonCrypto/CommonDigest.h>
 
@@ -108,6 +109,13 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
     [[DelegateManager sharedInstance] registerDelegate:self forKey:DelegateManagerWebView];
 }
 
+- (BOOL)isCurrentWebView:(BrowserWebView *)webView{
+    if (webView == self.browserContainerView.webView) {
+        return YES;
+    }
+    return NO;
+}
+
 - (void)loadWebModelArray{
     dispatch_async(_synchQueue, ^{
         dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
@@ -133,15 +141,19 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
     });
 }
 
+- (void)saveWebModelToDisk{
+    NSMutableData *data = [NSMutableData data];
+    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+    [archiver encodeObject:_webModelArray forKey:MY_HISTORY_DATA_KEY];
+    [archiver finishEncoding];
+    
+    [data writeToFile:_filePath atomically:YES];
+}
+
 - (void)saveWebModelData{
     dispatch_async(self.synchQueue, ^{
         dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            NSMutableData *data = [NSMutableData data];
-            NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
-            [archiver encodeObject:_webModelArray forKey:MY_HISTORY_DATA_KEY];
-            [archiver finishEncoding];
-            
-            [data writeToFile:_filePath atomically:YES];
+            [self saveWebModelToDisk];
             
             [_webModelArray enumerateObjectsUsingBlock:^(WebModel *webModel, NSUInteger idx, BOOL *stop){
                 @autoreleasepool {
@@ -303,8 +315,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
 
 - (void)clearMemory{
     dispatch_async(self.synchQueue, ^{
+        //remove olddest unused webView
         __block WebModel *toDeleteWebModel;
         [self.webModelArray enumerateObjectsUsingBlock:^(WebModel *webModel, NSUInteger idx, BOOL *stop){
+            //don't remove newest webView
             if (webModel.webView && idx < self.webModelArray.count - 1) {
                 toDeleteWebModel = webModel;
                 *stop = YES;
@@ -339,6 +353,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
 - (void)cleanDiskWithCompletionBlock:(WebBrowserNoParamsBlock)completionBlock{
     dispatch_async(self.synchQueue, ^{
         dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            //save browse data
+            [self saveWebModelToDisk];
+            
+            //remove outdated image
             NSMutableSet *urlSet = [NSMutableSet setWithCapacity:self.webModelArray.count];
             [self.webModelArray enumerateObjectsUsingBlock:^(WebModel *webModel, NSUInteger idx, BOOL *stop){
                 [urlSet addObject:[[self defaultCachePathForKey:webModel.imageKey] lastPathComponent]];
