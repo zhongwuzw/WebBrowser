@@ -10,6 +10,8 @@
 
 @protocol MenuHelperInterface <NSObject>
 
+@optional
+
 - (void)menuHelperCopy:(NSNotification *)sender;
 - (void)menuHelperOpenAndFill:(NSNotification *)sender;
 - (void)menuHelperReveal:(NSNotification *)sender;

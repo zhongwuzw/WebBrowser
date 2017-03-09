@@ -16,6 +16,8 @@
 @interface BrowserContainerView () <WebViewDelegate>
 
 @property (nonatomic, readwrite, weak) BrowserWebView *webView;
+@property (nonatomic, copy) NSString *restorationWebViewURL;
+@property (nonatomic, assign) CGPoint contentOffset;
 
 @end
 
@@ -37,11 +39,19 @@
 
     [self needUpdateWebView];
     
-    [[DelegateManager sharedInstance] registerDelegate:self forKey:DelegateManagerBrowserContainerLoadURL];
+    [[DelegateManager sharedInstance] registerDelegate:self forKeys:@[DelegateManagerBrowserContainerLoadURL,DelegateManagerWebView]];
     [[DelegateManager sharedInstance] addWebViewDelegate:self];
+    
+    self.restorationIdentifier = NSStringFromClass([self class]);
 }
 
 - (void)startLoadWebViewWithURL:(NSString *)url{
+    //load restoration url if state preserve enabled
+    if (self.restorationWebViewURL) {
+        url = self.restorationWebViewURL;
+        self.restorationWebViewURL = nil;
+    }
+    
     if ([[NSURL URLWithString:url] isLocal]) {
         NSURL *originalUrl = [[NSURL URLWithString:url] originalURLFromErrorURL];
         url = originalUrl.absoluteString;
@@ -116,6 +126,17 @@
     return YES;
 }
 
+#pragma mark - WebViewDelegate
+
+- (void)webViewDidFinishLoad:(BrowserWebView *)webView{
+    if ([[TabManager sharedInstance] isCurrentWebView:webView]) {
+        if (!CGPointEqualToPoint(CGPointZero, self.contentOffset)) {
+            [self.scrollView setContentOffset:self.contentOffset animated:NO];
+            self.contentOffset = CGPointZero;
+        }
+    }
+}
+
 #pragma mark - BrowserContainerLoadURLDelegate
 
 - (void)browserContainerViewLoadWebViewWithSug:(NSString *)text{
@@ -134,6 +155,26 @@
     
     NSURL *url = [NSURL URLWithString:urlString];
     [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
+}
+
+#pragma mark - Preseving and Restoring State
+
+- (void)encodeRestorableStateWithCoder:(NSCoder *)coder{
+    [coder encodeObject:self.webView.mainFURL forKey:@"webViewURL"];
+    [coder encodeCGPoint:self.scrollView.contentOffset forKey:@"webViewContentOffset"];
+    
+    [super encodeRestorableStateWithCoder:coder];
+}
+
+- (void)decodeRestorableStateWithCoder:(NSCoder *)coder{
+    NSString *webViewURL = [coder decodeObjectForKey:@"webViewURL"];
+    
+    if (webViewURL && webViewURL.length) {
+        self.restorationWebViewURL = webViewURL;
+        self.contentOffset = [coder decodeCGPointForKey:@"webViewContentOffset"];
+    }
+    
+    [super decodeRestorableStateWithCoder:coder];
 }
 
 @end

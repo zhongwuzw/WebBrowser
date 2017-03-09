@@ -38,4 +38,6 @@
 #define MAIN_FRAME_FINISIH_LOAD @"webViewMainFrameDidFinishLoad:" //webViewMainFrameDidFinishLoad:
 #define MAIN_FRAME_FAILED_LOAD @"webViewMainFrameDidFailLoad:withError:" //webViewMainFrameDidFailLoad:withError:
 
+#define FRAME_PROVISIONALLOAD @"webView:didStartProvisionalLoadForFrame:"
+
 #endif /* WebViewHeader_h */

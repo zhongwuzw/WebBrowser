@@ -19,7 +19,7 @@
 #import "HistoryTableViewController.h"
 #import "DelegateManager+WebViewDelegate.h"
 
-@interface BrowserViewController () <BrowserBottomToolBarButtonClickedDelegate, SKStoreProductViewControllerDelegate>
+@interface BrowserViewController () <BrowserBottomToolBarButtonClickedDelegate, SKStoreProductViewControllerDelegate, UIViewControllerRestoration>
 
 @property (nonatomic, strong) BrowserContainerView *browserContainerView;
 @property (nonatomic, strong) BrowserBottomToolBar *bottomToolBar;
@@ -46,6 +46,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
     
     [[DelegateManager sharedInstance] registerDelegate:self forKey:DelegateManagerWebView];
     
+    self.restorationIdentifier = NSStringFromClass([self class]);
+    self.restorationClass = [self class];
 }
 
 - (void)initializeView{
@@ -265,16 +267,17 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
     }
 }
 
+#pragma mark - Preseving and Restoring State
+
++ (UIViewController *)viewControllerWithRestorationIdentifierPath:(NSArray *)identifierComponents coder:(NSCoder *)coder{
+    BrowserViewController *controller = [BrowserViewController sharedInstance];
+    return controller;
+}
+
 #pragma mark - Dealloc Method
 
 - (void)dealloc{
     [Notifier removeObserver:self];
-}
-
-#pragma mark - Memory Warning Method
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
 }
 
 @end

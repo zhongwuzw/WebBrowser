@@ -15,6 +15,9 @@
 #import "BrowserViewController.h"
 #import "WebServer.h"
 #import "ErrorPageHelper.h"
+#import "TabManager.h"
+
+static NSString * const UserAgent = @"Mozilla/5.0 (iPhone; CPU iPhone OS 10_0 like Mac OS X) AppleWebKit/602.1.38 (KHTML, like Gecko) Version/10.0 Mobile/14A300 Safari/602.1";
 
 @interface AppDelegate ()
 
@@ -37,6 +40,7 @@
 - (void)applicationStartPrepare{
     [self setAudioPlayInBackgroundMode];
     [[KeyboardHelper sharedInstance] startObserving];
+    [[MenuHelper sharedInstance] setItems];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -44,9 +48,10 @@
     [DDLog addLogger:[DDASLLogger sharedInstance]];
     DDLogDebug(@"Home Path : %@", HomePath);
 
-    BrowserViewController *browserViewController = [BrowserViewController new];
+    BrowserViewController *browserViewController = [BrowserViewController sharedInstance];
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:browserViewController];
+    navigationController.restorationIdentifier = @"baseNavigationController";
     navigationController.navigationBarHidden = YES;
     navigationController.view.backgroundColor = [UIColor whiteColor];
     
@@ -57,8 +62,10 @@
     [ErrorPageHelper registerWithServer:[WebServer sharedInstance]];
     [[WebServer sharedInstance] start];
     
-    //解决UIWebView首次加载页面时间过长问题
-    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent" : @"Mozilla/5.0 (iPhone; CPU iPhone OS 10_0 like Mac OS X) AppleWebKit/602.1.38 (KHTML, like Gecko) Version/10.0 Mobile/14A300 Safari/602.1"}];
+    //解决UIWebView首次加载页面时间过长问题,设置UserAgent减少跳转和判断
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent" : UserAgent}];
+    
+    [TabManager sharedInstance];    //load archive data ahead
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self applicationStartPrepare];
@@ -69,6 +76,16 @@
 
 - (void)applicationWillResignActive:(UIApplication *)application{
     [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+#pragma mark - Preseving and Restoring State
+
+- (BOOL)application:(UIApplication *)application shouldSaveApplicationState:(NSCoder *)coder{
+    return YES;
+}
+
+- (BOOL)application:(UIApplication *)application shouldRestoreApplicationState:(NSCoder *)coder{
+    return YES;
 }
 
 @end

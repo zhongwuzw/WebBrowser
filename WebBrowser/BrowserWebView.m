@@ -11,6 +11,7 @@
 #import "HttpHelper.h"
 #import "TabManager.h"
 #import "DelegateManager+WebViewDelegate.h"
+#import "MenuHelper.h"
 
 #if TARGET_IPHONE_SIMULATOR
 #import <objc/objc-runtime.h>
@@ -19,9 +20,10 @@
 #import <objc/message.h>
 #endif
 
-@interface BrowserWebView ()
+@interface BrowserWebView () <MenuHelperInterface>
 
 @property (nonatomic, assign, readwrite) BOOL isMainFrameLoaded;
+@property (nonatomic, unsafe_unretained) UIActivityIndicatorView *indicatorView;
 
 @end
 
@@ -44,6 +46,22 @@
     self.scalesPageToFit = YES;
     
     [self setDrawInWebThread];
+    
+    UIActivityIndicatorView *activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    activityView.hidesWhenStopped = YES;
+    
+    [self addSubview:activityView];
+    
+    self.indicatorView = activityView;
+    [activityView release];
+}
+
+- (void)setFrame:(CGRect)frame{
+    if (!CGSizeEqualToSize(frame.size, self.size)) {
+        self.indicatorView.center = CGPointMake(self.bounds.origin.x + frame.size.width / 2, self.bounds.origin.y + frame.size.height / 2);
+        DDLogDebug(@"center x,y is %f,%f",self.indicatorView.center.x,self.indicatorView.center.y);
+    }
+    [super setFrame:frame];
 }
 
 - (void)evaluateJavaScript:(NSString *)javaScriptString completionHandler:(WebCompletionBlock)completionHandler
@@ -140,6 +158,7 @@
 
 - (void)webView:(BrowserWebView *)webView didFailLoadWithError:(NSError *)error{
     [[DelegateManager sharedInstance] performSelector:@selector(webView:didFailLoadWithError:) arguments:@[webView,error] key:DelegateManagerWebView];
+    [self.indicatorView stopAnimating];
 }
 
 - (BOOL)webView:(BrowserWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
@@ -166,6 +185,8 @@
 
 - (void)webViewDidFinishLoad:(BrowserWebView *)webView{
     [[DelegateManager sharedInstance] performSelector:@selector(webViewDidFinishLoad:) arguments:@[webView] key:DelegateManagerWebView];
+    
+    [self.indicatorView stopAnimating];
 }
 
 #pragma mark - private method
@@ -192,6 +213,8 @@
     {
         [self webView:self gotTitleName:title];
     }
+    
+    [self.indicatorView stopAnimating];
 }
 
 #pragma mark - decidePolicy method
@@ -271,7 +294,39 @@
     [[DelegateManager sharedInstance] performSelector:@selector(webView:gotTitleName:) arguments:@[webView,titleName] key:DelegateManagerWebView];
 }
 
+#pragma mark - frame method
+
+- (void)zwWebView:(id)sender didStartProvisionalLoadForFrame:(id)frame{
+    if([sender respondsToSelector:NSSelectorFromString(MAIN_FRAME)])
+    {
+        id mainFrame = [[(MAIN_FRAME__PROTO objc_msgSend)(sender,NSSelectorFromString(MAIN_FRAME)) retain] autorelease];
+        if(mainFrame == frame)
+        {
+            [self.indicatorView startAnimating];
+        }
+    }
+    
+    if ([self respondsToSelector:@selector(zwWebView:didStartProvisionalLoadForFrame:)]) {
+        ((void(*)(id, SEL, id, id)) objc_msgSend)(self, @selector(zwWebView:didStartProvisionalLoadForFrame:), sender, frame);
+    }
+}
+
+#pragma mark - Validating Commands
+
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender{
+    return action == @selector(menuHelperFindInPage:);
+}
+
+#pragma mark - MenuHelperInterface Protocol
+
+- (void)menuHelperFindInPage:(NSNotification *)sender{
+    
+}
+
+#pragma mark - Dealloc
+
 - (void)dealloc{
+    self.indicatorView = nil;
     self.webModel = nil;
     self.delegate = nil;
     self.scrollView.delegate = nil;
@@ -297,6 +352,8 @@ __attribute__((__constructor__)) static void $(){
     MethodSwizzle([BrowserWebView class], NSSelectorFromString(MAIN_FRAME_COMMIT_LOAD), @selector(zwMainFrameCommitLoad:));
     
     MethodSwizzle([BrowserWebView class], NSSelectorFromString(MAIN_FRAME_FINISIH_LOAD), @selector(zwMainFrameFinishLoad:));
+    
+    MethodSwizzle([BrowserWebView class], NSSelectorFromString(FRAME_PROVISIONALLOAD), @selector(zwWebView:didStartProvisionalLoadForFrame:));
     
     [pool drain];
 }

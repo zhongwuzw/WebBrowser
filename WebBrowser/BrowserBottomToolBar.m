@@ -51,7 +51,7 @@
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     flexibleItem.tag = BottomToolBarFlexibleButtonTag;
     
-    [self setItems:@[backItem,flexibleItem,forwardItem,flexibleItem,refreshOrStopItem,flexibleItem,multiWindowItem,flexibleItem,settingItem] animated:YES];
+    [self setItems:@[refreshOrStopItem,flexibleItem,multiWindowItem,flexibleItem,backItem,flexibleItem,forwardItem,flexibleItem,settingItem] animated:YES];
     
 }
 
