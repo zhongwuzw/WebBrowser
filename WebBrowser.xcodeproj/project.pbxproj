@@ -119,11 +119,11 @@
 		0E1F9F9C1DD2D86E00FA84EA /* NJKWebViewProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJKWebViewProgressView.h; sourceTree = "<group>"; };
 		0E1F9F9D1DD2D86E00FA84EA /* NJKWebViewProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJKWebViewProgressView.m; sourceTree = "<group>"; };
 		0E23292F1DADE07B007E9886 /* BrowserTopToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserTopToolBar.h; sourceTree = "<group>"; };
-		0E2329301DADE07B007E9886 /* BrowserTopToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserTopToolBar.m; sourceTree = "<group>"; };
+		0E2329301DADE07B007E9886 /* BrowserTopToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BrowserTopToolBar.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0E2329321DAE19BB007E9886 /* TopToolBarShapeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopToolBarShapeView.h; sourceTree = "<group>"; };
 		0E2329331DAE19BB007E9886 /* TopToolBarShapeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopToolBarShapeView.m; sourceTree = "<group>"; };
 		0E2C539D1DAA24970077B9B4 /* BrowserContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserContainerView.h; sourceTree = "<group>"; };
-		0E2C539E1DAA24970077B9B4 /* BrowserContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserContainerView.m; sourceTree = "<group>"; };
+		0E2C539E1DAA24970077B9B4 /* BrowserContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BrowserContainerView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0E2C53A11DAA314C0077B9B4 /* UIView+ZWUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ZWUtility.h"; sourceTree = "<group>"; };
 		0E2C53A21DAA314C0077B9B4 /* UIView+ZWUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ZWUtility.m"; sourceTree = "<group>"; };
 		0E2CC0151E0988AE0078EB91 /* UIColor+ZWUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+ZWUtility.h"; sourceTree = "<group>"; };
@@ -171,7 +171,7 @@
 		0E681F491D4AEC3F003534F5 /* WebBrowserUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WebBrowserUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E681F4D1D4AEC3F003534F5 /* WebBrowserUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WebBrowserUITests.m; sourceTree = "<group>"; };
 		0E681F4F1D4AEC3F003534F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0E681F5D1D4AF218003534F5 /* MacroMethod.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacroMethod.h; sourceTree = "<group>"; };
+		0E681F5D1D4AF218003534F5 /* MacroMethod.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MacroMethod.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		0E681F5F1D4AF2D5003534F5 /* WebBrowser.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebBrowser.pch; sourceTree = "<group>"; };
 		0E681F621D4AF8DB003534F5 /* MacroConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacroConstants.h; sourceTree = "<group>"; };
 		0E681F641D4AFEAA003534F5 /* KeyboardHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeyboardHelper.h; sourceTree = "<group>"; };
@@ -210,7 +210,7 @@
 		0EBF3A631DCF33ED00CD77C8 /* CocoaLumberjack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjack.framework; path = Carthage/Build/iOS/CocoaLumberjack.framework; sourceTree = "<group>"; };
 		0EBF3A641DCF33ED00CD77C8 /* MBProgressHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MBProgressHUD.framework; path = Carthage/Build/iOS/MBProgressHUD.framework; sourceTree = "<group>"; };
 		0EBF3A681DCF38D600CD77C8 /* BrowserBottomToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserBottomToolBar.h; sourceTree = "<group>"; };
-		0EBF3A691DCF38D600CD77C8 /* BrowserBottomToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserBottomToolBar.m; sourceTree = "<group>"; };
+		0EBF3A691DCF38D600CD77C8 /* BrowserBottomToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BrowserBottomToolBar.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0EBF3A6B1DCF715200CD77C8 /* BrowserBottomToolBarHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BrowserBottomToolBarHeader.h; sourceTree = "<group>"; };
 		0EBFFE711E5299A500404199 /* JavaScriptHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JavaScriptHelper.h; sourceTree = "<group>"; };
 		0EBFFE721E5299A500404199 /* JavaScriptHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JavaScriptHelper.m; sourceTree = "<group>"; };

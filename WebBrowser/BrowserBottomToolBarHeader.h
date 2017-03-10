@@ -23,7 +23,9 @@ typedef NS_ENUM(NSInteger, BottomToolBarButtonTag) {
 };
 
 #define TOOLBAR_BUTTON_BACK_STRING @"toolbar_goback_normal"
+#define TOOLBAR_BUTTON_BACK_HILIGHT_STRING @"toolbar_goback_highlighted"
 #define TOOLBAR_BUTTON_FORWARD_STRING @"toolbar_goforward_normal"
+#define TOOLBAR_BUTTON_FORWARD_HILIGHT_STRING @"toolbar_forward_highlighted"
 #define TOOLBAR_BUTTON_REFRESH_STRING @"menu_refresh_normal"
 #define TOOLBAR_BUTTON_STOP_STRING @"toolbar_stop_normal"
 #define TOOLBAR_BUTTON_MORE_STRING @"toolbar_more_normal"

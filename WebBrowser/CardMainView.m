@@ -87,7 +87,7 @@
     self.cardBottomView = ({
         CardMainBottomView *bottomView = [[CardMainBottomView alloc] initWithFrame:CGRectMake(0, self.height - BOTTOM_TOOL_BAR_HEIGHT, self.width, BOTTOM_TOOL_BAR_HEIGHT)];
         [self addSubview:bottomView];
-        bottomView.delegate = self;
+        bottomView.bottomDelegate = self;
         
         bottomView;
     });

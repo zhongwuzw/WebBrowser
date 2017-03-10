@@ -91,13 +91,13 @@
 #pragma mark - WebViewDelegate
 
 - (void)webView:(BrowserWebView *)webView gotTitleName:(NSString *)titleName{
-    if ([[TabManager sharedInstance] isCurrentWebView:webView]) {
+    if (IsCurrentWebView(webView)) {
         [self setTopURLOrTitle:titleName];
     }
 }
 
 - (BOOL)webView:(BrowserWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-    if ([[TabManager sharedInstance] isCurrentWebView:webView] && [self.progressProxy respondsToSelector:@selector(webView:shouldStartLoadWithRequest:navigationType:)]) {
+    if (IsCurrentWebView(webView) && [self.progressProxy respondsToSelector:@selector(webView:shouldStartLoadWithRequest:navigationType:)]) {
         return [self.progressProxy webView:webView shouldStartLoadWithRequest:request navigationType:navigationType];
     }
 
@@ -105,19 +105,19 @@
 }
 
 - (void)webViewDidFinishLoad:(BrowserWebView *)webView{
-    if ([[TabManager sharedInstance] isCurrentWebView:webView] && [self.progressProxy respondsToSelector:@selector(webViewDidFinishLoad:)]) {
+    if (IsCurrentWebView(webView) && [self.progressProxy respondsToSelector:@selector(webViewDidFinishLoad:)]) {
         [self.progressProxy webViewDidFinishLoad:webView];
     }
 }
 
 - (void)webViewDidStartLoad:(BrowserWebView *)webView{
-    if ([[TabManager sharedInstance] isCurrentWebView:webView] && [self.progressProxy respondsToSelector:@selector(webViewDidStartLoad:)]) {
+    if (IsCurrentWebView(webView) && [self.progressProxy respondsToSelector:@selector(webViewDidStartLoad:)]) {
         [self.progressProxy webViewDidFinishLoad:webView];
     }
 }
 
 - (void)webView:(BrowserWebView *)webView didFailLoadWithError:(NSError *)error{
-    if ([[TabManager sharedInstance] isCurrentWebView:webView] && [self.progressProxy respondsToSelector:@selector(webView:didFailLoadWithError:)]) {
+    if (IsCurrentWebView(webView) && [self.progressProxy respondsToSelector:@selector(webView:didFailLoadWithError:)]) {
         [self.progressProxy webView:webView didFailLoadWithError:error];
     }
 }

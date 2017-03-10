@@ -58,8 +58,8 @@
 }
 
 - (void)handleButtonClickedWithButton:(UIButton *)button{
-    if ([self.delegate respondsToSelector:@selector(cardBottomBtnClickedWithTag:)]) {
-        [self.delegate cardBottomBtnClickedWithTag:button.tag];
+    if ([self.bottomDelegate respondsToSelector:@selector(cardBottomBtnClickedWithTag:)]) {
+        [self.bottomDelegate cardBottomBtnClickedWithTag:button.tag];
     }
 }
 

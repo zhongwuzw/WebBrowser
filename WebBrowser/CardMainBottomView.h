@@ -19,8 +19,8 @@ typedef enum : NSUInteger {
 
 @end
 
-@interface CardMainBottomView : UIView
+@interface CardMainBottomView : UIToolbar
 
-@property (nonatomic, weak) id<CardBottomClickedDelegate> delegate;
+@property (nonatomic, weak) id<CardBottomClickedDelegate> bottomDelegate;
 
 @end

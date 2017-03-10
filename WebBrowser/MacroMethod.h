@@ -81,4 +81,8 @@ dispatch_async(dispatch_get_main_queue(), block);\
 #define CachePath NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)[0]
 #define TempPath NSTemporaryDirectory()
 
+#pragma mark - Convienence
+
+#define IsCurrentWebView(webView)  [[TabManager sharedInstance] isCurrentWebView:webView]
+
 #endif /* MacroMethod_h */

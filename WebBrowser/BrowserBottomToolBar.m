@@ -8,13 +8,16 @@
 
 #import "BrowserBottomToolBar.h"
 #import "TabManager.h"
+#import "DelegateManager+WebViewDelegate.h"
+#import "BrowserContainerView.h"
 
-@interface BrowserBottomToolBar () 
+@interface BrowserBottomToolBar () <WebViewDelegate>
 
 @property (nonatomic, weak) UIBarButtonItem *refreshOrStopItem;
 @property (nonatomic, weak) UIBarButtonItem *backItem;
 @property (nonatomic, weak) UIBarButtonItem *forwardItem;
 @property (nonatomic, assign) BOOL isRefresh;
+@property (nonatomic, weak) BrowserContainerView *containerView;
 
 @end
 
@@ -24,7 +27,9 @@
     if (self = [super initWithFrame:frame]) {
         [self initializeView];
         [[DelegateManager sharedInstance] registerDelegate:self forKey:DelegateManagerWebView];
+        [[DelegateManager sharedInstance] addWebViewDelegate:self];
         [Notifier addObserver:self selector:@selector(handletabSwitch:) name:kWebTabSwitch object:nil];
+        [Notifier addObserver:self selector:@selector(updateForwardBackItem) name:kWebHistoryItemChangedNotification object:nil];
     }
     
     return self;
@@ -35,13 +40,15 @@
     
     UIBarButtonItem *backItem = [self createBottomToolBarButtonWithImage:TOOLBAR_BUTTON_BACK_STRING tag:BottomToolBarBackButtonTag];
     self.backItem = backItem;
+    self.backItem.width = 45;
     
     UIBarButtonItem *forwardItem = [self createBottomToolBarButtonWithImage:TOOLBAR_BUTTON_FORWARD_STRING tag:BottomToolBarForwardButtonTag];
     self.forwardItem = forwardItem;
+    self.forwardItem.width = 45;
     
     UIBarButtonItem *refreshOrStopItem = [self createBottomToolBarButtonWithImage:TOOLBAR_BUTTON_STOP_STRING tag:BottomToolBarRefreshOrStopButtonTag];
     self.isRefresh = NO;
-    refreshOrStopItem.width = 30;
+    refreshOrStopItem.width = 45;
     self.refreshOrStopItem = refreshOrStopItem;
     
     UIBarButtonItem *multiWindowItem = [self createBottomToolBarButtonWithImage:TOOLBAR_BUTTON_MULTIWINDOW_STRING tag:BottomToolBarMultiWindowButtonTag];
@@ -85,21 +92,51 @@
     self.refreshOrStopItem.image = [[UIImage imageNamed:imageName] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 }
 
+- (void)updateForwardBackItem{
+    if (self.containerView.webView) {
+        BOOL backItemEnabled = [self.containerView.webView canGoBack];
+        BOOL forwardItemEnabled = [self.containerView.webView canGoForward];
+        [self.backItem setEnabled:backItemEnabled];
+        [self.forwardItem setEnabled:forwardItemEnabled];
+        
+        [self.backItem setImage:[[UIImage imageNamed:(backItemEnabled ?TOOLBAR_BUTTON_BACK_STRING : TOOLBAR_BUTTON_BACK_HILIGHT_STRING)] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+        [self.forwardItem setImage:[[UIImage imageNamed:(forwardItemEnabled ? TOOLBAR_BUTTON_FORWARD_STRING : TOOLBAR_BUTTON_FORWARD_HILIGHT_STRING)] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    }
+}
+
 #pragma mark - WebViewDelegate
 
-- (void)webViewForMainFrameDidFinishLoad:(BrowserWebView *)webView{
-    if ([[TabManager sharedInstance] isCurrentWebView:webView]) {
+- (void)webViewDidFinishLoad:(BrowserWebView *)webView{
+    if (IsCurrentWebView(webView)) {
+        [self updateForwardBackItem];
+    }
+}
+
+- (void)webView:(BrowserWebView *)webView didFailLoadWithError:(NSError *)error{
+    if (IsCurrentWebView(webView)) {
+        [self updateForwardBackItem];
         [self setToolBarButtonRefreshOrStop:YES];
-        
-        [self.backItem setEnabled:[webView canGoBack]];
-        [self.forwardItem setEnabled:[webView canGoForward]];
+    }
+}
+
+- (void)webViewForMainFrameDidFinishLoad:(BrowserWebView *)webView{
+    if (IsCurrentWebView(webView)) {
+        [self setToolBarButtonRefreshOrStop:YES];
     }
 }
 
 - (void)webViewForMainFrameDidCommitLoad:(BrowserWebView *)webView{
-    if ([[TabManager sharedInstance] isCurrentWebView:webView]) {
+    if (IsCurrentWebView(webView)) {
         [self setToolBarButtonRefreshOrStop:NO];
     }
+}
+
+- (BOOL)webView:(BrowserWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+    if (IsCurrentWebView(webView)) {
+        [self updateForwardBackItem];
+    }
+    
+    return YES;
 }
 
 #pragma mark - kWebTabSwitch notification handler
@@ -107,10 +144,16 @@
 - (void)handletabSwitch:(NSNotification *)notification{
     BrowserWebView *webView = [notification.userInfo objectForKey:@"webView"];
     if ([webView isKindOfClass:[BrowserWebView class]]) {
-        [self.backItem setEnabled:[webView canGoBack]];
-        [self.forwardItem setEnabled:[webView canGoForward]];
-        
+        [self updateForwardBackItem];
         [self setToolBarButtonRefreshOrStop:webView.isMainFrameLoaded];
+    }
+}
+
+#pragma mark - KVO
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
+    if ([keyPath isEqualToString:@"webView"] && [object isKindOfClass:[BrowserContainerView class]]) {
+        self.containerView = object;
     }
 }
 
@@ -118,6 +161,8 @@
 
 - (void)dealloc{
     [Notifier removeObserver:self name:kWebTabSwitch object:nil];
+    [Notifier removeObserver:self name:kWebHistoryItemChangedNotification object:nil];
+    [[[TabManager sharedInstance] browserContainerView] removeObserver:self forKeyPath:@"webView" context:nil];
 }
 
 @end

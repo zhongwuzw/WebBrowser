@@ -34,5 +34,7 @@
 //tab switch
 #define kWebTabSwitch               @"kWebTabSwitch"
 
+#define kWebHistoryItemChangedNotification @"WebHistoryItemChangedNotification"
+
 
 #endif /* MacroConstants_h */

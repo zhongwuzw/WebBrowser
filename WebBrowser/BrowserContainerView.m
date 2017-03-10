@@ -129,7 +129,7 @@
 #pragma mark - WebViewDelegate
 
 - (void)webViewDidFinishLoad:(BrowserWebView *)webView{
-    if ([[TabManager sharedInstance] isCurrentWebView:webView]) {
+    if (IsCurrentWebView(webView)) {
         if (!CGPointEqualToPoint(CGPointZero, self.contentOffset)) {
             [self.scrollView setContentOffset:self.contentOffset animated:NO];
             self.contentOffset = CGPointZero;

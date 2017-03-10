@@ -77,6 +77,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
         [self.view addSubview:toolBar];
         
         toolBar.browserButtonDelegate = self;
+        
+        [self.browserContainerView addObserver:toolBar forKeyPath:@"webView" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial context:NULL];
     
         toolBar;
     });
@@ -252,7 +254,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
     }
     if (tag == BottomToolBarMultiWindowButtonTag) {
         CardMainView *cardMainView = [[CardMainView alloc] initWithFrame:self.view.bounds];
-        
         [cardMainView reloadCardMainViewWithCompletionBlock:^{
             UIImage *image = [self.view snapshot];
             UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
