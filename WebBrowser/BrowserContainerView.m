@@ -161,7 +161,10 @@
 
 - (void)encodeRestorableStateWithCoder:(NSCoder *)coder{
     [coder encodeObject:self.webView.mainFURL forKey:@"webViewURL"];
-    [coder encodeCGPoint:self.scrollView.contentOffset forKey:@"webViewContentOffset"];
+    CGPoint point = self.scrollView.contentOffset;
+    //optimize contentOffset because of contentInset changed when webView scroll
+    point.y -= (TOP_TOOL_BAR_HEIGHT - self.scrollView.contentInset.top);
+    [coder encodeCGPoint:point forKey:@"webViewContentOffset"];
     
     [super encodeRestorableStateWithCoder:coder];
 }

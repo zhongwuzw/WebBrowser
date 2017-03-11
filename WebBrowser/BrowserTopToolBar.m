@@ -15,13 +15,14 @@
 
 #define SHAPE_VIEW_WIDTH 30
 #define SHAPE_VIEW_HEIGHT 44
-#define ShAPE_VIEW_Y_OFFSET 5
+#define SHAPE_VIEW_Y_OFFSET 5
 
 @interface BrowserTopToolBar ()
 
 @property (nonatomic, strong) TopToolBarShapeView *shapeView;
 @property (nonatomic, strong) NJKWebViewProgressView *progressView;
 @property (nonatomic, strong) NJKWebViewProgress *progressProxy;
+@property (nonatomic, strong) UIButton *expandButton;
 
 @end
 
@@ -42,7 +43,7 @@
     
     self.shapeView = ({
         TopToolBarShapeView *shapeView = [[TopToolBarShapeView alloc] initWithFrame:CGRectMake(0, 0, self.width - SHAPE_VIEW_WIDTH, self.height - SHAPE_VIEW_HEIGHT)];
-        shapeView.center = (CGPoint){CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds) + ShAPE_VIEW_Y_OFFSET};
+        shapeView.center = (CGPoint){CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds) + SHAPE_VIEW_Y_OFFSET};
         shapeView.shapeLayer.lineWidth = 2;
         shapeView.shapeLayer.fillColor = UIColorFromRGB(0xE6E6E7).CGColor;
         
@@ -52,6 +53,18 @@
         
         [self addSubview:shapeView];
         shapeView;
+    });
+    
+    self.expandButton = ({
+        UIButton *expandButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self addSubview:expandButton];
+        
+        expandButton.frame = CGRectMake(0, 0, 18, 18);
+        expandButton.hidden = YES;
+        [expandButton addTarget:self action:@selector(handleExpandBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [expandButton setImage:[UIImage imageNamed:@"toolbar_expand_normal"] forState:UIControlStateNormal];
+        
+        expandButton;
     });
     
     self.progressView = ({
@@ -76,10 +89,12 @@
 - (void)setFrame:(CGRect)frame{
     if (frame.size.height != self.height) {
         CGFloat shapeViewHeight = fabs(frame.size.height * (TOP_TOOL_BAR_HEIGHT - SHAPE_VIEW_HEIGHT) / TOP_TOOL_BAR_HEIGHT);
-        self.shapeView.center = (CGPoint){frame.size.width/2, frame.size.height/2 + ShAPE_VIEW_Y_OFFSET};
+        self.shapeView.center = (CGPoint){frame.size.width/2, frame.size.height/2 + SHAPE_VIEW_Y_OFFSET};
         
         self.shapeView.transform = CGAffineTransformMakeScale(shapeViewHeight / (TOP_TOOL_BAR_HEIGHT - SHAPE_VIEW_HEIGHT), shapeViewHeight / (TOP_TOOL_BAR_HEIGHT - SHAPE_VIEW_HEIGHT));
+        self.expandButton.center = CGPointMake(frame.size.width - 30, frame.size.height / 2 + SHAPE_VIEW_Y_OFFSET);
     }
+    self.expandButton.hidden = (frame.size.height != TOP_TOOL_BAR_THRESHOLD);
     
     [super setFrame:frame];
 }
@@ -120,6 +135,12 @@
     if (IsCurrentWebView(webView) && [self.progressProxy respondsToSelector:@selector(webView:didFailLoadWithError:)]) {
         [self.progressProxy webView:webView didFailLoadWithError:error];
     }
+}
+
+#pragma mark - Expand Button Handler
+
+- (void)handleExpandBtnClicked:(UIButton *)btn{
+    [Notifier postNotification:[NSNotification notificationWithName:kExpandHomeToolBarNotification object:nil]];
 }
 
 #pragma mark - NJKWebViewProgressDelegate

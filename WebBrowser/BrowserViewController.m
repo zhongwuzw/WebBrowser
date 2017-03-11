@@ -88,6 +88,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
 
 - (void)initializeNotification{
     [Notifier addObserver:self selector:@selector(receiveOpenAppstore:) name:kModalAppstoreOpen object:nil];
+    [Notifier addObserver:self selector:@selector(recoverToolBar) name:kExpandHomeToolBarNotification object:nil];
 }
 
 - (void)receiveOpenAppstore:(NSNotification*)notification

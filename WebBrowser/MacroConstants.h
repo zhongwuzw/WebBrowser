@@ -33,8 +33,9 @@
 #define kNoImageModeChanged         @"kNoImageModeChanged"
 //tab switch
 #define kWebTabSwitch               @"kWebTabSwitch"
-
+//webView navigation change
 #define kWebHistoryItemChangedNotification @"WebHistoryItemChangedNotification"
-
+//expand toolbar
+#define kExpandHomeToolBarNotification @"kExpandHomeToolBarNotification"
 
 #endif /* MacroConstants_h */

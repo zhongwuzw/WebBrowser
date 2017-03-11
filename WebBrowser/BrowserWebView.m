@@ -59,7 +59,6 @@
 - (void)setFrame:(CGRect)frame{
     if (!CGSizeEqualToSize(frame.size, self.size)) {
         self.indicatorView.center = CGPointMake(self.bounds.origin.x + frame.size.width / 2, self.bounds.origin.y + frame.size.height / 2);
-        DDLogDebug(@"center x,y is %f,%f",self.indicatorView.center.x,self.indicatorView.center.y);
     }
     [super setFrame:frame];
 }
