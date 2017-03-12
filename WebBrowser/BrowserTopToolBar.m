@@ -48,7 +48,6 @@
         shapeView.shapeLayer.fillColor = UIColorFromRGB(0xE6E6E7).CGColor;
         
         UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:shapeView.bounds cornerRadius:6];
-        [path stroke];
         shapeView.shapeLayer.path = path.CGPath;
         
         [self addSubview:shapeView];
