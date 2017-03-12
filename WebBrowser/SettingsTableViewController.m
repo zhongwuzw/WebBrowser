@@ -128,6 +128,7 @@ static NSString *const SettingPlaceholderTableViewCellIdentifier   = @"SettingPl
             break;
         case CellKindForNoImage:
             cell = [self noImageModeCellWithIndexPath:indexPath];
+            break;
         default:
             //never called
             cell = [tableView dequeueReusableCellWithIdentifier:SettingPlaceholderTableViewCellIdentifier];
