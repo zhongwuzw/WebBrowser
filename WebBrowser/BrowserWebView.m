@@ -38,7 +38,9 @@
 }
 
 - (void)initializeWebView{
-    self.backgroundColor = [UIColor clearColor];
+    //don't set backgroundColor to clearColor, prevents black screens from appearing on screenshots
+    self.backgroundColor = [UIColor whiteColor];
+    
     self.opaque = NO;
     self.delegate = self;
     self.allowsInlineMediaPlayback = YES;
