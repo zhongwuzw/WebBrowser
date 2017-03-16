@@ -186,7 +186,10 @@
 }
 
 - (void)removeSelfFromSuperView{
-    [[TabManager sharedInstance].browserContainerView needUpdateWebView];
+    [[TabManager sharedInstance].browserContainerView restoreWithCompletionHandler:^(WebModel *webModel, BrowserWebView *browserWebView){
+        NSNotification *notify = [NSNotification notificationWithName:kWebTabSwitch object:self userInfo:@{@"webView":browserWebView}];
+        [Notifier postNotification:notify];
+    }];
     
     WEAK_REF(self)
     [self.collectionView setCollectionViewLayout:self.flatLayout animated:YES completion:^(BOOL finished){

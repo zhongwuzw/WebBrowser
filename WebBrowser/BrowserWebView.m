@@ -12,6 +12,7 @@
 #import "TabManager.h"
 #import "DelegateManager+WebViewDelegate.h"
 #import "MenuHelper.h"
+#import "WebViewBackForwardList.h"
 
 #if TARGET_IPHONE_SIMULATOR
 #import <objc/objc-runtime.h>
@@ -94,22 +95,7 @@
 }
 
 - (NSString *)mainFURL{
-    id webDocumentView = nil;
-    id webView = nil;
-    id selfid = self;
-    if([selfid respondsToSelector:NSSelectorFromString(DOCUMENT_VIEW)])
-        webDocumentView = [[(DOCUMENT_VIEW__PROTO objc_msgSend)(selfid,NSSelectorFromString(DOCUMENT_VIEW)) retain] autorelease];
-    else
-        return nil;
-    
-    if(webDocumentView)
-    {
-        //也可以使用valueForKey来获取,object_getInstanceVariable方法只能在MRC下执行
-        object_getInstanceVariable(webDocumentView,[GOT_WEB_VIEW cStringUsingEncoding:NSUTF8StringEncoding], (void**)&webView);
-        [[webView retain] autorelease];
-    }
-    else
-        return nil;
+    id webView = [self webView];
     
     if(webView)
     {
@@ -124,21 +110,7 @@
 
 - (NSString *)mainFTitle
 {
-    id webDocumentView = nil;
-    id webView = nil;
-    id selfid = self;
-    if([selfid respondsToSelector:NSSelectorFromString(DOCUMENT_VIEW)])
-        webDocumentView = [[(DOCUMENT_VIEW__PROTO objc_msgSend)(selfid, NSSelectorFromString(DOCUMENT_VIEW)) retain] autorelease];
-    else
-        return nil;
-    
-    if(webDocumentView)
-    {
-        object_getInstanceVariable(webDocumentView,[GOT_WEB_VIEW cStringUsingEncoding:NSUTF8StringEncoding], (void**)&webView);
-        [[webView retain] autorelease];
-    }
-    else
-        return nil;
+    id webView = [self webView];
     
     if(webView)
     {
@@ -149,6 +121,102 @@
     }
     else
         return nil;
+}
+
+- (WebViewBackForwardList *)webViewBackForwardList{
+    id webView = [self webView];
+    
+    if (webView && [webView respondsToSelector:NSSelectorFromString(BACK_FORWARD_LIST)]) {
+        id backForwardList = nil;
+        backForwardList = [[(BACK_FORWARD_LIST__PROTO objc_msgSend)(webView, NSSelectorFromString(BACK_FORWARD_LIST)) retain] autorelease];
+        if (backForwardList) {
+            int backCount = 0;
+            int forwardCount = 0;
+            
+            if ([backForwardList respondsToSelector:NSSelectorFromString(BACK_LIST_COUNT)] && [backForwardList respondsToSelector:NSSelectorFromString(FORWARD_LIST_COUNT)]) {
+                backCount = (BACK_LIST_COUNT__PROTO objc_msgSend)(backForwardList, NSSelectorFromString(BACK_LIST_COUNT));
+                forwardCount = (FORWARD_LIST_COUNT__PROTO objc_msgSend)(backForwardList, NSSelectorFromString(FORWARD_LIST_COUNT));
+            }
+            
+            id backList = nil;
+            id forwardList = nil;
+            id currentItem = nil;
+            if ([backForwardList respondsToSelector:NSSelectorFromString(BACK_LIST_WITH_LIMIT)] && [backForwardList respondsToSelector:NSSelectorFromString(FORWARD_LIST_WITH_LIMIT)] && [backForwardList respondsToSelector:NSSelectorFromString(CURRENT_ITEM)]) {
+                backList = [[(BACK_LIST_WITH_LIMIT__PROTO objc_msgSend)(backForwardList, NSSelectorFromString(BACK_LIST_WITH_LIMIT), backCount) retain] autorelease];
+                forwardList = [[(FORWARD_LIST_WITH_LIMIT__PROTO objc_msgSend)(backForwardList, NSSelectorFromString(FORWARD_LIST_WITH_LIMIT), forwardCount) retain] autorelease];
+                currentItem = [[(CURRENT_ITEM__PROTO objc_msgSend)(backForwardList, NSSelectorFromString(CURRENT_ITEM)) retain] autorelease];
+            }
+            
+            WebViewBackForwardList *list = [[[WebViewBackForwardList alloc] initWithCurrentItem:[self getCurrentItem:currentItem] backList:[self getBackForwardItemsWithArray:backList] forwardList:[self getBackForwardItemsWithArray:forwardList]] autorelease];
+            return list;
+        }
+    }
+    
+    return nil;
+}
+
+- (WebViewHistoryItem *)getCurrentItem:(id)item{
+    if (item && [item respondsToSelector:NSSelectorFromString(URL_TITLE)] && [item respondsToSelector:NSSelectorFromString(URL_STRING)]) {
+        id urlString = [[(URL_STRING__PROTO objc_msgSend)(item, NSSelectorFromString(URL_STRING)) retain] autorelease];
+        id title = [[(URL_TITLE__PROTO objc_msgSend)(item, NSSelectorFromString(URL_TITLE)) retain] autorelease];
+        WebViewHistoryItem *hisItem = [[[WebViewHistoryItem alloc] initWithURLString:urlString title:title] autorelease];
+        return hisItem;
+    }
+    return nil;
+}
+
+- (NSArray<WebViewHistoryItem *> *)getBackForwardItemsWithArray:(NSArray *)items{
+    if (items && items.count > 0) {
+        NSMutableArray<WebViewHistoryItem *> *historyItems = [NSMutableArray arrayWithCapacity:items.count];
+        [items enumerateObjectsUsingBlock:^(id item, NSUInteger idx, BOOL *stop){
+            if ([item respondsToSelector:NSSelectorFromString(URL_TITLE)] && [item respondsToSelector:NSSelectorFromString(URL_STRING)]) {
+                @autoreleasepool {
+                    id urlString = [[(URL_STRING__PROTO objc_msgSend)(item, NSSelectorFromString(URL_STRING)) retain] autorelease];
+                    id title = [[(URL_TITLE__PROTO objc_msgSend)(item, NSSelectorFromString(URL_TITLE)) retain] autorelease];
+                    WebViewHistoryItem *hisItem = [[WebViewHistoryItem alloc] initWithURLString:urlString title:title];
+                    [historyItems addObject:hisItem];
+                    [hisItem release];
+                }
+            }
+        }];
+        return historyItems;
+    }
+    return nil;
+}
+
+//get WebView
+- (id)webView{
+    id webDocumentView = nil;
+    id webView = nil;
+    id selfid = self;
+    
+    if([selfid respondsToSelector:NSSelectorFromString(DOCUMENT_VIEW)]){
+        webDocumentView = [[(DOCUMENT_VIEW__PROTO objc_msgSend)(selfid,NSSelectorFromString(DOCUMENT_VIEW)) retain] autorelease];
+    }
+    else{
+        return nil;
+    }
+    
+    if(webDocumentView)
+    {
+        //也可以使用valueForKey来获取,object_getInstanceVariable方法只能在MRC下执行
+        object_getInstanceVariable(webDocumentView,[GOT_WEB_VIEW cStringUsingEncoding:NSUTF8StringEncoding], (void**)&webView);
+        [[webView retain] autorelease];
+    }
+    else{
+        return nil;
+    }
+    
+    if(webDocumentView)
+    {
+        object_getInstanceVariable(webDocumentView,[GOT_WEB_VIEW cStringUsingEncoding:NSUTF8StringEncoding], (void**)&webView);
+        [[webView retain] autorelease];
+    }
+    else{
+        return nil;
+    }
+    
+    return webView;
 }
 
 #pragma mark - UIWebViewDelegate
@@ -335,7 +403,7 @@
     [self loadHTMLString:@"" baseURL:nil];
     
     DDLogDebug(@"BrowserWebView dealloc");
-    
+
     [super dealloc];
 }
 

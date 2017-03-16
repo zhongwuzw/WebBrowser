@@ -11,5 +11,6 @@
 @interface NSString (ZWUtility)
 
 - (BOOL)isValidURL;
+- (BOOL)isLocal;
 
 @end

@@ -10,11 +10,13 @@
 #import "BrowserWebView.h"
 #import "BrowserBottomToolBarHeader.h"
 
+typedef void(^TabCompletion)(WebModel *webModel, BrowserWebView *browserWebView);
+
 @interface BrowserContainerView : UIView <BrowserBottomToolBarButtonClickedDelegate>
 
 @property (nonatomic, readonly) UIScrollView *scrollView;
 @property (nonatomic, readonly, weak) BrowserWebView *webView;
 
-- (void)needUpdateWebView;
+- (void)restoreWithCompletionHandler:(TabCompletion)completion;
 
 @end

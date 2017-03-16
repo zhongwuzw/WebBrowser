@@ -8,8 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class WebModel;
-@class BrowserContainerView;
+@class WebModel, BrowserContainerView, SessionData;
 
 typedef void(^MultiWebViewOperationBlock)(NSArray<WebModel *> *);
 typedef void(^CurWebViewOperationBlock)(WebModel *, BrowserWebView *);
@@ -23,6 +22,7 @@ typedef void(^WebBrowserNoParamsBlock)();
 @property (nonatomic, strong) UIImage *image;
 @property (nonatomic, strong) BrowserWebView *webView;
 @property (nonatomic, assign) BOOL isImageProcessed;
+@property (nonatomic, strong) SessionData *sessionData;
 
 @end
 

@@ -8,8 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class BrowserWebView;
-@class WebModel;
+@class BrowserWebView, WebModel, WebViewBackForwardList;
 
 typedef void (^WebCompletionBlock)(NSString *, NSError *);
 
@@ -33,5 +32,6 @@ typedef void (^WebCompletionBlock)(NSString *, NSError *);
 
 - (NSString *)mainFURL;
 - (NSString *)mainFTitle;
+- (WebViewBackForwardList *)webViewBackForwardList;
 
 @end

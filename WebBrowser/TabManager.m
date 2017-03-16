@@ -13,6 +13,8 @@
 #import "PreferenceHelper.h"
 #import "ErrorPageHelper.h"
 #import "BrowserContainerView.h"
+#import "SessionData.h"
+#import "WebViewBackForwardList.h"
 
 #import <CommonCrypto/CommonDigest.h>
 
@@ -24,6 +26,7 @@ static NSString *const KEY_WEB_TITLE        = @"KEY_WEB_TITLE";
 static NSString *const KEY_WEB_URL          = @"KEY_WEB_URL";
 static NSString *const KEY_WEB_IMAGE        = @"KEY_WEB_IMAGE";
 static NSString *const KEY_WEB_IMAGE_URL    = @"KEY_WEB_IMAGE_URL";
+static NSString *const KEY_WEB_SESSION_DATA    = @"KEY_WEB_SESSION_DATA";
 
 @implementation WebModel
 
@@ -32,6 +35,7 @@ static NSString *const KEY_WEB_IMAGE_URL    = @"KEY_WEB_IMAGE_URL";
         _title = [aDecoder decodeObjectOfClass:[NSString class] forKey:KEY_WEB_TITLE];
         _url = [aDecoder decodeObjectOfClass:[NSString class] forKey:KEY_WEB_URL];
         _imageKey = [aDecoder decodeObjectOfClass:[NSString class] forKey:KEY_WEB_IMAGE_URL];
+        _sessionData = [aDecoder decodeObjectOfClass:[SessionData class] forKey:KEY_WEB_SESSION_DATA];
     }
     
     return self;
@@ -41,6 +45,7 @@ static NSString *const KEY_WEB_IMAGE_URL    = @"KEY_WEB_IMAGE_URL";
     [aCoder encodeObject:self.title forKey:KEY_WEB_TITLE];
     [aCoder encodeObject:self.url forKey:KEY_WEB_URL];
     [aCoder encodeObject:self.imageKey forKey:KEY_WEB_IMAGE_URL];
+    [aCoder encodeObject:self.sessionData forKey:KEY_WEB_SESSION_DATA];
 }
 
 + (BOOL)supportsSecureCoding{
@@ -116,21 +121,50 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
     return NO;
 }
 
+- (NSArray<NSString *> *)getBackForwardListURL:(WebViewBackForwardList *)list{
+    NSMutableArray *array = [NSMutableArray array];
+    [list.backList enumerateObjectsUsingBlock:^(WebViewHistoryItem *item, NSUInteger idx, BOOL *stop){
+        NSString *url = (item.URLString ? item.URLString : @"");
+        [array addObject:url];
+    }];
+    
+    if (list.currentItem) {
+        NSString *url = (list.currentItem.URLString ? list.currentItem.URLString : @"");
+        [array addObject:url];
+    }
+    
+    [list.forwardList enumerateObjectsUsingBlock:^(WebViewHistoryItem *item, NSUInteger idx, BOOL *stop){
+        NSString *url = (item.URLString ? item.URLString : @"");
+        [array addObject:url];
+    }];
+    
+    return [array copy];
+}
+
 - (void)loadWebModelArray{
     dispatch_async(_synchQueue, ^{
         dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             if ([[NSFileManager defaultManager] fileExistsAtPath:_filePath]) {
                 NSData *data = [NSData dataWithContentsOfFile:_filePath options:NSDataReadingUncached error:nil];
                 if (data) {
-                    NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-                    NSArray<WebModel *> *array = [unarchiver decodeObjectForKey:MY_HISTORY_DATA_KEY];
-                    [unarchiver finishDecoding];
-                    
-                    if (array && [array isKindOfClass:[NSArray<WebModel *> class]] && array.count > 0) {
-                        [_webModelArray addObjectsFromArray:array];
-                    }
-                    else
+                    NSKeyedUnarchiver *unarchiver;
+                    @try {
+                        unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+                        NSArray<WebModel *> *array = [unarchiver decodeObjectForKey:MY_HISTORY_DATA_KEY];
+                        
+                        if (array && [array isKindOfClass:[NSArray<WebModel *> class]] && array.count > 0) {
+                            [_webModelArray addObjectsFromArray:array];
+                        }
+                        else{
+                            [self setDefaultWebArray];
+                        }
+                    } @catch (NSException *exception) {
+                        DDLogError(@"tab unarchive error");
                         [self setDefaultWebArray];
+                    } @finally {
+                        [unarchiver finishDecoding];
+                    }
+
                 }
                 else
                     [self setDefaultWebArray];
@@ -142,6 +176,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
 }
 
 - (void)saveWebModelToDisk{
+    [_webModelArray enumerateObjectsUsingBlock:^(WebModel *model, NSUInteger idx, BOOL *stop){
+        if (model.webView) {
+            WebViewBackForwardList *backForwardList = [model.webView webViewBackForwardList];
+            NSArray *urls = [self getBackForwardListURL:backForwardList];
+            NSInteger currentPage = -backForwardList.forwardList.count;
+            model.sessionData = [[SessionData alloc] initWithCurrentPage:currentPage urls:urls];
+        }
+    }];
     NSMutableData *data = [NSMutableData data];
     NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
     [archiver encodeObject:_webModelArray forKey:MY_HISTORY_DATA_KEY];
@@ -150,6 +192,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
     [data writeToFile:_filePath atomically:YES];
 }
 
+//save webModel, public API
 - (void)saveWebModelData{
     dispatch_async(self.synchQueue, ^{
         dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
@@ -351,11 +394,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
 }
 
 - (void)cleanDiskWithCompletionBlock:(WebBrowserNoParamsBlock)completionBlock{
+    //save browse data
+    [self saveWebModelData];
+    
     dispatch_async(self.synchQueue, ^{
         dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            //save browse data
-            [self saveWebModelToDisk];
-            
             //remove outdated image
             NSMutableSet *urlSet = [NSMutableSet setWithCapacity:self.webModelArray.count];
             [self.webModelArray enumerateObjectsUsingBlock:^(WebModel *webModel, NSUInteger idx, BOOL *stop){
@@ -424,7 +467,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
     //just trigger error page in case of "http" or "https"
     if ([url.scheme isEqualToString:@"http"] || [url.scheme isEqualToString:@"https"]) {
         [ErrorPageHelper showPageWithError:error URL:url inWebView:webView];
+        [self saveWebModelData];
     }
+}
+
+- (void)webViewForMainFrameDidFinishLoad:(BrowserWebView *)webView{
+    [self saveWebModelData];
 }
 
 #pragma mark - Dealloc

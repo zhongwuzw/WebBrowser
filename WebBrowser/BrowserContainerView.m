@@ -11,12 +11,14 @@
 #import "BrowserWebView.h"
 #import "HttpHelper.h"
 #import "NSURL+ZWUtility.h"
+#import "NSString+ZWUtility.h"
 #import "DelegateManager+WebViewDelegate.h"
+#import "SessionData.h"
+#import "WebServer.h"
 
 @interface BrowserContainerView () <WebViewDelegate>
 
 @property (nonatomic, readwrite, weak) BrowserWebView *webView;
-@property (nonatomic, copy) NSString *restorationWebViewURL;
 @property (nonatomic, assign) CGPoint contentOffset;
 
 @end
@@ -37,7 +39,7 @@
 - (void)setupWebView{
     [TabManager sharedInstance].browserContainerView = self;
 
-    [self needUpdateWebView];
+    [self restoreWithCompletionHandler:nil];
     
     [[DelegateManager sharedInstance] registerDelegate:self forKeys:@[DelegateManagerBrowserContainerLoadURL,DelegateManagerWebView]];
     [[DelegateManager sharedInstance] addWebViewDelegate:self];
@@ -46,13 +48,7 @@
 }
 
 - (void)startLoadWebViewWithURL:(NSString *)url{
-    //load restoration url if state preserve enabled
-    if (self.restorationWebViewURL) {
-        url = self.restorationWebViewURL;
-        self.restorationWebViewURL = nil;
-    }
-    
-    if ([[NSURL URLWithString:url] isLocal]) {
+    if ([[NSURL URLWithString:url] isErrorPageURL]) {
         NSURL *originalUrl = [[NSURL URLWithString:url] originalURLFromErrorURL];
         url = originalUrl.absoluteString;
     }
@@ -61,23 +57,37 @@
     [self.webView loadRequest:request];
 }
 
-- (void)needUpdateWebView{
+- (void)restoreWithCompletionHandler:(TabCompletion)completion{
     WEAK_REF(self)
     [[TabManager sharedInstance] setCurWebViewOperationBlockWith:^(WebModel *webModel, BrowserWebView *browserWebView){
         STRONG_REF(self_)
         if (self__) {
-            if (self__.webView != browserWebView) {
-                [self__.webView removeFromSuperview];
-                self__.webView = browserWebView;
-                [self__ addSubview:browserWebView];
-                [self__ bringSubviewToFront:browserWebView];
-                self__.webView.frame = CGRectMake(0, 0, self__.width, self__.height);
-                NSNotification *notify = [NSNotification notificationWithName:kWebTabSwitch object:self userInfo:@{@"webView":browserWebView}];
-                [Notifier postNotification:notify];
-                
-            }
+            [self__.webView removeFromSuperview];
+            self__.webView = browserWebView;
+            [self__ addSubview:browserWebView];
+            [self__ bringSubviewToFront:browserWebView];
+            self__.webView.frame = CGRectMake(0, 0, self__.width, self__.height);
+            
             if (!browserWebView.request) {
-                [self__ startLoadWebViewWithURL:webModel.url];
+                SessionData *sessionData = webModel.sessionData;
+                if (sessionData) {
+                    NSDictionary *originalDic = sessionData.jsonDictionary;
+                    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:originalDic options:0 error:NULL];
+                    if (jsonData) {
+                        NSString *escapedJSON = [[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+                        escapedJSON = (escapedJSON) ? escapedJSON : @"";
+                        NSURL *restoreURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/about/sessionrestore?history=%@",[[WebServer sharedInstance] base],escapedJSON]];
+                        NSURLRequest *request = [NSURLRequest requestWithURL:restoreURL];
+                        [browserWebView loadRequest:request];
+                    }
+                }
+                else{
+                    [self__ startLoadWebViewWithURL:webModel.url];
+                }
+            }
+
+            if (completion) {
+                completion(webModel, browserWebView);
             }
         }
     }];
@@ -95,7 +105,7 @@
             break;
         case BottomToolBarRefreshButtonTag:
         {
-            if ([self.webView.request.URL isLocal]) {
+            if ([self.webView.request.URL isErrorPageURL]) {
                 NSURL *url = [self.webView.request.URL originalURLFromErrorURL];
                 [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
             }
@@ -121,6 +131,11 @@
             [self browserBottomToolBarButtonClickedWithTag:BottomToolBarRefreshButtonTag];
             return NO;
         }
+        else if ([url.scheme isEqualToString:@"zwsessionrestore"] && [url.host isEqualToString:@"reload"]){
+            //session restore, just reload
+            [self.webView reload];
+            return NO;
+        }
     }
 
     return YES;
@@ -130,7 +145,8 @@
 
 - (void)webViewDidFinishLoad:(BrowserWebView *)webView{
     if (IsCurrentWebView(webView)) {
-        if (!CGPointEqualToPoint(CGPointZero, self.contentOffset)) {
+        //pass local url
+        if (![webView.mainFURL isLocal] && !CGPointEqualToPoint(CGPointZero, self.contentOffset)) {
             [self.scrollView setContentOffset:self.contentOffset animated:NO];
             self.contentOffset = CGPointZero;
         }
@@ -160,7 +176,6 @@
 #pragma mark - Preseving and Restoring State
 
 - (void)encodeRestorableStateWithCoder:(NSCoder *)coder{
-    [coder encodeObject:self.webView.mainFURL forKey:@"webViewURL"];
     CGPoint point = self.scrollView.contentOffset;
     //optimize contentOffset because of contentInset changed when webView scroll
     point.y -= (TOP_TOOL_BAR_HEIGHT - self.scrollView.contentInset.top);
@@ -170,12 +185,7 @@
 }
 
 - (void)decodeRestorableStateWithCoder:(NSCoder *)coder{
-    NSString *webViewURL = [coder decodeObjectForKey:@"webViewURL"];
-    
-    if (webViewURL && webViewURL.length) {
-        self.restorationWebViewURL = webViewURL;
-        self.contentOffset = [coder decodeCGPointForKey:@"webViewContentOffset"];
-    }
+    self.contentOffset = [coder decodeCGPointForKey:@"webViewContentOffset"];
     
     [super decodeRestorableStateWithCoder:coder];
 }

@@ -17,4 +17,9 @@ static NSString * const kURLRegEx = @"((\\w)*|([0-9]*)|([-|_])*)+([\\.|/]((\\w)*
     return [urlPredic evaluateWithObject:self];
 }
 
+- (BOOL)isLocal{
+    NSURL *url = [NSURL URLWithString:self];
+    return [url.host.lowercaseString isEqualToString:@"localhost"] || [url.host isEqualToString:@"127.0.0.1"];
+}
+
 @end

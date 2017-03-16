@@ -1,7 +1,3 @@
-<!-- This Source Code Form is subject to the terms of the Mozilla Public
-   - License, v. 2.0. If a copy of the MPL was not distributed with this
-   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <title>%error_title%</title>
@@ -14,17 +10,14 @@
                 this.send('zwerror://msg/' + msg);
             };
             this.send = function (dst) {
-                var bridge = document.createElement('iframe');
-                bridge.setAttribute('style', 'display:none');
-                bridge.setAttribute('height', '0px');
-                bridge.setAttribute('width', '0px');
-                bridge.setAttribute('frameloader', '0');
-                bridge.src = dst;
-                document.body.appendChild(bridge);
+                var elementID = "NET_ERROR_MSG_IFRAME";
+                var element = document.getElementById(elementID);
+                element || (element = document.createElement("iframe"), element.id = elementID, element.setAttribute("style", "height:0px !important; width:0px !important; border:none !important; display:none !important;"), document.body.appendChild(element));
+                element.src = "zwerror://" + dst;
             }
         }
         function zwFireReloadButton(){
-            new ZWBridge().send('zwerror://reload');
+            new ZWBridge().send('reload');
         }
     </script>
   </head>

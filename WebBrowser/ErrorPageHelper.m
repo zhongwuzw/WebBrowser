@@ -11,13 +11,31 @@
 #import "NSURL+ZWUtility.h"
 #import "BrowserWebView.h"
 
+static NSMutableArray *redirecting = nil;
+
 @implementation ErrorPageHelper
+
++ (NSMutableArray *)redirecting{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        redirecting = [NSMutableArray array];
+    });
+    return redirecting;
+}
 
 + (void)registerWithServer:(WebServer *)server{
     [server registerHandlerForMethod:@"GET" module:@"errors" resource:@"error.html" handler:^GCDWebServerResponse *(GCDWebServerRequest *request){
-        if (!request.URL.originalURLFromErrorURL) {
+        NSURL *originalURL = request.URL.originalURLFromErrorURL;
+        if (!originalURL) {
             return [[GCDWebServerResponse alloc] initWithStatusCode:404];
         }
+        
+        NSUInteger index = [[self redirecting] indexOfObject:originalURL];
+        if (index == NSNotFound) {
+            return [GCDWebServerDataResponse responseWithRedirect:originalURL permanent:NO];
+        }
+        
+        [[self redirecting] removeObjectAtIndex:index];
         
         int errCode = [request.query[@"code"] intValue];
         NSString *errDescription = request.query[@"description"];
@@ -50,9 +68,16 @@
 }
 
 + (void)showPageWithError:(NSError *)error URL:(NSURL *)url inWebView:(BrowserWebView *)webView{
-    if (url.isErrorPageURL) {
+    if (url.isErrorPageURL && url.originalURLFromErrorURL) {
+        NSUInteger index = [[self redirecting] indexOfObject:url.originalURLFromErrorURL];
+        if (index != NSNotFound) {
+            [[self redirecting] removeObjectAtIndex:index];
+        }
+        
         return;
     }
+    
+    [[self redirecting] addObject:url];
     
     NSURLComponents *components = [NSURLComponents componentsWithString:[NSString stringWithFormat:@"%@%@",[[WebServer sharedInstance] base],@"/errors/error.html"]];
     NSArray *queryItems = @[[NSURLQueryItem queryItemWithName:@"url" value:url.absoluteString],
