@@ -12,6 +12,7 @@
 @class BaseResponseModel;
 
 typedef void (^HttpClientSuccessBlock)(NSURLSessionDataTask *task, BaseResponseModel *model);
+typedef void (^HttpClientImageSuccessBlock)(UIImage *image, NSError *error);
 typedef void (^HttpClientFailureBlock)(NSURLSessionDataTask *task, BaseResponseModel *model);
 
 @interface HTTPClient : NSObject
@@ -20,6 +21,6 @@ typedef void (^HttpClientFailureBlock)(NSURLSessionDataTask *task, BaseResponseM
 
 SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(HTTPClient)
 
-//- (NSURLSessionDataTask *)getPreviousNewsWithDate:(NSString *)date success:(HttpClientSuccessBlock)success fail:(HttpClientFailureBlock)fail;
+- (void)getImageWithURL:(NSURL *)url completion:(HttpClientImageSuccessBlock)completion;
 
 @end

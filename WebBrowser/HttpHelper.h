@@ -12,8 +12,6 @@
 
 + (BOOL)canAppHandleURL:(NSURL *)url;
 
-+ (NSString *)appstoreIdFromURL:(NSString *)url;
-
 + (BOOL)isURL:(NSString *)content;
 
 @end

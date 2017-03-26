@@ -240,7 +240,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
             }
             webModel.image = image;
         }];
-        dispatch_main_sync_safe(^{
+        dispatch_main_safe_sync(^{
             if (block) {
                 block([_webModelArray copy]);
             }
@@ -250,7 +250,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
 
 - (void)setCurWebViewOperationBlockWith:(CurWebViewOperationBlock)block{
     dispatch_async(self.synchQueue, ^{
-        dispatch_main_sync_safe(^{
+        dispatch_main_safe_sync(^{
             BrowserWebView *browserWebView;
             WebModel *curModel = [_webModelArray lastObject];
             if (!curModel.webView) {
@@ -289,7 +289,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
         
         
         if (block) {
-            dispatch_main_async_safe(^{
+            dispatch_main_safe_async(^{
                 block();
             })
         }
@@ -428,7 +428,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
             }
             
             if (completionBlock) {
-                dispatch_main_async_safe(^{
+                dispatch_main_safe_async(^{
                     completionBlock();
                 })
             }
@@ -439,7 +439,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
 - (void)noImageModeChanged{
     [[self.webModelArray copy] enumerateObjectsUsingBlock:^(WebModel *webModel, NSUInteger idx, BOOL *stop){
         if (webModel.webView) {
-            dispatch_main_async_safe(^{
+            dispatch_main_safe_async(^{
                 [JavaScriptHelper setNoImageMode:[PreferenceHelper boolForKey:KeyNoImageModeStatus] webView:webModel.webView loadPrimaryScript:NO];
             })
         }
@@ -452,6 +452,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
 //当解析完head标签后注入无图模式js,需要注意的是，当启用无图模式时，UIWebView依然会进行图片网络请求
 - (void)webView:(BrowserWebView *)webView gotTitleName:(NSString*)titleName{
     [JavaScriptHelper setNoImageMode:[PreferenceHelper boolForKey:KeyNoImageModeStatus] webView:webView loadPrimaryScript:YES];
+    [JavaScriptHelper setLongPressGestureWithWebView:webView];
 }
 
 - (void)webView:(BrowserWebView *)webView didFailLoadWithError:(NSError *)error{

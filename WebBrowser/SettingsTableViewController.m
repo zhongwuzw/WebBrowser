@@ -176,7 +176,7 @@ static NSString *const SettingPlaceholderTableViewCellIdentifier   = @"SettingPl
         }];
         
         if (completionBlock) {
-            dispatch_main_async_safe(^{
+            dispatch_main_safe_async(^{
                 completionBlock();
             })
         }

@@ -29,6 +29,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(HTTPClient)
     return self;
 }
 
+- (void)getImageWithURL:(NSURL *)url completion:(HttpClientImageSuccessBlock)completion{
+    [_httpManager getImageWithURL:url completion:completion];
+}
+
 //- (NSURLSessionDataTask *)getPreviousNewsWithDate:(NSString *)date success:(HttpClientSuccessBlock)success
 //                                             fail:(HttpClientFailureBlock)fail{
 //    NSString *relativePath = [[HTTPURLConfiguration sharedInstance] previousNews];

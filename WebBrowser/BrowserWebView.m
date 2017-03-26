@@ -25,6 +25,7 @@
 
 @property (nonatomic, assign, readwrite) BOOL isMainFrameLoaded;
 @property (nonatomic, unsafe_unretained) UIActivityIndicatorView *indicatorView;
+@property (nonatomic, unsafe_unretained) UILongPressGestureRecognizer *longPressGestureRecognizer;
 
 @end
 
@@ -57,6 +58,12 @@
     
     self.indicatorView = activityView;
     [activityView release];
+    
+    UILongPressGestureRecognizer *longPressGesture = [UILongPressGestureRecognizer new];
+    self.longPressGestureRecognizer = longPressGesture;
+    longPressGesture.delegate = [TabManager sharedInstance].browserContainerView;
+    [self addGestureRecognizer:longPressGesture];
+    [longPressGesture release];
 }
 
 - (void)setFrame:(CGRect)frame{
@@ -395,6 +402,8 @@
 #pragma mark - Dealloc
 
 - (void)dealloc{
+    [self.indicatorView removeFromSuperview];
+    self.longPressGestureRecognizer = nil;
     self.indicatorView = nil;
     self.webModel = nil;
     self.delegate = nil;

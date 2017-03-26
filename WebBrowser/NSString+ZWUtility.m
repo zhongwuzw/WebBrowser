@@ -22,4 +22,17 @@ static NSString * const kURLRegEx = @"((\\w)*|([0-9]*)|([-|_])*)+([\\.|/]((\\w)*
     return [url.host.lowercaseString isEqualToString:@"localhost"] || [url.host isEqualToString:@"127.0.0.1"];
 }
 
+- (NSString *)ellipsizeWithMaxLength:(NSInteger)maxLength{
+    if (maxLength >= 2 && self.length > maxLength) {
+        NSInteger index1 = (maxLength + 1) / 2;
+        NSInteger index2 = self.length - maxLength / 2;
+        
+        NSString *index1Str = [self substringToIndex:index1];
+        NSString *index2Str = [self substringFromIndex:index2];
+        
+        return [NSString stringWithFormat:@"%@…\u2060%@",index1Str,index2Str];
+    }
+    return self;
+}
+
 @end

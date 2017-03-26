@@ -3,3 +3,4 @@ github "CocoaLumberjack/CocoaLumberjack"
 github "AFNetworking/AFNetworking" ~> 3.0
 github "Mantle/Mantle"
 github "swisspol/GCDWebServer" ~> 3.3.3
+github "rs/SDWebImage"

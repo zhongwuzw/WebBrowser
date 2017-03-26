@@ -13,5 +13,6 @@
 @interface JavaScriptHelper : NSObject
 
 + (void)setNoImageMode:(BOOL)enabled webView:(BrowserWebView *)webView loadPrimaryScript:(BOOL)needsLoad;
++ (void)setLongPressGestureWithWebView:(BrowserWebView *)webView;
 
 @end

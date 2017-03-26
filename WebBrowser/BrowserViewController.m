@@ -19,7 +19,7 @@
 #import "HistoryTableViewController.h"
 #import "DelegateManager+WebViewDelegate.h"
 
-@interface BrowserViewController () <BrowserBottomToolBarButtonClickedDelegate, SKStoreProductViewControllerDelegate, UIViewControllerRestoration>
+@interface BrowserViewController () <BrowserBottomToolBarButtonClickedDelegate,  UIViewControllerRestoration>
 
 @property (nonatomic, strong) BrowserContainerView *browserContainerView;
 @property (nonatomic, strong) BrowserBottomToolBar *bottomToolBar;
@@ -87,53 +87,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
 #pragma mark - Notification
 
 - (void)initializeNotification{
-    [Notifier addObserver:self selector:@selector(receiveOpenAppstore:) name:kModalAppstoreOpen object:nil];
     [Notifier addObserver:self selector:@selector(recoverToolBar) name:kExpandHomeToolBarNotification object:nil];
-}
-
-- (void)receiveOpenAppstore:(NSNotification*)notification
-{
-    NSString* appstoreId = notification.object;
-    
-    if ([appstoreId isKindOfClass:[NSString class]]) {
-        NSNumberFormatter *f = [NSNumberFormatter new];
-        f.numberStyle = NSNumberFormatterDecimalStyle;
-        NSNumber *number = [f numberFromString:appstoreId];
-        [self openAppstoreWithURL:number];
-    }
-}
-
-- (void)openAppstoreWithURL:(NSNumber *)appstoreID{
-    if (!appstoreID) {
-        return;
-    }
-    
-    SKStoreProductViewController *storeViewController = [SKStoreProductViewController new];
-    storeViewController.delegate = self;
-    
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:1];
-    
-    [dict setObject:appstoreID forKey:SKStoreProductParameterITunesItemIdentifier];
-    
-    [storeViewController loadProductWithParameters:dict completionBlock:^(BOOL result, NSError *error){
-        if (result) {
-            //prevent calls for multi times
-            if (self.presentedViewController) {
-                [self dismissViewControllerAnimated:NO completion:nil];
-            }
-            
-            [self presentViewController:storeViewController animated:YES completion:nil];
-        }
-    }];
-}
-
-#pragma mark - SKStoreProductViewControllerDelegate
-
-- (void)productViewControllerDidFinish:(SKStoreProductViewController*)viewController
-{
-    if (viewController) {
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }
 }
 
 #pragma mark - UIScrollViewDelegate Method

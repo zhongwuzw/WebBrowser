@@ -12,14 +12,23 @@
 #import "HttpHelper.h"
 #import "NSURL+ZWUtility.h"
 #import "NSString+ZWUtility.h"
+#import "NSURLCache+ZWUtility.h"
 #import "DelegateManager+WebViewDelegate.h"
 #import "SessionData.h"
 #import "WebServer.h"
+#import "BrowserViewController.h"
+#import "HTTPClient.h"
+
+#import <Photos/Photos.h>
+
+static NSInteger const ActionSheetTitleMaxLength = 120;
+static NSString *const CancelString = @"取消";
 
 @interface BrowserContainerView () <WebViewDelegate>
 
 @property (nonatomic, readwrite, weak) BrowserWebView *webView;
 @property (nonatomic, assign) CGPoint contentOffset;
+@property (nonatomic, weak) UIGestureRecognizer *selectionGestureRecognizer;
 
 @end
 
@@ -93,6 +102,103 @@
     }];
 }
 
+#pragma mark - Handle WebView Long Press Gesture
+
+- (void)handleContextMenuWithComponents:(NSString *)url{
+    if ([url hasPrefix:@"zwcontextmenu://message?json="]) {
+        NSString *jsonStr = [url substringFromIndex:@"zwcontextmenu://message?json=".length];
+        
+        jsonStr = [jsonStr stringByRemovingPercentEncoding];
+        if (jsonStr) {
+            NSDictionary *jsonDic = [NSJSONSerialization JSONObjectWithData:[jsonStr dataUsingEncoding:NSUTF8StringEncoding] options:0 error:NULL];
+            if (jsonDic && [jsonDic isKindOfClass:[NSDictionary class]]) {
+                if (jsonDic[@"handled"]) {
+                    self.selectionGestureRecognizer.enabled = NO;
+                    self.selectionGestureRecognizer.enabled = YES;
+                }
+                
+                NSString *urlString = jsonDic[@"link"];
+                urlString = [urlString stringByRemovingPercentEncoding];
+                
+                NSString *imageString = jsonDic[@"image"];
+                imageString = [imageString stringByRemovingPercentEncoding];
+                
+                [self handleContenxtMenuWithLink:urlString imageURL:imageString];
+            }
+        }
+    }
+}
+
+- (void)handleContenxtMenuWithLink:(NSString *)link imageURL:(NSString *)image{
+    NSURL *linkURL = [NSURL URLWithString:link];
+    NSURL *imageURL = [NSURL URLWithString:image];
+    if (!(linkURL || imageURL)) {
+        return;
+    }
+    UIAlertController *actionSheetController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    NSString *dialogTitle;
+    
+    if (linkURL) {
+        dialogTitle = linkURL.absoluteString;
+        UIAlertAction  *openNewTabAction = [UIAlertAction actionWithTitle:@"在新窗口打开" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+            DDLogDebug(@"新窗口打开");
+        }];
+        [actionSheetController addAction:openNewTabAction];
+        
+        UIAlertAction *copyAction = [UIAlertAction actionWithTitle:@"拷贝链接" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+            UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
+            pasteBoard.URL = linkURL;
+        }];
+        [actionSheetController addAction:copyAction];
+    }
+    
+    if (imageURL) {
+        dialogTitle = imageURL.absoluteString;
+        PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
+        
+        UIAlertAction *saveImageAction = [UIAlertAction actionWithTitle:@"保存图片" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+            if (status == PHAuthorizationStatusAuthorized || status == PHAuthorizationStatusNotDetermined) {
+                [self getImageWithURL:imageURL completion:^(UIImage *image, NSError *error){
+                    if (image) {
+                        UIImageWriteToSavedPhotosAlbum(image, nil, nil, NULL);
+                    }
+                }];
+            } else {
+                
+            }
+        }];
+        [actionSheetController addAction:saveImageAction];
+    }
+    
+    actionSheetController.title = [dialogTitle ellipsizeWithMaxLength:ActionSheetTitleMaxLength];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:CancelString style:UIAlertActionStyleCancel handler:nil];
+    [actionSheetController addAction:cancelAction];
+    [[BrowserViewController sharedInstance] presentViewController:actionSheetController animated:YES completion:nil];
+}
+
+- (void)getImageWithURL:(NSURL *)url completion:(void (^)(UIImage *, NSError *))completion{
+    if (!(url && completion)) {
+        return;
+    }
+    
+    UIImage *image = nil;
+    
+    if ((image = [[NSURLCache sharedURLCache] getCachedImageWithURL:url])) {
+        completion(image, nil);
+        return;
+    }
+    
+    [[HTTPClient sharedInstance] getImageWithURL:url completion:^(UIImage *image, NSError *error){
+        if (image) {
+            completion(image, nil);
+        }
+        else{
+            completion(nil, error);
+        }
+    }];
+}
+
 #pragma mark - BrowserBottomToolBarButtonClickedDelegate
 
 - (void)browserBottomToolBarButtonClickedWithTag:(BottomToolBarButtonTag)tag{
@@ -126,7 +232,7 @@
 
 - (BOOL)webView:(BrowserWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
     if (webView == self.webView) {
-        NSURL *url = request.URL;
+        NSURLComponents *url = [NSURLComponents componentsWithString:request.URL.absoluteString];
         if ([url.scheme isEqualToString:@"zwerror"] && [url.host isEqualToString:@"reload"]) {
             [self browserBottomToolBarButtonClickedWithTag:BottomToolBarRefreshButtonTag];
             return NO;
@@ -136,8 +242,11 @@
             [self.webView reload];
             return NO;
         }
+        else if ([url.scheme isEqualToString:@"zwcontextmenu"]){
+            [self handleContextMenuWithComponents:url.string];
+            return NO;
+        }
     }
-
     return YES;
 }
 
@@ -188,6 +297,22 @@
     self.contentOffset = [coder decodeCGPointForKey:@"webViewContentOffset"];
     
     [super decodeRestorableStateWithCoder:coder];
+}
+
+#pragma mark - UIGestureRecognizerDelegate 
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
+    return NO;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
+    if ([[otherGestureRecognizer.delegate description] containsString:@"_UIKeyboardBasedNonEditableTextSelectionGestureController"]) {
+        self.selectionGestureRecognizer = otherGestureRecognizer;
+    }
+    if ([otherGestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]]) {
+        return [[otherGestureRecognizer.delegate description] containsString:@"UIWebBrowserView"];
+    }
+    return NO;
 }
 
 @end

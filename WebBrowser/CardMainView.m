@@ -44,7 +44,7 @@
     [self.cardArr removeAllObjects];
     [self.cardArr addObjectsFromArray:array];
     
-    dispatch_main_async_safe(^{
+    dispatch_main_safe_async(^{
         [self.collectionView reloadData];
     })
 }

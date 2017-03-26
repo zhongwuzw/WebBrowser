@@ -81,7 +81,7 @@
             webModel.isImageProcessed = YES;
             
         }
-        dispatch_main_async_safe(^{
+        dispatch_main_safe_async(^{
             [self.imageView setImage:webModel.image];
         })
     });

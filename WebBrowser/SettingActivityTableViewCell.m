@@ -26,7 +26,7 @@
             NSString *result = block();
             if ([result isKindOfClass:[NSString class]]) {
                 WEAK_REF(self)
-                dispatch_main_async_safe(^{
+                dispatch_main_safe_async(^{
                     STRONG_REF(self_)
                     if (self__) {
                         [self__.activityIndicatorView stopAnimating];

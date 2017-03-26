@@ -71,7 +71,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DelegateManager)
     [[array allObjects] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop){
         if ([obj respondsToSelector:anInvocation.selector]) {
             [anInvocation setTarget:obj];
-            dispatch_main_sync_safe(^{
+            dispatch_main_safe_sync(^{
                 [anInvocation invoke];
             })
         }

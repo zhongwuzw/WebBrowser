@@ -34,7 +34,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(WebServer)
 - (BOOL)start{
     if (!_server.isRunning) {
         [self.server startWithOptions:@{
-                                        GCDWebServerOption_Port: @6571,
+                                        GCDWebServerOption_Port: @6800,
                                         GCDWebServerOption_BindToLocalhost: @YES,GCDWebServerOption_AutomaticallySuspendInBackground: @YES
                                         } error:NULL];
     }

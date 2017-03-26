@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "BrowserContainerView.h"
 
-@class WebModel, BrowserContainerView, SessionData;
+@class WebModel, SessionData;
 
 typedef void(^MultiWebViewOperationBlock)(NSArray<WebModel *> *);
 typedef void(^CurWebViewOperationBlock)(WebModel *, BrowserWebView *);

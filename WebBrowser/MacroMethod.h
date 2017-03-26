@@ -60,14 +60,14 @@ __block __strong typeof(self) self##_ = self; (void) self##_;
 #pragma mark - Safe Main Queue
 
 //安全main queue 执行
-#define dispatch_main_sync_safe(block)\
+#define dispatch_main_safe_sync(block)\
 if ([NSThread isMainThread]) {\
 block();\
 } else {\
 dispatch_sync(dispatch_get_main_queue(), block);\
 }
 
-#define dispatch_main_async_safe(block)\
+#define dispatch_main_safe_async(block)\
 if ([NSThread isMainThread]) {\
 block();\
 } else {\

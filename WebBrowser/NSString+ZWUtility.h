@@ -12,5 +12,6 @@
 
 - (BOOL)isValidURL;
 - (BOOL)isLocal;
+- (NSString *)ellipsizeWithMaxLength:(NSInteger)maxLength;
 
 @end

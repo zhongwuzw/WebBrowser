@@ -16,9 +16,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(MenuHelper)
     NSString *revealPasswordTitle = @"显示";
     UIMenuItem *revealPasswordItem = [[UIMenuItem alloc] initWithTitle:revealPasswordTitle action:@selector(menuHelperReveal:)];
     
-    NSString *hidePasswordTitle = @"隐藏";
-    UIMenuItem *hidePasswordItem = [[UIMenuItem alloc] initWithTitle:hidePasswordTitle action:@selector(menuHelperSecure:)];
-    
     NSString *copyTitle = @"拷贝";
     UIMenuItem *copyItem = [[UIMenuItem alloc] initWithTitle:copyTitle action:@selector(menuHelperCopy:)];
     
@@ -28,7 +25,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(MenuHelper)
     NSString *findInPageTitle = @"页内查找";
     UIMenuItem *findInPageItem = [[UIMenuItem alloc] initWithTitle:findInPageTitle action:@selector(menuHelperFindInPage:)];
 
-    [UIMenuController sharedMenuController].menuItems = @[copyItem, revealPasswordItem, hidePasswordItem, openAndFillItem, findInPageItem];
+    [UIMenuController sharedMenuController].menuItems = @[copyItem, revealPasswordItem, openAndFillItem, findInPageItem];
 
 }
 

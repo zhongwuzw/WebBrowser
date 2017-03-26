@@ -27,8 +27,6 @@
 #define DEFAULT_CARD_CELL_TITLE @"百度一下"
 
 #pragma mark - Notification
-//打开appstore
-#define kModalAppstoreOpen          @"kModalAppstoreOpen"
 //无图模式
 #define kNoImageModeChanged         @"kNoImageModeChanged"
 //tab switch

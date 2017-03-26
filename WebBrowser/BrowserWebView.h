@@ -27,6 +27,7 @@ typedef void (^WebCompletionBlock)(NSString *, NSError *);
 @property (nonatomic, unsafe_unretained) WebModel *webModel;
 @property (nonatomic, assign, readonly) BOOL isMainFrameLoaded;
 @property (nonatomic, unsafe_unretained, readonly) UIActivityIndicatorView *indicatorView;
+@property (nonatomic, unsafe_unretained, readonly) UILongPressGestureRecognizer *longPressGestureRecognizer;
 
 - (void)evaluateJavaScript:(NSString *)javaScriptString completionHandler:(WebCompletionBlock)completionHandler;
 

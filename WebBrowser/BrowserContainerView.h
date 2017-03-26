@@ -12,7 +12,7 @@
 
 typedef void(^TabCompletion)(WebModel *webModel, BrowserWebView *browserWebView);
 
-@interface BrowserContainerView : UIView <BrowserBottomToolBarButtonClickedDelegate>
+@interface BrowserContainerView : UIView <BrowserBottomToolBarButtonClickedDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, readonly) UIScrollView *scrollView;
 @property (nonatomic, readonly, weak) BrowserWebView *webView;

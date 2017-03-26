@@ -16,5 +16,6 @@
                      modelClass:(Class)modelClass
                         success:(void (^)(NSURLSessionDataTask *task, BaseResponseModel *model))success
                         failure:(void (^)(NSURLSessionDataTask *task, BaseResponseModel *model))failure;
+- (void)getImageWithURL:(NSURL *)url completion:(void (^)(UIImage *image, NSError *error))completion;
 
 @end

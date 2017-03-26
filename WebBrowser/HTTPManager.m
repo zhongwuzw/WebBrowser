@@ -7,6 +7,7 @@
 //
 
 #import <AFNetworking/AFNetworking.h>
+#import <SDWebImage/SDWebImageManager.h>
 
 #import "HTTPManager.h"
 #import "BaiduSugResponseModel.h"
@@ -42,7 +43,20 @@
     return self;
 }
 
-
+- (void)getImageWithURL:(NSURL *)url completion:(void (^)(UIImage *, NSError *))completion{
+    [[SDWebImageManager sharedManager] loadImageWithURL:url options:SDWebImageCacheMemoryOnly progress:nil completed:^(UIImage *image, NSData *data, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL){
+        dispatch_main_safe_sync(^{
+            if (image && completion) {
+                completion(image, nil);
+                return ;
+            }
+            
+            if (completion && finished) {
+                completion(nil, error);
+            }
+        })
+    }];
+}
 /**
  HTTP Get Method
  */
@@ -64,7 +78,7 @@
         STRONG_REF(self_)
         if (self__) {
             BaseResponseModel *baseModel = [self__ failureResponseModelWithTask:task];
-            dispatch_main_async_safe(^{
+            dispatch_main_safe_async(^{
                 if (failure) {
                     failure(task,baseModel);
                 }
@@ -128,7 +142,7 @@
         baseModel = [self createBaiduSugModeWithResponse:responseObject error:&error];
     }
     
-    dispatch_main_async_safe(^{
+    dispatch_main_safe_async(^{
         if (error) {
             if (failure) {
                 BaseResponseModel *errorModel = [[BaseResponseModel alloc] initWithErrorCode:HttpRequestParseErrorType errorMsg:@"解析错误"];
@@ -151,7 +165,7 @@
     NSError *error;
     BaseResponseModel *baseModel = [MTLJSONAdapter modelOfClass:modelClass fromJSONDictionary:responseObject error:&error];
     
-    dispatch_main_async_safe(^{
+    dispatch_main_safe_async(^{
         if (error) {
             if (failure) {
                 BaseResponseModel *errorModel = [[BaseResponseModel alloc] initWithErrorCode:HttpRequestParseErrorType errorMsg:@"解析错误"];

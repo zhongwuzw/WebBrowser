@@ -38,13 +38,15 @@
 - (void)initializeView{
     self.backgroundColor = [UIColor whiteColor];
     
-    UIBarButtonItem *backItem = [self createBottomToolBarButtonWithImage:TOOLBAR_BUTTON_BACK_STRING tag:BottomToolBarBackButtonTag];
+    UIBarButtonItem *backItem = [self createBottomToolBarButtonWithImage:TOOLBAR_BUTTON_BACK_HILIGHT_STRING tag:BottomToolBarBackButtonTag];
     self.backItem = backItem;
     self.backItem.width = 45;
+    [self.backItem setEnabled:NO];
     
-    UIBarButtonItem *forwardItem = [self createBottomToolBarButtonWithImage:TOOLBAR_BUTTON_FORWARD_STRING tag:BottomToolBarForwardButtonTag];
+    UIBarButtonItem *forwardItem = [self createBottomToolBarButtonWithImage:TOOLBAR_BUTTON_FORWARD_HILIGHT_STRING tag:BottomToolBarForwardButtonTag];
     self.forwardItem = forwardItem;
     self.forwardItem.width = 45;
+    [self.forwardItem setEnabled:NO];
     
     UIBarButtonItem *refreshOrStopItem = [self createBottomToolBarButtonWithImage:TOOLBAR_BUTTON_STOP_STRING tag:BottomToolBarRefreshOrStopButtonTag];
     self.isRefresh = NO;

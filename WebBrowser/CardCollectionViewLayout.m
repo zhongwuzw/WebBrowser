@@ -41,7 +41,7 @@ static CGFloat BottomPercent = 0.85;
 }
 
 - (void)reloadCollection{
-    dispatch_main_async_safe(^{
+    dispatch_main_safe_async(^{
         [self.collectionView performBatchUpdates:^{
             [self.collectionView reloadData];
         }completion:nil];

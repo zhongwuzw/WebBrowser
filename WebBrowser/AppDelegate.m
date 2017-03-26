@@ -48,6 +48,11 @@ static NSString * const UserAgent = @"Mozilla/5.0 (iPhone; CPU iPhone OS 10_0 li
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
     [DDLog addLogger:[DDASLLogger sharedInstance]];
     DDLogDebug(@"Home Path : %@", HomePath);
+    
+    NSURLCache *URLCache = [[NSURLCache alloc] initWithMemoryCapacity:4 * 1024 * 1024
+                                                         diskCapacity:32 * 1024 * 1024
+                                                             diskPath:nil];
+    [NSURLCache setSharedURLCache:URLCache];
 
     BrowserViewController *browserViewController = [BrowserViewController sharedInstance];
     
