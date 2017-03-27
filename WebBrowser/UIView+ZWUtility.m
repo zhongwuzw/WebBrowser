@@ -1,7 +1,19 @@
 
 #import "UIView+ZWUtility.h"
+#import <MBProgressHUD/MBProgressHUD.h>
 
 @implementation UIView (ZWUtility)
+
+
+- (void)showHUDAtBottomWithMessage:(NSString *)message{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self animated:YES];
+    
+    hud.mode = MBProgressHUDModeText;
+    hud.label.text = message;
+    hud.offset = CGPointMake(0.f, MBProgressMaxOffset);
+    
+    [hud hideAnimated:YES afterDelay:1.5f];
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

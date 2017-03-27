@@ -63,7 +63,7 @@
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
     SearchViewController *searchVC = [SearchViewController new];
     searchVC.origTextFieldString = textField.text;
-    [[[BrowserViewController sharedInstance] navigationController] pushViewController:searchVC animated:NO];
+    [[BrowserVC navigationController] pushViewController:searchVC animated:NO];
     return NO;
 }
 

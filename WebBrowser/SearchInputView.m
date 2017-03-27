@@ -96,7 +96,7 @@ typedef enum : NSUInteger {
 - (IBAction)handleButtonClicked:(UIButton *)sender {
     switch (sender.tag) {
         case SearchButtonTopCacelButton:
-            [[[BrowserViewController sharedInstance] navigationController] popViewControllerAnimated:NO];
+            [[BrowserVC navigationController] popViewControllerAnimated:NO];
             break;
         case SearchButtonBottomButton:
             [self.textField insertText:sender.titleLabel.text];
@@ -124,7 +124,7 @@ typedef enum : NSUInteger {
     if (text) {
         [[DelegateManager sharedInstance] performSelector:NSSelectorFromString(@"browserContainerViewLoadWebViewWithSug:") arguments:@[text] key:DelegateManagerBrowserContainerLoadURL];
     }
-    [[[BrowserViewController sharedInstance] navigationController] popViewControllerAnimated:NO];
+    [[BrowserVC navigationController] popViewControllerAnimated:NO];
     [textField resignFirstResponder];
     return YES;
 }

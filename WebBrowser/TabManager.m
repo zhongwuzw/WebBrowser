@@ -236,7 +236,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
                 }
             }
             if (!image) {
-                image = [UIImage imageNamed:DEFAULT_CARD_CELL_IMAGE];
+                image = ([webModel.url isEqualToString:DEFAULT_CARD_CELL_URL]) ? [UIImage imageNamed:DEFAULT_CARD_CELL_IMAGE] : [UIImage imageNamed:DEFAULT_IMAGE];
             }
             webModel.image = image;
         }];
@@ -262,7 +262,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
             else
                 browserWebView = curModel.webView;
             
-            browserWebView.scrollView.delegate = [BrowserViewController sharedInstance];
+            browserWebView.scrollView.delegate = BrowserVC;
             if (block) {
                 block([_webModelArray lastObject], browserWebView);
             }
@@ -292,6 +292,23 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
             dispatch_main_safe_async(^{
                 block();
             })
+        }
+    });
+}
+
+- (void)addWebModelWithURL:(NSURL *)url completion:(WebBrowserNoParamsBlock)completion{
+    if (!url) {
+        return;
+    }
+    
+    dispatch_async(self.synchQueue, ^{
+        WebModel *webModel = [WebModel new];
+        webModel.url = url.absoluteString;
+        
+        [self.webModelArray addObject:webModel];
+        
+        if (completion) {
+            completion();
         }
     });
 }

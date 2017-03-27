@@ -226,7 +226,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
 #pragma mark - Preseving and Restoring State
 
 + (UIViewController *)viewControllerWithRestorationIdentifierPath:(NSArray *)identifierComponents coder:(NSCoder *)coder{
-    BrowserViewController *controller = [BrowserViewController sharedInstance];
+    BrowserViewController *controller = BrowserVC;
     return controller;
 }
 

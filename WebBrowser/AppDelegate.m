@@ -54,7 +54,7 @@ static NSString * const UserAgent = @"Mozilla/5.0 (iPhone; CPU iPhone OS 10_0 li
                                                              diskPath:nil];
     [NSURLCache setSharedURLCache:URLCache];
 
-    BrowserViewController *browserViewController = [BrowserViewController sharedInstance];
+    BrowserViewController *browserViewController = BrowserVC;
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:browserViewController];
     navigationController.restorationIdentifier = @"baseNavigationController";

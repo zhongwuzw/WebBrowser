@@ -142,13 +142,24 @@ static NSString *const CancelString = @"取消";
     if (linkURL) {
         dialogTitle = linkURL.absoluteString;
         UIAlertAction  *openNewTabAction = [UIAlertAction actionWithTitle:@"在新窗口打开" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-            DDLogDebug(@"新窗口打开");
+            WEAK_REF(self)
+            [[TabManager sharedInstance] addWebModelWithURL:linkURL completion:^{
+                STRONG_REF(self_)
+                if (self__) {
+                    [self__ restoreWithCompletionHandler:^(WebModel *webModel, BrowserWebView *webView){
+                        NSNotification *notify = [NSNotification notificationWithName:kWebTabSwitch object:self userInfo:@{@"webView":webView}];
+                        [Notifier postNotification:notify];
+                        [[BrowserVC navigationController].view showHUDAtBottomWithMessage:@"已在新窗口中打开"];
+                    }];
+                }
+            }];
         }];
         [actionSheetController addAction:openNewTabAction];
         
         UIAlertAction *copyAction = [UIAlertAction actionWithTitle:@"拷贝链接" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
             UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
             pasteBoard.URL = linkURL;
+            [[BrowserVC navigationController].view showHUDAtBottomWithMessage:@"拷贝成功"];
         }];
         [actionSheetController addAction:copyAction];
     }
@@ -159,13 +170,25 @@ static NSString *const CancelString = @"取消";
         
         UIAlertAction *saveImageAction = [UIAlertAction actionWithTitle:@"保存图片" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
             if (status == PHAuthorizationStatusAuthorized || status == PHAuthorizationStatusNotDetermined) {
+                [[BrowserVC navigationController].view showHUDAtBottomWithMessage:@"正在保存"];
                 [self getImageWithURL:imageURL completion:^(UIImage *image, NSError *error){
                     if (image) {
+                        [[BrowserVC navigationController].view showHUDAtBottomWithMessage:@"保存成功"];
                         UIImageWriteToSavedPhotosAlbum(image, nil, nil, NULL);
                     }
                 }];
             } else {
+                UIAlertController *accessDenied = [UIAlertController alertControllerWithTitle:@"WebBrowser 想要访问照片" message:@"将允许图片保存到照片" preferredStyle:UIAlertControllerStyleAlert];
                 
+                UIAlertAction *dismissAction = [UIAlertAction actionWithTitle:CancelString style:UIAlertActionStyleCancel handler:nil];
+                [accessDenied addAction:dismissAction];
+                
+                UIAlertAction *settingsAction = [UIAlertAction actionWithTitle:@"打开设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+                }];
+                [accessDenied addAction:settingsAction];
+                
+                [BrowserVC presentViewController:accessDenied animated:YES completion:nil];
             }
         }];
         [actionSheetController addAction:saveImageAction];
@@ -174,7 +197,7 @@ static NSString *const CancelString = @"取消";
     actionSheetController.title = [dialogTitle ellipsizeWithMaxLength:ActionSheetTitleMaxLength];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:CancelString style:UIAlertActionStyleCancel handler:nil];
     [actionSheetController addAction:cancelAction];
-    [[BrowserViewController sharedInstance] presentViewController:actionSheetController animated:YES completion:nil];
+    [BrowserVC presentViewController:actionSheetController animated:YES completion:nil];
 }
 
 - (void)getImageWithURL:(NSURL *)url completion:(void (^)(UIImage *, NSError *))completion{

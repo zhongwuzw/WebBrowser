@@ -4,6 +4,8 @@
 
 @interface UIView (ZWUtility)
 
+- (void)showHUDAtBottomWithMessage:(NSString *)message;
+
 /**
  * Shortcut for frame.origin.x.
  *

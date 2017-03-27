@@ -38,6 +38,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(TabManager)
 - (void)setCurWebViewOperationBlockWith:(CurWebViewOperationBlock)block;
 - (void)updateWebModelArray:(NSArray<WebModel *> *)webArray;
 - (void)updateWebModelArray:(NSArray<WebModel *> *)webArray completion:(WebBrowserNoParamsBlock)block;
+- (void)addWebModelWithURL:(NSURL *)url completion:(WebBrowserNoParamsBlock)completion;
 - (void)saveWebModelData;
 
 - (BOOL)isCurrentWebView:(BrowserWebView *)webView;
