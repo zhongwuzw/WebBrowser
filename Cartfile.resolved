@@ -1,5 +1,5 @@
 github "AFNetworking/AFNetworking" "3.1.0"
-github "CocoaLumberjack/CocoaLumberjack" "3.1.0"
+github "CocoaLumberjack/CocoaLumberjack" "3.0.0"
 github "swisspol/GCDWebServer" "3.3.3"
 github "jdg/MBProgressHUD" "1.0.0"
 github "Mantle/Mantle" "2.1.0"
