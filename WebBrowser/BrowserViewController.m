@@ -88,6 +88,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
 
 - (void)initializeNotification{
     [Notifier addObserver:self selector:@selector(recoverToolBar) name:kExpandHomeToolBarNotification object:nil];
+    [Notifier addObserver:self selector:@selector(recoverToolBar) name:kWebTabSwitch object:nil];
 }
 
 #pragma mark - UIScrollViewDelegate Method

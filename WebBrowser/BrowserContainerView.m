@@ -118,10 +118,8 @@ static NSString *const CancelString = @"取消";
                 }
                 
                 NSString *urlString = jsonDic[@"link"];
-                urlString = [urlString stringByRemovingPercentEncoding];
-                
+
                 NSString *imageString = jsonDic[@"image"];
-                imageString = [imageString stringByRemovingPercentEncoding];
                 
                 [self handleContenxtMenuWithLink:urlString imageURL:imageString];
             }

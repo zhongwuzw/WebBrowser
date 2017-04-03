@@ -20,7 +20,8 @@ function postJSBridgeMessage(message) {
     element || (element = document.createElement("iframe"), element.id = elementID, element.setAttribute("style", "height:0px !important; width:0px !important; border:none !important; display:none !important;"), document.body.appendChild(element));
  
     var messageStr = JSON.stringify(message);
-    element.src = "zwcontextmenu://message?json=" + messageStr;
+    var escapedMessageStr = encodeURI(messageStr);
+    element.src = "zwcontextmenu://message?json=" + escapedMessageStr;
 }
 
 function cancel() {
