@@ -53,6 +53,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
 - (void)initializeView{
     self.view.backgroundColor = UIColorFromRGB(0xF8F8F8);
     
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:nil action:nil];
+    [self.navigationItem setBackBarButtonItem:backItem];
+    
     self.browserContainerView = ({
         BrowserContainerView *browserContainerView = [BrowserContainerView new];
         [self.view addSubview:browserContainerView];
@@ -196,8 +199,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
               
           }],
           [SettingsMenuItem itemWithText:@"历史" image:[UIImage imageNamed:@"album"] action:^{
-//              HistoryTableViewController *hisTableVC = [[HistoryTableViewController alloc] initWithStyle:UITableViewStylePlain];
-//              [self_.navigationController pushViewController:hisTableVC animated:YES];
+              HistoryTableViewController *hisTableVC = [[HistoryTableViewController alloc] initWithStyle:UITableViewStylePlain];
+              [self_.navigationController pushViewController:hisTableVC animated:YES];
           }],
           [SettingsMenuItem itemWithText:@"设置" image:[UIImage imageNamed:@"album"] action:^{
               SettingsTableViewController *settingsTableVC = [[SettingsTableViewController alloc] initWithStyle:UITableViewStylePlain];

@@ -86,6 +86,17 @@ static NSString * const UserAgent = @"Mozilla/5.0 (iPhone; CPU iPhone OS 10_0 li
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+// Enable UIWebView video landscape
+- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window{
+    static NSString *kAVFullScreenViewControllerStr = @"AVFullScreenViewController";
+    UIViewController *presentedViewController = [window.rootViewController presentedViewController];
+
+    if (presentedViewController && [presentedViewController isKindOfClass:NSClassFromString(kAVFullScreenViewControllerStr)] && [presentedViewController isBeingDismissed] == NO) {
+        return UIInterfaceOrientationMaskAll;
+    }
+    return UIInterfaceOrientationMaskPortrait;
+}
+
 #pragma mark - Preseving and Restoring State
 
 - (BOOL)application:(UIApplication *)application shouldSaveApplicationState:(NSCoder *)coder{

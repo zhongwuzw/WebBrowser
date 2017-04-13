@@ -15,6 +15,7 @@
 #import "BrowserContainerView.h"
 #import "SessionData.h"
 #import "WebViewBackForwardList.h"
+#import "HistorySQLiteManager.h"
 
 #import <CommonCrypto/CommonDigest.h>
 
@@ -470,6 +471,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
 - (void)webView:(BrowserWebView *)webView gotTitleName:(NSString*)titleName{
     [JavaScriptHelper setNoImageMode:[PreferenceHelper boolForKey:KeyNoImageModeStatus] webView:webView loadPrimaryScript:YES];
     [JavaScriptHelper setLongPressGestureWithWebView:webView];
+    [[HistorySQLiteManager sharedInstance] insertOrUpdateHistoryWithURL:webView.mainFURL title:titleName];
 }
 
 - (void)webView:(BrowserWebView *)webView didFailLoadWithError:(NSError *)error{

@@ -191,7 +191,18 @@
     return nil;
 }
 
-//get WebView
+// get mainFrame
+- (id)mainFrameWithWebView:(id)webView{
+    if([webView respondsToSelector:NSSelectorFromString(MAIN_FRAME)])
+    {
+        id mainFrame = [[(MAIN_FRAME__PROTO objc_msgSend)(webView,NSSelectorFromString(MAIN_FRAME)) retain] autorelease];
+        return mainFrame;
+        
+    }
+    return nil;
+}
+
+// get WebView
 - (id)webView{
     id webDocumentView = nil;
     id webView = nil;
@@ -276,16 +287,9 @@
         ((void(*)(id, SEL, id, id, id)) objc_msgSend)(self, @selector(zwWebView:didReceiveTitle:forFrame:), sender, title, frame);
     }
     
+    id mainFrame = [self mainFrameWithWebView:sender];
     
-    if([sender respondsToSelector:NSSelectorFromString(MAIN_FRAME)])
-    {
-        id mainFrame = [[(MAIN_FRAME__PROTO objc_msgSend)(sender,NSSelectorFromString(MAIN_FRAME)) retain] autorelease];
-        if(mainFrame == frame)
-        {
-            [self webView:self gotTitleName:title];
-        }
-    }
-    else
+    if(mainFrame == frame)
     {
         [self webView:self gotTitleName:title];
     }
@@ -314,14 +318,14 @@
     if(![request isKindOfClass:[NSURLRequest class]])
         return;
     
-    NSInteger intNaviType = 0;
-    if ([actionInformation isKindOfClass:[NSDictionary class]]) {
-        id naviType = [((NSDictionary*)actionInformation) objectForKey:WEB_ACTION_NAVI_TYPE_KEY];
-        if([naviType isKindOfClass:[NSNumber class]])
-        {
-            intNaviType = [(NSNumber*)naviType integerValue];
-        }
-    }
+//    NSInteger intNaviType = 0;
+//    if ([actionInformation isKindOfClass:[NSDictionary class]]) {
+//        id naviType = [((NSDictionary*)actionInformation) objectForKey:WEB_ACTION_NAVI_TYPE_KEY];
+//        if([naviType isKindOfClass:[NSNumber class]])
+//        {
+//            intNaviType = [(NSNumber*)naviType integerValue];
+//        }
+//    }
     
     if([self respondsToSelector:@selector(zwWebView:decidePolicyForNavigationAction:request:frame:decisionListener:)])
         ((void(*)(id, SEL, id, id, id, id, id)) objc_msgSend)(self, @selector(zwWebView:decidePolicyForNavigationAction:request:frame:decisionListener:), webView, actionInformation, request, frame, listener);
@@ -373,13 +377,11 @@
 #pragma mark - frame method
 
 - (void)zwWebView:(id)sender didStartProvisionalLoadForFrame:(id)frame{
-    if([sender respondsToSelector:NSSelectorFromString(MAIN_FRAME)])
+    id mainFrame = [self mainFrameWithWebView:sender];
+    
+    if(mainFrame == frame)
     {
-        id mainFrame = [[(MAIN_FRAME__PROTO objc_msgSend)(sender,NSSelectorFromString(MAIN_FRAME)) retain] autorelease];
-        if(mainFrame == frame)
-        {
-            [self.indicatorView startAnimating];
-        }
+        [self.indicatorView startAnimating];
     }
     
     if ([self respondsToSelector:@selector(zwWebView:didStartProvisionalLoadForFrame:)]) {

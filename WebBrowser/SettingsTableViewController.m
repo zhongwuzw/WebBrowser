@@ -32,29 +32,13 @@ static NSString *const SettingPlaceholderTableViewCellIdentifier   = @"SettingPl
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.clearsSelectionOnViewWillAppear = NO;
     self.title = @"设置";
-    self.view.backgroundColor = [UIColor whiteColor];
     
     self.dataArray = @[@"清除缓存",@"无图浏览模式"];
     
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([SettingActivityTableViewCell class]) bundle:nil] forCellReuseIdentifier:SettingActivityTableViewCellIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([SettingSwitchTableViewCell class]) bundle:nil] forCellReuseIdentifier:SettingSwitchTableViewCellIdentifier];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:SettingPlaceholderTableViewCellIdentifier];
-    
-    self.tableView.tableFooterView = [UIView new];
-}
-
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    
-    [self.navigationController setNavigationBarHidden:NO];
-}
-
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
 - (void)handleTableViewSelectAt:(NSInteger)index{
