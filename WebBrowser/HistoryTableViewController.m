@@ -64,6 +64,8 @@ static NSString *const kHistoryTableViewContentSize = @"contentSize";
     
     UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action){
         [self.historyDataManager deleleAllHistoryRecords];
+        self.noMoreData = YES;
+        [self addNoMoreDataViewIfNeeded];
         [self.tableView reloadData];
     }];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){}];
@@ -74,7 +76,7 @@ static NSString *const kHistoryTableViewContentSize = @"contentSize";
 }
 
 - (void)addNoMoreDataViewIfNeeded{
-    if (self.noMoreData) {
+    if (self.noMoreData && !self.bottomNoMoreLabel) {
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
         [label setText:@"没有更多历史访问记录"];
         [label setTextAlignment:NSTextAlignmentCenter];
