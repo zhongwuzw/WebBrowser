@@ -9,14 +9,16 @@
 #import <Foundation/Foundation.h>
 #import "HistorySQLiteManager.h"
 
-typedef void(^HistoryDataCompletion)(void);
+typedef void(^HistoryDataCompletion)(BOOL isNoMoreData);
+typedef void(^HistoryDataLoadMoreCompletion)(NSArray<NSIndexPath *> *indexPaths, BOOL isNoMoreData);
+typedef void(^HistoryDataDeleteCompletion)(BOOL success);
 
 @interface HistorySectionModel : NSObject
 
 @property (nonatomic, copy) NSString *date;
-@property (nonatomic, copy) NSArray<HistoryItemModel *> *itemsArray;
+@property (nonatomic, strong) NSMutableArray<HistoryItemModel *> *itemsArray;
 
-+ (HistorySectionModel *)historySectionWithDate:(NSString *)date itemsArray:(NSArray<HistoryItemModel *> *)itemsArray;
++ (HistorySectionModel *)historySectionWithDate:(NSString *)date itemsArray:(NSMutableArray<HistoryItemModel *> *)itemsArray;
 
 @end
 
@@ -27,5 +29,8 @@ typedef void(^HistoryDataCompletion)(void);
 - (NSInteger)numberOfRowsInSection:(NSInteger)section;
 - (HistoryItemModel *)historyModelForRowAtIndexPath:(NSIndexPath *)indexPath;
 - (NSString *)headerTitleForSection:(NSInteger)section;
+- (void)getMoreDataWithCompletion:(HistoryDataLoadMoreCompletion)completion;
+- (void)deleteRowAtIndexPath:(NSIndexPath *)indexPath completion:(HistoryDataDeleteCompletion)completion;
+- (void)deleleAllHistoryRecords;
 
 @end

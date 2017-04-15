@@ -4,8 +4,6 @@
 
 @interface UIView (ZWUtility)
 
-- (void)showHUDAtBottomWithMessage:(NSString *)message;
-
 /**
  * Shortcut for frame.origin.x.
  *
@@ -131,5 +129,10 @@
  * Get UIView Snapshot
  */
 - (UIImage *)snapshot;
+
+- (void)showHUDAtBottomWithMessage:(NSString *)message;
+
+- (void)showHUDWithMessage:(NSString *)message;
+
 
 @end

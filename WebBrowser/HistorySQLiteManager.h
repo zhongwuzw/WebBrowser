@@ -8,6 +8,8 @@
 
 #import "ZWSQLiteManager.h"
 
+typedef void(^HistorySQLiteDeleteCompletion)(BOOL success);
+
 @interface HistoryItemModel : NSObject
 
 @property (nonatomic, copy) NSString *hourMinute;
@@ -19,8 +21,8 @@
 
 @end
 
-typedef void(^HistoryCompletionHandler)(NSArray *);
-typedef void(^HistoryTodayYesterdayCompletionHandler)(NSArray<HistoryItemModel *> *today,NSArray<HistoryItemModel *> *yesterday);
+typedef void(^HistoryCompletionHandler)(NSMutableArray<HistoryItemModel *> *);
+typedef void(^HistoryTodayYesterdayCompletionHandler)(NSMutableArray<HistoryItemModel *> *today,NSMutableArray<HistoryItemModel *> *yesterday);
 
 @interface HistorySQLiteManager : ZWSQLiteManager
 
@@ -28,5 +30,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(HistorySQLiteManager)
 - (void)insertOrUpdateHistoryWithURL:(NSString *)url title:(NSString *)title;
 - (void)getHistoryDataByLimit:(NSInteger)limit offset:(NSInteger)offset handler:(HistoryCompletionHandler)handler;
 - (void)getTodayAndYesterdayHistoryDataWithHandler:(HistoryTodayYesterdayCompletionHandler)handler;
+- (void)deleteHistoryRecordWithModel:(HistoryItemModel *)model completion:(HistorySQLiteDeleteCompletion)completion;
+- (void)deleteAllHistoryRecords;
 
 @end

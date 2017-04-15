@@ -19,7 +19,7 @@ static NSString *const kHistorySQLiteName = @"history.db";
     item.hourMinute = hourMinute;
     item.url = url;
     item.title = title;
-    item.title = title;
+    item.time = time;
     
     return item;
 }
@@ -70,7 +70,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(HistorySQLiteManager)
     }
     ZW_IN_DATABASE(db, ({
         FMResultSet *resultSet = [db executeZWQuery:ZW_SQL_SELECT_HISTORY withArgumentsInArray:@[@(limit), @(offset)]];
-        NSArray *array = [self getHistoryResultWithDBResultSet:resultSet];
+        NSMutableArray *array = [self getHistoryResultWithDBResultSet:resultSet];
         
         dispatch_main_safe_async(^{
             handler(array);
@@ -85,10 +85,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(HistorySQLiteManager)
     
     ZW_IN_DATABASE(db, ({
         FMResultSet *resultSet = [db executeZWQuery:ZW_SQL_SELECT_TODAY_YESTERDAY_HISTORY withArgumentsInArray:@[[NSDate currentDate]]];
-        NSArray *todayArray = [self getHistoryResultWithDBResultSet:resultSet];
+        NSMutableArray *todayArray = [self getHistoryResultWithDBResultSet:resultSet];
         
         resultSet = [db executeZWQuery:ZW_SQL_SELECT_TODAY_YESTERDAY_HISTORY withArgumentsInArray:@[[NSDate yesterdayDate]]];
-        NSArray *yesterdayArray = [self getHistoryResultWithDBResultSet:resultSet];
+        NSMutableArray *yesterdayArray = [self getHistoryResultWithDBResultSet:resultSet];
         
         dispatch_main_safe_async(^{
             handler(todayArray, yesterdayArray);
@@ -96,7 +96,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(HistorySQLiteManager)
     }));
 }
 
-- (NSArray<HistoryItemModel *> *)getHistoryResultWithDBResultSet:(FMResultSet *)resultSet{
+- (NSMutableArray<HistoryItemModel *> *)getHistoryResultWithDBResultSet:(FMResultSet *)resultSet{
     NSMutableArray *array = [NSMutableArray array];
     
     while ([resultSet next]) {
@@ -112,6 +112,23 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(HistorySQLiteManager)
     }
     
     return array;
+}
+
+- (void)deleteHistoryRecordWithModel:(HistoryItemModel *)model completion:(HistorySQLiteDeleteCompletion)completion{
+    ZW_IN_DATABASE(db, ({
+        BOOL success = [db executeZWUpdate:ZW_SQL_DELETE_HISTORY_RECORD withArgumentsInArray:@[model.url, model.time]];
+        if (completion) {
+            dispatch_main_safe_async(^{
+                completion(success);
+            })
+        }
+    }));
+}
+
+- (void)deleteAllHistoryRecords{
+    ZW_IN_DATABASE(db, ({
+        [db executeZWUpdate:ZW_SQL_DELETE_ALL_HISTORY_RECORD];
+    }));
 }
 
 @end

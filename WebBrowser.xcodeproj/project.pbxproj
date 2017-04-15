@@ -855,6 +855,7 @@
 		0EC14F571E31BAD100A44D05 /* History */ = {
 			isa = PBXGroup;
 			children = (
+				0ED404591EA06C9600F17CE2 /* View */,
 				0E2A091F1E978F800060EB22 /* Header */,
 				0E70780B1E96312900E898A8 /* Manager */,
 				0EC14F581E31BAE000A44D05 /* Controller */,
@@ -886,6 +887,13 @@
 				0ECA028B1E5AE46A00955887 /* NetError.css */,
 			);
 			name = CSS;
+			sourceTree = "<group>";
+		};
+		0ED404591EA06C9600F17CE2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 		0EF0255D1DD94FCF0011019F /* Network */ = {

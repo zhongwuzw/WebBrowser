@@ -328,8 +328,4 @@ static NSString * const CellId = @"SettingsMenuCell";
     }
 }
 
-- (void)dealloc{
-    DDLogDebug(@"SettingsViewController dealloc");
-}
-
 @end

@@ -19,10 +19,10 @@
 
 #define ZW_SQL_CREATE_HISTORY_TABLE \
     @"CREATE TABLE IF NOT EXISTS " ZW_TABLE_HISTORY @" ("    \
-        ZW_FIELD_URL             @" TEXT, "                  \
+        ZW_FIELD_URL             @" TEXT NOT NULL, "         \
         ZW_FIELD_TITLE           @" TEXT, "                  \
         ZW_FIELD_HOUR_MINUTE     @" TEXT, "                  \
-        ZW_FIELD_TIME            @" TEXT, "                  \
+        ZW_FIELD_TIME            @" TEXT NOT NULL, "         \
         @"PRIMARY KEY(" ZW_FIELD_URL @"," ZW_FIELD_TIME @")" \
     @")"
 
@@ -40,13 +40,23 @@
     @") VALUES(?, ?, ?, ?)"
 
 #define ZW_SQL_SELECT_HISTORY                \
-    @"SELECT * FROM " ZW_TABLE_HISTORY @" "  \
-    @"LIMIT ?, ?"
+    @"SELECT * FROM " ZW_TABLE_HISTORY @" ORDER BY "  \
+        ZW_FIELD_TIME           @" DESC,"         \
+        ZW_FIELD_HOUR_MINUTE    @" DESC "         \
+    @"LIMIT ? OFFSET ?"
 
 #define ZW_SQL_SELECT_TODAY_YESTERDAY_HISTORY     \
     @"SELECT * FROM " ZW_TABLE_HISTORY @" "       \
         @"WHERE "     ZW_FIELD_TIME @" = ? "      \
         @"ORDER BY "  ZW_FIELD_HOUR_MINUTE @" "   \
     @"DESC"
+
+#define ZW_SQL_DELETE_HISTORY_RECORD     \
+    @"DELETE FROM " ZW_TABLE_HISTORY @" "       \
+        @"WHERE "   ZW_FIELD_URL @" = ? "       \
+        @"AND "     ZW_FIELD_TIME @" = ? "      \
+
+#define ZW_SQL_DELETE_ALL_HISTORY_RECORD     \
+    @"DELETE FROM " ZW_TABLE_HISTORY
 
 #endif /* ZWSQLSQL_h */

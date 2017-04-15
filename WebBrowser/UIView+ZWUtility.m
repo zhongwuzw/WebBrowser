@@ -15,6 +15,15 @@
     [hud hideAnimated:YES afterDelay:1.5f];
 }
 
+- (void)showHUDWithMessage:(NSString *)message{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self animated:YES];
+    
+    hud.mode = MBProgressHUDModeText;
+    hud.label.text = message;
+    
+    [hud hideAnimated:YES afterDelay:1.5f];
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (CGFloat)left {
