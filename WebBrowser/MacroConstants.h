@@ -36,5 +36,7 @@
 #define kWebHistoryItemChangedNotification @"WebHistoryItemChangedNotification"
 //expand toolbar
 #define kExpandHomeToolBarNotification @"kExpandHomeToolBarNotification"
+//open in new window
+#define kOpenInNewWindowNotification @"kOpenInNewWindowNotification"
 
 #endif /* MacroConstants_h */

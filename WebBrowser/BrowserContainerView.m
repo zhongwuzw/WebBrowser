@@ -52,6 +52,7 @@ static NSString *const CancelString = @"取消";
     
     [[DelegateManager sharedInstance] registerDelegate:self forKeys:@[DelegateManagerBrowserContainerLoadURL,DelegateManagerWebView]];
     [[DelegateManager sharedInstance] addWebViewDelegate:self];
+    [Notifier addObserver:self selector:@selector(handleOpenInNewWindow:) name:kOpenInNewWindowNotification object:nil];
     
     self.restorationIdentifier = NSStringFromClass([self class]);
 }
@@ -64,6 +65,27 @@ static NSString *const CancelString = @"取消";
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
     
     [self.webView loadRequest:request];
+}
+
+- (void)handleOpenInNewWindow:(NSNotification *)notify{
+    NSURL *url = [notify.userInfo objectForKey:@"url"];
+    if ([url isKindOfClass:[NSURL class]]) {
+        [self handleOpenInNewWindowWithURL:url];
+    }
+}
+
+- (void)handleOpenInNewWindowWithURL:(NSURL *)url{
+    WEAK_REF(self)
+    [[TabManager sharedInstance] addWebModelWithURL:url completion:^{
+        STRONG_REF(self_)
+        if (self__) {
+            [self__ restoreWithCompletionHandler:^(WebModel *webModel, BrowserWebView *webView){
+                NSNotification *notify = [NSNotification notificationWithName:kWebTabSwitch object:self userInfo:@{@"webView":webView}];
+                [Notifier postNotification:notify];
+                [[BrowserVC navigationController].view showHUDAtBottomWithMessage:@"已在新窗口中打开"];
+            }];
+        }
+    }];
 }
 
 - (void)restoreWithCompletionHandler:(TabCompletion)completion{
@@ -140,17 +162,7 @@ static NSString *const CancelString = @"取消";
     if (linkURL) {
         dialogTitle = linkURL.absoluteString;
         UIAlertAction  *openNewTabAction = [UIAlertAction actionWithTitle:@"在新窗口打开" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-            WEAK_REF(self)
-            [[TabManager sharedInstance] addWebModelWithURL:linkURL completion:^{
-                STRONG_REF(self_)
-                if (self__) {
-                    [self__ restoreWithCompletionHandler:^(WebModel *webModel, BrowserWebView *webView){
-                        NSNotification *notify = [NSNotification notificationWithName:kWebTabSwitch object:self userInfo:@{@"webView":webView}];
-                        [Notifier postNotification:notify];
-                        [[BrowserVC navigationController].view showHUDAtBottomWithMessage:@"已在新窗口中打开"];
-                    }];
-                }
-            }];
+            [self handleOpenInNewWindowWithURL:linkURL];
         }];
         [actionSheetController addAction:openNewTabAction];
         
@@ -334,6 +346,12 @@ static NSString *const CancelString = @"取消";
         return [[otherGestureRecognizer.delegate description] containsString:@"UIWebBrowserView"];
     }
     return NO;
+}
+
+#pragma mark - Dealloc
+
+- (void)dealloc{
+    [Notifier removeObserver:self name:kOpenInNewWindowNotification object:nil];
 }
 
 @end

@@ -9,6 +9,7 @@
 #import "HistoryTableViewController.h"
 #import "HistoryDataManager.h"
 #import "DelegateManager.h"
+#import "BrowserViewController.h"
 
 static NSString *const kHistoryTableViewCellIdentifier = @"kHistoryTableViewCellIdentifier";
 static NSString *const kHistoryTableViewHeaderFooterIdentifier = @"kHistoryTableViewHeaderFooterIdentifier";
@@ -40,6 +41,9 @@ static NSString *const kHistoryTableViewContentSize = @"contentSize";
     [self.tableView registerClass:[UITableViewHeaderFooterView class] forHeaderFooterViewReuseIdentifier:kHistoryTableViewHeaderFooterIdentifier];
     UIBarButtonItem *clearItem = [[UIBarButtonItem alloc] initWithTitle:@"清除所有" style:UIBarButtonItemStylePlain target:self action:@selector(handleClearAllHistory)];
     self.navigationItem.rightBarButtonItem = clearItem;
+    
+    UILongPressGestureRecognizer *longGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGesture:)];
+    [self.tableView addGestureRecognizer:longGesture];
 }
 
 - (void)initData{
@@ -57,6 +61,76 @@ static NSString *const kHistoryTableViewContentSize = @"contentSize";
 - (void)initObserver{
     [self.tableView addObserver:self forKeyPath:kHistoryTableViewContentOffset options:NSKeyValueObservingOptionNew context:nil];
     [self.tableView addObserver:self forKeyPath:kHistoryTableViewContentSize options:NSKeyValueObservingOptionNew context:nil];
+}
+
+- (void)handleLongPressGesture:(UILongPressGestureRecognizer *)longGesture{
+    if (longGesture.state == UIGestureRecognizerStateRecognized) {
+        CGPoint p = [longGesture locationInView:self.tableView];
+        
+        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:p];
+        
+        [self handleLongPressGestureForIndexPath:indexPath];
+    }
+}
+
+- (void)handleLongPressGestureForIndexPath:(NSIndexPath *)indexPath{
+    if (!indexPath) {
+        return;
+    }
+    
+    HistoryItemModel *model = [self.historyDataManager historyModelForRowAtIndexPath:indexPath];
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *copyTitleAction = [UIAlertAction actionWithTitle:@"拷贝标题" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        [self copyToPasteBoardWithString:model.title isURL:NO];
+    }];
+    
+    UIAlertAction *copyURLAction = [UIAlertAction actionWithTitle:@"拷贝链接" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        [self copyToPasteBoardWithString:model.url isURL:YES];
+    }];
+    
+    UIAlertAction *openInNewWindowAction = [UIAlertAction actionWithTitle:@"新窗口打开" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        NSURL *url = [NSURL URLWithString:model.url];
+        if (url) {
+            [self.navigationController popViewControllerAnimated:NO];
+            NSNotification *notify = [NSNotification notificationWithName:kOpenInNewWindowNotification object:self userInfo:@{@"url": url}];
+            [Notifier postNotification:notify];
+        }
+    }];
+    
+    UIAlertAction *shareAction = [UIAlertAction actionWithTitle:@"分享" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        [self.view showHUDWithMessage:@"Yep, 就是不想实现!"];
+    }];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    
+    [@[copyTitleAction, copyURLAction, openInNewWindowAction, shareAction, cancelAction] enumerateObjectsUsingBlock:^(UIAlertAction *action, NSUInteger idx, BOOL *stop){
+        [alert addAction:action];
+    }];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)copyToPasteBoardWithString:(NSString *)str isURL:(BOOL)isURL{
+    UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
+    BOOL isSuccess = YES;
+    if (isURL) {
+        NSURL *url = [NSURL URLWithString:str];
+        if (url) {
+            pasteBoard.URL = url;
+        }
+        else{
+            isSuccess = NO;
+        }
+    }
+    else if(str.length > 0) {
+        pasteBoard.string = str;
+    }
+    else{
+        isSuccess = NO;
+    }
+    [[BrowserVC navigationController].view showHUDAtBottomWithMessage:isSuccess ? @"拷贝成功":@"拷贝失败"];
 }
 
 - (void)handleClearAllHistory{

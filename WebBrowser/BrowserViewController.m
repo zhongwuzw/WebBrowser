@@ -206,7 +206,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
               SettingsTableViewController *settingsTableVC = [[SettingsTableViewController alloc] initWithStyle:UITableViewStylePlain];
               [self_.navigationController pushViewController:settingsTableVC animated:YES];
           }],
-          [SettingsMenuItem itemWithText:@"分享" image:[UIImage imageNamed:@"album"] action:nil]
+          [SettingsMenuItem itemWithText:@"分享" image:[UIImage imageNamed:@"album"] action:^{
+              [self_.view showHUDWithMessage:@"Yep, 就是不想实现!"];
+          }]
           ];
         
         [SettingsViewController presentFromViewController:self withItems:items completion:nil];
