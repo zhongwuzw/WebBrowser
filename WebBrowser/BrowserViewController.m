@@ -18,6 +18,11 @@
 #import "SettingsTableViewController.h"
 #import "HistoryTableViewController.h"
 #import "DelegateManager+WebViewDelegate.h"
+#import "BookmarkTableViewController.h"
+#import "BookmarkDataManager.h"
+
+static NSString *const kBrowserViewControllerAddBookmarkSuccess = @"添加书签成功";
+static NSString *const kBrowserViewControllerAddBookmarkFailure = @"添加书签失败";
 
 @interface BrowserViewController () <BrowserBottomToolBarButtonClickedDelegate,  UIViewControllerRestoration>
 
@@ -195,16 +200,17 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
         WEAK_REF(self)
         NSArray<SettingsMenuItem *> *items =
         @[
+          [SettingsMenuItem itemWithText:@"加入书签" image:[UIImage imageNamed:@"album"] action:^{
+              [self_ addBookmark];
+          }],
           [SettingsMenuItem itemWithText:@"书签" image:[UIImage imageNamed:@"album"] action:^{
-              
+              [self_ pushTableViewControllerWithControllerName:[BookmarkTableViewController class]];
           }],
           [SettingsMenuItem itemWithText:@"历史" image:[UIImage imageNamed:@"album"] action:^{
-              HistoryTableViewController *hisTableVC = [[HistoryTableViewController alloc] initWithStyle:UITableViewStylePlain];
-              [self_.navigationController pushViewController:hisTableVC animated:YES];
+              [self_ pushTableViewControllerWithControllerName:[HistoryTableViewController class]];
           }],
           [SettingsMenuItem itemWithText:@"设置" image:[UIImage imageNamed:@"album"] action:^{
-              SettingsTableViewController *settingsTableVC = [[SettingsTableViewController alloc] initWithStyle:UITableViewStylePlain];
-              [self_.navigationController pushViewController:settingsTableVC animated:YES];
+              [self_ pushTableViewControllerWithControllerName:[SettingsTableViewController class]];
           }],
           [SettingsMenuItem itemWithText:@"分享" image:[UIImage imageNamed:@"album"] action:^{
               [self_.view showHUDWithMessage:@"Yep, 就是不想实现!"];
@@ -227,6 +233,28 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
             });
         }];
     }
+}
+
+- (void)pushTableViewControllerWithControllerName:(Class)class{
+    if (![class isSubclassOfClass:[UITableViewController class]]) {
+        return;
+    }
+    UITableViewController *vc = [[class alloc] initWithStyle:UITableViewStylePlain];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)addBookmark{
+    BrowserWebView *webView = self.browserContainerView.webView;
+    NSString *title = webView.mainFTitle;
+    NSString *url = webView.mainFURL;
+    BookmarkDataManager *dataManager = [[BookmarkDataManager alloc] init];
+    WEAK_REF(self)
+    [dataManager addBookmarkWithURL:url title:title completion:^(BOOL success){
+        STRONG_REF(self_)
+        if (self__) {
+            [self__.view showHUDWithMessage:(success) ? kBrowserViewControllerAddBookmarkSuccess : kBrowserViewControllerAddBookmarkFailure];
+        }
+    }];
 }
 
 #pragma mark - Preseving and Restoring State

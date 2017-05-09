@@ -23,4 +23,8 @@
     return [super executeUpdate:sql];
 }
 
+- (BOOL)executeZWStatements:(NSString *)sql{
+    return [super executeStatements:sql];
+}
+
 @end

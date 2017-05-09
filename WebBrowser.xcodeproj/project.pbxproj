@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		0E19A4D41E232FA8009DAF9A /* NSNumber+ZWUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E19A4D31E232FA8009DAF9A /* NSNumber+ZWUtility.m */; };
 		0E19A4D91E237D35009DAF9A /* DelegateManager+Delegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E19A4D81E237D35009DAF9A /* DelegateManager+Delegate.m */; };
+		0E1A9F191EAF597400FAB196 /* BookmarkTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1A9F181EAF597400FAB196 /* BookmarkTableViewController.m */; };
+		0E1A9F1C1EAF59AC00FAB196 /* BookmarkDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1A9F1B1EAF59AC00FAB196 /* BookmarkDataManager.m */; };
 		0E1F9F9E1DD2D86E00FA84EA /* NJKWebViewProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1F9F9B1DD2D86E00FA84EA /* NJKWebViewProgress.m */; };
 		0E1F9F9F1DD2D86E00FA84EA /* NJKWebViewProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1F9F9D1DD2D86E00FA84EA /* NJKWebViewProgressView.m */; };
 		0E2329311DADE07B007E9886 /* BrowserTopToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E2329301DADE07B007E9886 /* BrowserTopToolBar.m */; };
@@ -27,6 +29,8 @@
 		0E3D2B711E24836700364B69 /* NSFileManager+ZWUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3D2B701E24836700364B69 /* NSFileManager+ZWUtility.m */; };
 		0E3D2B741E248D5E00364B69 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3D2B731E248D5E00364B69 /* SettingsTableViewController.m */; };
 		0E3D2B771E24CD3000364B69 /* UIImage+ZWUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3D2B761E24CD3000364B69 /* UIImage+ZWUtility.m */; };
+		0E44786D1EC0395100D8F3F3 /* BookmarkEditTextFieldTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E44786B1EC0395100D8F3F3 /* BookmarkEditTextFieldTableViewCell.m */; };
+		0E44786E1EC0395100D8F3F3 /* BookmarkEditTextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E44786C1EC0395100D8F3F3 /* BookmarkEditTextFieldTableViewCell.xib */; };
 		0E48FB011DA3FD4B00B8FCDB /* BrowserWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E48FB001DA3FD4B00B8FCDB /* BrowserWebView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		0E5000511E0B6D60004BA658 /* CardMainBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E5000501E0B6D60004BA658 /* CardMainBottomView.m */; };
 		0E512D431E6675ED008A8AFA /* CardBrowserCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E512D421E6675ED008A8AFA /* CardBrowserCollectionViewLayout.m */; };
@@ -56,13 +60,19 @@
 		0E7795931E20F8C800CE86BE /* SearchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E7795911E20F8C800CE86BE /* SearchTableViewCell.m */; };
 		0E7795941E20F8C900CE86BE /* SearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E7795921E20F8C800CE86BE /* SearchTableViewCell.xib */; };
 		0E7795971E21042300CE86BE /* NSString+ZWUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E7795961E21042300CE86BE /* NSString+ZWUtility.m */; };
+		0E8013DB1EB0A1B60098BF64 /* BookmarkSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8013DA1EB0A1B60098BF64 /* BookmarkSectionHeaderView.m */; };
+		0E8013DD1EB0A3280098BF64 /* BookmarkSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E8013DC1EB0A3280098BF64 /* BookmarkSectionHeaderView.xib */; };
 		0E829CD71E12075B008FF0A8 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E829CD61E12075B008FF0A8 /* SearchViewController.m */; };
 		0E831A0F1E87DBCD00FB3576 /* NSURLCache+ZWUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E831A0E1E87DBCD00FB3576 /* NSURLCache+ZWUtility.m */; };
 		0E8EE8311E11123600B6DADF /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8EE8301E11123600B6DADF /* SettingsViewController.m */; };
 		0E8EE8351E11277100B6DADF /* SettingAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8EE8341E11277100B6DADF /* SettingAnimator.m */; };
+		0E9361D81EB0EDA1004F6AE7 /* BookmarkSectionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E9361D71EB0EDA1004F6AE7 /* BookmarkSectionInfo.m */; };
+		0E9361DC1EB0FAEE004F6AE7 /* BookmarkTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E9361DA1EB0FAEE004F6AE7 /* BookmarkTableViewCell.m */; };
+		0E9361DD1EB0FAEE004F6AE7 /* BookmarkTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E9361DB1EB0FAEE004F6AE7 /* BookmarkTableViewCell.xib */; };
 		0E9836B61E82CC9B0044BEA9 /* ContextMenu.js in Resources */ = {isa = PBXBuildFile; fileRef = 0E9836B51E82CC9B0044BEA9 /* ContextMenu.js */; };
 		0E986A0B1D4CA6C10003900D /* BrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E986A0A1D4CA6C10003900D /* BrowserViewController.m */; };
 		0E986A0F1D4D06170003900D /* TabManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E986A0E1D4D06170003900D /* TabManager.m */; };
+		0E9B8D471EBF4E1C004088A0 /* BookmarkEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E9B8D461EBF4E1C004088A0 /* BookmarkEditViewController.m */; };
 		0EA7DEE31DB0ABD8005C592E /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EA7DEE21DB0ABD8005C592E /* BaseViewController.m */; };
 		0EAA18B91DD35D5D0072F9B3 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EAA18B81DD35D5D0072F9B3 /* WebKit.framework */; };
 		0EB636641E5B30E8000BD2D6 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EB636631E5B30E8000BD2D6 /* CFNetwork.framework */; };
@@ -129,6 +139,10 @@
 		0E19A4D71E237D35009DAF9A /* DelegateManager+Delegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DelegateManager+Delegate.h"; sourceTree = "<group>"; };
 		0E19A4D81E237D35009DAF9A /* DelegateManager+Delegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DelegateManager+Delegate.m"; sourceTree = "<group>"; };
 		0E19A4DA1E238161009DAF9A /* DelegateKeyHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DelegateKeyHeader.h; sourceTree = "<group>"; };
+		0E1A9F171EAF597400FAB196 /* BookmarkTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkTableViewController.h; sourceTree = "<group>"; };
+		0E1A9F181EAF597400FAB196 /* BookmarkTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkTableViewController.m; sourceTree = "<group>"; };
+		0E1A9F1A1EAF59AC00FAB196 /* BookmarkDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkDataManager.h; sourceTree = "<group>"; };
+		0E1A9F1B1EAF59AC00FAB196 /* BookmarkDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkDataManager.m; sourceTree = "<group>"; };
 		0E1F9F9A1DD2D86E00FA84EA /* NJKWebViewProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJKWebViewProgress.h; sourceTree = "<group>"; };
 		0E1F9F9B1DD2D86E00FA84EA /* NJKWebViewProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NJKWebViewProgress.m; sourceTree = "<group>"; };
 		0E1F9F9C1DD2D86E00FA84EA /* NJKWebViewProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NJKWebViewProgressView.h; sourceTree = "<group>"; };
@@ -166,6 +180,9 @@
 		0E3D2B731E248D5E00364B69 /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
 		0E3D2B751E24CD3000364B69 /* UIImage+ZWUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ZWUtility.h"; sourceTree = "<group>"; };
 		0E3D2B761E24CD3000364B69 /* UIImage+ZWUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ZWUtility.m"; sourceTree = "<group>"; };
+		0E44786A1EC0395100D8F3F3 /* BookmarkEditTextFieldTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkEditTextFieldTableViewCell.h; sourceTree = "<group>"; };
+		0E44786B1EC0395100D8F3F3 /* BookmarkEditTextFieldTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkEditTextFieldTableViewCell.m; sourceTree = "<group>"; };
+		0E44786C1EC0395100D8F3F3 /* BookmarkEditTextFieldTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookmarkEditTextFieldTableViewCell.xib; sourceTree = "<group>"; };
 		0E48FAFF1DA3FD4B00B8FCDB /* BrowserWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserWebView.h; sourceTree = "<group>"; };
 		0E48FB001DA3FD4B00B8FCDB /* BrowserWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserWebView.m; sourceTree = "<group>"; };
 		0E48FB031DA4058300B8FCDB /* WebViewHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebViewHeader.h; sourceTree = "<group>"; };
@@ -227,6 +244,9 @@
 		0E7795921E20F8C800CE86BE /* SearchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchTableViewCell.xib; sourceTree = "<group>"; };
 		0E7795951E21042300CE86BE /* NSString+ZWUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ZWUtility.h"; sourceTree = "<group>"; };
 		0E7795961E21042300CE86BE /* NSString+ZWUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ZWUtility.m"; sourceTree = "<group>"; };
+		0E8013D91EB0A1B60098BF64 /* BookmarkSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkSectionHeaderView.h; sourceTree = "<group>"; };
+		0E8013DA1EB0A1B60098BF64 /* BookmarkSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkSectionHeaderView.m; sourceTree = "<group>"; };
+		0E8013DC1EB0A3280098BF64 /* BookmarkSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookmarkSectionHeaderView.xib; sourceTree = "<group>"; };
 		0E829CD51E12075B008FF0A8 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
 		0E829CD61E12075B008FF0A8 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		0E82A4481DAF8BCA00F13D4E /* BrowserHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BrowserHeader.h; sourceTree = "<group>"; };
@@ -236,11 +256,18 @@
 		0E8EE8301E11123600B6DADF /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		0E8EE8331E11277100B6DADF /* SettingAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingAnimator.h; sourceTree = "<group>"; };
 		0E8EE8341E11277100B6DADF /* SettingAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingAnimator.m; sourceTree = "<group>"; };
+		0E9361D61EB0EDA1004F6AE7 /* BookmarkSectionInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkSectionInfo.h; sourceTree = "<group>"; };
+		0E9361D71EB0EDA1004F6AE7 /* BookmarkSectionInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkSectionInfo.m; sourceTree = "<group>"; };
+		0E9361D91EB0FAEE004F6AE7 /* BookmarkTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkTableViewCell.h; sourceTree = "<group>"; };
+		0E9361DA1EB0FAEE004F6AE7 /* BookmarkTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkTableViewCell.m; sourceTree = "<group>"; };
+		0E9361DB1EB0FAEE004F6AE7 /* BookmarkTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookmarkTableViewCell.xib; sourceTree = "<group>"; };
 		0E9836B51E82CC9B0044BEA9 /* ContextMenu.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ContextMenu.js; sourceTree = "<group>"; };
 		0E986A091D4CA6C10003900D /* BrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserViewController.h; sourceTree = "<group>"; };
 		0E986A0A1D4CA6C10003900D /* BrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BrowserViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0E986A0D1D4D06170003900D /* TabManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = TabManager.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		0E986A0E1D4D06170003900D /* TabManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = TabManager.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		0E9B8D451EBF4E1C004088A0 /* BookmarkEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkEditViewController.h; sourceTree = "<group>"; };
+		0E9B8D461EBF4E1C004088A0 /* BookmarkEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkEditViewController.m; sourceTree = "<group>"; };
 		0EA7DEE11DB0ABD8005C592E /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		0EA7DEE21DB0ABD8005C592E /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		0EAA18B81DD35D5D0072F9B3 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
@@ -358,6 +385,37 @@
 				0E19A4DA1E238161009DAF9A /* DelegateKeyHeader.h */,
 			);
 			name = DelegateManager;
+			sourceTree = "<group>";
+		};
+		0E1A9F141EAF593500FAB196 /* Bookmark */ = {
+			isa = PBXGroup;
+			children = (
+				0E9361D51EB0ED48004F6AE7 /* Model */,
+				0EF336721EAF91BF00A2B6E7 /* View */,
+				0E1A9F161EAF595000FAB196 /* Controller */,
+				0E1A9F151EAF594900FAB196 /* Manager */,
+			);
+			name = Bookmark;
+			sourceTree = "<group>";
+		};
+		0E1A9F151EAF594900FAB196 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				0E1A9F1A1EAF59AC00FAB196 /* BookmarkDataManager.h */,
+				0E1A9F1B1EAF59AC00FAB196 /* BookmarkDataManager.m */,
+			);
+			name = Manager;
+			sourceTree = "<group>";
+		};
+		0E1A9F161EAF595000FAB196 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				0E1A9F171EAF597400FAB196 /* BookmarkTableViewController.h */,
+				0E1A9F181EAF597400FAB196 /* BookmarkTableViewController.m */,
+				0E9B8D451EBF4E1C004088A0 /* BookmarkEditViewController.h */,
+				0E9B8D461EBF4E1C004088A0 /* BookmarkEditViewController.m */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 		0E1F9F981DD2D83400FA84EA /* Vendors */ = {
@@ -606,6 +664,7 @@
 				0E1F9F981DD2D83400FA84EA /* Vendors */,
 				0EF0255D1DD94FCF0011019F /* Network */,
 				0E829CD31E12073B008FF0A8 /* Search */,
+				0E1A9F141EAF593500FAB196 /* Bookmark */,
 				0EC14F571E31BAD100A44D05 /* History */,
 				0E3A6B6E1E110F1C00071397 /* Setting */,
 				0E32E2F71E08C5DC00CFBBB5 /* MultiWindow */,
@@ -783,6 +842,15 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		0E9361D51EB0ED48004F6AE7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0E9361D61EB0EDA1004F6AE7 /* BookmarkSectionInfo.h */,
+				0E9361D71EB0EDA1004F6AE7 /* BookmarkSectionInfo.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		0E986A081D4CA6890003900D /* Browser */ = {
 			isa = PBXGroup;
 			children = (
@@ -926,6 +994,22 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		0EF336721EAF91BF00A2B6E7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0E8013D91EB0A1B60098BF64 /* BookmarkSectionHeaderView.h */,
+				0E8013DA1EB0A1B60098BF64 /* BookmarkSectionHeaderView.m */,
+				0E8013DC1EB0A3280098BF64 /* BookmarkSectionHeaderView.xib */,
+				0E9361D91EB0FAEE004F6AE7 /* BookmarkTableViewCell.h */,
+				0E9361DA1EB0FAEE004F6AE7 /* BookmarkTableViewCell.m */,
+				0E9361DB1EB0FAEE004F6AE7 /* BookmarkTableViewCell.xib */,
+				0E44786A1EC0395100D8F3F3 /* BookmarkEditTextFieldTableViewCell.h */,
+				0E44786B1EC0395100D8F3F3 /* BookmarkEditTextFieldTableViewCell.m */,
+				0E44786C1EC0395100D8F3F3 /* BookmarkEditTextFieldTableViewCell.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		0EFCB9DB1E4F62520094C466 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
@@ -1054,15 +1138,18 @@
 			files = (
 				0ECA028C1E5AE46A00955887 /* NetError.css in Resources */,
 				0EDD68E51DACFBF400265744 /* Assets.xcassets in Resources */,
+				0E8013DD1EB0A3280098BF64 /* BookmarkSectionHeaderView.xib in Resources */,
 				0ECA02891E5AE45900955887 /* NetError.html in Resources */,
 				0E7795941E20F8C900CE86BE /* SearchTableViewCell.xib in Resources */,
 				0E5CC9DA1E7922AE0049ABEB /* SessionRestore.html in Resources */,
 				0EFCB9DE1E4F62A60094C466 /* NoImageModeHelper.js in Resources */,
+				0E44786E1EC0395100D8F3F3 /* BookmarkEditTextFieldTableViewCell.xib in Resources */,
 				0EBDC6241E1DDEC100B6A4DB /* SearchInputView.xib in Resources */,
 				0E681F381D4AEC3F003534F5 /* LaunchScreen.storyboard in Resources */,
 				0E5988A61E2F8070003259C0 /* SettingActivityTableViewCell.xib in Resources */,
 				0EBFFE7B1E52B22C00404199 /* SettingSwitchTableViewCell.xib in Resources */,
 				0E9836B61E82CC9B0044BEA9 /* ContextMenu.js in Resources */,
+				0E9361DD1EB0FAEE004F6AE7 /* BookmarkTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1132,11 +1219,13 @@
 				0E3A6B731E11102C00071397 /* SettingsCollectionViewCell.m in Sources */,
 				0EF025701DD957EC0011019F /* BaseResponseModel.m in Sources */,
 				0E5CC9E11E794D890049ABEB /* WebViewHistoryItem.m in Sources */,
+				0E9361DC1EB0FAEE004F6AE7 /* BookmarkTableViewCell.m in Sources */,
 				0E2C53A31DAA314C0077B9B4 /* UIView+ZWUtility.m in Sources */,
 				0ED304151E98697C00445A9A /* BaseTableViewController.m in Sources */,
 				0EC14F511E31B97900A44D05 /* FMDatabaseAdditions.m in Sources */,
 				0EED28311DC1A32100EC8581 /* ZWUtility.m in Sources */,
 				0E32E3071E08D4FB00CFBBB5 /* CardMainView.m in Sources */,
+				0E1A9F1C1EAF59AC00FAB196 /* BookmarkDataManager.m in Sources */,
 				0E19A4D91E237D35009DAF9A /* DelegateManager+Delegate.m in Sources */,
 				0E7078071E96294A00E898A8 /* ZWSQLiteManager.m in Sources */,
 				0E6A292B1E83C1D1002142B1 /* NSCharacterSet+ZWUtility.m in Sources */,
@@ -1150,11 +1239,13 @@
 				0E5988A51E2F8070003259C0 /* SettingActivityTableViewCell.m in Sources */,
 				0E512D461E66BCA9008A8AFA /* CardBrowserFlatLayout.m in Sources */,
 				0E681F2D1D4AEC3F003534F5 /* AppDelegate.m in Sources */,
+				0E44786D1EC0395100D8F3F3 /* BookmarkEditTextFieldTableViewCell.m in Sources */,
 				0E8EE8351E11277100B6DADF /* SettingAnimator.m in Sources */,
 				0E1F9F9E1DD2D86E00FA84EA /* NJKWebViewProgress.m in Sources */,
 				0E3D2B741E248D5E00364B69 /* SettingsTableViewController.m in Sources */,
 				0E831A0F1E87DBCD00FB3576 /* NSURLCache+ZWUtility.m in Sources */,
 				0E32E2FF1E08C8F600CFBBB5 /* CardCollectionViewLayout.m in Sources */,
+				0E8013DB1EB0A1B60098BF64 /* BookmarkSectionHeaderView.m in Sources */,
 				0E5CC9DE1E79305E0049ABEB /* SessionData.m in Sources */,
 				0E70780E1E96314000E898A8 /* HistorySQLiteManager.m in Sources */,
 				0E5000511E0B6D60004BA658 /* CardMainBottomView.m in Sources */,
@@ -1173,11 +1264,14 @@
 				0EF025661DD951EB0011019F /* HTTPManager.m in Sources */,
 				0ED304181E99F42D00445A9A /* HistoryDataManager.m in Sources */,
 				0E986A0B1D4CA6C10003900D /* BrowserViewController.m in Sources */,
+				0E9361D81EB0EDA1004F6AE7 /* BookmarkSectionInfo.m in Sources */,
+				0E9B8D471EBF4E1C004088A0 /* BookmarkEditViewController.m in Sources */,
 				0EFDD3081DD423AC002AB3FB /* HttpHelper.m in Sources */,
 				0E7795971E21042300CE86BE /* NSString+ZWUtility.m in Sources */,
 				0E3A4F301E7A22A7006FA3F8 /* SessionRestoreHelper.m in Sources */,
 				0E39F9AA1E14C8AA007B5681 /* SearchInputView.m in Sources */,
 				0E8EE8311E11123600B6DADF /* SettingsViewController.m in Sources */,
+				0E1A9F191EAF597400FAB196 /* BookmarkTableViewController.m in Sources */,
 				0E1F9F9F1DD2D86E00FA84EA /* NJKWebViewProgressView.m in Sources */,
 				0E2CC0171E0988AE0078EB91 /* UIColor+ZWUtility.m in Sources */,
 			);

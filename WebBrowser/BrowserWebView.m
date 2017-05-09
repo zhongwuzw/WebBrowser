@@ -318,14 +318,14 @@
     if(![request isKindOfClass:[NSURLRequest class]])
         return;
     
-//    NSInteger intNaviType = 0;
-//    if ([actionInformation isKindOfClass:[NSDictionary class]]) {
-//        id naviType = [((NSDictionary*)actionInformation) objectForKey:WEB_ACTION_NAVI_TYPE_KEY];
-//        if([naviType isKindOfClass:[NSNumber class]])
-//        {
-//            intNaviType = [(NSNumber*)naviType integerValue];
-//        }
-//    }
+    NSInteger intNaviType = 0;
+    if ([actionInformation isKindOfClass:[NSDictionary class]]) {
+        id naviType = [((NSDictionary*)actionInformation) objectForKey:WEB_ACTION_NAVI_TYPE_KEY];
+        if([naviType isKindOfClass:[NSNumber class]])
+        {
+            intNaviType = [(NSNumber*)naviType integerValue];
+        }
+    }
     
     if([self respondsToSelector:@selector(zwWebView:decidePolicyForNavigationAction:request:frame:decisionListener:)])
         ((void(*)(id, SEL, id, id, id, id, id)) objc_msgSend)(self, @selector(zwWebView:decidePolicyForNavigationAction:request:frame:decisionListener:), webView, actionInformation, request, frame, listener);
@@ -418,25 +418,25 @@
     [super dealloc];
 }
 
-@end
-
-__attribute__((__constructor__)) static void $(){
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    
-    MethodSwizzle([BrowserWebView class], NSSelectorFromString(WEB_GOT_TITLE), @selector(zwWebView:didReceiveTitle:forFrame:));
-    
-    MethodSwizzle([BrowserWebView class], NSSelectorFromString(WEB_NEW_WINDOW), @selector(zwWebView:decidePolicyForNewWindowAction:request:newFrameName:decisionListener:));
-    
-    MethodSwizzle([BrowserWebView class], NSSelectorFromString(WEB_ACTION_NAVIGATION), @selector(zwWebView:decidePolicyForNavigationAction:request:frame:decisionListener:));
-
-    MethodSwizzle([BrowserWebView class], NSSelectorFromString(MAIN_FRAME_COMMIT_LOAD), @selector(zwMainFrameCommitLoad:));
-    
-    MethodSwizzle([BrowserWebView class], NSSelectorFromString(MAIN_FRAME_FINISIH_LOAD), @selector(zwMainFrameFinishLoad:));
-    
-    MethodSwizzle([BrowserWebView class], NSSelectorFromString(FRAME_PROVISIONALLOAD), @selector(zwWebView:didStartProvisionalLoadForFrame:));
-    
-    [pool drain];
++ (void)initialize{
+    if (self == [BrowserWebView class]) {
+        @autoreleasepool {
+            MethodSwizzle([BrowserWebView class], NSSelectorFromString(WEB_GOT_TITLE), @selector(zwWebView:didReceiveTitle:forFrame:));
+            
+            MethodSwizzle([BrowserWebView class], NSSelectorFromString(WEB_NEW_WINDOW), @selector(zwWebView:decidePolicyForNewWindowAction:request:newFrameName:decisionListener:));
+            
+            MethodSwizzle([BrowserWebView class], NSSelectorFromString(WEB_ACTION_NAVIGATION), @selector(zwWebView:decidePolicyForNavigationAction:request:frame:decisionListener:));
+            
+            MethodSwizzle([BrowserWebView class], NSSelectorFromString(MAIN_FRAME_COMMIT_LOAD), @selector(zwMainFrameCommitLoad:));
+            
+            MethodSwizzle([BrowserWebView class], NSSelectorFromString(MAIN_FRAME_FINISIH_LOAD), @selector(zwMainFrameFinishLoad:));
+            
+            MethodSwizzle([BrowserWebView class], NSSelectorFromString(FRAME_PROVISIONALLOAD), @selector(zwWebView:didStartProvisionalLoadForFrame:));
+        }
+    }
 }
+
+@end
 
 
 

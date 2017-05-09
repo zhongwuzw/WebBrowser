@@ -41,6 +41,7 @@ static NSString *const kHistoryTableViewContentSize = @"contentSize";
     [self.tableView registerClass:[UITableViewHeaderFooterView class] forHeaderFooterViewReuseIdentifier:kHistoryTableViewHeaderFooterIdentifier];
     UIBarButtonItem *clearItem = [[UIBarButtonItem alloc] initWithTitle:@"清除所有" style:UIBarButtonItemStylePlain target:self action:@selector(handleClearAllHistory)];
     self.navigationItem.rightBarButtonItem = clearItem;
+    self.title = @"历史";
     
     UILongPressGestureRecognizer *longGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressGesture:)];
     [self.tableView addGestureRecognizer:longGesture];

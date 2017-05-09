@@ -21,7 +21,7 @@ static NSString *const URLsKey = @"URLsKey";
 @implementation SessionData
 
 - (NSDictionary *)jsonDictionary{
-    NSAssert(_urls.count, @"urls count should great than 0");
+    NSAssert(_urls, @"urls should has value");
     return @{
         @"currentPage" :  @(_currentPage),
         @"history"        : _urls
