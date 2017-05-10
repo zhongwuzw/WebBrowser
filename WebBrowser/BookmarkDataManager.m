@@ -140,6 +140,19 @@ static const void * const kDispatchQueueSpecificKey = &kDispatchQueueSpecificKey
     return itemModel;
 }
 
+- (NSString *)headerTitleForSection:(NSInteger)section{
+    QueueCheck(NO);
+    __block NSString *title;
+    dispatch_sync(_syncQueue, ^{
+        if (section < self.sectionArray.count) {
+            title = self.sectionArray[section].title;
+        }
+    });
+    return title;
+}
+
+#pragma mark - Move
+
 - (void)moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)newIndexPath completion:(BookmarkDataCompletion)completion{
     QueueCheck(NO);
     
@@ -173,6 +186,37 @@ static const void * const kDispatchQueueSpecificKey = &kDispatchQueueSpecificKey
         }
     });
 }
+
+- (void)moveSectionAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)newIndexPath completion:(BookmarkDataCompletion)completion{
+    QueueCheck(NO);
+    
+    NSInteger fromSection = fromIndexPath.section;
+    NSInteger toSection = newIndexPath.section;
+    
+    dispatch_async(_syncQueue, ^{
+        if (!(fromSection < self.sectionArray.count && toSection < self.sectionArray.count) && completion) {
+            dispatch_main_safe_async(^{
+                completion(NO);
+            })
+            return ;
+        }
+        BookmarkSectionModel *sectionModel = self.sectionArray[fromSection];
+        [self.sectionArray removeObjectAtIndex:fromSection];
+        [self.sectionArray insertObject:sectionModel atIndex:toSection];
+        
+        dispatch_async(_syncQueue, ^{
+            [self saveBookmarkSectionModelToDisk];
+        });
+        
+        if (completion) {
+            dispatch_main_safe_async(^{
+                completion(YES);
+            })
+        }
+    });
+}
+
+#pragma mark - Delete
 
 - (void)deleteRowAtIndexPath:(NSIndexPath *)indexPath completion:(BookmarkDataDeleteCompletion)completion{
     QueueCheck(NO);
@@ -211,16 +255,27 @@ static const void * const kDispatchQueueSpecificKey = &kDispatchQueueSpecificKey
     });
 }
 
-- (NSString *)headerTitleForSection:(NSInteger)section{
+- (void)deleteSectionAtIndexPath:(NSIndexPath *)indexPath completion:(BookmarkDataDeleteCompletion)completion{
     QueueCheck(NO);
-    __block NSString *title;
-    dispatch_sync(_syncQueue, ^{
+    dispatch_async(_syncQueue, ^{
+        NSInteger section = indexPath.section;
+        BOOL isSuccess = NO;
         if (section < self.sectionArray.count) {
-            title = self.sectionArray[section].title;
+            [self.sectionArray removeObjectAtIndex:section];
+            isSuccess = YES;
+            dispatch_async(_syncQueue, ^{
+                [self saveBookmarkSectionModelToDisk];
+            });
+        }
+        if (completion) {
+            dispatch_main_safe_async(^{
+                completion(isSuccess);
+            })
         }
     });
-    return title;
 }
+
+#pragma mark - Add
 
 - (void)addBookmarkWithURL:(NSString *)url title:(NSString *)title completion:(BookmarkDataCompletion)completion{
     [self addBookmarkWithURL:url title:title sectionName:nil completion:completion];
@@ -246,21 +301,19 @@ static const void * const kDispatchQueueSpecificKey = &kDispatchQueueSpecificKey
                 index = idx;
             }
         }];
-        if (index != NSNotFound) {
-            BookmarkItemModel *itemModel = [BookmarkItemModel bookmarkItemWithTitle:title url:url];
-            self.sectionArray[index].itemsArray = (self.sectionArray[index].itemsArray) ? self.sectionArray[index].itemsArray : [NSMutableArray array];
-            [self.sectionArray[index].itemsArray addObject:itemModel];
-            [self saveBookmarkSectionModelToDisk];
-            
-            if (completion) {
-                dispatch_main_safe_async(^{
-                    completion(YES);
-                })
-            }
+        if (index == NSNotFound) {
+            [self.sectionArray insertObject:[BookmarkSectionModel bookmarkSectionWithTitle:kBookmarkDefaultSectionName itemsArray:nil] atIndex:0];
+            index = 0;
         }
-        else if (completion){
+        
+        BookmarkItemModel *itemModel = [BookmarkItemModel bookmarkItemWithTitle:title url:url];
+        self.sectionArray[index].itemsArray = (self.sectionArray[index].itemsArray) ? self.sectionArray[index].itemsArray : [NSMutableArray array];
+        [self.sectionArray[index].itemsArray addObject:itemModel];
+        [self saveBookmarkSectionModelToDisk];
+        
+        if (completion) {
             dispatch_main_safe_async(^{
-                completion(NO);
+                completion(YES);
             })
         }
     });
@@ -289,6 +342,40 @@ static const void * const kDispatchQueueSpecificKey = &kDispatchQueueSpecificKey
         if (completion) {
             dispatch_main_safe_async(^{
                 completion(!isExisted);
+            })
+        }
+    });
+}
+
+#pragma mark - Edit
+
+- (void)editBookmarkDirectoryWithName:(NSString *)name sectionIndex:(NSInteger)index completion:(BookmarkDataCompletion)completion{
+    QueueCheck(NO);
+    
+    dispatch_async(_syncQueue, ^{
+        __block BOOL isSuccess = YES;
+        if (index < self.sectionArray.count) {
+            [self.sectionArray enumerateObjectsUsingBlock:^(BookmarkSectionModel *model, NSUInteger idx, BOOL *stop){
+                if ([model.title isEqualToString:name] && idx != index) {
+                    isSuccess = NO;
+                    *stop = YES;
+                }
+            }];
+        }
+        else{
+            isSuccess = NO;
+        }
+        
+        if (isSuccess) {
+            self.sectionArray[index].title = name;
+            dispatch_async(_syncQueue, ^{
+                [self saveBookmarkSectionModelToDisk];
+            });
+        }
+        
+        if (completion) {
+            dispatch_main_safe_async(^{
+                completion(isSuccess);
             })
         }
     });

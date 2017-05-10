@@ -92,6 +92,8 @@
 		0EC14F541E31B97900A44D05 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EC14F4F1E31B97900A44D05 /* FMResultSet.m */; };
 		0EC14F561E31B9B300A44D05 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EC14F551E31B9B300A44D05 /* libsqlite3.tbd */; };
 		0EC14F5B1E31BB0800A44D05 /* HistoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EC14F5A1E31BB0800A44D05 /* HistoryTableViewController.m */; };
+		0EC3D8BC1EC1C99D0059E4DC /* BookmarkSectionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EC3D8BA1EC1C99D0059E4DC /* BookmarkSectionTableViewCell.m */; };
+		0EC3D8BD1EC1C99D0059E4DC /* BookmarkSectionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0EC3D8BB1EC1C99D0059E4DC /* BookmarkSectionTableViewCell.xib */; };
 		0ECA02891E5AE45900955887 /* NetError.html in Resources */ = {isa = PBXBuildFile; fileRef = 0ECA02881E5AE45900955887 /* NetError.html */; };
 		0ECA028C1E5AE46A00955887 /* NetError.css in Resources */ = {isa = PBXBuildFile; fileRef = 0ECA028B1E5AE46A00955887 /* NetError.css */; };
 		0ECA029F1E5AFFF900955887 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0ECA029E1E5AFFF900955887 /* libz.tbd */; };
@@ -301,6 +303,9 @@
 		0EC14F551E31B9B300A44D05 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		0EC14F591E31BB0800A44D05 /* HistoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryTableViewController.h; sourceTree = "<group>"; };
 		0EC14F5A1E31BB0800A44D05 /* HistoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryTableViewController.m; sourceTree = "<group>"; };
+		0EC3D8B91EC1C99D0059E4DC /* BookmarkSectionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkSectionTableViewCell.h; sourceTree = "<group>"; };
+		0EC3D8BA1EC1C99D0059E4DC /* BookmarkSectionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkSectionTableViewCell.m; sourceTree = "<group>"; };
+		0EC3D8BB1EC1C99D0059E4DC /* BookmarkSectionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookmarkSectionTableViewCell.xib; sourceTree = "<group>"; };
 		0ECA02881E5AE45900955887 /* NetError.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = NetError.html; sourceTree = "<group>"; };
 		0ECA028B1E5AE46A00955887 /* NetError.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = NetError.css; sourceTree = "<group>"; };
 		0ECA029E1E5AFFF900955887 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -1006,6 +1011,9 @@
 				0E44786A1EC0395100D8F3F3 /* BookmarkEditTextFieldTableViewCell.h */,
 				0E44786B1EC0395100D8F3F3 /* BookmarkEditTextFieldTableViewCell.m */,
 				0E44786C1EC0395100D8F3F3 /* BookmarkEditTextFieldTableViewCell.xib */,
+				0EC3D8B91EC1C99D0059E4DC /* BookmarkSectionTableViewCell.h */,
+				0EC3D8BA1EC1C99D0059E4DC /* BookmarkSectionTableViewCell.m */,
+				0EC3D8BB1EC1C99D0059E4DC /* BookmarkSectionTableViewCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1140,6 +1148,7 @@
 				0EDD68E51DACFBF400265744 /* Assets.xcassets in Resources */,
 				0E8013DD1EB0A3280098BF64 /* BookmarkSectionHeaderView.xib in Resources */,
 				0ECA02891E5AE45900955887 /* NetError.html in Resources */,
+				0EC3D8BD1EC1C99D0059E4DC /* BookmarkSectionTableViewCell.xib in Resources */,
 				0E7795941E20F8C900CE86BE /* SearchTableViewCell.xib in Resources */,
 				0E5CC9DA1E7922AE0049ABEB /* SessionRestore.html in Resources */,
 				0EFCB9DE1E4F62A60094C466 /* NoImageModeHelper.js in Resources */,
@@ -1272,6 +1281,7 @@
 				0E39F9AA1E14C8AA007B5681 /* SearchInputView.m in Sources */,
 				0E8EE8311E11123600B6DADF /* SettingsViewController.m in Sources */,
 				0E1A9F191EAF597400FAB196 /* BookmarkTableViewController.m in Sources */,
+				0EC3D8BC1EC1C99D0059E4DC /* BookmarkSectionTableViewCell.m in Sources */,
 				0E1F9F9F1DD2D86E00FA84EA /* NJKWebViewProgressView.m in Sources */,
 				0E2CC0171E0988AE0078EB91 /* UIColor+ZWUtility.m in Sources */,
 			);

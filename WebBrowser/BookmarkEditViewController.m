@@ -17,15 +17,31 @@ static NSString *const kBookmarkEditTextFieldCellIdentifier = @"kBookmarkEditTex
 @property (nonatomic, strong) BookmarkDataManager *dataManager;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, copy) BookmarkEditCompletion completion;
+@property (nonatomic, copy) NSString *sectionName;
+@property (nonatomic, strong) NSIndexPath *indexPath;
 
 @end
 
 @implementation BookmarkEditViewController
 
+//Add directory
 - (instancetype)initWithDataManager:(BookmarkDataManager *)dataManager completion:(BookmarkEditCompletion)completion{
     if (self = [super initWithNibName:nil bundle:nil]) {
         _dataManager = dataManager;
         _completion = completion;
+        _operationKind = BookmarkOperationKindSectionAdd;
+    }
+    return self;
+}
+
+//Edit directory name
+- (instancetype)initWithDataManager:(BookmarkDataManager *)dataManager sectionName:(NSString *)sectionName sectionIndex:(NSIndexPath *)indexPath completion:(BookmarkEditCompletion)completion{
+    if (self = [super initWithNibName:nil bundle:nil]) {
+        _dataManager = dataManager;
+        _completion = completion;
+        _operationKind = BookmarkOperationKindSectionEdit;
+        _sectionName = sectionName;
+        _indexPath = indexPath;
     }
     return self;
 }
@@ -72,7 +88,7 @@ static NSString *const kBookmarkEditTextFieldCellIdentifier = @"kBookmarkEditTex
     }
     
     WEAK_REF(self)
-    [self.dataManager addBookmarkDirectoryWithName:name completion:^(BOOL success){
+    BookmarkDataCompletion completion = ^(BOOL success){
         STRONG_REF(self_)
         if (self__ && success) {
             [self__ exit];
@@ -83,7 +99,14 @@ static NSString *const kBookmarkEditTextFieldCellIdentifier = @"kBookmarkEditTex
         else if (self__){
             [self__.view showHUDWithMessage:@"文件夹名不能重名"];
         }
-    }];
+    };
+    
+    if (self.operationKind == BookmarkOperationKindSectionEdit) {
+        [self.dataManager editBookmarkDirectoryWithName:name sectionIndex:_indexPath.section completion:completion];
+    }
+    else{
+        [self.dataManager addBookmarkDirectoryWithName:name completion:completion];
+    }
 }
 
 - (void)exit{
@@ -102,9 +125,18 @@ static NSString *const kBookmarkEditTextFieldCellIdentifier = @"kBookmarkEditTex
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     BookmarkEditTextFieldTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kBookmarkEditTextFieldCellIdentifier];
+    if (self.operationKind == BookmarkOperationKindSectionEdit) {
+        [cell.textField setText:self.sectionName];
+    }
     [cell.textField becomeFirstResponder];
     
     return cell;
+}
+
+#pragma mark - Dealloc
+
+- (void)dealloc{
+    DDLogDebug(@"%@ dealloced",NSStringFromClass([self class]));
 }
 
 @end

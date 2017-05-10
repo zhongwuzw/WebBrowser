@@ -39,11 +39,14 @@ typedef void(^BookmarkDataDeleteCompletion)(BOOL success);
 - (NSInteger)numberOfRowsInSection:(NSInteger)section;
 - (BookmarkItemModel *)bookmarkModelForRowAtIndexPath:(NSIndexPath *)indexPath;
 - (void)moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)newIndexPath completion:(BookmarkDataCompletion)completion;
+- (void)moveSectionAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)newIndexPath completion:(BookmarkDataCompletion)completion;
 - (NSString *)headerTitleForSection:(NSInteger)section;
 - (void)deleteRowAtIndexPath:(NSIndexPath *)indexPath completion:(BookmarkDataDeleteCompletion)completion;
 - (void)deleleAllBookmarkRecords;
+- (void)deleteSectionAtIndexPath:(NSIndexPath *)indexPath completion:(BookmarkDataDeleteCompletion)completion;
 - (void)addBookmarkWithURL:(NSString *)url title:(NSString *)title sectionName:(NSString *)sectionName completion:(BookmarkDataCompletion)completion;
 - (void)addBookmarkWithURL:(NSString *)url title:(NSString *)title completion:(BookmarkDataCompletion)completion;
 - (void)addBookmarkDirectoryWithName:(NSString *)name completion:(BookmarkDataCompletion)completion;
+- (void)editBookmarkDirectoryWithName:(NSString *)name sectionIndex:(NSInteger)index completion:(BookmarkDataCompletion)completion;
 
 @end

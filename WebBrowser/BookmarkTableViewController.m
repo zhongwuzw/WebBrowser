@@ -12,16 +12,27 @@
 #import "BookmarkSectionInfo.h"
 #import "BookmarkTableViewCell.h"
 #import "BookmarkEditViewController.h"
+#import "BookmarkSectionTableViewCell.h"
 
 static CGFloat const kBookmarkTableHeaderViewHeader = 34;
 static NSString *const kBookmarkTableViewCellIdentifier = @"kBookmarkTableViewCellIdentifier";
+static NSString *const kBookmarkSectionTableViewCellIdentifier = @"kBookmarkSectionTableViewCellIdentifier";
 static NSString *const kBookmarkTableViewHeaderFooterIdentifier = @"kBookmarkTableViewHeaderFooterIdentifier";
 static NSString *const kEditToolBarItem = @"编辑";
 
-@interface BookmarkTableViewController () <SectionHeaderViewDelegate>
+typedef NS_ENUM(NSUInteger, BookmarkTableState) {
+    BookmarkTableStateNormal,
+    BookmarkTableStateSectionEdit,
+    BookmarkTableStateBookmarkEdit,
+};
+
+@interface BookmarkTableViewController () <SectionHeaderViewDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) BookmarkDataManager *dataManager;
 @property (nonatomic, strong) NSMutableArray<BookmarkSectionInfo *> *sectionInfoArray;
+@property (nonatomic, assign) BookmarkTableState tableState;
+@property (nonatomic, strong) UILongPressGestureRecognizer *longPressGesture;
+@property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
 
 @end
 
@@ -42,12 +53,14 @@ static NSString *const kEditToolBarItem = @"编辑";
     
     [self initUI];
     [self initData];
+    [self addGesture];
 }
 
 - (void)initUI{
-    self.tableView.sectionHeaderHeight = kBookmarkTableHeaderViewHeader;
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([BookmarkSectionHeaderView class]) bundle:nil]forHeaderFooterViewReuseIdentifier:kBookmarkTableViewHeaderFooterIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([BookmarkTableViewCell class]) bundle:nil] forCellReuseIdentifier:kBookmarkTableViewCellIdentifier];
+    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([BookmarkSectionTableViewCell class]) bundle:nil] forCellReuseIdentifier:kBookmarkSectionTableViewCellIdentifier];
+    
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [self addToolbarEditBtn];
@@ -71,17 +84,108 @@ static NSString *const kEditToolBarItem = @"编辑";
     }];
 }
 
+- (void)addGesture{
+    self.longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongGesture:)];
+    _longPressGesture.delegate = self;
+    [self.tableView addGestureRecognizer:_longPressGesture];
+}
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated{
+    [super setEditing:editing animated:animated];
+    
+    if (editing) {
+        [self addToolbarNewDirectoryAndDoneBtn];
+    }
+    else{
+        BookmarkTableState previousState = self.tableState;
+        self.tableState = BookmarkTableStateNormal;
+        if (previousState == BookmarkTableStateSectionEdit) {
+            [self.tableView reloadData];
+        }
+        [self addToolbarEditBtn];
+    }
+}
+
+#pragma mark - Handle Gesture
+
+- (void)handleLongGesture:(UILongPressGestureRecognizer *)longGesture{
+    if (longGesture.state == UIGestureRecognizerStateRecognized) {
+        CGPoint p = [longGesture locationInView:self.tableView];
+        
+        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:p];
+        
+        if (!indexPath) {
+            [self handleSectionLongGestureWithCGPoint:p];
+        }
+        else{
+            [self handleCellLongGestureWithIndexPath:indexPath];
+        }
+    }
+}
+
+- (void)handleCellLongGestureWithIndexPath:(NSIndexPath *)indexPath{
+    BookmarkItemModel *itemModel = [self.dataManager bookmarkModelForRowAtIndexPath:indexPath];
+    
+    
+}
+
+- (void)handleSectionLongGestureWithCGPoint:(CGPoint)point{
+    NSInteger sections = [self.tableView numberOfSections];
+    
+    BookmarkSectionHeaderView *headerView;
+    NSInteger index = NSNotFound;
+    
+    for (int i = 0; i < sections; i++) {
+        BookmarkSectionHeaderView *hView = (BookmarkSectionHeaderView *)[self.tableView headerViewForSection:i];
+        if (hView && CGRectContainsPoint(hView.frame, point)) {
+            headerView = hView;
+            index = i;
+            break;
+        }
+    }
+    
+    if (headerView) {
+        WEAK_REF(self)
+        BookmarkEditViewController *editVC = [[BookmarkEditViewController alloc] initWithDataManager:self.dataManager sectionName:headerView.titleLabel.text sectionIndex:[NSIndexPath indexPathForRow:0 inSection:index] completion:^{
+            STRONG_REF(self_)
+            if (self__) {
+                [self__.tableView reloadSections:[NSIndexSet indexSetWithIndex:index] withRowAnimation:UITableViewRowAnimationNone];
+            }
+        }];
+        
+        UINavigationController *navigationVC = [[UINavigationController alloc] initWithRootViewController:editVC];
+        [self presentViewController:navigationVC animated:YES completion:nil];
+    }
+}
+
+#pragma mark - UIGestureRecognizerDelegate
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
+    if ([gestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]]) {
+        return !self.editing;
+    }
+    return NO;
+}
+
 #pragma mark - Handle ToolBar
 
 - (void)handleEditBtnClicked{
-    [self addToolbarNewDirectoryAndDoneBtn];
+    self.tableState = BookmarkTableStateBookmarkEdit;
+    [self setEditing:YES animated:YES];
+}
+
+- (void)handleSectionEditBtnClicked{
+    self.tableState = BookmarkTableStateSectionEdit;
+    [self.sectionInfoArray enumerateObjectsUsingBlock:^(BookmarkSectionInfo *info, NSUInteger idx, BOOL *stop){
+        info.open = NO;
+    }];
     
-    [self.tableView setEditing:YES animated:YES];
+    [self.tableView reloadData];
+    [self setEditing:YES animated:YES];
 }
 
 - (void)handleDoneBtnClicked{
-    [self addToolbarEditBtn];
-    [self.tableView setEditing:NO animated:YES];
+    [self setEditing:NO animated:YES];
 }
 
 - (void)handleNewDirectoryBtnClicked{
@@ -99,15 +203,14 @@ static NSString *const kEditToolBarItem = @"编辑";
     }];
     
     UINavigationController *navigationVC = [[UINavigationController alloc] initWithRootViewController:editVC];
-    [self presentViewController:navigationVC animated:YES completion:^{
-        ;
-    }];
+    [self presentViewController:navigationVC animated:YES completion:nil];
 }
 
 - (void)addToolbarEditBtn{
-    UIBarButtonItem *editItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(handleEditBtnClicked)];
+    UIBarButtonItem *sectionEditItem = [[UIBarButtonItem alloc] initWithTitle:@"编辑文件夹" style:UIBarButtonItemStylePlain target:self action:@selector(handleSectionEditBtnClicked)];
+    UIBarButtonItem *editItem = [[UIBarButtonItem alloc] initWithTitle:@"编辑书签" style:UIBarButtonItemStylePlain target:self action:@selector(handleEditBtnClicked)];
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    [self setToolbarItems:@[flexibleItem, editItem] animated:YES];
+    [self setToolbarItems:@[sectionEditItem, flexibleItem, editItem] animated:YES];
 }
 
 - (void)addToolbarNewDirectoryAndDoneBtn{
@@ -124,20 +227,35 @@ static NSString *const kEditToolBarItem = @"编辑";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if (self.tableState == BookmarkTableStateSectionEdit) {
+        return 1;
+    }
     BookmarkSectionInfo *sectionInfo = (section < self.sectionInfoArray.count) ? self.sectionInfoArray[section] : nil;
     return sectionInfo.open ? [self.dataManager numberOfRowsInSection:section] : 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    BookmarkTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kBookmarkTableViewCellIdentifier];
-    
-    BookmarkItemModel *itemModel = [self.dataManager bookmarkModelForRowAtIndexPath:indexPath];
-    cell.textLabel.text = itemModel.title;
+    UITableViewCell *cell = nil;
+    if (self.tableState == BookmarkTableStateSectionEdit) {
+        cell = [tableView dequeueReusableCellWithIdentifier:kBookmarkSectionTableViewCellIdentifier];
+        NSString *title = [self.dataManager headerTitleForSection:indexPath.section];
+        [(BookmarkSectionTableViewCell *)cell titleLabel].text = title;
+    }
+    else{
+        cell = [tableView dequeueReusableCellWithIdentifier:kBookmarkTableViewCellIdentifier];
+        
+        BookmarkItemModel *itemModel = [self.dataManager bookmarkModelForRowAtIndexPath:indexPath];
+        cell.textLabel.text = itemModel.title;
+    }
     
     return cell;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    if (self.tableState == BookmarkTableStateSectionEdit) {
+        return nil;
+    }
+    
     BookmarkSectionHeaderView *view = [tableView dequeueReusableHeaderFooterViewWithIdentifier:kBookmarkTableViewHeaderFooterIdentifier];
     
     NSString *title = [self.dataManager headerTitleForSection:section];
@@ -152,34 +270,62 @@ static NSString *const kEditToolBarItem = @"编辑";
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
-    return YES;
+    return self.editing;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.dataManager deleteRowAtIndexPath:indexPath completion:^(BOOL success){
-            if (success) {
+        if (self.tableState == BookmarkTableStateSectionEdit) {
+            [self.dataManager deleteSectionAtIndexPath:indexPath completion:^(BOOL success){
+                [tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
+            }];
+        }
+        else{
+            [self.dataManager deleteRowAtIndexPath:indexPath completion:^(BOOL success){
                 [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            }
-        }];
+            }];
+        }
     }
 }
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath{
     WEAK_REF(self)
-    [self.dataManager moveRowAtIndexPath:sourceIndexPath toIndexPath:destinationIndexPath completion:^(BOOL success){
-        STRONG_REF(self_)
-        if (self__ && success && sourceIndexPath.section != destinationIndexPath.section && destinationIndexPath.section <  self__.sectionInfoArray.count && !self__.sectionInfoArray[destinationIndexPath.section].open) {
-            BookmarkSectionHeaderView *headerView = (BookmarkSectionHeaderView *)[tableView headerViewForSection:destinationIndexPath.section];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [headerView toggleOpenWithUserAction:NO];
-                [self__ sectionHeaderView:headerView sectionOpened:destinationIndexPath.section isMove:YES];
-            });
-        }
-    }];
+    if (self.tableState == BookmarkTableStateSectionEdit) {
+        [self.dataManager moveSectionAtIndexPath:sourceIndexPath toIndexPath:destinationIndexPath completion:nil];
+    }
+    else{
+        [self.dataManager moveRowAtIndexPath:sourceIndexPath toIndexPath:destinationIndexPath completion:^(BOOL success){
+            STRONG_REF(self_)
+            if (self__ && success && sourceIndexPath.section != destinationIndexPath.section && destinationIndexPath.section <  self__.sectionInfoArray.count && !self__.sectionInfoArray[destinationIndexPath.section].open) {
+                BookmarkSectionHeaderView *headerView = (BookmarkSectionHeaderView *)[tableView headerViewForSection:destinationIndexPath.section];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [headerView toggleOpenWithUserAction:NO];
+                    [self__ sectionHeaderView:headerView sectionOpened:destinationIndexPath.section isMove:YES];
+                });
+            }
+        }];
+    }
 }
 
 #pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (self.tableState == BookmarkTableStateSectionEdit) {
+        return kBookmarkTableHeaderViewHeader;
+    }
+    return 44;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (self.tableState == BookmarkTableStateSectionEdit) {
+        return 0;
+    }
+    return kBookmarkTableHeaderViewHeader;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
 
 #pragma mark - SectionHeaderViewDelegate
 
