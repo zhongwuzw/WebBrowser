@@ -38,8 +38,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(HistorySQLiteManager)
 
 - (void)databaseManagerDidCreated{
     ZW_IN_DATABASE(db, ({
+        [db beginDeferredTransaction];
         [db executeZWUpdate:ZW_SQL_CREATE_HISTORY_TABLE];
         [db executeZWUpdate:ZW_SQL_CREATE_HISTORY_INDEX_TABLE];
+        [db commit];
     }));
 }
 

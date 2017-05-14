@@ -30,8 +30,8 @@
 {
     [super prepareLayout];
     
-    CGFloat top = 0.0;
-    CGFloat left = 0.0;
+    CGFloat top = 0.0f;
+    CGFloat left = 0.0f;
     CGFloat width = self.collectionView.frame.size.width;
     CGFloat height = self.collectionView.frame.size.height;
     

@@ -6,29 +6,23 @@
 //  Copyright © 2017年 钟武. All rights reserved.
 //
 
-#import "BookmarkEditViewController.h"
+#import "BookmarkDirectoryEditViewController.h"
 #import "BookmarkDataManager.h"
 #import "BookmarkEditTextFieldTableViewCell.h"
 
-static NSString *const kBookmarkEditTextFieldCellIdentifier = @"kBookmarkEditTextFieldCellIdentifier";
+@interface BookmarkDirectoryEditViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
-@interface BookmarkEditViewController () <UITableViewDelegate, UITableViewDataSource>
-
-@property (nonatomic, strong) BookmarkDataManager *dataManager;
-@property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, copy) BookmarkEditCompletion completion;
 @property (nonatomic, copy) NSString *sectionName;
-@property (nonatomic, strong) NSIndexPath *indexPath;
 
 @end
 
-@implementation BookmarkEditViewController
+@implementation BookmarkDirectoryEditViewController
 
 //Add directory
 - (instancetype)initWithDataManager:(BookmarkDataManager *)dataManager completion:(BookmarkEditCompletion)completion{
     if (self = [super initWithNibName:nil bundle:nil]) {
-        _dataManager = dataManager;
-        _completion = completion;
+        self.dataManager = dataManager;
+        self.completion = completion;
         _operationKind = BookmarkOperationKindSectionAdd;
     }
     return self;
@@ -37,50 +31,24 @@ static NSString *const kBookmarkEditTextFieldCellIdentifier = @"kBookmarkEditTex
 //Edit directory name
 - (instancetype)initWithDataManager:(BookmarkDataManager *)dataManager sectionName:(NSString *)sectionName sectionIndex:(NSIndexPath *)indexPath completion:(BookmarkEditCompletion)completion{
     if (self = [super initWithNibName:nil bundle:nil]) {
-        _dataManager = dataManager;
-        _completion = completion;
+        self.dataManager = dataManager;
+        self.completion = completion;
         _operationKind = BookmarkOperationKindSectionEdit;
         _sectionName = sectionName;
-        _indexPath = indexPath;
+        self.indexPath= indexPath;
     }
     return self;
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    [self initUI];
-    [self initData];
-}
-
 - (void)initUI{
-    self.view.backgroundColor = [UIColor whiteColor];
-    
-    UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(exit)];
-    self.navigationItem.leftBarButtonItem = cancelItem;
-    
-    UIBarButtonItem *doneItem = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(handleDoneItemClicked)];
-    self.navigationItem.rightBarButtonItem = doneItem;
-    
-    UINavigationBar *navigationBar = self.navigationController.navigationBar;
-    
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(navigationBar.frame), self.view.width, self.view.height - CGRectGetMaxY(navigationBar.frame)) style:UITableViewStyleGrouped];
-    [self.view addSubview:_tableView];
-    [_tableView registerNib:[UINib nibWithNibName:NSStringFromClass([BookmarkEditTextFieldTableViewCell class]) bundle:nil] forCellReuseIdentifier:kBookmarkEditTextFieldCellIdentifier];
-    
-    _tableView.tableFooterView = [UIView new];
-}
-
-- (void)initData{
-    _tableView.dataSource = self;
-    _tableView.delegate = self;
-    [_tableView reloadData];
+    [super initUI];
+    self.title = @"文件夹";
 }
 
 #pragma mark - Handle NavigationItem Clicked
 
 - (void)handleDoneItemClicked{
-    BookmarkEditTextFieldTableViewCell *cell = [_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    BookmarkEditTextFieldTableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     NSString *name = cell.textField.text;
     if (!name || [name isEqualToString:@""]) {
         [self.view showHUDWithMessage:@"文件夹名不能为空"];
@@ -102,15 +70,11 @@ static NSString *const kBookmarkEditTextFieldCellIdentifier = @"kBookmarkEditTex
     };
     
     if (self.operationKind == BookmarkOperationKindSectionEdit) {
-        [self.dataManager editBookmarkDirectoryWithName:name sectionIndex:_indexPath.section completion:completion];
+        [self.dataManager editBookmarkDirectoryWithName:name sectionIndex:self.indexPath.section completion:completion];
     }
     else{
         [self.dataManager addBookmarkDirectoryWithName:name completion:completion];
     }
-}
-
-- (void)exit{
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - UITableViewDataSource
@@ -129,14 +93,9 @@ static NSString *const kBookmarkEditTextFieldCellIdentifier = @"kBookmarkEditTex
         [cell.textField setText:self.sectionName];
     }
     [cell.textField becomeFirstResponder];
+    cell.textField.delegate = self;
     
     return cell;
-}
-
-#pragma mark - Dealloc
-
-- (void)dealloc{
-    DDLogDebug(@"%@ dealloced",NSStringFromClass([self class]));
 }
 
 @end

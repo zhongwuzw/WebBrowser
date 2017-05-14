@@ -6,18 +6,16 @@
 //  Copyright © 2017年 钟武. All rights reserved.
 //
 
-#import "BaseTableViewController.h"
+#import "BookmarkEditBaseViewController.h"
 
 @class BookmarkDataManager;
-
-typedef void(^BookmarkEditCompletion)();
 
 typedef NS_ENUM(NSUInteger, BookmarkOperationKind) {
     BookmarkOperationKindSectionAdd,
     BookmarkOperationKindSectionEdit
 };
 
-@interface BookmarkEditViewController : UIViewController
+@interface BookmarkDirectoryEditViewController : BookmarkEditBaseViewController
 
 @property (nonatomic, assign) BookmarkOperationKind operationKind;
 

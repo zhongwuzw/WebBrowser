@@ -14,7 +14,7 @@
 
 - (UIImage *)getCornerImageWithFrame:(CGRect)rect cornerRadius:(CGFloat)cornerRadius text:(NSString *)text atPoint:(CGPoint)point{
     UIImage *image;
-    UIGraphicsBeginImageContextWithOptions(rect.size, NO, 0.0);
+    UIGraphicsBeginImageContextWithOptions(rect.size, NO, 0.0f);
     [[UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:cornerRadius] addClip];
     CGRect imageRect = rect;
     imageRect.origin.y = UIImage_Text_Height;

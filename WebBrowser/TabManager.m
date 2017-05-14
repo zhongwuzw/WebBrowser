@@ -321,7 +321,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
         return;
     }
     
-    NSData *data = UIImageJPEGRepresentation(image, (CGFloat)1.0);
+    NSData *data = UIImageJPEGRepresentation(image, (CGFloat)1.0f);
     
     if (!data) {
         return;

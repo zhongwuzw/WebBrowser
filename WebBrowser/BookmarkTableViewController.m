@@ -11,8 +11,9 @@
 #import "BookmarkSectionHeaderView.h"
 #import "BookmarkSectionInfo.h"
 #import "BookmarkTableViewCell.h"
-#import "BookmarkEditViewController.h"
+#import "BookmarkDirectoryEditViewController.h"
 #import "BookmarkSectionTableViewCell.h"
+#import "BookmarkItemEditViewController.h"
 
 static CGFloat const kBookmarkTableHeaderViewHeader = 34;
 static NSString *const kBookmarkTableViewCellIdentifier = @"kBookmarkTableViewCellIdentifier";
@@ -88,6 +89,10 @@ typedef NS_ENUM(NSUInteger, BookmarkTableState) {
     self.longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongGesture:)];
     _longPressGesture.delegate = self;
     [self.tableView addGestureRecognizer:_longPressGesture];
+    
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+    tapGesture.cancelsTouchesInView = NO;
+    [self.view addGestureRecognizer:tapGesture];
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated{
@@ -108,6 +113,12 @@ typedef NS_ENUM(NSUInteger, BookmarkTableState) {
 
 #pragma mark - Handle Gesture
 
+- (void)handleTapGesture:(UITapGestureRecognizer *)sender{
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        [self setEditing:NO animated:YES];
+    }
+}
+
 - (void)handleLongGesture:(UILongPressGestureRecognizer *)longGesture{
     if (longGesture.state == UIGestureRecognizerStateRecognized) {
         CGPoint p = [longGesture locationInView:self.tableView];
@@ -123,12 +134,23 @@ typedef NS_ENUM(NSUInteger, BookmarkTableState) {
     }
 }
 
+// edit bookmark item
 - (void)handleCellLongGestureWithIndexPath:(NSIndexPath *)indexPath{
     BookmarkItemModel *itemModel = [self.dataManager bookmarkModelForRowAtIndexPath:indexPath];
     
+    WEAK_REF(self)
+    BookmarkItemEditViewController *editVC = [[BookmarkItemEditViewController alloc] initWithDataManager:self.dataManager item:itemModel sectionIndex:indexPath operationKind:BookmarkItemOperationKindItemEdit completion:^{
+        STRONG_REF(self_)
+        if (self__) {
+            [self__.tableView reloadData];
+        }
+    }];
     
+    UINavigationController *navigationVC = [[UINavigationController alloc] initWithRootViewController:editVC];
+    [self presentViewController:navigationVC animated:YES completion:nil];
 }
 
+// edit bookmark directory
 - (void)handleSectionLongGestureWithCGPoint:(CGPoint)point{
     NSInteger sections = [self.tableView numberOfSections];
     
@@ -146,7 +168,7 @@ typedef NS_ENUM(NSUInteger, BookmarkTableState) {
     
     if (headerView) {
         WEAK_REF(self)
-        BookmarkEditViewController *editVC = [[BookmarkEditViewController alloc] initWithDataManager:self.dataManager sectionName:headerView.titleLabel.text sectionIndex:[NSIndexPath indexPathForRow:0 inSection:index] completion:^{
+        BookmarkDirectoryEditViewController *editVC = [[BookmarkDirectoryEditViewController alloc] initWithDataManager:self.dataManager sectionName:headerView.titleLabel.text sectionIndex:[NSIndexPath indexPathForRow:0 inSection:index] completion:^{
             STRONG_REF(self_)
             if (self__) {
                 [self__.tableView reloadSections:[NSIndexSet indexSetWithIndex:index] withRowAnimation:UITableViewRowAnimationNone];
@@ -190,7 +212,7 @@ typedef NS_ENUM(NSUInteger, BookmarkTableState) {
 
 - (void)handleNewDirectoryBtnClicked{
     WEAK_REF(self)
-    BookmarkEditViewController *editVC = [[BookmarkEditViewController alloc] initWithDataManager:self.dataManager completion:^{
+    BookmarkDirectoryEditViewController *editVC = [[BookmarkDirectoryEditViewController alloc] initWithDataManager:self.dataManager completion:^{
         STRONG_REF(self_)
         if (self__) {
             NSInteger section = [self__.dataManager numberOfSections];
@@ -325,6 +347,15 @@ typedef NS_ENUM(NSUInteger, BookmarkTableState) {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if (!tableView.editing) {
+        BookmarkItemModel *model = [self.dataManager bookmarkModelForRowAtIndexPath:indexPath];
+        
+        if (model.url.length > 0) {
+            [[DelegateManager sharedInstance] performSelector:NSSelectorFromString(@"browserContainerViewLoadWebViewWithSug:") arguments:@[model.url] key:DelegateManagerBrowserContainerLoadURL];
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    }
 }
 
 #pragma mark - SectionHeaderViewDelegate

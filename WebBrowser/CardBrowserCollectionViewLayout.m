@@ -31,12 +31,12 @@
 {
     [super prepareLayout];
     
-    self.itemGap = roundf(self.collectionView.frame.size.height*0.2);
+    self.itemGap = roundf(self.collectionView.frame.size.height*0.2f);
     
     [self.attributes removeAllObjects];
     
-    CGFloat top = -110.0;
-    CGFloat left = 6.0;
+    CGFloat top = -110.0f;
+    CGFloat left = 6.0f;
     CGFloat width = roundf(self.collectionView.frame.size.width - 2*left);
     CGFloat height = roundf((self.collectionView.frame.size.height/self.collectionView.frame.size.width)*width);
     
@@ -50,25 +50,25 @@
         attributes.zIndex = item;
         
         // standard angle
-        CGFloat angleOfRotation = -61.0;
+        CGFloat angleOfRotation = -61.0f;
         
-        CGFloat frameOffset = self.collectionView.contentOffset.y - frame.origin.y - floorf(self.collectionView.frame.size.height/10.0);
+        CGFloat frameOffset = self.collectionView.contentOffset.y - frame.origin.y - floorf(self.collectionView.frame.size.height/10.0f);
         if (frameOffset > 0) {
             // make the cell at the top fall away
-            frameOffset = frameOffset/5.0;
-            frameOffset = MIN(frameOffset, 30.0);
+            frameOffset = frameOffset/5.0f;
+            frameOffset = MIN(frameOffset, 30.0f);
             angleOfRotation += frameOffset;
         }
         
         // rotation
-        CATransform3D rotation = CATransform3DMakeRotation((M_PI*angleOfRotation/180.0f), 1.0, 0.0, 0.0);
+        CATransform3D rotation = CATransform3DMakeRotation((M_PI*angleOfRotation/180.0f), 1.0f, 0.0f, 0.0f);
         
         // perspective
-        CGFloat depth = 300.0;
-        CATransform3D translateDown = CATransform3DMakeTranslation(0.0, 0.0, -depth);
-        CATransform3D translateUp = CATransform3DMakeTranslation(0.0, 0.0, depth);
+        CGFloat depth = 300.0f;
+        CATransform3D translateDown = CATransform3DMakeTranslation(0.0f, 0.0f, -depth);
+        CATransform3D translateUp = CATransform3DMakeTranslation(0.0f, 0.0f, depth);
         CATransform3D scale = CATransform3DIdentity;
-        scale.m34 = -1.0f/1500.0;
+        scale.m34 = -1.0f/1500.0f;
         CATransform3D perspective =  CATransform3DConcat(CATransform3DConcat(translateDown, scale), translateUp);
         
         // final transform
@@ -77,10 +77,10 @@
         CGFloat gap = self.itemGap;
         
         if (self.pannedItemIndexPath && item == self.pannedItemIndexPath.item) {
-            CGFloat dx = MAX(self.panStartPoint.x - self.panUpdatePoint.x, 0.0);
+            CGFloat dx = MAX(self.panStartPoint.x - self.panUpdatePoint.x, 0.0f);
             frame.origin.x -= dx;
             attributes.frame = frame;
-            attributes.alpha = MAX(1.0 - dx/width, 0);
+            attributes.alpha = MAX(1.0f - dx/width, 0);
             
             gap = attributes.alpha * self.itemGap;
         }

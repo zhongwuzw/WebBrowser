@@ -33,9 +33,9 @@
 //    [super layoutSubviews];
 //    
 ////    self.contentView.layer.shadowColor = [UIColor blackColor].CGColor;
-////    self.contentView.layer.shadowOffset = CGSizeMake(0.0, -20.0);
-////    self.contentView.layer.shadowOpacity = 0.6;
-////    self.contentView.layer.shadowRadius = 20.0;
+////    self.contentView.layer.shadowOffset = CGSizeMake(0.0f, -20.0f);
+////    self.contentView.layer.shadowOpacity = 0.6f;
+////    self.contentView.layer.shadowRadius = 20.0f;
 ////    self.contentView.layer.shadowPath = [UIBezierPath bezierPathWithRect:self.contentView.bounds].CGPath;
 ////    self.contentView.layer.shouldRasterize = YES;
 ////    
@@ -43,8 +43,8 @@
 ////    rect.size.width -= 9;
 ////    self.layer.shadowPath = [UIBezierPath bezierPathWithRoundedRect:rect cornerRadius:Cell_Corner_Radius].CGPath;
 ////    self.layer.shadowOffset = CGSizeMake(4, -2);
-////    self.layer.shadowOpacity = 0.5;
-////    self.layer.shadowColor = [[UIColor blackColor] colorWithAlphaComponent:0.5].CGColor;
+////    self.layer.shadowOpacity = 0.5f;
+////    self.layer.shadowColor = [[UIColor blackColor] colorWithAlphaComponent:0.5f].CGColor;
 //}
 
 - (void)commonInit{

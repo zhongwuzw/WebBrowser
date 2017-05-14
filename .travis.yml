@@ -1,15 +1,11 @@
 language: objective-c
-osx_image: xcode8.2
+osx_image: xcode8
 xcode_project: WebBrowser.xcodeproj
 xcode_scheme: WebBrowser
-xcode_sdk: iphonesimulator10.2
 env:
   global:
   - FRAMEWORK_NAME=WebBrowser
   - EXAMPLE_SCHEME="WebBrowser"
-  - IOS_SDK=iphonesimulator10.2
-  matrix:
-  - DESTINATION="platform=iOS Simulator,id=22FA2149-1241-469C-BF6D-462D3837DB72,OS=10.2" SDK="$IOS_SDK"
 before_install:
 - brew update
 - brew outdated carthage || brew upgrade carthage
@@ -28,4 +24,4 @@ deploy:
     tags: true
 
 script:
-  - xcodebuild -scheme "$EXAMPLE_SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO build | xcpretty
+  - xcodebuild -scheme "$EXAMPLE_SCHEME" -sdk iphonesimulator -project WebBrowser.xcodeproj -configuration Debug ONLY_ACTIVE_ARCH=NO build | xcpretty

@@ -52,9 +52,9 @@ typedef enum : NSUInteger {
 }
 
 - (void)sliderFirstTouch:(CharacterSelectView *)slider{
-    self.leadingLayoutConstraint.constant = -(self.width - slider.width)/2 + 10;
-    self.trailingLayoutContraint.constant = -(self.width - slider.width)/2 + 10;
-    [UIView animateWithDuration:.3 animations:^{
+    self.leadingLayoutConstraint.constant = -(self.width - slider.width)/2.0f + 10;
+    self.trailingLayoutContraint.constant = -(self.width - slider.width)/2.0f + 10;
+    [UIView animateWithDuration:.3f animations:^{
         [self layoutIfNeeded];
     } completion:^(BOOL finished){
         
@@ -62,11 +62,11 @@ typedef enum : NSUInteger {
 }
 
 - (void)sliderStop:(CharacterSelectView *)slider{
-    [self.slider setValue:0.5 animated:NO];
+    [self.slider setValue:0.5f animated:NO];
     self.lastThreshold = 0;
     self.leadingLayoutConstraint.constant = 0;
     self.trailingLayoutContraint.constant = 0;
-    [UIView animateWithDuration:.3 animations:^{
+    [UIView animateWithDuration:.3f animations:^{
         [self layoutIfNeeded];
     } completion:^(BOOL finished){
         
@@ -75,7 +75,7 @@ typedef enum : NSUInteger {
 
 - (void)sliderValueChangedAction:(CharacterSelectView *)slider{
     if (self.textField.selectedTextRange.empty) {
-        NSInteger offset = (slider.value - 0.5) * self.textField.text.length * 2;
+        NSInteger offset = (slider.value - 0.5f) * self.textField.text.length * 2;
         NSInteger labsOffset = labs(offset);
         if ((labsOffset > self.lastThreshold && offset < 0) || (labsOffset < self.lastThreshold && offset > 0)) {
             self.lastThreshold = labsOffset;

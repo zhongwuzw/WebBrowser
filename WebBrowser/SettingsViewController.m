@@ -31,7 +31,7 @@
         CAGradientLayer *layer = (CAGradientLayer *)self.layer;
         layer.colors = @[
                          (id)[[UIColor colorWithWhite:0 alpha:1] CGColor],
-                         (id)[[UIColor colorWithWhite:0 alpha:0.7] CGColor],
+                         (id)[[UIColor colorWithWhite:0 alpha:0.7f] CGColor],
                          ];
     }
     return self;
@@ -150,22 +150,24 @@ static NSString * const CellId = @"SettingsMenuCell";
     return UIStatusBarStyleLightContent;
 }
 
-- (void)dismiss:(id)sender
+- (void)dismiss:(UITapGestureRecognizer *)sender
 {
-    UIViewController *vc = [self presentingViewController];
-    if ([vc isKindOfClass:[UINavigationController class]])
-    {
-        vc = [vc performSelector:@selector(topViewController)];
-    }
-    
-    [self dismissViewControllerAnimated:YES completion:^{
-        [vc.view setNeedsLayout];
-        if ([vc respondsToSelector:@selector(collectionView)])
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        UIViewController *vc = [self presentingViewController];
+        if ([vc isKindOfClass:[UINavigationController class]])
         {
-            UICollectionView *collectionView = [vc performSelector:@selector(collectionView)];
-            [collectionView.collectionViewLayout invalidateLayout];
+            vc = [vc performSelector:@selector(topViewController)];
         }
-    }];
+        
+        [self dismissViewControllerAnimated:YES completion:^{
+            [vc.view setNeedsLayout];
+            if ([vc respondsToSelector:@selector(collectionView)])
+            {
+                UICollectionView *collectionView = [vc performSelector:@selector(collectionView)];
+                [collectionView.collectionViewLayout invalidateLayout];
+            }
+        }];
+    }
 }
 
 - (SettingsMenuBackgroundView *)backgroundView {
@@ -221,14 +223,14 @@ static NSString * const CellId = @"SettingsMenuCell";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    double delayInSeconds = 0.15;
+    CGFloat delayInSeconds = 0.15f;
     SettingsMenuItem *item = self.items[indexPath.item];
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [self dismissViewControllerAnimated:YES completion:^{
             if (item.action)
             {
-                double delayInSeconds = 0.15;
+                CGFloat delayInSeconds = 0.15f;
                 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
                 dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                     item.action();
@@ -285,19 +287,19 @@ static NSString * const CellId = @"SettingsMenuCell";
     
     self.collectionView.hidden = NO;
     
-    [UIView animateWithDuration:0.25 animations:^{
-        self.backgroundView.alpha = 1.0;
+    [UIView animateWithDuration:0.25f animations:^{
+        self.backgroundView.alpha = 1.0f;
     } completion:^(BOOL finished) {
     }];
     
     for (NSInteger idx = 0; idx < self.items.count; ++idx)
     {
-        CGFloat delay = 0.02 * idx;
-        delay += 0.05;
-        [UIView animateWithDuration:0.8 delay:delay usingSpringWithDamping:0.6 initialSpringVelocity:1 options:0 animations:^{
+        CGFloat delay = 0.02f * idx;
+        delay += 0.05f;
+        [UIView animateWithDuration:0.8f delay:delay usingSpringWithDamping:0.6f initialSpringVelocity:1 options:0 animations:^{
             UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:idx inSection:0]];
             cell.transform = CGAffineTransformIdentity;
-            cell.alpha = 1.0;
+            cell.alpha = 1.0f;
         } completion:^(BOOL finished) {
             if (idx + 1 == self.items.count && completion)
             {
@@ -311,7 +313,7 @@ static NSString * const CellId = @"SettingsMenuCell";
 {
     for (NSInteger idx = 0; idx < self.items.count; ++idx)
     {
-        [UIView animateWithDuration:0.3 delay:0.02 * idx options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        [UIView animateWithDuration:0.3f delay:0.02f * idx options:UIViewAnimationOptionCurveEaseInOut animations:^{
             UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:self.items.count - idx - 1 inSection:0]];
             cell.transform = [self offStageTransformForItemAtIndex:idx negative:YES];
             cell.alpha = 0;

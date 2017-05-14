@@ -14,7 +14,7 @@ typedef void(^BookmarkDataCompletion)(BOOL success);
 typedef void(^BookmarkDataInitCompletion)(NSArray<BookmarkSectionModel *> *array);
 typedef void(^BookmarkDataDeleteCompletion)(BOOL success);
 
-@interface BookmarkItemModel : NSObject
+@interface BookmarkItemModel : NSObject <NSCopying>
 
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *url;
@@ -45,8 +45,10 @@ typedef void(^BookmarkDataDeleteCompletion)(BOOL success);
 - (void)deleleAllBookmarkRecords;
 - (void)deleteSectionAtIndexPath:(NSIndexPath *)indexPath completion:(BookmarkDataDeleteCompletion)completion;
 - (void)addBookmarkWithURL:(NSString *)url title:(NSString *)title sectionName:(NSString *)sectionName completion:(BookmarkDataCompletion)completion;
+- (void)addBookmarkWithURL:(NSString *)url title:(NSString *)title sectionIndex:(NSInteger)sectionIndex completion:(BookmarkDataCompletion)completion;
 - (void)addBookmarkWithURL:(NSString *)url title:(NSString *)title completion:(BookmarkDataCompletion)completion;
 - (void)addBookmarkDirectoryWithName:(NSString *)name completion:(BookmarkDataCompletion)completion;
 - (void)editBookmarkDirectoryWithName:(NSString *)name sectionIndex:(NSInteger)index completion:(BookmarkDataCompletion)completion;
+- (void)editBookmarkItemWithModel:(BookmarkItemModel *)model oldIndexPath:(NSIndexPath *)oldIndexPath finalIndexPath:(NSIndexPath *)finalIndexPath completion:(BookmarkDataCompletion)completion;
 
 @end

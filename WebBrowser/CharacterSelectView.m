@@ -18,7 +18,7 @@
 }
 
 - (void)commonInit{
-    self.value = 0.5;
+    self.value = 0.5f;
     self.minimumTrackTintColor = UIColorFromRGB(0xE4E6E8);
     self.maximumTrackTintColor = UIColorFromRGB(0xE4E6E8);
 }

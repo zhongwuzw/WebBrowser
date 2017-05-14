@@ -309,7 +309,43 @@ static const void * const kDispatchQueueSpecificKey = &kDispatchQueueSpecificKey
         BookmarkItemModel *itemModel = [BookmarkItemModel bookmarkItemWithTitle:title url:url];
         self.sectionArray[index].itemsArray = (self.sectionArray[index].itemsArray) ? self.sectionArray[index].itemsArray : [NSMutableArray array];
         [self.sectionArray[index].itemsArray addObject:itemModel];
-        [self saveBookmarkSectionModelToDisk];
+        
+        dispatch_async(_syncQueue, ^{
+            [self saveBookmarkSectionModelToDisk];
+        });
+        
+        if (completion) {
+            dispatch_main_safe_async(^{
+                completion(YES);
+            })
+        }
+    });
+}
+
+- (void)addBookmarkWithURL:(NSString *)url title:(NSString *)title sectionIndex:(NSInteger)sectionIndex completion:(BookmarkDataCompletion)completion{
+    QueueCheck(NO);
+    
+    if (url.length == 0 || title.length == 0) {
+        if (completion) {
+            dispatch_main_safe_async(^{
+                completion(NO);
+            })
+        }
+        return;
+    }
+    
+    dispatch_async(_syncQueue, ^{
+        BOOL success = NO;
+        if (sectionIndex < self.sectionArray.count) {
+            success = YES;
+            BookmarkItemModel *itemModel = [BookmarkItemModel bookmarkItemWithTitle:title url:url];
+            self.sectionArray[sectionIndex].itemsArray = (self.sectionArray[sectionIndex].itemsArray) ? self.sectionArray[sectionIndex].itemsArray : [NSMutableArray array];
+            [self.sectionArray[sectionIndex].itemsArray addObject:itemModel];
+            
+            dispatch_async(_syncQueue, ^{
+                [self saveBookmarkSectionModelToDisk];
+            });
+        }
         
         if (completion) {
             dispatch_main_safe_async(^{
@@ -381,6 +417,42 @@ static const void * const kDispatchQueueSpecificKey = &kDispatchQueueSpecificKey
     });
 }
 
+- (void)editBookmarkItemWithModel:(BookmarkItemModel *)model oldIndexPath:(NSIndexPath *)oldIndexPath finalIndexPath:(NSIndexPath *)finalIndexPath completion:(BookmarkDataCompletion)completion{
+    QueueCheck(NO);
+    
+    dispatch_async(_syncQueue, ^{
+        BOOL success = YES;
+        NSInteger oldSection = oldIndexPath.section;
+        NSInteger oldRow = oldIndexPath.row;
+        NSInteger finalSection = finalIndexPath.section;
+        
+        if ([oldIndexPath isEqual:finalIndexPath]) {
+            if (oldSection < self.sectionArray.count && oldRow < self.sectionArray[oldSection].itemsArray.count) {
+                [self.sectionArray[oldSection].itemsArray replaceObjectAtIndex:oldRow withObject:model];
+            }
+        }
+        else if (oldSection < self.sectionArray.count && oldRow < self.sectionArray[oldSection].itemsArray.count) {
+            [self.sectionArray[oldSection].itemsArray removeObjectAtIndex:oldRow];
+            [self.sectionArray[finalSection].itemsArray addObject:model];
+        }
+        else{
+            success = NO;
+        }
+        
+        if (success) {
+            dispatch_async(_syncQueue, ^{
+                [self saveBookmarkSectionModelToDisk];
+            });
+        }
+        
+        if (completion) {
+            dispatch_main_safe_async(^{
+                completion(success);
+            })
+        }
+    });
+}
+
 @end
 
 static NSString *const kBookmarkItemTitleKey = @"kBookmarkItemTitleKey";
@@ -415,6 +487,17 @@ static NSString *const kBookmarkItemUrlKey = @"kBookmarkItemUrlKey";
 
 + (BOOL)supportsSecureCoding{
     return YES;
+}
+
+#pragma mark - NSCopying
+
+- (id)copyWithZone:(NSZone *)zone{
+    BookmarkItemModel *itemModel = [[self class] allocWithZone:zone];
+    
+    itemModel.title = [self.title copyWithZone:zone];
+    itemModel.url = [self.url copyWithZone:zone];
+    
+    return itemModel;
 }
 
 @end

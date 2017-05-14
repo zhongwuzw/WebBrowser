@@ -20,6 +20,7 @@
 #import "DelegateManager+WebViewDelegate.h"
 #import "BookmarkTableViewController.h"
 #import "BookmarkDataManager.h"
+#import "BookmarkItemEditViewController.h"
 
 static NSString *const kBrowserViewControllerAddBookmarkSuccess = @"添加书签成功";
 static NSString *const kBrowserViewControllerAddBookmarkFailure = @"添加书签失败";
@@ -247,14 +248,19 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
     BrowserWebView *webView = self.browserContainerView.webView;
     NSString *title = webView.mainFTitle;
     NSString *url = webView.mainFURL;
+    
+    if (title.length == 0 || url.length == 0) {
+        [self.view showHUDWithMessage:kBrowserViewControllerAddBookmarkFailure];
+        return;
+    }
+    
     BookmarkDataManager *dataManager = [[BookmarkDataManager alloc] init];
-    WEAK_REF(self)
-    [dataManager addBookmarkWithURL:url title:title completion:^(BOOL success){
-        STRONG_REF(self_)
-        if (self__) {
-            [self__.view showHUDWithMessage:(success) ? kBrowserViewControllerAddBookmarkSuccess : kBrowserViewControllerAddBookmarkFailure];
-        }
-    }];
+    
+    BookmarkItemEditViewController *editVC = [[BookmarkItemEditViewController alloc] initWithDataManager:dataManager item:[BookmarkItemModel bookmarkItemWithTitle:title url:url] sectionIndex:[NSIndexPath indexPathForRow:0 inSection:0] operationKind:BookmarkItemOperationKindItemAdd completion:nil];
+    
+    UINavigationController *navigationVC = [[UINavigationController alloc] initWithRootViewController:editVC];
+    
+    [self presentViewController:navigationVC animated:YES completion:nil];
 }
 
 #pragma mark - Preseving and Restoring State

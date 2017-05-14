@@ -128,7 +128,7 @@ static NSString * const CELL = @"CELL";
         [UIView setAnimationBeginsFromCurrentState:YES];
         [UIView setAnimationCurve:state.animationCurve];
         
-        self.searchInputView.center = CGPointMake(self.searchInputView.centerX, keyBoardEndY - self.searchInputView.height/2.0);
+        self.searchInputView.center = CGPointMake(self.searchInputView.centerX, keyBoardEndY - self.searchInputView.height/2.0f);
         if (self.isTextChanged) {
             self.tableView.height = CGRectGetMinY(self.searchInputView.frame) - STATUS_BAR_HEIGHT;
         }

@@ -8,7 +8,7 @@
 
 #import "CardCollectionViewLayout.h"
 
-static CGFloat BottomPercent = 0.85;
+static CGFloat BottomPercent = 0.85f;
 #define TitleHeight 150
 
 @interface CardCollectionViewLayout ()
