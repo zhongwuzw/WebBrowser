@@ -159,7 +159,7 @@ typedef NS_ENUM(NSUInteger, BookmarkItemTextField) {
     
     if (indexPath.section == 1 && indexPath.row != self.finalIndexPath.section) {
         UITableViewCell *oldCell = [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:self.finalIndexPath.section inSection:1]];
-        oldCell.accessoryType = UIAccessibilityTraitNone;
+        oldCell.accessoryType = UITableViewCellAccessoryNone;
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
         self.finalIndexPath = [NSIndexPath indexPathForRow:self.indexPath.row inSection:indexPath.row];
