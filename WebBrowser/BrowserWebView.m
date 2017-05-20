@@ -389,18 +389,6 @@
     }
 }
 
-#pragma mark - Validating Commands
-
-- (BOOL)canPerformAction:(SEL)action withSender:(id)sender{
-    return action == @selector(menuHelperFindInPage:);
-}
-
-#pragma mark - MenuHelperInterface Protocol
-
-- (void)menuHelperFindInPage:(NSNotification *)sender{
-    
-}
-
 #pragma mark - Dealloc
 
 - (void)dealloc{

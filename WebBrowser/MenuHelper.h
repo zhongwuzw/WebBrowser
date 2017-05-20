@@ -12,11 +12,11 @@
 
 @optional
 
-- (void)menuHelperCopy:(NSNotification *)sender;
-- (void)menuHelperOpenAndFill:(NSNotification *)sender;
-- (void)menuHelperReveal:(NSNotification *)sender;
-- (void)menuHelperSecure:(NSNotification *)sender;
-- (void)menuHelperFindInPage:(NSNotification *)sender;
+- (void)menuHelperCopy;
+- (void)menuHelperOpenAndFill;
+- (void)menuHelperReveal;
+- (void)menuHelperSecure;
+- (void)menuHelperFindInPage;
 
 @end
 

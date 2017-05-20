@@ -64,7 +64,7 @@
       observer.disconnect();
       observer = null;
     }
-  }
+  };
 
   window.addEventListener("DOMContentLoaded", function (event) {
     window.__firefox__.NoImageMode.setEnabled(window.__firefox__.NoImageMode.enabled);

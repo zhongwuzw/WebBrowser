@@ -14,16 +14,16 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(MenuHelper)
 
 - (void)setItems{
     NSString *revealPasswordTitle = @"显示";
-    UIMenuItem *revealPasswordItem = [[UIMenuItem alloc] initWithTitle:revealPasswordTitle action:@selector(menuHelperReveal:)];
+    UIMenuItem *revealPasswordItem = [[UIMenuItem alloc] initWithTitle:revealPasswordTitle action:@selector(menuHelperReveal)];
     
     NSString *copyTitle = @"拷贝";
-    UIMenuItem *copyItem = [[UIMenuItem alloc] initWithTitle:copyTitle action:@selector(menuHelperCopy:)];
+    UIMenuItem *copyItem = [[UIMenuItem alloc] initWithTitle:copyTitle action:@selector(menuHelperCopy)];
     
     NSString *openAndFillTitle = @"打开";
-    UIMenuItem *openAndFillItem = [[UIMenuItem alloc] initWithTitle:openAndFillTitle action:@selector(menuHelperOpenAndFill:)];
+    UIMenuItem *openAndFillItem = [[UIMenuItem alloc] initWithTitle:openAndFillTitle action:@selector(menuHelperOpenAndFill)];
     
     NSString *findInPageTitle = @"页内查找";
-    UIMenuItem *findInPageItem = [[UIMenuItem alloc] initWithTitle:findInPageTitle action:@selector(menuHelperFindInPage:)];
+    UIMenuItem *findInPageItem = [[UIMenuItem alloc] initWithTitle:findInPageTitle action:@selector(menuHelperFindInPage)];
 
     [UIMenuController sharedMenuController].menuItems = @[copyItem, revealPasswordItem, openAndFillItem, findInPageItem];
 

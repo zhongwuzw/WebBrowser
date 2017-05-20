@@ -34,5 +34,6 @@
 SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(KeyboardHelper)
 - (void)startObserving;
 - (void)addDelegate:(id<KeyboardHelperDelegate>)delegate;
+- (void)removeDelegate:(id<KeyboardHelperDelegate>)delegate;
 
 @end

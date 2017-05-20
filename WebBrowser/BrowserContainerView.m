@@ -18,6 +18,7 @@
 #import "WebServer.h"
 #import "BrowserViewController.h"
 #import "HTTPClient.h"
+#import "FindInPageBar.h"
 
 #import <Photos/Photos.h>
 
@@ -50,7 +51,7 @@ static NSString *const CancelString = @"取消";
 
     [self restoreWithCompletionHandler:nil];
     
-    [[DelegateManager sharedInstance] registerDelegate:self forKeys:@[DelegateManagerBrowserContainerLoadURL,DelegateManagerWebView]];
+    [[DelegateManager sharedInstance] registerDelegate:self forKeys:@[DelegateManagerBrowserContainerLoadURL, DelegateManagerWebView, DelegateManagerFindInPageBarDelegate]];
     [[DelegateManager sharedInstance] addWebViewDelegate:self];
     [Notifier addObserver:self selector:@selector(handleOpenInNewWindow:) name:kOpenInNewWindowNotification object:nil];
     
@@ -124,28 +125,55 @@ static NSString *const CancelString = @"取消";
     }];
 }
 
-#pragma mark - Handle WebView Long Press Gesture
-
-- (void)handleContextMenuWithComponents:(NSString *)url{
-    if ([url hasPrefix:@"zwcontextmenu://message?json="]) {
-        NSString *jsonStr = [url substringFromIndex:@"zwcontextmenu://message?json=".length];
+- (NSDictionary *)getWebViewJSONDicWithComponents:(NSString *)url prefix:(NSString *)prefix{
+    NSDictionary *jsonDic = nil;
+    if ([url hasPrefix:prefix]) {
+        NSString *jsonStr = [url substringFromIndex:prefix.length];
         
         jsonStr = [jsonStr stringByRemovingPercentEncoding];
         if (jsonStr) {
-            NSDictionary *jsonDic = [NSJSONSerialization JSONObjectWithData:[jsonStr dataUsingEncoding:NSUTF8StringEncoding] options:0 error:NULL];
+            jsonDic = [NSJSONSerialization JSONObjectWithData:[jsonStr dataUsingEncoding:NSUTF8StringEncoding] options:0 error:NULL];
             if (jsonDic && [jsonDic isKindOfClass:[NSDictionary class]]) {
-                if (jsonDic[@"handled"]) {
-                    self.selectionGestureRecognizer.enabled = NO;
-                    self.selectionGestureRecognizer.enabled = YES;
-                }
-                
-                NSString *urlString = jsonDic[@"link"];
-
-                NSString *imageString = jsonDic[@"image"];
-                
-                [self handleContenxtMenuWithLink:urlString imageURL:imageString];
+                return jsonDic;
             }
         }
+    }
+    return jsonDic;
+}
+
+#pragma mark - Handle WebView FindInPage Results
+
+- (void)handleFindInPageWithComponents:(NSString *)url{
+    NSDictionary *jsonDic = [self getWebViewJSONDicWithComponents:url prefix:@"zwfindinpage://message?json="];
+    if (jsonDic) {
+        NSNumber *totalResults = [jsonDic objectForKey:@"totalResults"];
+        
+        NSNumber *currentResult = [jsonDic objectForKey:@"currentResult"];
+        
+        if (totalResults) {
+            [BrowserVC findInPageDidUpdateTotalResults:[totalResults integerValue]];
+        }
+        if (currentResult) {
+            [BrowserVC findInPageDidUpdateCurrentResult:[currentResult integerValue]];
+        }
+    }
+}
+
+#pragma mark - Handle WebView Long Press Gesture
+
+- (void)handleContextMenuWithComponents:(NSString *)url{
+    NSDictionary *jsonDic = [self getWebViewJSONDicWithComponents:url prefix:@"zwcontextmenu://message?json="];
+    if (jsonDic) {
+        if (jsonDic[@"handled"]) {
+            self.selectionGestureRecognizer.enabled = NO;
+            self.selectionGestureRecognizer.enabled = YES;
+        }
+        
+        NSString *urlString = jsonDic[@"link"];
+        
+        NSString *imageString = jsonDic[@"image"];
+        
+        [self handleContenxtMenuWithLink:urlString imageURL:imageString];
     }
 }
 
@@ -279,6 +307,10 @@ static NSString *const CancelString = @"取消";
             [self handleContextMenuWithComponents:url.string];
             return NO;
         }
+        else if ([url.scheme isEqualToString:@"zwfindinpage"]){
+            [self handleFindInPageWithComponents:url.string];
+            return NO;
+        }
     }
     return YES;
 }
@@ -346,6 +378,53 @@ static NSString *const CancelString = @"取消";
         return [[otherGestureRecognizer.delegate description] containsString:@"UIWebBrowserView"];
     }
     return NO;
+}
+
+#pragma mark - Validating Commands
+
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender{
+    return action == @selector(menuHelperFindInPage);
+}
+
+- (void)findWithText:(NSString *)text function:(NSString *)function{
+    text = (text.length) ? text : @"";
+    
+    NSString *escaped = [[text stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"] stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
+    
+    escaped = (escaped) ? escaped : @"";
+    
+    [self.webView evaluateJavaScript:[NSString stringWithFormat:@"window.__firefox__.%@(\"%@\")",function,escaped] completionHandler:nil];
+}
+
+#pragma mark - MenuHelperInterface Protocol
+
+- (void)menuHelperFindInPage{
+    WEAK_REF(self)
+    [self.webView evaluateJavaScript:@"window.__firefox__.getSelection()" completionHandler:^(NSString *result, NSError *error){
+        STRONG_REF(self_)
+        if (self__ && result.length > 0) {
+            [self__ findWithText:result function:@"find"];
+            [BrowserVC findInPageDidSelectForSelection:result];
+        }
+    }];
+}
+
+#pragma mark - FindInPageBarDelegate
+
+- (void)findInPage:(FindInPageBar *)findInPage didTextChange:(NSString *)text{
+    [self findWithText:text function:@"find"];
+}
+
+- (void)findInPage:(FindInPageBar *)findInPage didFindPreviousWithText:(NSString *)text{
+    [self findWithText:text function:@"findPrevious"];
+}
+
+- (void)findInPage:(FindInPageBar *)findInPage didFindNextWithText:(NSString *)text{
+    [self findWithText:text function:@"findNext"];
+}
+
+- (void)findInPageDidPressClose:(FindInPageBar *)findInPage{
+    [self.webView evaluateJavaScript:@"window.__firefox__.findDone()" completionHandler:nil];
 }
 
 #pragma mark - Dealloc

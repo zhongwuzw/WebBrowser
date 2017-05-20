@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E1702C81ECC412B0075C7D5 /* FindInPageBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1702C71ECC412B0075C7D5 /* FindInPageBar.m */; };
 		0E19A4D41E232FA8009DAF9A /* NSNumber+ZWUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E19A4D31E232FA8009DAF9A /* NSNumber+ZWUtility.m */; };
 		0E19A4D91E237D35009DAF9A /* DelegateManager+Delegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E19A4D81E237D35009DAF9A /* DelegateManager+Delegate.m */; };
 		0E1A9F191EAF597400FAB196 /* BookmarkTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1A9F181EAF597400FAB196 /* BookmarkTableViewController.m */; };
@@ -113,6 +114,7 @@
 		0EF025701DD957EC0011019F /* BaseResponseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF0256F1DD957EC0011019F /* BaseResponseModel.m */; };
 		0EF025721DD95B1E0011019F /* Mantle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EF025711DD95B1E0011019F /* Mantle.framework */; };
 		0EF025751DD99FAC0011019F /* BaiduSugResponseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF025741DD99FAC0011019F /* BaiduSugResponseModel.m */; };
+		0EF59F9A1ECB0B5000D6BDF9 /* FindInPage.js in Resources */ = {isa = PBXBuildFile; fileRef = 0EF59F991ECB0B5000D6BDF9 /* FindInPage.js */; };
 		0EFCB9DE1E4F62A60094C466 /* NoImageModeHelper.js in Resources */ = {isa = PBXBuildFile; fileRef = 0EFCB9DD1E4F62A60094C466 /* NoImageModeHelper.js */; };
 		0EFDD3081DD423AC002AB3FB /* HttpHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EFDD3071DD423AC002AB3FB /* HttpHelper.m */; };
 		0EFDD30A1DD42861002AB3FB /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EFDD3091DD42861002AB3FB /* AVFoundation.framework */; };
@@ -138,6 +140,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0E1702C61ECC412B0075C7D5 /* FindInPageBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindInPageBar.h; sourceTree = "<group>"; };
+		0E1702C71ECC412B0075C7D5 /* FindInPageBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindInPageBar.m; sourceTree = "<group>"; };
 		0E19A4D21E232FA8009DAF9A /* NSNumber+ZWUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+ZWUtility.h"; sourceTree = "<group>"; };
 		0E19A4D31E232FA8009DAF9A /* NSNumber+ZWUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+ZWUtility.m"; sourceTree = "<group>"; };
 		0E19A4D71E237D35009DAF9A /* DelegateManager+Delegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DelegateManager+Delegate.h"; sourceTree = "<group>"; };
@@ -340,6 +344,7 @@
 		0EF025711DD95B1E0011019F /* Mantle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mantle.framework; path = Carthage/Build/iOS/Mantle.framework; sourceTree = "<group>"; };
 		0EF025731DD99FAC0011019F /* BaiduSugResponseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaiduSugResponseModel.h; sourceTree = "<group>"; };
 		0EF025741DD99FAC0011019F /* BaiduSugResponseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaiduSugResponseModel.m; sourceTree = "<group>"; };
+		0EF59F991ECB0B5000D6BDF9 /* FindInPage.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = FindInPage.js; sourceTree = "<group>"; };
 		0EFCB9DD1E4F62A60094C466 /* NoImageModeHelper.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; lineEnding = 0; path = NoImageModeHelper.js; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.javascript; };
 		0EFDD3061DD423AC002AB3FB /* HttpHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpHelper.h; sourceTree = "<group>"; };
 		0EFDD3071DD423AC002AB3FB /* HttpHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpHelper.m; sourceTree = "<group>"; };
@@ -605,6 +610,8 @@
 				0E2329331DAE19BB007E9886 /* TopToolBarShapeView.m */,
 				0EBF3A681DCF38D600CD77C8 /* BrowserBottomToolBar.h */,
 				0EBF3A691DCF38D600CD77C8 /* BrowserBottomToolBar.m */,
+				0E1702C61ECC412B0075C7D5 /* FindInPageBar.h */,
+				0E1702C71ECC412B0075C7D5 /* FindInPageBar.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1043,6 +1050,7 @@
 			isa = PBXGroup;
 			children = (
 				0EFCB9DD1E4F62A60094C466 /* NoImageModeHelper.js */,
+				0EF59F991ECB0B5000D6BDF9 /* FindInPage.js */,
 				0E9836B51E82CC9B0044BEA9 /* ContextMenu.js */,
 			);
 			name = JavaScript;
@@ -1167,6 +1175,7 @@
 				0E681F381D4AEC3F003534F5 /* LaunchScreen.storyboard in Resources */,
 				0E5988A61E2F8070003259C0 /* SettingActivityTableViewCell.xib in Resources */,
 				0EBFFE7B1E52B22C00404199 /* SettingSwitchTableViewCell.xib in Resources */,
+				0EF59F9A1ECB0B5000D6BDF9 /* FindInPage.js in Resources */,
 				0E9836B61E82CC9B0044BEA9 /* ContextMenu.js in Resources */,
 				0E9361DD1EB0FAEE004F6AE7 /* BookmarkTableViewCell.xib in Resources */,
 			);
@@ -1253,6 +1262,7 @@
 				0EBFFE761E52AA7500404199 /* PreferenceHelper.m in Sources */,
 				0EF025751DD99FAC0011019F /* BaiduSugResponseModel.m in Sources */,
 				0EBB15A31EC36C780044156A /* BookmarkEditBaseViewController.m in Sources */,
+				0E1702C81ECC412B0075C7D5 /* FindInPageBar.m in Sources */,
 				0E7078141E9652C400E898A8 /* ZWDatabaseQueue.m in Sources */,
 				0E2329311DADE07B007E9886 /* BrowserTopToolBar.m in Sources */,
 				0E2329341DAE19BB007E9886 /* TopToolBarShapeView.m in Sources */,

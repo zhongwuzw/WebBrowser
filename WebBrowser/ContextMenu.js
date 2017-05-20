@@ -15,13 +15,15 @@ var highlightDiv = null;
 var touchHandled = false;
  
 function postJSBridgeMessage(message) {
-    var elementID = "CONTEXT_MENU_MSG_IFRAME";
-    var element = document.getElementById(elementID);
-    element || (element = document.createElement("iframe"), element.id = elementID, element.setAttribute("style", "height:0px !important; width:0px !important; border:none !important; display:none !important;"), document.body.appendChild(element));
- 
-    var messageStr = JSON.stringify(message);
-    var escapedMessageStr = encodeURI(messageStr);
-    element.src = "zwcontextmenu://message?json=" + escapedMessageStr;
+  var element = document.createElement('iframe');
+  element.style.display = 'none';
+
+  var messageStr = JSON.stringify(message);
+  var escapedMessageStr = encodeURI(messageStr);
+
+  element.src = "zwcontextmenu://message?json=" + escapedMessageStr;
+  document.documentElement.appendChild(element);
+  setTimeout(function() { document.documentElement.removeChild(element); }, 0);
 }
 
 function cancel() {

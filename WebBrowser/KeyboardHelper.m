@@ -83,6 +83,15 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KeyboardHelper)
     [_delegates addObject:[[WeakKeyboardDelegate alloc] initWithDelegate:delegate]];
 }
 
+- (void)removeDelegate:(id<KeyboardHelperDelegate>)delegate{
+    for (int i = 0; i < _delegates.count; i++) {
+        if (_delegates[i].delegate == delegate) {
+            [_delegates removeObjectAtIndex:i];
+            return;
+        }
+    }
+}
+
 - (void)keyboardWillShow:(NSNotification *)notification{
     NSDictionary *userInfo = notification.userInfo;
     _currentState = [[KeyboardState alloc] initWithUserInfo:userInfo];

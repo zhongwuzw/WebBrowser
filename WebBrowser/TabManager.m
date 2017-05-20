@@ -467,10 +467,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
 
 #pragma mark - WebViewDelegate Method
 
-//当解析完head标签后注入无图模式js,需要注意的是，当启用无图模式时，UIWebView依然会进行图片网络请求
+//当解析完head标签后注入无图模式js,需要注意的是，当启用无图模式时，UIWebView依然会进行图片网络请求,只是设置visible为false
 - (void)webView:(BrowserWebView *)webView gotTitleName:(NSString*)titleName{
     [JavaScriptHelper setNoImageMode:[PreferenceHelper boolForKey:KeyNoImageModeStatus] webView:webView loadPrimaryScript:YES];
     [JavaScriptHelper setLongPressGestureWithWebView:webView];
+    [JavaScriptHelper setFindInPageWithWebView:webView];
+    
     [[HistorySQLiteManager sharedInstance] insertOrUpdateHistoryWithURL:webView.mainFURL title:titleName];
 }
 

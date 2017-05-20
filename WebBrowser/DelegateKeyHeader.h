@@ -11,5 +11,6 @@
 
 #define DelegateManagerWebView @"WebViewDelegate"
 #define DelegateManagerBrowserContainerLoadURL @"DelegateManagerBrowserContainerLoadURL"
+#define DelegateManagerFindInPageBarDelegate @"DelegateManagerFindInPageBarDelegate"
 
 #endif /* DelegateKeyHeader_h */

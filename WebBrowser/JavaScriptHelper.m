@@ -17,12 +17,16 @@
     return source;
 }
 
++ (void)loadJavascriptWithName:(NSString *)name webView:(BrowserWebView *)webView{
+    NSString *source = [self getJSSourceWithName:name];
+    if (source) {
+        [webView evaluateJavaScript:source completionHandler:nil];
+    }
+}
+
 + (void)setNoImageMode:(BOOL)enabled webView:(BrowserWebView *)webView loadPrimaryScript:(BOOL)needsLoad{
     if (needsLoad) {
-        NSString *source = [self getJSSourceWithName:@"NoImageModeHelper"];
-        if (source) {
-            [webView evaluateJavaScript:source completionHandler:nil];
-        }
+        [self loadJavascriptWithName:@"NoImageModeHelper" webView:webView];
     }
     
     [webView evaluateJavaScript:[NSString stringWithFormat:@"window.__firefox__.NoImageMode.setEnabled(%d)",enabled] completionHandler:^(NSString *result, NSError *error){
@@ -31,10 +35,11 @@
 }
     
 + (void)setLongPressGestureWithWebView:(BrowserWebView *)webView{
-    NSString *source = [self getJSSourceWithName:@"ContextMenu"];
-    if (source) {
-        [webView evaluateJavaScript:source completionHandler:nil];
-    }
+    [self loadJavascriptWithName:@"ContextMenu" webView:webView];
+}
+
++ (void)setFindInPageWithWebView:(BrowserWebView *)webView{
+    [self loadJavascriptWithName:@"FindInPage" webView:webView];
 }
 
 @end

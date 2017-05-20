@@ -21,11 +21,13 @@
 #import "BookmarkTableViewController.h"
 #import "BookmarkDataManager.h"
 #import "BookmarkItemEditViewController.h"
+#import "FindInPageBar.h"
+#import "KeyboardHelper.h"
 
 static NSString *const kBrowserViewControllerAddBookmarkSuccess = @"添加书签成功";
 static NSString *const kBrowserViewControllerAddBookmarkFailure = @"添加书签失败";
 
-@interface BrowserViewController () <BrowserBottomToolBarButtonClickedDelegate,  UIViewControllerRestoration>
+@interface BrowserViewController () <BrowserBottomToolBarButtonClickedDelegate,  UIViewControllerRestoration, KeyboardHelperDelegate>
 
 @property (nonatomic, strong) BrowserContainerView *browserContainerView;
 @property (nonatomic, strong) BrowserBottomToolBar *bottomToolBar;
@@ -34,6 +36,8 @@ static NSString *const kBrowserViewControllerAddBookmarkFailure = @"添加书签
 @property (nonatomic, assign) BOOL isWebViewDecelerate;
 @property (nonatomic, assign) ScrollDirection webViewScrollDirection;
 @property (nonatomic, weak) id<BrowserBottomToolBarButtonClickedDelegate> browserButtonDelegate;
+@property (nonatomic, strong) FindInPageBar *findInPageBar;
+@property (nonatomic, weak) NSLayoutConstraint *findInPageBarbottomLayoutConstaint;
 
 @end
 
@@ -50,7 +54,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
 
     self.lastContentOffset = - TOP_TOOL_BAR_HEIGHT;
     
-    [[DelegateManager sharedInstance] registerDelegate:self forKey:DelegateManagerWebView];
+    [[DelegateManager sharedInstance] registerDelegate:self forKeys:@[DelegateManagerWebView, DelegateManagerFindInPageBarDelegate]];
+    [[KeyboardHelper sharedInstance] addDelegate:self];
     
     self.restorationIdentifier = NSStringFromClass([self class]);
     self.restorationClass = [self class];
@@ -269,6 +274,97 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
     BrowserViewController *controller = BrowserVC;
     return controller;
 }
+
+#pragma mark - FindInPageBarDelegate
+
+- (void)findInPage:(FindInPageBar *)findInPage didFindPreviousWithText:(NSString *)text{
+    [self.findInPageBar endEditing:YES];
+}
+
+- (void)findInPage:(FindInPageBar *)findInPage didFindNextWithText:(NSString *)text{
+    [self.findInPageBar endEditing:YES];
+}
+
+- (void)findInPageDidPressClose:(FindInPageBar *)findInPage{
+    [self updateFindInPageVisibility:NO];
+}
+
+- (void)updateFindInPageVisibility:(BOOL)visible{
+    if (visible) {
+        if (!self.findInPageBar) {
+            FindInPageBar *findInPageBar = [FindInPageBar new];
+            findInPageBar.translatesAutoresizingMaskIntoConstraints = NO;
+            [self.view addSubview:findInPageBar];
+            
+            [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[findInPageBar]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(findInPageBar)]];
+            [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[findInPageBar(44)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(findInPageBar)]];
+            NSLayoutConstraint *bottomConstaint = [NSLayoutConstraint constraintWithItem:findInPageBar attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_bottomToolBar attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.f];
+            [self.view addConstraint:bottomConstaint];
+            self.findInPageBarbottomLayoutConstaint = bottomConstaint;
+            
+            self.findInPageBar = findInPageBar;
+        }
+        [self.findInPageBar becomeFirstResponder];
+    }
+    else if (self.findInPageBar){
+        [self.findInPageBar endEditing:YES];
+        [self.findInPageBar removeFromSuperview];
+        self.findInPageBar = nil;
+    }
+}
+
+#pragma mark - FindInPageUpdateDelegate
+
+- (void)findInPageDidUpdateCurrentResult:(NSInteger)currentResult{
+    self.findInPageBar.currentResult = currentResult;
+}
+
+- (void)findInPageDidUpdateTotalResults:(NSInteger)totalResults{
+    self.findInPageBar.totalResults = totalResults;
+}
+
+- (void)findInPageDidSelectForSelection:(NSString *)selection{
+    [self updateFindInPageVisibility:YES];
+    self.findInPageBar.text = selection;
+}
+
+#pragma mark - KeyboardHelperDelegate
+
+- (void)keyboardHelper:(KeyboardHelper *)keyboardHelper keyboardWillShowWithState:(KeyboardState *)state{
+    [self changeSearchInputViewPoint:state isShow:YES];
+}
+
+- (void)keyboardHelper:(KeyboardHelper *)keyboardHelper keyboardWillHideWithState:(KeyboardState *)state{
+    [self changeSearchInputViewPoint:state isShow:NO];
+}
+
+- (void)changeSearchInputViewPoint:(KeyboardState *)state isShow:(BOOL)isShow{
+    if (!(self.navigationController.topViewController == self && !self.presentedViewController && self.findInPageBar)) {
+        return;
+    }
+    
+    NSDictionary *userInfo = [state userInfo];
+    NSValue *value = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGFloat keyBoardEndY = value.CGRectValue.origin.y;  // 得到键盘弹出后的键盘视图所在y坐标
+    
+    // 添加移动动画，使视图跟随键盘移动
+    [UIView animateWithDuration:state.animationDuration animations:^{
+        [UIView setAnimationBeginsFromCurrentState:YES];
+        [UIView setAnimationCurve:state.animationCurve];
+        [self.findInPageBarbottomLayoutConstaint setActive:NO];
+        if (isShow) {
+            NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:self.findInPageBar attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop multiplier:1.0f constant:keyBoardEndY];
+            self.findInPageBarbottomLayoutConstaint = bottomConstraint;
+            [self.view addConstraint:bottomConstraint];
+        }
+        else{
+            NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:self.findInPageBar attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.bottomToolBar attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.f];
+            self.findInPageBarbottomLayoutConstaint = bottomConstraint;
+            [self.view addConstraint:bottomConstraint];
+        }
+    }];
+}
+
 
 #pragma mark - Dealloc Method
 
