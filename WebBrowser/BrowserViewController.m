@@ -23,6 +23,7 @@
 #import "BookmarkItemEditViewController.h"
 #import "FindInPageBar.h"
 #import "KeyboardHelper.h"
+#import "NSURL+ZWUtility.h"
 
 static NSString *const kBrowserViewControllerAddBookmarkSuccess = @"添加书签成功";
 static NSString *const kBrowserViewControllerAddBookmarkFailure = @"添加书签失败";
@@ -203,6 +204,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
         [self.browserButtonDelegate browserBottomToolBarButtonClickedWithTag:tag];
     }
     if (tag == BottomToolBarMoreButtonTag) {
+        // weak self_ must not nil
         WEAK_REF(self)
         NSArray<SettingsMenuItem *> *items =
         @[
@@ -218,8 +220,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
           [SettingsMenuItem itemWithText:@"设置" image:[UIImage imageNamed:@"album"] action:^{
               [self_ pushTableViewControllerWithControllerName:[SettingsTableViewController class]];
           }],
-          [SettingsMenuItem itemWithText:@"分享" image:[UIImage imageNamed:@"album"] action:^{
-              [self_.view showHUDWithMessage:@"Yep, 就是不想实现!"];
+          [SettingsMenuItem itemWithText:@"拷贝连接" image:[UIImage imageNamed:@"album"] action:^{
+              [self_ handleCopyURLButtonClicked];
           }]
           ];
         
@@ -247,6 +249,22 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
     }
     UITableViewController *vc = [[class alloc] initWithStyle:UITableViewStylePlain];
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)handleCopyURLButtonClicked{
+    NSURL *url = [NSURL URLWithString:self.browserContainerView.webView.mainFURL];
+    BOOL success = NO;
+    
+    if (url) {
+        if ([url isErrorPageURL]) {
+            url = [url originalURLFromErrorURL];
+        }
+        UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
+        pasteBoard.URL = url;
+        success = YES;
+    }
+
+    [self.view showHUDWithMessage:success ? @"拷贝成功" : @"拷贝失败"];
 }
 
 - (void)addBookmark{

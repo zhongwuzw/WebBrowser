@@ -91,6 +91,7 @@ function findMatches(text) {
       var node;
       while (node = walker.nextNode()) {
         var textContent = node.textContent;
+        // 遍历节点所有字符
         findString: for (var i = 0; i < textContent.length - textLength + 1; ++i) {
           for (var j = 0; j < textLength; ++j) {
             var nextChar = textContent[i + j];

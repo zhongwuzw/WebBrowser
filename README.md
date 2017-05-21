@@ -28,19 +28,39 @@
 ![](https://raw.githubusercontent.com/zhongwuzw/WebBrowser/master/images/no-image-mode.gif)
 
 #### 5. History历史
-**Develop In Progress**
+1. Long Press to select options.
+2. Tap to open history in current window.
+![](http://oc54pu02q.bkt.clouddn.com/history.gif)
 
 #### 6. Favorite收藏
-**Develop In Progress**
+##### In non-editing mode
+1. Long press on directory to edit directory name in non-editing mode.
+![](http://oc54pu02q.bkt.clouddn.com/bookmark_edit_long_section.gif)
 
-#### 7. Share分享
-**Develop In Progress**
+2. Long press on bookmark item to edit bookmark's url, name, directory in non-editing mode.
+![](http://oc54pu02q.bkt.clouddn.com/bookmark_long_edit_item.gif)
+
+##### In editing mode
+1. reorder, delete directory in editing mode.
+![](http://oc54pu02q.bkt.clouddn.com/bookmark_edit_section.gif)
+
+2. click "新文件夹" button to add new directory in editing mode.
+![](http://oc54pu02q.bkt.clouddn.com/bookmark_add_section.gif)
+
+3. reorder, delete bookmark in editing mode.
+![](http://oc54pu02q.bkt.clouddn.com/bookmark_edit_item.gif)
+
+4. add new bookmark.
+![](http://oc54pu02q.bkt.clouddn.com/bookmark_add.gif)
+
+#### 7. 页内查找
+![](http://oc54pu02q.bkt.clouddn.com/findinpage.gif)
 
 ## License
 
 The MIT License (MIT)
 
-Copyright (c) 2016 Zhong Wu
+Copyright (c) 2017 Zhong Wu
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

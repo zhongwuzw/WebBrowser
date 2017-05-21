@@ -120,12 +120,17 @@ typedef NS_ENUM(NSUInteger, BookmarkTableState) {
 }
 
 - (void)handleLongGesture:(UILongPressGestureRecognizer *)longGesture{
-    if (longGesture.state == UIGestureRecognizerStateRecognized) {
+    if (longGesture.state == UIGestureRecognizerStateEnded) {
         CGPoint p = [longGesture locationInView:self.tableView];
         
         NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:p];
+        CGRect frame = CGRectNull;
+        if (indexPath) {
+            BookmarkSectionHeaderView *headerView = (BookmarkSectionHeaderView *)[self.tableView headerViewForSection:indexPath.section];
+            frame = (headerView) ? headerView.frame : CGRectNull;
+        }
         
-        if (!indexPath) {
+        if (!indexPath || CGRectContainsPoint(frame, p)) {
             [self handleSectionLongGestureWithCGPoint:p];
         }
         else{
