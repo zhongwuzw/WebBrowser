@@ -1,6 +1,6 @@
 # WebBrowser（iOS）[![GitHub license](https://img.shields.io/badge/License-MIT-lightgrey.svg)](https://github.com/avito-tech/Marshroute/blob/master/LICENSE)  [![carthage compatible](https://img.shields.io/badge/Carthage-compatible-blue.svg)](https://github.com/Carthage/Carthage) [![Build Status](https://travis-ci.org/zhongwuzw/WebBrowser.svg?branch=master)](https://travis-ci.org/zhongwuzw/WebBrowser)
 
-一款用于网页浏览的APP。(***Develop In Progress***)
+一款用于网页浏览的APP。
 
   
 ## Usage - 用法
