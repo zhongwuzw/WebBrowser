@@ -246,7 +246,8 @@
         }
         else{
             self.browserLayout.pannedItemIndexPath = nil;
-            [self.browserLayout invalidateLayout];
+            [self.collectionView performBatchUpdates:^{
+            } completion:nil];
         }
         
     }
