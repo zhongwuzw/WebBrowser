@@ -12,11 +12,8 @@
 
 @optional
 
-- (void)menuHelperCopy;
-- (void)menuHelperOpenAndFill;
-- (void)menuHelperReveal;
-- (void)menuHelperSecure;
 - (void)menuHelperFindInPage;
+- (void)menuHelperFindInBaidu;
 
 @end
 

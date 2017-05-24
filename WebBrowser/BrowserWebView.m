@@ -389,6 +389,18 @@
     }
 }
 
+#pragma mark - Menu Action
+
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender{
+    if (action == @selector(copy:)) {
+        return YES;
+    }
+    if (action == @selector(selectAll:)) {
+        return YES;
+    }
+    return NO;
+}
+
 #pragma mark - Dealloc
 
 - (void)dealloc{
@@ -405,6 +417,8 @@
 
     [super dealloc];
 }
+
+#pragma mark - Initialize
 
 + (void)initialize{
     if (self == [BrowserWebView class]) {

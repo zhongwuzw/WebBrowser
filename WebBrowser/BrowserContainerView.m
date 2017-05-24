@@ -19,13 +19,15 @@
 #import "BrowserViewController.h"
 #import "HTTPClient.h"
 #import "FindInPageBar.h"
+#import "MenuHelper.h"
 
 #import <Photos/Photos.h>
 
 static NSInteger const ActionSheetTitleMaxLength = 120;
 static NSString *const CancelString = @"取消";
+static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word=";
 
-@interface BrowserContainerView () <WebViewDelegate>
+@interface BrowserContainerView () <WebViewDelegate, MenuHelperInterface>
 
 @property (nonatomic, readwrite, weak) BrowserWebView *webView;
 @property (nonatomic, assign) CGPoint contentOffset;
@@ -383,7 +385,13 @@ static NSString *const CancelString = @"取消";
 #pragma mark - Validating Commands
 
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender{
-    return action == @selector(menuHelperFindInPage);
+    if (action == @selector(menuHelperFindInBaidu)) {
+        return YES;
+    }
+    if (action == @selector(menuHelperFindInPage)) {
+        return YES;
+    }
+    return [super canPerformAction:action withSender:sender];
 }
 
 - (void)findWithText:(NSString *)text function:(NSString *)function{
@@ -400,11 +408,33 @@ static NSString *const CancelString = @"取消";
 
 - (void)menuHelperFindInPage{
     WEAK_REF(self)
+    
+    [self getWebViewSelectionWithCompletion:^(NSString *result){
+        [self_ findWithText:result function:@"find"];
+        [BrowserVC findInPageDidSelectForSelection:result];
+    }];
+}
+
+- (void)menuHelperFindInBaidu{
+    WEAK_REF(self)
+    [self getWebViewSelectionWithCompletion:^(NSString *result){
+        STRONG_REF(self_)
+        if (self__) {
+            result = [BaiduSearchPath stringByAppendingString:[result stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+            NSURL *url = [NSURL URLWithString:result];
+            [self__ handleOpenInNewWindowWithURL:url];
+        }
+    }];
+}
+
+- (void)getWebViewSelectionWithCompletion:(void(^)(NSString *result))completion{
+    WEAK_REF(self)
     [self.webView evaluateJavaScript:@"window.__firefox__.getSelection()" completionHandler:^(NSString *result, NSError *error){
         STRONG_REF(self_)
-        if (self__ && result.length > 0) {
-            [self__ findWithText:result function:@"find"];
-            [BrowserVC findInPageDidSelectForSelection:result];
+        if (self__ && result.length > 0 && completion) {
+            dispatch_main_safe_async(^{
+                completion(result);
+            })
         }
     }];
 }
