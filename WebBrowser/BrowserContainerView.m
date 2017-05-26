@@ -22,6 +22,7 @@
 #import "MenuHelper.h"
 
 #import <Photos/Photos.h>
+#import <AVKit/AVKit.h>
 
 static NSInteger const ActionSheetTitleMaxLength = 120;
 static NSString *const CancelString = @"取消";
@@ -56,6 +57,7 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
     [[DelegateManager sharedInstance] registerDelegate:self forKeys:@[DelegateManagerBrowserContainerLoadURL, DelegateManagerWebView, DelegateManagerFindInPageBarDelegate]];
     [[DelegateManager sharedInstance] addWebViewDelegate:self];
     [Notifier addObserver:self selector:@selector(handleOpenInNewWindow:) name:kOpenInNewWindowNotification object:nil];
+    [Notifier addObserver:self selector:@selector(handlePlayerItemPlay:) name:kAVPlayerItemBecameCurrentNotification object:nil];
     
     self.restorationIdentifier = NSStringFromClass([self class]);
 }
@@ -68,6 +70,22 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
     
     [self.webView loadRequest:request];
+}
+
+- (void)handlePlayerItemPlay:(NSNotification *)notify{
+    AVPlayerItem *playerItem = [notify object];
+    if (playerItem == nil) {
+        return;
+    }
+    
+    AVURLAsset *asset = (AVURLAsset *)[playerItem asset];
+    NSURL *url = [asset URL];
+    
+    if (!url) {
+        return;
+    }
+    
+    [BrowserVC handlePlayerItemPlayWithURL:url playerItem:playerItem];
 }
 
 - (void)handleOpenInNewWindow:(NSNotification *)notify{
@@ -461,6 +479,7 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
 
 - (void)dealloc{
     [Notifier removeObserver:self name:kOpenInNewWindowNotification object:nil];
+    [Notifier removeObserver:self name:kAVPlayerItemBecameCurrentNotification object:nil];
 }
 
 @end

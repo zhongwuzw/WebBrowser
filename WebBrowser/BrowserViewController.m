@@ -23,6 +23,7 @@
 #import "BookmarkItemEditViewController.h"
 #import "FindInPageBar.h"
 #import "KeyboardHelper.h"
+#import "BrowserVideoView.h"
 #import "NSURL+ZWUtility.h"
 
 static NSString *const kBrowserViewControllerAddBookmarkSuccess = @"添加书签成功";
@@ -39,6 +40,7 @@ static NSString *const kBrowserViewControllerAddBookmarkFailure = @"添加书签
 @property (nonatomic, weak) id<BrowserBottomToolBarButtonClickedDelegate> browserButtonDelegate;
 @property (nonatomic, strong) FindInPageBar *findInPageBar;
 @property (nonatomic, weak) NSLayoutConstraint *findInPageBarbottomLayoutConstaint;
+@property (nonatomic, weak) BrowserVideoView *videoView;
 
 @end
 
@@ -383,6 +385,23 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
     }];
 }
 
+#pragma mark - Handle Video Play
+
+- (void)handlePlayerItemPlayWithURL:(NSURL *)url playerItem:(AVPlayerItem *)playerItem{
+    if (playerItem == self.videoView.playerItem) {
+        return;
+    }
+    
+    if (!self.videoView) {
+        BrowserVideoView *videoView = [[BrowserVideoView alloc] initWithURL:url];
+        videoView.frame = CGRectMake((self.view.width - BrowserVideoViewWidth) / 2, 0, BrowserVideoViewWidth, BrowserVideoViewHeight);
+        [self.view addSubview:videoView];
+        self.videoView = videoView;
+    }
+    else{
+        [self.videoView setURL:url];
+    }
+}
 
 #pragma mark - Dealloc Method
 

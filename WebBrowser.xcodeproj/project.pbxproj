@@ -104,6 +104,10 @@
 		0ED304151E98697C00445A9A /* BaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED304141E98697C00445A9A /* BaseTableViewController.m */; };
 		0ED304181E99F42D00445A9A /* HistoryDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED304171E99F42D00445A9A /* HistoryDataManager.m */; };
 		0ED35E8C1E40B56F0060A367 /* DelegateManager+WebViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED35E8B1E40B56F0060A367 /* DelegateManager+WebViewDelegate.m */; };
+		0EDCDFD11ED679B7007EB473 /* BrowserVideoPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EDCDFD01ED679B7007EB473 /* BrowserVideoPlayerView.m */; };
+		0EDCDFD41ED67A84007EB473 /* BrowserVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EDCDFD31ED67A84007EB473 /* BrowserVideoView.m */; };
+		0EDCDFD81ED690F9007EB473 /* BrowserVideoControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EDCDFD71ED690F9007EB473 /* BrowserVideoControlView.m */; };
+		0EDCDFDA1ED6BDB0007EB473 /* BrowserVideoControlView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0EDCDFD91ED6BDB0007EB473 /* BrowserVideoControlView.xib */; };
 		0EDD68E51DACFBF400265744 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0EDD68E41DACFBF400265744 /* Assets.xcassets */; };
 		0EED28311DC1A32100EC8581 /* ZWUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EED28301DC1A32100EC8581 /* ZWUtility.m */; };
 		0EF025651DD951EB0011019F /* HTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF025601DD951EB0011019F /* HTTPClient.m */; };
@@ -326,6 +330,13 @@
 		0ED304171E99F42D00445A9A /* HistoryDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryDataManager.m; sourceTree = "<group>"; };
 		0ED35E8A1E40B56F0060A367 /* DelegateManager+WebViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DelegateManager+WebViewDelegate.h"; sourceTree = "<group>"; };
 		0ED35E8B1E40B56F0060A367 /* DelegateManager+WebViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DelegateManager+WebViewDelegate.m"; sourceTree = "<group>"; };
+		0EDCDFCF1ED679B7007EB473 /* BrowserVideoPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserVideoPlayerView.h; sourceTree = "<group>"; };
+		0EDCDFD01ED679B7007EB473 /* BrowserVideoPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserVideoPlayerView.m; sourceTree = "<group>"; };
+		0EDCDFD21ED67A84007EB473 /* BrowserVideoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserVideoView.h; sourceTree = "<group>"; };
+		0EDCDFD31ED67A84007EB473 /* BrowserVideoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserVideoView.m; sourceTree = "<group>"; };
+		0EDCDFD61ED690F9007EB473 /* BrowserVideoControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserVideoControlView.h; sourceTree = "<group>"; };
+		0EDCDFD71ED690F9007EB473 /* BrowserVideoControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrowserVideoControlView.m; sourceTree = "<group>"; };
+		0EDCDFD91ED6BDB0007EB473 /* BrowserVideoControlView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BrowserVideoControlView.xib; sourceTree = "<group>"; };
 		0EDD68E41DACFBF400265744 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0EED282F1DC1A32100EC8581 /* ZWUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWUtility.h; sourceTree = "<group>"; };
 		0EED28301DC1A32100EC8581 /* ZWUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWUtility.m; sourceTree = "<group>"; };
@@ -478,6 +489,7 @@
 		0E2C539C1DAA245A0077B9B4 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0EDCDFD51ED690B5007EB473 /* Video */,
 				0E2C539D1DAA24970077B9B4 /* BrowserContainerView.h */,
 				0E2C539E1DAA24970077B9B4 /* BrowserContainerView.m */,
 				0E48FAFF1DA3FD4B00B8FCDB /* BrowserWebView.h */,
@@ -986,6 +998,20 @@
 			name = View;
 			sourceTree = "<group>";
 		};
+		0EDCDFD51ED690B5007EB473 /* Video */ = {
+			isa = PBXGroup;
+			children = (
+				0EDCDFCF1ED679B7007EB473 /* BrowserVideoPlayerView.h */,
+				0EDCDFD01ED679B7007EB473 /* BrowserVideoPlayerView.m */,
+				0EDCDFD21ED67A84007EB473 /* BrowserVideoView.h */,
+				0EDCDFD31ED67A84007EB473 /* BrowserVideoView.m */,
+				0EDCDFD61ED690F9007EB473 /* BrowserVideoControlView.h */,
+				0EDCDFD71ED690F9007EB473 /* BrowserVideoControlView.m */,
+				0EDCDFD91ED6BDB0007EB473 /* BrowserVideoControlView.xib */,
+			);
+			name = Video;
+			sourceTree = "<group>";
+		};
 		0EF0255D1DD94FCF0011019F /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -1172,6 +1198,7 @@
 				0EFCB9DE1E4F62A60094C466 /* NoImageModeHelper.js in Resources */,
 				0E44786E1EC0395100D8F3F3 /* BookmarkEditTextFieldTableViewCell.xib in Resources */,
 				0EBDC6241E1DDEC100B6A4DB /* SearchInputView.xib in Resources */,
+				0EDCDFDA1ED6BDB0007EB473 /* BrowserVideoControlView.xib in Resources */,
 				0E681F381D4AEC3F003534F5 /* LaunchScreen.storyboard in Resources */,
 				0E5988A61E2F8070003259C0 /* SettingActivityTableViewCell.xib in Resources */,
 				0EBFFE7B1E52B22C00404199 /* SettingSwitchTableViewCell.xib in Resources */,
@@ -1231,10 +1258,12 @@
 				0E986A0F1D4D06170003900D /* TabManager.m in Sources */,
 				0EC14F521E31B97900A44D05 /* FMDatabasePool.m in Sources */,
 				0ED35E8C1E40B56F0060A367 /* DelegateManager+WebViewDelegate.m in Sources */,
+				0EDCDFD81ED690F9007EB473 /* BrowserVideoControlView.m in Sources */,
 				0EBFFE7A1E52B22C00404199 /* SettingSwitchTableViewCell.m in Sources */,
 				0E5CC9E41E794FFD0049ABEB /* WebViewBackForwardList.m in Sources */,
 				0EBF3A6A1DCF38D600CD77C8 /* BrowserBottomToolBar.m in Sources */,
 				0EF025651DD951EB0011019F /* HTTPClient.m in Sources */,
+				0EDCDFD11ED679B7007EB473 /* BrowserVideoPlayerView.m in Sources */,
 				0EC14F541E31B97900A44D05 /* FMResultSet.m in Sources */,
 				0E32E2FB1E08C69E00CFBBB5 /* CardCollectionViewCell.m in Sources */,
 				0E2E41841E55906600A23142 /* WebServer.m in Sources */,
@@ -1278,6 +1307,7 @@
 				0E8013DB1EB0A1B60098BF64 /* BookmarkSectionHeaderView.m in Sources */,
 				0E5CC9DE1E79305E0049ABEB /* SessionData.m in Sources */,
 				0E70780E1E96314000E898A8 /* HistorySQLiteManager.m in Sources */,
+				0EDCDFD41ED67A84007EB473 /* BrowserVideoView.m in Sources */,
 				0E5000511E0B6D60004BA658 /* CardMainBottomView.m in Sources */,
 				0E7078111E9633F000E898A8 /* NSDate+ZWUtility.m in Sources */,
 				0E48FB011DA3FD4B00B8FCDB /* BrowserWebView.m in Sources */,

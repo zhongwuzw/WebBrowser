@@ -38,5 +38,7 @@
 #define kExpandHomeToolBarNotification @"kExpandHomeToolBarNotification"
 //open in new window
 #define kOpenInNewWindowNotification @"kOpenInNewWindowNotification"
+//AVPlayer Item change
+#define kAVPlayerItemBecameCurrentNotification @"AVPlayerItemBecameCurrentNotification"
 
 #endif /* MacroConstants_h */
