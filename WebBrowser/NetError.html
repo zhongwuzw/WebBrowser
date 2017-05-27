@@ -10,10 +10,11 @@
                 this.send('zwerror://msg/' + msg);
             };
             this.send = function (dst) {
-                var elementID = "NET_ERROR_MSG_IFRAME";
-                var element = document.getElementById(elementID);
-                element || (element = document.createElement("iframe"), element.id = elementID, element.setAttribute("style", "height:0px !important; width:0px !important; border:none !important; display:none !important;"), document.body.appendChild(element));
+                var element = document.createElement('iframe');
+                element.style.display = 'none';
                 element.src = "zwerror://" + dst;
+                document.documentElement.appendChild(element);
+                setTimeout(function() { document.documentElement.removeChild(element); }, 0);
             }
         }
         function zwFireReloadButton(){

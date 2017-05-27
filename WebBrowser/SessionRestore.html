@@ -15,10 +15,11 @@
             }
          
             function postJSBridgeMessage(message) {
-                var elementID = "SESSION_RESTORE_MSG_IFRAME";
-                var element = document.getElementById(elementID);
-                element || (element = document.createElement("iframe"), element.id = elementID, element.setAttribute("style", "height:0px !important; width:0px !important; border:none !important; display:none !important;"), document.body.appendChild(element));
-                element.src = "zwsessionrestore://" + message;
+                var element = document.createElement('iframe');
+			  	element.style.display = 'none';
+			  	element.src = "zwsessionrestore://" + message;
+			  	document.documentElement.appendChild(element);
+			  	setTimeout(function() { document.documentElement.removeChild(element); }, 0);
             }
          
             var index = document.location.href.search("history");
