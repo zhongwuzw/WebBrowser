@@ -33,7 +33,6 @@ typedef NS_ENUM(NSUInteger, BookmarkTableState) {
 @property (nonatomic, strong) NSMutableArray<BookmarkSectionInfo *> *sectionInfoArray;
 @property (nonatomic, assign) BookmarkTableState tableState;
 @property (nonatomic, strong) UILongPressGestureRecognizer *longPressGesture;
-@property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
 
 @end
 
@@ -89,10 +88,6 @@ typedef NS_ENUM(NSUInteger, BookmarkTableState) {
     self.longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongGesture:)];
     _longPressGesture.delegate = self;
     [self.tableView addGestureRecognizer:_longPressGesture];
-    
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
-    tapGesture.cancelsTouchesInView = NO;
-    [self.view addGestureRecognizer:tapGesture];
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated{
@@ -112,12 +107,6 @@ typedef NS_ENUM(NSUInteger, BookmarkTableState) {
 }
 
 #pragma mark - Handle Gesture
-
-- (void)handleTapGesture:(UITapGestureRecognizer *)sender{
-    if (sender.state == UIGestureRecognizerStateEnded) {
-        [self setEditing:NO animated:YES];
-    }
-}
 
 - (void)handleLongGesture:(UILongPressGestureRecognizer *)longGesture{
     if (longGesture.state == UIGestureRecognizerStateEnded) {
