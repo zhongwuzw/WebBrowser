@@ -29,6 +29,12 @@
     return self;
 }
 
+- (void)prepareForReuse{
+    [super prepareForReuse];
+    
+    self.imageView.image = nil;
+}
+
 //- (void)layoutSubviews{
 //    [super layoutSubviews];
 //    
