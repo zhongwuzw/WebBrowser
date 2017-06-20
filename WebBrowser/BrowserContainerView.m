@@ -322,7 +322,7 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
 - (void)webViewDidFinishLoad:(BrowserWebView *)webView{
     if (IsCurrentWebView(webView)) {
         //pass local url
-        if (![webView.mainFURL isLocal] && !CGPointEqualToPoint(CGPointZero, self.contentOffset)) {
+        if (![webView.mainFURL isLocal] && !CGPointEqualToPoint(CGPointZero, self.contentOffset) && self.contentOffset.y < self.scrollView.contentSize.height) {
             [self.scrollView setContentOffset:self.contentOffset animated:NO];
             self.contentOffset = CGPointZero;
         }
