@@ -17,6 +17,7 @@
 #import "ErrorPageHelper.h"
 #import "SessionRestoreHelper.h"
 #import "TabManager.h"
+#import "PreferenceHelper.h"
 
 static NSString * const UserAgent = @"Mozilla/5.0 (iPhone; CPU iPhone OS 10_0 like Mac OS X) AppleWebKit/602.1.38 (KHTML, like Gecko) Version/10.0 Mobile/14A300 Safari/602.1";
 
@@ -114,7 +115,8 @@ static NSString * const UserAgent = @"Mozilla/5.0 (iPhone; CPU iPhone OS 10_0 li
     if (self.pasteboardChangeCount != pasteboard.changeCount) {
         self.pasteboardChangeCount = pasteboard.changeCount;
         NSURL *url = pasteboard.URL;
-        if (url) {
+        if (url && ![[PreferenceHelper URLForKey:KeyPasteboardURL] isEqual:url]) {
+            [PreferenceHelper setURL:url forKey:KeyPasteboardURL];
             [self presentPasteboardChangedAlertWithURL:url];
         }
     }
