@@ -22,9 +22,15 @@ static NSString * const UserAgent = @"Mozilla/5.0 (iPhone; CPU iPhone OS 10_0 li
 
 @interface AppDelegate ()
 
+@property (nonatomic, assign) NSInteger pasteboardChangeCount;
+
 @end
 
 @implementation AppDelegate
+
+- (void)dealloc{
+    [Notifier removeObserver:self name:UIPasteboardChangedNotification object:nil];
+}
 
 - (void)setAudioPlayInBackgroundMode{
     AVAudioSession *audioSession = [AVAudioSession sharedInstance];
@@ -38,10 +44,30 @@ static NSString * const UserAgent = @"Mozilla/5.0 (iPhone; CPU iPhone OS 10_0 li
     if (!success) { /* handle the error condition */ }
 }
 
+- (void)handlePasteboardNotification:(NSNotification *)notify{
+    self.pasteboardChangeCount = [UIPasteboard generalPasteboard].changeCount;
+}
+
+- (void)presentPasteboardChangedAlertWithURL:(NSURL *)url{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"新窗口打开剪切板网址" message:@"您是否需要在新窗口中打开剪切板中的网址？" preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action){
+        NSNotification *notify = [NSNotification notificationWithName:kOpenInNewWindowNotification object:self userInfo:@{@"url": url}];
+        [Notifier postNotification:notify];
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    
+    [alert addAction:defaultAction];
+    [alert addAction:cancelAction];
+    [self.window.rootViewController presentViewController:alert animated:YES completion:nil];
+}
+
 - (void)applicationStartPrepare{
     [self setAudioPlayInBackgroundMode];
     [[KeyboardHelper sharedInstance] startObserving];
     [[MenuHelper sharedInstance] setItems];
+    
+    [Notifier addObserver:self selector:@selector(handlePasteboardNotification:) name:UIPasteboardChangedNotification object:nil];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -80,6 +106,18 @@ static NSString * const UserAgent = @"Mozilla/5.0 (iPhone; CPU iPhone OS 10_0 li
     });
     
     return YES;
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application{
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    
+    if (self.pasteboardChangeCount != pasteboard.changeCount) {
+        self.pasteboardChangeCount = pasteboard.changeCount;
+        NSURL *url = pasteboard.URL;
+        if (url) {
+            [self presentPasteboardChangedAlertWithURL:url];
+        }
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application{

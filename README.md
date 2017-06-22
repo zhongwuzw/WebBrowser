@@ -8,6 +8,7 @@
 3. 书签、历史记录管理(bookmark、history manage)
 4. 页内查找(find in page)
 5. 点击标题栏进行页面访问或搜索(tap the title bar to  input url for surf or key to search)
+6. 自动监控剪切板`URL`，可在新窗口中打开
 
   
 ## Usage - 用法
