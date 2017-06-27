@@ -159,7 +159,7 @@ static NSString * const CELL = @"CELL";
     if (text) {
         [[DelegateManager sharedInstance] performSelector:NSSelectorFromString(@"browserContainerViewLoadWebViewWithSug:") arguments:@[text] key:DelegateManagerBrowserContainerLoadURL];
     }
-    [self.navigationController popViewControllerAnimated:NO];
+    [self.navigationController popToRootViewControllerAnimated:NO];
 }
 
 - (void)dealloc{

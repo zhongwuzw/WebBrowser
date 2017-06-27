@@ -274,8 +274,14 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
             break;
         case BottomToolBarRefreshButtonTag:
         {
-            if ([self.webView.request.URL isErrorPageURL]) {
+            NSURL *url = self.webView.request.URL;
+            if ([url isErrorPageURL]) {
                 NSURL *url = [self.webView.request.URL originalURLFromErrorURL];
+                [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
+            }
+            else if (!url || [url.absoluteString isEqualToString:@""]){
+                WebModel *webModel = [[TabManager sharedInstance] getCurrentWebModel];
+                url = [NSURL URLWithString:webModel.url];
                 [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
             }
             else{

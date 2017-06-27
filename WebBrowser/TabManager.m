@@ -29,6 +29,17 @@ static NSString *const KEY_WEB_IMAGE        = @"KEY_WEB_IMAGE";
 static NSString *const KEY_WEB_IMAGE_URL    = @"KEY_WEB_IMAGE_URL";
 static NSString *const KEY_WEB_SESSION_DATA    = @"KEY_WEB_SESSION_DATA";
 
+static const void * const kDispatchQueueSpecificKey = &kDispatchQueueSpecificKey;
+
+#ifdef DEBUG
+#define QueueCheck(shouldSyncQueue) do {                                                       \
+TabManager *manager = (__bridge id)dispatch_get_specific(kDispatchQueueSpecificKey);                                            \
+assert((shouldSyncQueue ? manager == self : manager != self) && "operate on webModelArray needs in sync queue");   \
+} while (0)
+#else
+#define QueueCheck(shouldSyncQueue)
+#endif
+
 @implementation WebModel
 
 - (id)initWithCoder:(NSCoder *)aDecoder{
@@ -84,6 +95,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
         
         NSString *queueName = [NSString stringWithFormat:@"com.zhongwu.TabManager-%@", [[NSUUID UUID] UUIDString]];
         _synchQueue = dispatch_queue_create([queueName cStringUsingEncoding:NSASCIIStringEncoding], DISPATCH_QUEUE_SERIAL);
+        dispatch_queue_set_specific(_synchQueue, kDispatchQueueSpecificKey, (__bridge void *)self, NULL);
         
         _webModelArray = [NSMutableArray arrayWithCapacity:4];
         [self loadWebModelArray];
@@ -225,6 +237,17 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
     return webModel;
 }
 
+- (WebModel *)getCurrentWebModel{
+    QueueCheck(NO);
+    
+    __block WebModel *webModel = nil;
+    dispatch_sync(self.synchQueue, ^{
+        webModel = [_webModelArray lastObject];
+    });
+    
+    return webModel;
+}
+
 - (void)setMultiWebViewOperationBlockWith:(MultiWebViewOperationBlock)block{
     dispatch_async(self.synchQueue, ^{
         [_webModelArray enumerateObjectsUsingBlock:^(WebModel *webModel, NSUInteger idx, BOOL *stop){
@@ -312,6 +335,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
             completion();
         }
     });
+}
+
+- (void)stopLoadingCurrentWebView{
+    dispatch_main_safe_async(^{
+        [self.browserContainerView.webView stopLoading];
+    })
 }
 
 #pragma mark - Disk Image Method
