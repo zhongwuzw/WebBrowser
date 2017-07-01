@@ -122,7 +122,7 @@ typedef enum : NSUInteger {
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     NSString *text = textField.text;
     if (text) {
-        [[DelegateManager sharedInstance] performSelector:NSSelectorFromString(@"browserContainerViewLoadWebViewWithSug:") arguments:@[text] key:DelegateManagerBrowserContainerLoadURL];
+        [[DelegateManager sharedInstance] performSelector:@selector(browserContainerViewLoadWebViewWithSug:) arguments:@[text] key:DelegateManagerBrowserContainerLoadURL];
     }
     [[BrowserVC navigationController] popToRootViewControllerAnimated:NO];
     [textField resignFirstResponder];

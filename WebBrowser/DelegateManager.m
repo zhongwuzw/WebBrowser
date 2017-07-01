@@ -8,10 +8,14 @@
 
 #import "DelegateManager.h"
 
+NSString *const DelegateManagerWebView = @"WebViewDelegate";
+NSString *const DelegateManagerBrowserContainerLoadURL = @"DelegateManagerBrowserContainerLoadURL";
+NSString *const DelegateManagerFindInPageBarDelegate = @"DelegateManagerFindInPageBarDelegate";
+
 // Arguments 0 and 1 are self and _cmd always
 const unsigned int kNumberOfImplicitArgs = 2;
 
-@interface DelegateManager ()
+@interface DelegateManager () <BrowserWebViewDelegate, BrowserContainerLoadURLDelegate, FindInPageBarDelegate>
 
 @property (nonatomic, strong) NSMutableDictionary<NSString *, NSPointerArray *> *delegateDic;
 @property (nonatomic, strong) dispatch_queue_t synchronizationQueue;

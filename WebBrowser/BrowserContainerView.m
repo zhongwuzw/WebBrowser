@@ -27,7 +27,7 @@ static NSInteger const ActionSheetTitleMaxLength = 120;
 static NSString *const CancelString = @"取消";
 static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word=";
 
-@interface BrowserContainerView () <WebViewDelegate, MenuHelperInterface>
+@interface BrowserContainerView () <WebViewDelegate, MenuHelperInterface, BrowserContainerLoadURLDelegate, BrowserWebViewDelegate, FindInPageBarDelegate>
 
 @property (nonatomic, readwrite, weak) BrowserWebView *webView;
 @property (nonatomic, assign) CGPoint contentOffset;
@@ -323,7 +323,7 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
     return YES;
 }
 
-#pragma mark - WebViewDelegate
+#pragma mark - BrowserWebViewDelegate
 
 - (void)webViewDidFinishLoad:(BrowserWebView *)webView{
     if (IsCurrentWebView(webView)) {

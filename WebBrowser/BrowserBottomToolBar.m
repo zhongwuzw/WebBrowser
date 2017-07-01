@@ -11,7 +11,7 @@
 #import "DelegateManager+WebViewDelegate.h"
 #import "BrowserContainerView.h"
 
-@interface BrowserBottomToolBar () <WebViewDelegate>
+@interface BrowserBottomToolBar () <WebViewDelegate, BrowserWebViewDelegate>
 
 @property (nonatomic, weak) UIBarButtonItem *refreshOrStopItem;
 @property (nonatomic, weak) UIBarButtonItem *backItem;
@@ -106,7 +106,7 @@
     }
 }
 
-#pragma mark - WebViewDelegate
+#pragma mark - BrowserWebViewDelegate
 
 - (void)webViewDidFinishLoad:(BrowserWebView *)webView{
     if (IsCurrentWebView(webView)) {

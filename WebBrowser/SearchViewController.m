@@ -157,7 +157,7 @@ static NSString * const CELL = @"CELL";
     SearchTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     NSString *text = [cell cellText];
     if (text) {
-        [[DelegateManager sharedInstance] performSelector:NSSelectorFromString(@"browserContainerViewLoadWebViewWithSug:") arguments:@[text] key:DelegateManagerBrowserContainerLoadURL];
+        [[DelegateManager sharedInstance] performSelector:@selector(browserContainerViewLoadWebViewWithSug:) arguments:@[text] key:DelegateManagerBrowserContainerLoadURL];
     }
     [self.navigationController popToRootViewControllerAnimated:NO];
 }

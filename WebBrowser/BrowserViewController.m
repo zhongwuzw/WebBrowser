@@ -322,7 +322,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
             
             self.findInPageBar = findInPageBar;
         }
-        [self.findInPageBar becomeFirstResponder];
     }
     else if (self.findInPageBar){
         [self.findInPageBar endEditing:YES];

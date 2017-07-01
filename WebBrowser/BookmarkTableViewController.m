@@ -346,7 +346,7 @@ typedef NS_ENUM(NSUInteger, BookmarkTableState) {
         BookmarkItemModel *model = [self.dataManager bookmarkModelForRowAtIndexPath:indexPath];
         
         if (model.url.length > 0) {
-            [[DelegateManager sharedInstance] performSelector:NSSelectorFromString(@"browserContainerViewLoadWebViewWithSug:") arguments:@[model.url] key:DelegateManagerBrowserContainerLoadURL];
+            [[DelegateManager sharedInstance] performSelector:@selector(browserContainerViewLoadWebViewWithSug:) arguments:@[model.url] key:DelegateManagerBrowserContainerLoadURL];
             [self.navigationController popViewControllerAnimated:YES];
         }
     }

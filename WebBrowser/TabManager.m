@@ -75,7 +75,7 @@ assert((shouldSyncQueue ? manager == self : manager != self) && "operate on webM
 
 @end
 
-@interface TabManager ()
+@interface TabManager () <BrowserWebViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray<WebModel *> *webModelArray;
 @property (nonatomic, copy)   NSString *filePath;
@@ -494,7 +494,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
     [[self.webModelArray lastObject].webView reload];
 }
 
-#pragma mark - WebViewDelegate Method
+#pragma mark - BrowserWebViewDelegate Method
 
 //当解析完head标签后注入无图模式js,需要注意的是，当启用无图模式时，UIWebView依然会进行图片网络请求,只是设置visible为false
 - (void)webView:(BrowserWebView *)webView gotTitleName:(NSString*)titleName{

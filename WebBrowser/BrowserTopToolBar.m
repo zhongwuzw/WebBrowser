@@ -17,7 +17,7 @@
 #define SHAPE_VIEW_HEIGHT 44
 #define SHAPE_VIEW_Y_OFFSET 5
 
-@interface BrowserTopToolBar ()
+@interface BrowserTopToolBar () <BrowserWebViewDelegate>
 
 @property (nonatomic, strong) TopToolBarShapeView *shapeView;
 @property (nonatomic, strong) NJKWebViewProgressView *progressView;
@@ -102,7 +102,7 @@
     [self.shapeView setTopURLOrTitle:urlOrTitle];
 }
 
-#pragma mark - WebViewDelegate
+#pragma mark - BrowserWebViewDelegate
 
 - (void)webView:(BrowserWebView *)webView gotTitleName:(NSString *)titleName{
     if (IsCurrentWebView(webView)) {
