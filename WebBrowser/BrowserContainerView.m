@@ -338,16 +338,17 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
 #pragma mark - BrowserContainerLoadURLDelegate
 
 - (void)browserContainerViewLoadWebViewWithSug:(NSString *)text{
-    if (!text) {
+    if (!text || !text.length) {
         return;
     }
-    NSString *urlString = text;
-    if (![HttpHelper isURL:text]) {
-        urlString = [NSString stringWithFormat:BAIDU_SEARCH_URL,[text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    
+    NSString *urlString = [text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    if (![HttpHelper isURL:urlString]) {
+        urlString = [NSString stringWithFormat:BAIDU_SEARCH_URL,[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     }
     else{
-        if (![text hasPrefix:@"http://"] && ![text hasPrefix:@"https://"]) {
-            urlString = [NSString stringWithFormat:@"http://%@",text];
+        if (![urlString hasPrefix:@"http://"] && ![urlString hasPrefix:@"https://"]) {
+            urlString = [NSString stringWithFormat:@"http://%@",urlString];
         }
     }
     

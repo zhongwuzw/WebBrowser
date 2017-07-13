@@ -18,6 +18,7 @@
 #import "SessionRestoreHelper.h"
 #import "TabManager.h"
 #import "PreferenceHelper.h"
+#import "BaseNavigationViewController.h"
 
 static NSString * const UserAgent = @"Mozilla/5.0 (iPhone; CPU iPhone OS 10_0 like Mac OS X) AppleWebKit/602.1.38 (KHTML, like Gecko) Version/10.0 Mobile/14A300 Safari/602.1";
 
@@ -83,10 +84,7 @@ static NSString * const UserAgent = @"Mozilla/5.0 (iPhone; CPU iPhone OS 10_0 li
 
     BrowserViewController *browserViewController = BrowserVC;
     
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:browserViewController];
-    navigationController.restorationIdentifier = @"baseNavigationController";
-    navigationController.navigationBarHidden = YES;
-    navigationController.view.backgroundColor = [UIColor whiteColor];
+    BaseNavigationViewController *navigationController = [[BaseNavigationViewController alloc] initWithRootViewController:browserViewController];
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.rootViewController = navigationController;

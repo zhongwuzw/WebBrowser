@@ -9,7 +9,7 @@
 #ifndef MacroConstants_h
 #define MacroConstants_h
 
-#define STATUS_BAR_HEIGHT 20
+#define STATUS_BAR_HEIGHT [UIApplication sharedApplication].statusBarFrame.size.height
 
 #define BOTTOM_TOOL_BAR_HEIGHT 44
 #define TOP_TOOL_BAR_HEIGHT 70

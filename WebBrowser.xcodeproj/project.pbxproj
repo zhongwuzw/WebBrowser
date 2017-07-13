@@ -64,6 +64,7 @@
 		0E8013DD1EB0A3280098BF64 /* BookmarkSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E8013DC1EB0A3280098BF64 /* BookmarkSectionHeaderView.xib */; };
 		0E829CD71E12075B008FF0A8 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E829CD61E12075B008FF0A8 /* SearchViewController.m */; };
 		0E831A0F1E87DBCD00FB3576 /* NSURLCache+ZWUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E831A0E1E87DBCD00FB3576 /* NSURLCache+ZWUtility.m */; };
+		0E831AC71F1726EB00E8D9C1 /* BaseNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E831AC61F1726EB00E8D9C1 /* BaseNavigationViewController.m */; };
 		0E8EE8311E11123600B6DADF /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8EE8301E11123600B6DADF /* SettingsViewController.m */; };
 		0E8EE8351E11277100B6DADF /* SettingAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8EE8341E11277100B6DADF /* SettingAnimator.m */; };
 		0E9361D81EB0EDA1004F6AE7 /* BookmarkSectionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E9361D71EB0EDA1004F6AE7 /* BookmarkSectionInfo.m */; };
@@ -256,6 +257,8 @@
 		0E82A4481DAF8BCA00F13D4E /* BrowserHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BrowserHeader.h; sourceTree = "<group>"; };
 		0E831A0D1E87DBCD00FB3576 /* NSURLCache+ZWUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLCache+ZWUtility.h"; sourceTree = "<group>"; };
 		0E831A0E1E87DBCD00FB3576 /* NSURLCache+ZWUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLCache+ZWUtility.m"; sourceTree = "<group>"; };
+		0E831AC51F1726EB00E8D9C1 /* BaseNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseNavigationViewController.h; sourceTree = "<group>"; };
+		0E831AC61F1726EB00E8D9C1 /* BaseNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseNavigationViewController.m; sourceTree = "<group>"; };
 		0E8EE82F1E11123600B6DADF /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		0E8EE8301E11123600B6DADF /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SettingsViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0E8EE8331E11277100B6DADF /* SettingAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingAnimator.h; sourceTree = "<group>"; };
@@ -893,6 +896,8 @@
 				0EA7DEE21DB0ABD8005C592E /* BaseViewController.m */,
 				0ED304131E98697C00445A9A /* BaseTableViewController.h */,
 				0ED304141E98697C00445A9A /* BaseTableViewController.m */,
+				0E831AC51F1726EB00E8D9C1 /* BaseNavigationViewController.h */,
+				0E831AC61F1726EB00E8D9C1 /* BaseNavigationViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1282,6 +1287,7 @@
 				0E7078171E9656E500E898A8 /* ZWDatabase.m in Sources */,
 				0E3D2B771E24CD3000364B69 /* UIImage+ZWUtility.m in Sources */,
 				0E681F2A1D4AEC3F003534F5 /* main.m in Sources */,
+				0E831AC71F1726EB00E8D9C1 /* BaseNavigationViewController.m in Sources */,
 				0E70784C1E18A89500A91048 /* DelegateManager.m in Sources */,
 				0EF025661DD951EB0011019F /* HTTPManager.m in Sources */,
 				0ED304181E99F42D00445A9A /* HistoryDataManager.m in Sources */,

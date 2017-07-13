@@ -15,6 +15,7 @@
 #import "KeyboardHelper.h"
 
 #define SEARCH_INPUTVIEW_HEIGHT 76
+
 static NSString * const CELL = @"CELL";
 
 @interface SearchViewController ()<UITableViewDelegate, UITableViewDataSource, KeyboardHelperDelegate>
@@ -23,33 +24,16 @@ static NSString * const CELL = @"CELL";
 @property (nonatomic, strong) SearchInputView *searchInputView;
 @property (nonatomic, strong) NSURLSessionDataTask *bdRecoTask;
 @property (nonatomic, copy) NSArray *searchResultArray;
-@property (nonatomic, assign) BOOL isTextChanged;
+@property (nonatomic, strong) KeyboardState *keyboardState;
 
 @end
 
 @implementation SearchViewController
 
-- (UITableView *)tableView{
-    if (!_tableView) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, STATUS_BAR_HEIGHT, self.view.width, CGRectGetMinY(self.searchInputView.frame) - STATUS_BAR_HEIGHT) style:UITableViewStylePlain];
-        [self.view insertSubview:_tableView belowSubview:self.searchInputView];
-        
-        _tableView.backgroundColor = [UIColor whiteColor];
-        
-        _tableView.delegate = self;
-        _tableView.dataSource = self;
-        
-        [_tableView registerNib:[UINib nibWithNibName:NSStringFromClass([SearchTableViewCell class]) bundle:nil] forCellReuseIdentifier:CELL];
-        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    }
-    return _tableView;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.automaticallyAdjustsScrollViewInsets = NO;
-    self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.automaticallyAdjustsScrollViewInsets = YES;
     
     [[KeyboardHelper sharedInstance] addDelegate:self];
     
@@ -60,6 +44,7 @@ static NSString * const CELL = @"CELL";
     self.view.backgroundColor = [UIColor whiteColor];
     self.searchInputView = ({
         SearchInputView *inputView = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([SearchInputView class]) owner:nil options:nil] objectAtIndex:0];
+
         inputView.frame = CGRectMake(self.view.bounds.origin.x, self.view.height - SEARCH_INPUTVIEW_HEIGHT, self.view.width, SEARCH_INPUTVIEW_HEIGHT);
         [self.view addSubview:inputView];
         
@@ -70,11 +55,41 @@ static NSString * const CELL = @"CELL";
         
         inputView;
     });
+    
+    self.tableView = ({
+        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+        [self.view addSubview:tableView];
+        
+        tableView.translatesAutoresizingMaskIntoConstraints = NO;
+        
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[tableView]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(tableView)]];
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[tableView]-0-[_searchInputView]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(tableView,_searchInputView)]];
+        [self.view addConstraint:[NSLayoutConstraint constraintWithItem:tableView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.f]];
+        [tableView setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisVertical];
+        
+        tableView.backgroundColor = [UIColor whiteColor];
+        
+        tableView.delegate = self;
+        tableView.dataSource = self;
+        
+        [tableView registerNib:[UINib nibWithNibName:NSStringFromClass([SearchTableViewCell class]) bundle:nil] forCellReuseIdentifier:CELL];
+        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        
+        tableView;
+    });
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.searchInputView.textField becomeFirstResponder];
+}
+
+- (void)viewDidLayoutSubviews{
+    [super viewDidLayoutSubviews];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self changeSearchInputViewPoint:self.keyboardState];
+    });
 }
 
 - (void)cancelRecoTaskIfNeeded{
@@ -84,7 +99,6 @@ static NSString * const CELL = @"CELL";
 }
 
 - (void)textFieldTextDidChange:(NSNotification *)notify{
-    self.isTextChanged = YES;
     UITextField *textField = [notify object];
     if (textField.text.length > 0) {
         self.searchInputView.slider.enabled = YES;
@@ -119,9 +133,9 @@ static NSString * const CELL = @"CELL";
 }
 
 - (void)changeSearchInputViewPoint:(KeyboardState *)state{
-    NSDictionary *userInfo = [state userInfo];
-    NSValue *value = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
-    CGFloat keyBoardEndY = value.CGRectValue.origin.y;  // 得到键盘弹出后的键盘视图所在y坐标
+    self.keyboardState = state;
+    
+    CGFloat keyBoardEndY = self.view.height - [state intersectionHeightForView:self.view];
     
     // 添加移动动画，使视图跟随键盘移动
     [UIView animateWithDuration:state.animationDuration animations:^{
@@ -129,9 +143,6 @@ static NSString * const CELL = @"CELL";
         [UIView setAnimationCurve:state.animationCurve];
         
         self.searchInputView.center = CGPointMake(self.searchInputView.centerX, keyBoardEndY - self.searchInputView.height/2.0f);
-        if (self.isTextChanged) {
-            self.tableView.height = CGRectGetMinY(self.searchInputView.frame) - STATUS_BAR_HEIGHT;
-        }
     }];
 }
 

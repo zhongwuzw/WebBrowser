@@ -360,9 +360,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
         return;
     }
     
-    NSDictionary *userInfo = [state userInfo];
-    NSValue *value = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
-    CGFloat keyBoardEndY = value.CGRectValue.origin.y;  // 得到键盘弹出后的键盘视图所在y坐标
+    CGFloat keyBoardEndY = self.view.height - [state intersectionHeightForView:self.view];
     
     // 添加移动动画，使视图跟随键盘移动
     [UIView animateWithDuration:state.animationDuration animations:^{
