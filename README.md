@@ -51,45 +51,45 @@
 1. Long Press to select options. (长按记录可弹出选项按钮)
 2. Tap to open history in current window.(点击记录会在当前窗口打开历史页面)
 <p align="center">
-  <img src="http://oc54pu02q.bkt.clouddn.com/history.gif" alt="history"/>
+  <img src="https://raw.githubusercontent.com/zhongwuzw/WebBrowser/master/images/history.gif" alt="history"/>
 </p>
 
 #### 6. Favorite (收藏)
 ##### In non-editing mode (在非编辑模式下操作)
 1. Long press on directory to edit directory name in non-editing mode.(长按目录来编辑目录名字)
 <p align="center">
-  <img src="http://oc54pu02q.bkt.clouddn.com/bookmark_edit_long_section.gif" alt="favorite"/>
+  <img src="https://raw.githubusercontent.com/zhongwuzw/WebBrowser/master/images/bookmark_edit_long_section.gif" alt="favorite"/>
 </p>
 
 2. Long press on bookmark item to edit bookmark's url, name, directory in non-editing mode.(长按书签项来编辑书签的地址、名字、以及所在目录)
 <p align="center">
-  <img src="http://oc54pu02q.bkt.clouddn.com/bookmark_long_edit_item.gif" alt="favorite"/>
+  <img src="https://raw.githubusercontent.com/zhongwuzw/WebBrowser/master/images/bookmark_long_edit_item.gif" alt="favorite"/>
 </p>
 
 ##### In editing mode (在编辑模式下)
 1. reorder, delete directory in editing mode.(删除、排序目录)
 <p align="center">
-  <img src="http://oc54pu02q.bkt.clouddn.com/bookmark_edit_section.gif" alt="favorite"/>
+  <img src="https://raw.githubusercontent.com/zhongwuzw/WebBrowser/master/images/bookmark_edit_section.gif" alt="favorite"/>
 </p>
 
 2. click "新文件夹" button to add new directory in editing mode.(点击"新文件夹"按钮来创建新的目录)
 <p align="center">
-  <img src="http://oc54pu02q.bkt.clouddn.com/bookmark_add_section.gif" alt="favorite"/>
+  <img src="https://raw.githubusercontent.com/zhongwuzw/WebBrowser/master/images/bookmark_add_section.gif" alt="favorite"/>
 </p>
 
 3. reorder, delete bookmark in editing mode.(删除、排序书签)
 <p align="center">
-  <img src="http://oc54pu02q.bkt.clouddn.com/bookmark_edit_item.gif" alt="favorite"/>
+  <img src="https://raw.githubusercontent.com/zhongwuzw/WebBrowser/master/images/bookmark_edit_item.gif" alt="favorite"/>
 </p>
 
 4. add new bookmark.(添加新书签)
 <p align="center">
-  <img src="http://oc54pu02q.bkt.clouddn.com/bookmark_add.gif" alt="favorite"/>
+  <img src="https://raw.githubusercontent.com/zhongwuzw/WebBrowser/master/images/bookmark_add.gif" alt="favorite"/>
 </p>
 
 #### 7. find in page (页内查找)
 <p align="center">
-  <img src="http://oc54pu02q.bkt.clouddn.com/findinpage.gif" alt="find in page"/>
+  <img src="https://raw.githubusercontent.com/zhongwuzw/WebBrowser/master/images/findinpage.gif" alt="find in page"/>
 </p>
 
 ## License
