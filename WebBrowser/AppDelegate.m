@@ -38,7 +38,7 @@ static NSString * const UserAgent = @"Mozilla/5.0 (iPhone; CPU iPhone OS 10_0 li
     AVAudioSession *audioSession = [AVAudioSession sharedInstance];
     
     NSError *setCategoryError = nil;
-    BOOL success = [audioSession setCategory:AVAudioSessionCategoryPlayback error:&setCategoryError];
+    BOOL success = [audioSession setCategory:AVAudioSessionCategoryPlayback withOptions:AVAudioSessionCategoryOptionMixWithOthers error:&setCategoryError];
     if (!success) { /* handle the error condition */ }
     
     NSError *activationError = nil;
