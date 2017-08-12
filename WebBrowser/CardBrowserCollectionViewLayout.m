@@ -12,7 +12,7 @@
 
 @property (nonatomic, assign) CGSize contentSize;
 @property (nonatomic, assign) CGFloat itemGap;
-@property (nonatomic, strong) NSMutableArray *attributes;
+@property (nonatomic, strong) NSMutableArray<UICollectionViewLayoutAttributes *> *attributes;
 
 @end
 
@@ -107,7 +107,7 @@
 {
     NSMutableArray *attributesInRect = [NSMutableArray array];
     
-    for (UICollectionViewLayoutAttributes *attributes in self.attributes) {
+    foreach(attributes, self.attributes) {
         if (CGRectIntersectsRect(attributes.frame, rect)) {
             [attributesInRect addObject:attributes];
         }

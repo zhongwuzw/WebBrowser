@@ -17,6 +17,7 @@
 #import "UIView+ZWUtility.h"
 #import "ZWUtility.h"
 #import "DelegateManager.h"
+#import "ZWFastEnumeration.h"
 
 #if DEBUG
 static const DDLogLevel ddLogLevel = DDLogLevelDebug;

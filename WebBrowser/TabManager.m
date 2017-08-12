@@ -458,7 +458,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
             NSDirectoryEnumerator *fileEnumerator = [[NSFileManager defaultManager] enumeratorAtURL:diskCacheURL includingPropertiesForKeys:resourceKeys options:NSDirectoryEnumerationSkipsHiddenFiles errorHandler:NULL];
             
             NSMutableArray *urlsToDelete = [NSMutableArray array];
-            for (NSURL *fileURL in fileEnumerator) {
+            foreach(fileURL, fileEnumerator) {
                 NSDictionary *resourceValues = [fileURL resourceValuesForKeys:resourceKeys error:NULL];
                 
                 if ([resourceValues[NSURLIsDirectoryKey] boolValue]) {
@@ -470,7 +470,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
                 }
             }
             
-            for (NSURL *fileURL in urlsToDelete) {
+            foreach(fileURL, urlsToDelete) {
                 [[NSFileManager defaultManager] removeItemAtURL:fileURL error:nil];
             }
             

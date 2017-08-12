@@ -51,8 +51,7 @@
     
     NSDirectoryEnumerator *enumerator = [self enumeratorAtURL:directoryURL includingPropertiesForKeys:prefetchedProperties options:0 errorHandler:errorHandler];
     
-    for (NSURL *contentItemURL in enumerator) {
-        
+    foreach(contentItemURL, enumerator) {
         if (errorDidOccur)
             return -1;
         

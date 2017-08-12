@@ -113,7 +113,7 @@ static CGFloat BottomPercent = 0.85f;
     [self.deletePath removeAllObjects];
     [self.insertPath removeAllObjects];
     
-    for (UICollectionViewUpdateItem *item in updateItems) {
+    foreach(item, updateItems) {
         if (item.updateAction == UICollectionUpdateActionDelete) {
             [self.deletePath addObject:item.indexPathBeforeUpdate];
         }
@@ -121,6 +121,7 @@ static CGFloat BottomPercent = 0.85f;
             [self.insertPath addObject:item.indexPathAfterUpdate];
         }
     }
+    
 }
 
 - (UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingItemAtIndexPath:(NSIndexPath *)itemIndexPath{

@@ -217,7 +217,7 @@
     if ([self isKindOfClass:cls])
         return self;
     
-    for (UIView* child in self.subviews) {
+    foreach(child, self.subviews) {
         UIView* it = [child descendantOrSelfWithClass:cls];
         if (it)
             return it;

@@ -45,9 +45,9 @@ static char delegatesKey;
 }
 
 - (void)addWebViewDelegate:(id<WebViewDelegate>)delegate{
-    for (WeakWebBrowserDelegate *weakDelagete in self.delegates) {
-        if (!weakDelagete.delegate) {
-            weakDelagete.delegate = delegate;
+    foreach(weakDelegate, self.delegates) {
+        if (!weakDelegate.delegate) {
+            weakDelegate.delegate = delegate;
             return;
         }
     }

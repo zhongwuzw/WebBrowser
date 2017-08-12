@@ -275,6 +275,7 @@
 		0E986A0E1D4D06170003900D /* TabManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = TabManager.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0E9B8D451EBF4E1C004088A0 /* BookmarkDirectoryEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkDirectoryEditViewController.h; sourceTree = "<group>"; };
 		0E9B8D461EBF4E1C004088A0 /* BookmarkDirectoryEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkDirectoryEditViewController.m; sourceTree = "<group>"; };
+		0E9CD4851F3EABA300D6AFE5 /* ZWFastEnumeration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWFastEnumeration.h; sourceTree = "<group>"; };
 		0EA7DEE11DB0ABD8005C592E /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		0EA7DEE21DB0ABD8005C592E /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		0EAA18B81DD35D5D0072F9B3 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
@@ -638,6 +639,7 @@
 			children = (
 				0E48FB031DA4058300B8FCDB /* WebViewHeader.h */,
 				0E2A091E1E977E5C0060EB22 /* ZWSQLiteHeader.h */,
+				0E9CD4851F3EABA300D6AFE5 /* ZWFastEnumeration.h */,
 			);
 			name = Header;
 			sourceTree = "<group>";

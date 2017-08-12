@@ -68,8 +68,7 @@
 - (void)addConstraints{
     NSDictionary *views = @{@"text":self.textLabel, @"image":self.imageView};
     
-    for (UIView *v in [views allValues])
-    {
+    foreach(v, [views allValues]) {
         [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:v attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
     }
     

@@ -258,7 +258,8 @@
     BOOL isShouldStart = YES;
     
     NSArray<WeakWebBrowserDelegate *> *delegates = [[DelegateManager sharedInstance] webViewDelegates];
-    for (WeakWebBrowserDelegate *delegate in delegates) {
+    
+    foreach(delegate, delegates) {
         if ([delegate.delegate respondsToSelector:@selector(webView:shouldStartLoadWithRequest:navigationType:)]) {
             isShouldStart = [delegate.delegate webView:webView shouldStartLoadWithRequest:request navigationType:navigationType];
             if (!isShouldStart) {

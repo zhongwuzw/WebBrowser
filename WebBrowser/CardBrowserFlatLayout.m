@@ -10,7 +10,7 @@
 
 @interface CardBrowserFlatLayout ()
 
-@property (nonatomic, strong) NSMutableArray *attributes;
+@property (nonatomic, strong) NSMutableArray<UICollectionViewLayoutAttributes *> *attributes;
 @property (nonatomic, assign) CGSize contentSize;
 
 @end
@@ -67,7 +67,7 @@
 {
     NSMutableArray *attributesInRect = [NSMutableArray array];
     
-    for (UICollectionViewLayoutAttributes *attributes in self.attributes) {
+    foreach(attributes, self.attributes) {
         if (CGRectIntersectsRect(attributes.frame, rect)) {
             [attributesInRect addObject:attributes];
         }

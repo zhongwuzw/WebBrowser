@@ -73,7 +73,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KeyboardHelper)
 }
 
 - (void)addDelegate:(id<KeyboardHelperDelegate>)delegate{
-    for (WeakKeyboardDelegate *weakDelegate in _delegates) {
+    foreach(weakDelegate, _delegates) {
         if (!weakDelegate.delegate){
             weakDelegate.delegate = delegate;
             return;
@@ -96,7 +96,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KeyboardHelper)
     NSDictionary *userInfo = notification.userInfo;
     _currentState = [[KeyboardState alloc] initWithUserInfo:userInfo];
     
-    for (WeakKeyboardDelegate *weakDelegate in _delegates) {
+    foreach(weakDelegate, _delegates) {
         if ([weakDelegate.delegate respondsToSelector:@selector(keyboardHelper:keyboardWillShowWithState:)]) {
             [weakDelegate.delegate keyboardHelper:self keyboardWillShowWithState:_currentState];
         }
@@ -107,7 +107,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KeyboardHelper)
     NSDictionary *userInfo = notification.userInfo;
     _currentState = [[KeyboardState alloc] initWithUserInfo:userInfo];
     
-    for (WeakKeyboardDelegate *weakDelegate in _delegates) {
+    foreach(weakDelegate, _delegates) {
         if ([weakDelegate.delegate respondsToSelector:@selector(keyboardHelper:keyboardDidShowWithState:)]) {
             [weakDelegate.delegate keyboardHelper:self keyboardDidShowWithState:_currentState];
         }
@@ -118,7 +118,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(KeyboardHelper)
     NSDictionary *userInfo = notification.userInfo;
     _currentState = [[KeyboardState alloc] initWithUserInfo:userInfo];
     
-    for (WeakKeyboardDelegate *weakDelegate in _delegates) {
+    foreach(weakDelegate, _delegates) {
         if ([weakDelegate.delegate respondsToSelector:@selector(keyboardHelper:keyboardWillHideWithState:)]) {
             [weakDelegate.delegate keyboardHelper:self keyboardWillHideWithState:_currentState];
         }

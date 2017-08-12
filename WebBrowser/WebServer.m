@@ -70,7 +70,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(WebServer)
     NSParameterAssert(type);
     NSParameterAssert(module);
     
-    for (NSString *path in [NSBundle pathsForResourcesOfType:type inDirectory:[[NSBundle mainBundle] bundlePath]]) {
+    foreach(path, [NSBundle pathsForResourcesOfType:type inDirectory:[[NSBundle mainBundle] bundlePath]]) {
         [self.server addGETHandlerForPath:[NSString stringWithFormat:@"/%@/%@",module,path.lastPathComponent] filePath:path isAttachment:NO cacheAge:UINT_MAX allowRangeRequests:YES];
     }
 }

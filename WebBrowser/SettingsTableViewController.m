@@ -142,7 +142,7 @@ static NSString *const SettingPlaceholderTableViewCellIdentifier   = @"SettingPl
                 NSDirectoryEnumerator *fileEnumerator = [[NSFileManager defaultManager] enumeratorAtURL:diskCacheURL includingPropertiesForKeys:resourceKeys options:NSDirectoryEnumerationSkipsHiddenFiles errorHandler:NULL];
                 
                 NSMutableArray *urlsToDelete = [NSMutableArray array];
-                for (NSURL *fileURL in fileEnumerator) {
+                foreach(fileURL, fileEnumerator) {
                     NSDictionary *resourceValues = [fileURL resourceValuesForKeys:resourceKeys error:NULL];
                     
                     if ([resourceValues[NSURLIsDirectoryKey] boolValue]) {
@@ -152,10 +152,9 @@ static NSString *const SettingPlaceholderTableViewCellIdentifier   = @"SettingPl
                     [urlsToDelete addObject:fileURL];
                 }
                 
-                for (NSURL *fileURL in urlsToDelete) {
+                foreach(fileURL, urlsToDelete) {
                     [[NSFileManager defaultManager] removeItemAtURL:fileURL error:nil];
                 }
-
             }
         }];
         
