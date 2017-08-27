@@ -209,8 +209,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
 - (void)saveWebModelData{
     dispatch_async(self.synchQueue, ^{
         dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            [self saveWebModelToDisk];
-            
             [_webModelArray enumerateObjectsUsingBlock:^(WebModel *webModel, NSUInteger idx, BOOL *stop){
                 @autoreleasepool {
                     if (webModel.webView) {
@@ -220,6 +218,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
                     }
                 }
             }];
+            
+            [self saveWebModelToDisk];
         });
     });
 }
@@ -516,7 +516,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
     
     NSURL *url = error.userInfo[NSURLErrorFailingURLErrorKey];
     //just trigger error page in case of "http" or "https"
-    if ([url.scheme isEqualToString:@"http"] || [url.scheme isEqualToString:@"https"]) {
+    if ([url.absoluteString isEqual:webView.mainFURL] && ([url.scheme isEqualToString:@"http"] || [url.scheme isEqualToString:@"https"])) {
         [ErrorPageHelper showPageWithError:error URL:url inWebView:webView];
         [self saveWebModelData];
     }
