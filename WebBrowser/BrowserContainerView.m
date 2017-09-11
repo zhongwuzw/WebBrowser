@@ -51,7 +51,7 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
 - (void)setupWebView{
     [TabManager sharedInstance].browserContainerView = self;
 
-    [self restoreWithCompletionHandler:nil];
+    [self restoreWithCompletionHandler:nil animation:NO];
     
     [[DelegateManager sharedInstance] registerDelegate:self forKeys:@[DelegateManagerBrowserContainerLoadURL, DelegateManagerWebView, DelegateManagerFindInPageBarDelegate]];
     [[DelegateManager sharedInstance] addWebViewDelegate:self];
@@ -82,25 +82,45 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
     [[TabManager sharedInstance] addWebModelWithURL:url completion:^{
         STRONG_REF(self_)
         if (self__) {
-            [self__ restoreWithCompletionHandler:^(WebModel *webModel, BrowserWebView *webView){
+            [self__ restoreWithCompletionHandler:^(WebModel *webModel, BrowserWebView *webView) {
                 NSNotification *notify = [NSNotification notificationWithName:kWebTabSwitch object:self userInfo:@{@"webView":webView}];
                 [Notifier postNotification:notify];
                 [[BrowserVC navigationController].view showHUDAtBottomWithMessage:@"已在新窗口中打开"];
-            }];
+            } animation:YES];
         }
     }];
 }
 
-- (void)restoreWithCompletionHandler:(TabCompletion)completion{
+- (void)restoreWithCompletionHandler:(TabCompletion)completion animation:(BOOL)animation{
     WEAK_REF(self)
     [[TabManager sharedInstance] setCurWebViewOperationBlockWith:^(WebModel *webModel, BrowserWebView *browserWebView){
         STRONG_REF(self_)
         if (self__) {
-            [self__.webView removeFromSuperview];
+            BrowserWebView *oldBrowserView = self__.webView;
+            
+            browserWebView.frame = CGRectMake(0, 0, self__.width, self__.height);
+            
+            if (oldBrowserView != browserWebView && [oldBrowserView superview] && animation) {
+                browserWebView.transform = CGAffineTransformMakeTranslation(self__.width, 0);
+                oldBrowserView.transform = CGAffineTransformIdentity;
+                oldBrowserView.frame = CGRectMake(0, 0, self__.width, self__.height);
+                
+                [UIView transitionWithView:self__ duration:.5f options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                    oldBrowserView.transform = CGAffineTransformMakeTranslation(- self__.width, 0);
+                    [self__ addSubview:browserWebView];
+                    browserWebView.transform = CGAffineTransformIdentity;
+                    
+                }completion:^(BOOL finished){
+                    [oldBrowserView removeFromSuperview];
+                }];
+            }
+            else if(oldBrowserView != browserWebView)
+            {
+                [oldBrowserView removeFromSuperview];
+                [self__ addSubview:browserWebView];
+            }
+            
             self__.webView = browserWebView;
-            [self__ addSubview:browserWebView];
-            [self__ bringSubviewToFront:browserWebView];
-            self__.webView.frame = CGRectMake(0, 0, self__.width, self__.height);
             
             if (!browserWebView.request) {
                 SessionData *sessionData = webModel.sessionData;
@@ -237,7 +257,10 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
     actionSheetController.title = [dialogTitle ellipsizeWithMaxLength:ActionSheetTitleMaxLength];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:CancelString style:UIAlertActionStyleCancel handler:nil];
     [actionSheetController addAction:cancelAction];
-    [BrowserVC presentViewController:actionSheetController animated:YES completion:nil];
+    
+    if (!BrowserVC.presentedViewController) {
+        [BrowserVC presentViewController:actionSheetController animated:YES completion:nil];
+    }
 }
 
 - (void)getImageWithURL:(NSURL *)url completion:(void (^)(UIImage *, NSError *))completion{
