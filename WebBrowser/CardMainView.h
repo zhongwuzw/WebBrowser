@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^CompletionBlock)();
+typedef void(^CompletionBlock)(void);
 
 @class CardCollectionViewCell;
 @class WebModel;

@@ -14,12 +14,8 @@
 #import "MenuHelper.h"
 #import "WebViewBackForwardList.h"
 
-#if TARGET_IPHONE_SIMULATOR
-#import <objc/objc-runtime.h>
-#else
 #import <objc/runtime.h>
 #import <objc/message.h>
-#endif
 
 @interface BrowserWebView () <MenuHelperInterface>
 

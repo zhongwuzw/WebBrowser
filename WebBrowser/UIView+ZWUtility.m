@@ -258,39 +258,39 @@
 
 
 - (UIImage *)snapshotForBrowserWebView{
-    CGRect rect = self.bounds;
-    rect.origin.y = TOP_TOOL_BAR_HEIGHT;
-    
-//    废弃iOS7截屏方法，因为截屏时有时候会出现屏幕闪屏
-//    rect.origin.y = -TOP_TOOL_BAR_HEIGHT;
-//    UIGraphicsBeginImageContextWithOptions(CGSizeMake(self.width, self.height - TOP_TOOL_BAR_HEIGHT), YES, 0);
-//    [self drawViewHierarchyInRect:rect afterScreenUpdates:YES];
-//    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-//    UIGraphicsEndImageContext();
-    
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(self.width, self.height), YES, 0.0f);
-    [self.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    CGFloat scale = image.scale;
-    rect.origin.x *= scale;
-    rect.origin.y *= scale;
-    rect.size.width *= scale;
-    rect.size.height *= scale;
-    
-    CGImageRef cgImage = CGImageCreateWithImageInRect(image.CGImage, rect);
-    
-    if (cgImage == NULL) {
-        return nil;
-    }
-    
-    UIImage *finalImage = [UIImage imageWithCGImage:cgImage scale:scale orientation:UIImageOrientationUp];
-    CGImageRelease(cgImage);
+    __block UIImage *finalImage = nil;
+    dispatch_main_safe_sync(^{
+        CGRect rect = self.bounds;
+        rect.origin.y = TOP_TOOL_BAR_HEIGHT;
+        
+        //    废弃iOS7截屏方法，因为截屏时有时候会出现屏幕闪屏
+        //    rect.origin.y = -TOP_TOOL_BAR_HEIGHT;
+        //    UIGraphicsBeginImageContextWithOptions(CGSizeMake(self.width, self.height - TOP_TOOL_BAR_HEIGHT), YES, 0);
+        //    [self drawViewHierarchyInRect:rect afterScreenUpdates:YES];
+        //    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+        //    UIGraphicsEndImageContext();
+        
+        UIGraphicsBeginImageContextWithOptions(CGSizeMake(self.width, self.height), YES, 0.0f);
+        [self.layer renderInContext:UIGraphicsGetCurrentContext()];
+        UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        CGFloat scale = image.scale;
+        rect.origin.x *= scale;
+        rect.origin.y *= scale;
+        rect.size.width *= scale;
+        rect.size.height *= scale;
+        
+        CGImageRef cgImage = CGImageCreateWithImageInRect(image.CGImage, rect);
+        
+        if (cgImage != NULL) {
+            finalImage = [UIImage imageWithCGImage:cgImage scale:scale orientation:UIImageOrientationUp];
+            CGImageRelease(cgImage);
+        }
+    })
     
     return finalImage;
 }
-
 
 - (UIImage *)snapshot{
     UIGraphicsBeginImageContextWithOptions(self.bounds.size, YES, 0.0f);

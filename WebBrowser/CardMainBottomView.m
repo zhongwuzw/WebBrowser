@@ -10,8 +10,8 @@
 
 @interface CardMainBottomView ()
 
-@property (nonatomic, strong) UIButton * returnButton;
-@property (nonatomic, strong) UIButton * addButton;
+@property (nonatomic, strong) UIBarButtonItem * returnButton;
+@property (nonatomic, strong) UIBarButtonItem * addButton;
 
 @end
 
@@ -27,26 +27,21 @@
 
 - (void)commonInit{
     self.backgroundColor = [UIColor whiteColor];
-    self.returnButton = ({
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [self addSubview:button];
-        button.tag = ReturnButtonClicked;
-        [self makeConstraintsWithButton:button isLeft:YES];
-        [button addTarget:self action:@selector(handleButtonClickedWithButton:) forControlEvents:UIControlEventTouchUpInside];
-        [button setImage:[UIImage imageNamed:@"card-return"] forState:UIControlStateNormal];
-        
-        button;
-    });
     
-    self.addButton = ({
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [self addSubview:button];
-        button.tag = AddButtonClicked;
-        [self makeConstraintsWithButton:button isLeft:NO];
-        [button addTarget:self action:@selector(handleButtonClickedWithButton:) forControlEvents:UIControlEventTouchUpInside];
-        [button setImage:[UIImage imageNamed:@"card-add"] forState:UIControlStateNormal];
-        button;
-    });
+    self.returnButton = [self createBottomToolBarButtonWithImage:@"card-return" tag:ReturnButtonClicked];
+    
+    self.addButton = [self createBottomToolBarButtonWithImage:@"card-add" tag:AddButtonClicked];
+    
+    UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    
+    [self setItems:@[flexibleItem, self.returnButton, flexibleItem, self.addButton, flexibleItem]];
+}
+
+- (UIBarButtonItem *)createBottomToolBarButtonWithImage:(NSString *)imageName tag:(NSInteger)tag{
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:imageName] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(handleButtonClickedWithButton:)];
+    item.tag = tag;
+    
+    return item;
 }
 
 - (void)makeConstraintsWithButton:(UIButton *)button isLeft:(BOOL)isLeft{
@@ -57,7 +52,7 @@
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-0-[button]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(button)]];
 }
 
-- (void)handleButtonClickedWithButton:(UIButton *)button{
+- (void)handleButtonClickedWithButton:(UIBarButtonItem *)button{
     if ([self.bottomDelegate respondsToSelector:@selector(cardBottomBtnClickedWithTag:)]) {
         [self.bottomDelegate cardBottomBtnClickedWithTag:button.tag];
     }

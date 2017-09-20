@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0E1702C81ECC412B0075C7D5 /* FindInPageBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1702C71ECC412B0075C7D5 /* FindInPageBar.m */; };
+		0E1710F51F726782007A7DB0 /* GestureProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1710F41F726782007A7DB0 /* GestureProxy.m */; };
 		0E19A4D41E232FA8009DAF9A /* NSNumber+ZWUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E19A4D31E232FA8009DAF9A /* NSNumber+ZWUtility.m */; };
 		0E1A9F191EAF597400FAB196 /* BookmarkTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1A9F181EAF597400FAB196 /* BookmarkTableViewController.m */; };
 		0E1A9F1C1EAF59AC00FAB196 /* BookmarkDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1A9F1B1EAF59AC00FAB196 /* BookmarkDataManager.m */; };
@@ -60,6 +61,7 @@
 		0E7795931E20F8C800CE86BE /* SearchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E7795911E20F8C800CE86BE /* SearchTableViewCell.m */; };
 		0E7795941E20F8C900CE86BE /* SearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E7795921E20F8C800CE86BE /* SearchTableViewCell.xib */; };
 		0E7795971E21042300CE86BE /* NSString+ZWUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E7795961E21042300CE86BE /* NSString+ZWUtility.m */; };
+		0E7E43A01F67E0D200DB6CD7 /* ArrowActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E7E439F1F67E0D200DB6CD7 /* ArrowActivityView.m */; };
 		0E8013DB1EB0A1B60098BF64 /* BookmarkSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8013DA1EB0A1B60098BF64 /* BookmarkSectionHeaderView.m */; };
 		0E8013DD1EB0A3280098BF64 /* BookmarkSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E8013DC1EB0A3280098BF64 /* BookmarkSectionHeaderView.xib */; };
 		0E829CD71E12075B008FF0A8 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E829CD61E12075B008FF0A8 /* SearchViewController.m */; };
@@ -142,6 +144,8 @@
 /* Begin PBXFileReference section */
 		0E1702C61ECC412B0075C7D5 /* FindInPageBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindInPageBar.h; sourceTree = "<group>"; };
 		0E1702C71ECC412B0075C7D5 /* FindInPageBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindInPageBar.m; sourceTree = "<group>"; };
+		0E1710F31F726782007A7DB0 /* GestureProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GestureProxy.h; sourceTree = "<group>"; };
+		0E1710F41F726782007A7DB0 /* GestureProxy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GestureProxy.m; sourceTree = "<group>"; };
 		0E19A4D21E232FA8009DAF9A /* NSNumber+ZWUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+ZWUtility.h"; sourceTree = "<group>"; };
 		0E19A4D31E232FA8009DAF9A /* NSNumber+ZWUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+ZWUtility.m"; sourceTree = "<group>"; };
 		0E1A9F171EAF597400FAB196 /* BookmarkTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkTableViewController.h; sourceTree = "<group>"; };
@@ -249,6 +253,8 @@
 		0E7795921E20F8C800CE86BE /* SearchTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchTableViewCell.xib; sourceTree = "<group>"; };
 		0E7795951E21042300CE86BE /* NSString+ZWUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ZWUtility.h"; sourceTree = "<group>"; };
 		0E7795961E21042300CE86BE /* NSString+ZWUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "NSString+ZWUtility.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		0E7E439E1F67E0D200DB6CD7 /* ArrowActivityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArrowActivityView.h; sourceTree = "<group>"; };
+		0E7E439F1F67E0D200DB6CD7 /* ArrowActivityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArrowActivityView.m; sourceTree = "<group>"; };
 		0E8013D91EB0A1B60098BF64 /* BookmarkSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkSectionHeaderView.h; sourceTree = "<group>"; };
 		0E8013DA1EB0A1B60098BF64 /* BookmarkSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkSectionHeaderView.m; sourceTree = "<group>"; };
 		0E8013DC1EB0A3280098BF64 /* BookmarkSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookmarkSectionHeaderView.xib; sourceTree = "<group>"; };
@@ -630,6 +636,8 @@
 		0E48FAFE1DA3FCCB00B8FCDB /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0E7E439E1F67E0D200DB6CD7 /* ArrowActivityView.h */,
+				0E7E439F1F67E0D200DB6CD7 /* ArrowActivityView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -653,6 +661,8 @@
 				0E5CC9E01E794D880049ABEB /* WebViewHistoryItem.m */,
 				0E5CC9E21E794FFD0049ABEB /* WebViewBackForwardList.h */,
 				0E5CC9E31E794FFD0049ABEB /* WebViewBackForwardList.m */,
+				0E1710F31F726782007A7DB0 /* GestureProxy.h */,
+				0E1710F41F726782007A7DB0 /* GestureProxy.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1119,7 +1129,7 @@
 		0E681F1D1D4AEC3F003534F5 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "钟武";
 				TargetAttributes = {
 					0E681F241D4AEC3F003534F5 = {
@@ -1250,6 +1260,7 @@
 				0E9361DC1EB0FAEE004F6AE7 /* BookmarkTableViewCell.m in Sources */,
 				0E2C53A31DAA314C0077B9B4 /* UIView+ZWUtility.m in Sources */,
 				0ED304151E98697C00445A9A /* BaseTableViewController.m in Sources */,
+				0E1710F51F726782007A7DB0 /* GestureProxy.m in Sources */,
 				0EC14F511E31B97900A44D05 /* FMDatabaseAdditions.m in Sources */,
 				0EED28311DC1A32100EC8581 /* ZWUtility.m in Sources */,
 				0E32E3071E08D4FB00CFBBB5 /* CardMainView.m in Sources */,
@@ -1302,6 +1313,7 @@
 				0E39F9AA1E14C8AA007B5681 /* SearchInputView.m in Sources */,
 				0EBB15A01EC36A1D0044156A /* BookmarkItemEditViewController.m in Sources */,
 				0E8EE8311E11123600B6DADF /* SettingsViewController.m in Sources */,
+				0E7E43A01F67E0D200DB6CD7 /* ArrowActivityView.m in Sources */,
 				0E1A9F191EAF597400FAB196 /* BookmarkTableViewController.m in Sources */,
 				0EC3D8BC1EC1C99D0059E4DC /* BookmarkSectionTableViewCell.m in Sources */,
 				0E1F9F9F1DD2D86E00FA84EA /* NJKWebViewProgressView.m in Sources */,
@@ -1361,14 +1373,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -1407,14 +1425,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;

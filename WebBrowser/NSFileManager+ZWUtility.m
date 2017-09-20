@@ -10,7 +10,7 @@
 
 @implementation NSFileManager (ZWUtility)
 
-- (long long)getAllocatedSizeOfDirectoryAtURLS:(NSArray<NSURL *> *)directoryURLs error:(NSError * _Nullable *)error{
+- (long long)getAllocatedSizeOfDirectoryAtURLS:(NSArray<NSURL *> *)directoryURLs error:(NSError * _Nullable __autoreleasing *)error{
     __block unsigned long long accumulatedSize = 0;
     
     __block BOOL isError = NO;
@@ -32,7 +32,7 @@
     return accumulatedSize;
 }
 
-- (long long)getAllocatedSizeOfDirectoryAtURL:(NSURL *)directoryURL error:(NSError * _Nullable *)error{
+- (long long)getAllocatedSizeOfDirectoryAtURL:(NSURL *)directoryURL error:(NSError * _Nullable __autoreleasing *)error{
     unsigned long long accumulatedSize = 0;
     
     NSArray *prefetchedProperties = @[

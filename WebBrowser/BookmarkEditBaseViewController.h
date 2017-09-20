@@ -10,7 +10,7 @@
 
 @class BookmarkDataManager;
 
-typedef void(^BookmarkEditCompletion)();
+typedef void(^BookmarkEditCompletion)(void);
 extern NSString *const kBookmarkEditTextFieldCellIdentifier;
 
 @interface BookmarkEditBaseViewController : UIViewController

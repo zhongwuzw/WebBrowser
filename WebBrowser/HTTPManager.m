@@ -89,7 +89,7 @@
     return op;
 }
 
-- (BaiduSugResponseModel *)createBaiduSugModeWithResponse:(id)responseObject error:(NSError **)error{
+- (BaiduSugResponseModel *)createBaiduSugModeWithResponse:(id)responseObject error:(NSError * __autoreleasing *)error{
     BaiduSugResponseModel *model = [BaiduSugResponseModel new];
     
     if ([responseObject isKindOfClass:[NSArray class]]) {

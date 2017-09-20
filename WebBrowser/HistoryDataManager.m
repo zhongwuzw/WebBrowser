@@ -11,9 +11,9 @@
 static NSString *const kTodayDate = @"今天";
 static NSString *const kYesterdayDate = @"昨天";
 static NSString *const kBeforeDate = @"以前";
-static NSInteger const kLimit = 20;
+static NSInteger const kLimit = 50;
 
-typedef void(^HistoryDataTempCompletion)();
+typedef void(^HistoryDataTempCompletion)(void);
 
 @implementation HistorySectionModel
 

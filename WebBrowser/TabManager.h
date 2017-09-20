@@ -13,7 +13,7 @@
 
 typedef void(^MultiWebViewOperationBlock)(NSArray<WebModel *> *);
 typedef void(^CurWebViewOperationBlock)(WebModel *, BrowserWebView *);
-typedef void(^WebBrowserNoParamsBlock)();
+typedef void(^WebBrowserNoParamsBlock)(void);
 
 @interface WebModel : NSObject <NSSecureCoding>
 

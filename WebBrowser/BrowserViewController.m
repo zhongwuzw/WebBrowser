@@ -69,10 +69,9 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
     [self.navigationItem setBackBarButtonItem:backItem];
     
     self.browserContainerView = ({
-        BrowserContainerView *browserContainerView = [BrowserContainerView new];
+        BrowserContainerView *browserContainerView = [[BrowserContainerView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height)];
         [self.view addSubview:browserContainerView];
         
-        browserContainerView.frame = CGRectMake(0, 0, self.view.width, self.view.height);
         self.browserButtonDelegate = browserContainerView;
 
         browserContainerView;

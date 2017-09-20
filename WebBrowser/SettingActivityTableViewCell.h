@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-typedef NSString *(^SettingNoParamsBlock)();
-typedef void (^SettingVoidReturnNoParamsBlock)();
+typedef NSString *(^SettingNoParamsBlock)(void);
+typedef void (^SettingVoidReturnNoParamsBlock)(void);
 typedef void (^SettingCompletionBlock)(NSString *);
 
 @interface SettingActivityTableViewCell : UITableViewCell

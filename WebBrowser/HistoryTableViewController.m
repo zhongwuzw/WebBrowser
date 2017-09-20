@@ -23,6 +23,7 @@ static NSString *const kHistoryTableViewContentSize = @"contentSize";
 @property (nonatomic, strong) HistoryDataManager *historyDataManager;
 @property (nonatomic, assign) BOOL noMoreData;
 @property (nonatomic, weak) UILabel *bottomNoMoreLabel;
+@property (nonatomic, assign) BOOL isLoading;
 
 @end
 
@@ -39,6 +40,7 @@ static NSString *const kHistoryTableViewContentSize = @"contentSize";
 - (void)initUI{
     self.tableView.sectionHeaderHeight = kHistoryTableHeaderViewHeader;
     [self.tableView registerClass:[UITableViewHeaderFooterView class] forHeaderFooterViewReuseIdentifier:kHistoryTableViewHeaderFooterIdentifier];
+    
     UIBarButtonItem *clearItem = [[UIBarButtonItem alloc] initWithTitle:@"清除所有" style:UIBarButtonItemStylePlain target:self action:@selector(handleClearAllHistory)];
     self.navigationItem.rightBarButtonItem = clearItem;
     self.title = @"历史";
@@ -48,6 +50,7 @@ static NSString *const kHistoryTableViewContentSize = @"contentSize";
 }
 
 - (void)initData{
+    self.isLoading = YES;
     WEAK_REF(self)
     _historyDataManager = [[HistoryDataManager alloc] initWithCompletion:^(BOOL isNoMoreData){
         STRONG_REF(self_)
@@ -55,6 +58,7 @@ static NSString *const kHistoryTableViewContentSize = @"contentSize";
             self__.noMoreData = isNoMoreData;
             [self__ addNoMoreDataViewIfNeeded];
             [self__.tableView reloadData];
+            self__.isLoading = NO;
         }
     }];
 }
@@ -164,7 +168,7 @@ static NSString *const kHistoryTableViewContentSize = @"contentSize";
     if (indexPaths.count > 0) {
         NSInteger section = self.tableView.numberOfSections - 1;
         if (section >= 0) {
-            [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
         }
     }
 }
@@ -192,9 +196,14 @@ static NSString *const kHistoryTableViewContentSize = @"contentSize";
 }
 
 - (void)scrollViewContentOffsetDidChange:(NSDictionary *)change{
+    if (_isLoading) {
+        return;
+    }
+    
     CGFloat yOffset = [[change objectForKey:NSKeyValueChangeNewKey] CGPointValue].y;
     if (yOffset > 0 && yOffset + self.tableView.height + kHistoryTableViewThreshold > self.tableView.contentSize.height) {
         if (!self.noMoreData) {
+            self.isLoading = YES;
             WEAK_REF(self)
             [self.historyDataManager getMoreDataWithCompletion:^(NSArray<NSIndexPath *> *indexPaths, BOOL isNoMoreData){
                 STRONG_REF(self_)
@@ -202,6 +211,7 @@ static NSString *const kHistoryTableViewContentSize = @"contentSize";
                     self__.noMoreData = isNoMoreData;
                     [self__ addNoMoreDataViewIfNeeded];
                     [self__ reloadBeforeHistorySectionIfNeeded:indexPaths];
+                    self__.isLoading = NO;
                 }
             }];
         }
@@ -266,7 +276,7 @@ static NSString *const kHistoryTableViewContentSize = @"contentSize";
         [self.historyDataManager deleteRowAtIndexPath:indexPath completion:^(BOOL success){
             STRONG_REF(self_)
             if (self__ && success) {
-                [self__.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                [self__.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
             }
         }];
     }

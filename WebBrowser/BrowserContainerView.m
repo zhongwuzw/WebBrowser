@@ -20,9 +20,12 @@
 #import "HTTPClient.h"
 #import "FindInPageBar.h"
 #import "MenuHelper.h"
+#import "ArrowActivityView.h"
+#import "GestureProxy.h"
 
 #import <Photos/Photos.h>
 
+static CGFloat const ArrowActivitySize = 30.f;
 static NSInteger const ActionSheetTitleMaxLength = 120;
 static NSString *const CancelString = @"取消";
 static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word=";
@@ -30,8 +33,10 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
 @interface BrowserContainerView () <WebViewDelegate, MenuHelperInterface, BrowserContainerLoadURLDelegate, BrowserWebViewDelegate, FindInPageBarDelegate>
 
 @property (nonatomic, readwrite, weak) BrowserWebView *webView;
-@property (nonatomic, assign) CGPoint contentOffset;
 @property (nonatomic, weak) UIGestureRecognizer *selectionGestureRecognizer;
+@property (nonatomic, strong) GestureProxy *gestureProxy;
+@property (nonatomic, assign) CGPoint edgeStartPoint;
+@property (nonatomic, strong) ArrowActivityView *arrowActivityView;
 
 @end
 
@@ -48,6 +53,14 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
     return self.webView.scrollView;
 }
 
+- (ArrowActivityView *)arrowActivityView{
+    if (!_arrowActivityView) {
+        _arrowActivityView = [[ArrowActivityView alloc] initWithFrame:CGRectMake(0, 0, ArrowActivitySize, ArrowActivitySize) kind:ArrowActivityKindLeft];
+        [self insertSubview:_arrowActivityView atIndex:0];
+    }
+    return _arrowActivityView;
+}
+
 - (void)setupWebView{
     [TabManager sharedInstance].browserContainerView = self;
 
@@ -57,7 +70,24 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
     [[DelegateManager sharedInstance] addWebViewDelegate:self];
     [Notifier addObserver:self selector:@selector(handleOpenInNewWindow:) name:kOpenInNewWindowNotification object:nil];
     
+    [self addScreenEdgePanGesture];
     self.restorationIdentifier = NSStringFromClass([self class]);
+}
+
+- (void)addArrowViewForLeftOrRight:(BOOL)isLeft{
+    if (isLeft) {
+        self.arrowActivityView.center = CGPointMake(5.f + ArrowActivitySize / 2.0f, self.height / 2);
+    }
+    else{
+        self.arrowActivityView.center = CGPointMake(self.width - ArrowActivitySize / 2.0f - 5.f, self.height / 2.0f);
+    }
+    
+    [self.arrowActivityView setKind:(isLeft) ? ArrowActivityKindLeft : ArrowActivityKindRight];
+}
+
+- (void)removeArrowActivityView{
+    [self.arrowActivityView removeFromSuperview];
+    self.arrowActivityView = nil;
 }
 
 - (void)startLoadWebViewWithURL:(NSString *)url{
@@ -85,7 +115,6 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
             [self__ restoreWithCompletionHandler:^(WebModel *webModel, BrowserWebView *webView) {
                 NSNotification *notify = [NSNotification notificationWithName:kWebTabSwitch object:self userInfo:@{@"webView":webView}];
                 [Notifier postNotification:notify];
-                [[BrowserVC navigationController].view showHUDAtBottomWithMessage:@"已在新窗口中打开"];
             } animation:YES];
         }
     }];
@@ -103,6 +132,7 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
             if (oldBrowserView != browserWebView && [oldBrowserView superview] && animation) {
                 browserWebView.transform = CGAffineTransformMakeTranslation(self__.width, 0);
                 oldBrowserView.transform = CGAffineTransformIdentity;
+                // If the transform property is not the identity transform, the value of frame is undefined and therefore should be ignored.
                 oldBrowserView.frame = CGRectMake(0, 0, self__.width, self__.height);
                 
                 [UIView transitionWithView:self__ duration:.5f options:UIViewAnimationOptionCurveEaseInOut animations:^{
@@ -178,6 +208,39 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
         if (currentResult) {
             [BrowserVC findInPageDidUpdateCurrentResult:[currentResult integerValue]];
         }
+    }
+}
+
+#pragma mark - Handle ScreenEdgePan Gesture
+
+- (void)addScreenEdgePanGesture{
+    UIPanGestureRecognizer *edgeGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleScreenEdgePanGesture:)];
+    self.gestureProxy = [[GestureProxy alloc] initWithCGPoint:CGPointMake(18, 0)];
+    edgeGesture.delegate = _gestureProxy;
+    edgeGesture.minimumNumberOfTouches = 1;
+    edgeGesture.maximumNumberOfTouches = 1;
+    
+    [self addGestureRecognizer:edgeGesture];
+}
+
+- (void)handleScreenEdgePanGesture:(UIPanGestureRecognizer *)gesture{
+    CGPoint point = [gesture translationInView:self];
+    
+    if (gesture.state == UIGestureRecognizerStateBegan) {
+        self.backgroundColor = UIColorFromRGB(0x5A5A5A);
+        [self addArrowViewForLeftOrRight:YES];
+        self.edgeStartPoint = point;
+    }
+    else if (gesture.state == UIGestureRecognizerStateChanged) {
+        self.webView.transform = CGAffineTransformMakeTranslation(point.x - _edgeStartPoint.x, 0);
+    }
+    else {
+        [UIView animateWithDuration:.2f animations:^{
+           self.webView.transform = CGAffineTransformIdentity;
+        } completion:^(BOOL finished){
+            self.backgroundColor = [UIColor clearColor];
+            [self removeArrowActivityView];
+        }];
     }
 }
 
@@ -346,18 +409,6 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
     return YES;
 }
 
-#pragma mark - BrowserWebViewDelegate
-
-- (void)webViewDidFinishLoad:(BrowserWebView *)webView{
-    if (IsCurrentWebView(webView)) {
-        //pass local url
-        if (![webView.mainFURL isLocal] && !CGPointEqualToPoint(CGPointZero, self.contentOffset) && self.contentOffset.y < self.scrollView.contentSize.height) {
-            [self.scrollView setContentOffset:self.contentOffset animated:NO];
-            self.contentOffset = CGPointZero;
-        }
-    }
-}
-
 #pragma mark - BrowserContainerLoadURLDelegate
 
 - (void)browserContainerViewLoadWebViewWithSug:(NSString *)text{
@@ -379,28 +430,7 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
     [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
-#pragma mark - Preseving and Restoring State
-
-- (void)encodeRestorableStateWithCoder:(NSCoder *)coder{
-    CGPoint point = self.scrollView.contentOffset;
-    //optimize contentOffset because of contentInset changed when webView scroll
-    point.y -= (TOP_TOOL_BAR_HEIGHT - self.scrollView.contentInset.top);
-    [coder encodeCGPoint:point forKey:@"webViewContentOffset"];
-    
-    [super encodeRestorableStateWithCoder:coder];
-}
-
-- (void)decodeRestorableStateWithCoder:(NSCoder *)coder{
-    self.contentOffset = [coder decodeCGPointForKey:@"webViewContentOffset"];
-    
-    [super decodeRestorableStateWithCoder:coder];
-}
-
-#pragma mark - UIGestureRecognizerDelegate 
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
-    return NO;
-}
+#pragma mark - UIGestureRecognizerDelegate
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
     if ([[otherGestureRecognizer.delegate description] containsString:@"_UIKeyboardBasedNonEditableTextSelectionGestureController"]) {
@@ -409,6 +439,7 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
     if ([otherGestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]]) {
         return [[otherGestureRecognizer.delegate description] containsString:@"UIWebBrowserView"];
     }
+    
     return NO;
 }
 
