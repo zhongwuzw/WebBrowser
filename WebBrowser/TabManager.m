@@ -65,12 +65,14 @@ assert((shouldSyncQueue ? manager == self : manager != self) && "operate on webM
 }
 
 - (void)dealloc{
-    self.webView.webModel = nil;
-    self.webView.delegate = nil;
-    self.webView.scrollView.delegate = nil;
-    [self.webView loadHTMLString:@"" baseURL:nil];
-    [self.webView stopLoading];
-    self.webView = nil;
+    // dealloc called in secondly thread, we need call in main thread
+    dispatch_main_safe_sync(^{
+        self.webView.webModel = nil;
+        self.webView.delegate = nil;
+        self.webView.scrollView.delegate = nil;
+        [self.webView stopLoading];
+        [self.webView loadHTMLString:@"" baseURL:nil];
+    });
 }
 
 @end
@@ -190,8 +192,12 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
 
 - (void)saveWebModelToDisk{
     [_webModelArray enumerateObjectsUsingBlock:^(WebModel *model, NSUInteger idx, BOOL *stop){
-        if (model.webView) {
-            WebViewBackForwardList *backForwardList = [model.webView webViewBackForwardList];
+     BrowserWebView *webView = model.webView;
+        if (webView) {
+            __block WebViewBackForwardList *backForwardList;
+            dispatch_main_safe_sync(^{
+                backForwardList = [webView webViewBackForwardList];
+            });
             NSArray *urls = [self getBackForwardListURL:backForwardList];
             NSInteger currentPage = -backForwardList.forwardList.count;
             model.sessionData = [[SessionData alloc] initWithCurrentPage:currentPage urls:urls];
@@ -208,19 +214,17 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
 //save webModel, public API
 - (void)saveWebModelData{
     dispatch_async(self.synchQueue, ^{
-        dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            [_webModelArray enumerateObjectsUsingBlock:^(WebModel *webModel, NSUInteger idx, BOOL *stop){
-                @autoreleasepool {
-                    if (webModel.webView) {
-                        NSString *key = [NSString stringWithFormat:@"%f%@%@",[[NSDate date] timeIntervalSince1970],webModel.url,webModel.title];
-                        [self storeImage:webModel.image forKey:key];
-                        webModel.imageKey = key;
-                    }
+        [_webModelArray enumerateObjectsUsingBlock:^(WebModel *webModel, NSUInteger idx, BOOL *stop){
+            @autoreleasepool {
+                if (webModel.webView) {
+                    NSString *key = [NSString stringWithFormat:@"%f%@%@",[[NSDate date] timeIntervalSince1970],webModel.url,webModel.title];
+                    [self storeImage:webModel.image forKey:key];
+                    webModel.imageKey = key;
                 }
-            }];
-            
-            [self saveWebModelToDisk];
-        });
+            }
+        }];
+        
+        [self saveWebModelToDisk];
     });
 }
 
@@ -274,21 +278,25 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
 
 - (void)setCurWebViewOperationBlockWith:(CurWebViewOperationBlock)block{
     dispatch_async(self.synchQueue, ^{
-        dispatch_main_safe_sync(^{
-            BrowserWebView *browserWebView;
-            WebModel *curModel = [_webModelArray lastObject];
-            if (!curModel.webView) {
+        __block BrowserWebView *browserWebView;
+        WebModel *curModel = [_webModelArray lastObject];
+        if (!curModel.webView) {
+            dispatch_main_safe_sync(^{
                 browserWebView = [BrowserWebView new];
                 browserWebView.scrollView.contentInset = UIEdgeInsetsMake(TOP_TOOL_BAR_HEIGHT, 0, BOTTOM_TOOL_BAR_HEIGHT, 0);
-                _webModelArray[_webModelArray.count - 1].webView = browserWebView;
-                browserWebView.webModel = curModel;
-            }
-            else
-                browserWebView = curModel.webView;
+            })
             
+            _webModelArray[_webModelArray.count - 1].webView = browserWebView;
+            browserWebView.webModel = curModel;
+        }
+        else {
+            browserWebView = curModel.webView;
+        }
+        
+        dispatch_main_safe_sync(^{
             browserWebView.scrollView.delegate = BrowserVC;
             if (block) {
-                block([_webModelArray lastObject], browserWebView);
+                block(curModel, browserWebView);
             }
         })
     });
@@ -341,6 +349,14 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
     dispatch_main_safe_async(^{
         [self.browserContainerView.webView stopLoading];
     })
+}
+
+- (NSUInteger)numberOfTabs{
+    __block NSUInteger num;
+    dispatch_sync(self.synchQueue, ^{
+        num = self.webModelArray.count;
+    });
+    return num;
 }
 
 #pragma mark - Disk Image Method

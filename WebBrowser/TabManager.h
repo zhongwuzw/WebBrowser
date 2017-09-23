@@ -43,5 +43,6 @@ SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(TabManager)
 - (WebModel *)getCurrentWebModel;
 - (BOOL)isCurrentWebView:(BrowserWebView *)webView;
 - (void)stopLoadingCurrentWebView;
+- (NSUInteger)numberOfTabs;
 
 @end

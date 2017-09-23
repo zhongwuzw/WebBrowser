@@ -13,5 +13,6 @@
 - (BOOL)isValidURL;
 - (BOOL)isLocal;
 - (NSString *)ellipsizeWithMaxLength:(NSInteger)maxLength;
+- (NSDictionary *)getWebViewJSONDicWithPrefix:(NSString *)prefix;
 
 @end

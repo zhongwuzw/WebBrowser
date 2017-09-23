@@ -37,6 +37,7 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
 @property (nonatomic, strong) GestureProxy *gestureProxy;
 @property (nonatomic, assign) CGPoint edgeStartPoint;
 @property (nonatomic, strong) ArrowActivityView *arrowActivityView;
+@property (nonatomic, assign) BOOL showActivityView;
 
 @end
 
@@ -53,14 +54,6 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
     return self.webView.scrollView;
 }
 
-- (ArrowActivityView *)arrowActivityView{
-    if (!_arrowActivityView) {
-        _arrowActivityView = [[ArrowActivityView alloc] initWithFrame:CGRectMake(0, 0, ArrowActivitySize, ArrowActivitySize) kind:ArrowActivityKindLeft];
-        [self insertSubview:_arrowActivityView atIndex:0];
-    }
-    return _arrowActivityView;
-}
-
 - (void)setupWebView{
     [TabManager sharedInstance].browserContainerView = self;
 
@@ -72,22 +65,6 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
     
     [self addScreenEdgePanGesture];
     self.restorationIdentifier = NSStringFromClass([self class]);
-}
-
-- (void)addArrowViewForLeftOrRight:(BOOL)isLeft{
-    if (isLeft) {
-        self.arrowActivityView.center = CGPointMake(5.f + ArrowActivitySize / 2.0f, self.height / 2);
-    }
-    else{
-        self.arrowActivityView.center = CGPointMake(self.width - ArrowActivitySize / 2.0f - 5.f, self.height / 2.0f);
-    }
-    
-    [self.arrowActivityView setKind:(isLeft) ? ArrowActivityKindLeft : ArrowActivityKindRight];
-}
-
-- (void)removeArrowActivityView{
-    [self.arrowActivityView removeFromSuperview];
-    self.arrowActivityView = nil;
 }
 
 - (void)startLoadWebViewWithURL:(NSString *)url{
@@ -177,26 +154,46 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
     }];
 }
 
-- (NSDictionary *)getWebViewJSONDicWithComponents:(NSString *)url prefix:(NSString *)prefix{
-    NSDictionary *jsonDic = nil;
-    if ([url hasPrefix:prefix]) {
-        NSString *jsonStr = [url substringFromIndex:prefix.length];
-        
-        jsonStr = [jsonStr stringByRemovingPercentEncoding];
-        if (jsonStr) {
-            jsonDic = [NSJSONSerialization JSONObjectWithData:[jsonStr dataUsingEncoding:NSUTF8StringEncoding] options:0 error:NULL];
-            if (jsonDic && [jsonDic isKindOfClass:[NSDictionary class]]) {
-                return jsonDic;
-            }
-        }
+#pragma mark - ActivityView
+
+- (ArrowActivityView *)arrowActivityView{
+    if (!_arrowActivityView) {
+        _arrowActivityView = [[ArrowActivityView alloc] initWithFrame:CGRectMake(0, 0, ArrowActivitySize, ArrowActivitySize) kind:ArrowActivityKindLeft];
+        [self insertSubview:_arrowActivityView atIndex:0];
     }
-    return jsonDic;
+    return _arrowActivityView;
+}
+
+- (void)addArrowViewWithPoint:(CGPoint)point{
+    if (!self.showActivityView) {
+        return;
+    }
+    
+    BOOL isLeft = point.x < self.width / 2.0f;
+    if (isLeft) {
+        self.arrowActivityView.center = CGPointMake(5.f + ArrowActivitySize / 2.0f, self.height / 2);
+    }
+    else{
+        self.arrowActivityView.center = CGPointMake(self.width - ArrowActivitySize / 2.0f - 5.f, self.height / 2.0f);
+    }
+    
+    [self.arrowActivityView setKind:(isLeft) ? ArrowActivityKindLeft : ArrowActivityKindRight];
+}
+
+- (void)removeArrowActivityView{
+    [self.arrowActivityView removeFromSuperview];
+    self.arrowActivityView = nil;
+}
+
+- (void)setShowActivityViewIfNeeded{
+    NSUInteger num = [[TabManager sharedInstance] numberOfTabs];
+    self.showActivityView = (num > 1);
 }
 
 #pragma mark - Handle WebView FindInPage Results
 
 - (void)handleFindInPageWithComponents:(NSString *)url{
-    NSDictionary *jsonDic = [self getWebViewJSONDicWithComponents:url prefix:@"zwfindinpage://message?json="];
+    NSDictionary *jsonDic = [url getWebViewJSONDicWithPrefix:@"zwfindinpage://message?json="];
     if (jsonDic) {
         NSNumber *totalResults = [jsonDic objectForKey:@"totalResults"];
         
@@ -224,21 +221,33 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
 }
 
 - (void)handleScreenEdgePanGesture:(UIPanGestureRecognizer *)gesture{
-    CGPoint point = [gesture translationInView:self];
+    CGPoint point = [gesture locationInView:self];
     
     if (gesture.state == UIGestureRecognizerStateBegan) {
         self.backgroundColor = UIColorFromRGB(0x5A5A5A);
-        [self addArrowViewForLeftOrRight:YES];
+        [self setShowActivityViewIfNeeded];
+        [self addArrowViewWithPoint:point];
         self.edgeStartPoint = point;
     }
     else if (gesture.state == UIGestureRecognizerStateChanged) {
-        self.webView.transform = CGAffineTransformMakeTranslation(point.x - _edgeStartPoint.x, 0);
+        CGFloat offset = point.x - _edgeStartPoint.x;
+        self.webView.transform = CGAffineTransformMakeTranslation(offset, 0);
+        if (self.showActivityView && fabs(offset) >= ArrowActivitySize + 5.f * 2) {
+            self.arrowActivityView.centerX = (offset > 0) ? offset / 2.0f : self.width - fabs(offset) / 2.0f;
+            if (fabs(offset) > self.width / 2.0f - 50) {
+                [self.arrowActivityView setOn:YES];
+            }
+            else{
+                [self.arrowActivityView setOn:NO];
+            }
+        }
     }
     else {
         [UIView animateWithDuration:.2f animations:^{
            self.webView.transform = CGAffineTransformIdentity;
         } completion:^(BOOL finished){
             self.backgroundColor = [UIColor clearColor];
+//            NSString *str = self.arrowActivityView.isOn ? @"切换" : @"不切换";
             [self removeArrowActivityView];
         }];
     }
@@ -247,7 +256,7 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
 #pragma mark - Handle WebView Long Press Gesture
 
 - (void)handleContextMenuWithComponents:(NSString *)url{
-    NSDictionary *jsonDic = [self getWebViewJSONDicWithComponents:url prefix:@"zwcontextmenu://message?json="];
+    NSDictionary *jsonDic = [url getWebViewJSONDicWithPrefix:@"zwcontextmenu://message?json="];
     if (jsonDic) {
         if (jsonDic[@"handled"]) {
             self.selectionGestureRecognizer.enabled = NO;

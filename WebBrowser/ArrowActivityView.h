@@ -17,6 +17,7 @@ typedef NS_ENUM(NSUInteger, ArrowActivityKinds) {
 
 - (instancetype)initWithFrame:(CGRect)frame kind:(ArrowActivityKinds)kind;
 - (void)setOn:(BOOL)on;
+- (BOOL)isOn;
 - (void)setKind:(ArrowActivityKinds)kind;
 
 @end

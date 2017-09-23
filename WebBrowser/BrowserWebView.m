@@ -98,6 +98,8 @@
 }
 
 - (NSString *)mainFURL{
+    NSAssert([NSThread isMainThread], @"method should called in main thread");
+    
     id webView = [self webView];
     
     if(webView)
@@ -113,6 +115,8 @@
 
 - (NSString *)mainFTitle
 {
+    NSAssert([NSThread isMainThread], @"method should called in main thread");
+    
     id webView = [self webView];
     
     if(webView)
@@ -127,6 +131,8 @@
 }
 
 - (WebViewBackForwardList *)webViewBackForwardList{
+    NSAssert([NSThread isMainThread], @"method should called in main thread");
+    
     id webView = [self webView];
     
     if (webView && [webView respondsToSelector:NSSelectorFromString(BACK_FORWARD_LIST)]) {

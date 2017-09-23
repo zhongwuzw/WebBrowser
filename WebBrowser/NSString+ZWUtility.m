@@ -35,4 +35,20 @@ static NSString * const kURLRegEx = @"((\\w)*|([0-9]*)|([-|_])*)+([\\.|/]((\\w)*
     return self;
 }
 
+- (NSDictionary *)getWebViewJSONDicWithPrefix:(NSString *)prefix{
+    NSDictionary *jsonDic = nil;
+    if ([self hasPrefix:prefix]) {
+        NSString *jsonStr = [self substringFromIndex:prefix.length];
+        
+        jsonStr = [jsonStr stringByRemovingPercentEncoding];
+        if (jsonStr) {
+            jsonDic = [NSJSONSerialization JSONObjectWithData:[jsonStr dataUsingEncoding:NSUTF8StringEncoding] options:0 error:NULL];
+            if (jsonDic && [jsonDic isKindOfClass:[NSDictionary class]]) {
+                return jsonDic;
+            }
+        }
+    }
+    return jsonDic;
+}
+
 @end

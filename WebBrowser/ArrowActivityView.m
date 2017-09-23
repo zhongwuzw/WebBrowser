@@ -15,6 +15,7 @@ static CGFloat const kArrowYOffset = 8.f;
 @interface ArrowActivityView ()
 
 @property (nonatomic, assign) ArrowActivityKinds kind;
+@property (nonatomic, assign) ArrowActivityKinds lastKind;
 @property (nonatomic, strong) CAShapeLayer *arrowLayer;
 @property (nonatomic, strong) CAShapeLayer *circleLayer;
 @property (nonatomic, strong) UIColor *onArrowColor;
@@ -23,6 +24,7 @@ static CGFloat const kArrowYOffset = 8.f;
 @property (nonatomic, assign) CGFloat arrowLineWidth;
 @property (nonatomic, assign) CGFloat animationDuration;
 @property (nonatomic, assign) BOOL on;
+@property (nonatomic, assign) BOOL firstRender;
 
 @end
 
@@ -36,26 +38,42 @@ static CGFloat const kArrowYOffset = 8.f;
 }
 
 - (void)commonInit{
-    _onArrowColor = [UIColor clearColor];
+    _onArrowColor = UIColorFromRGB(0x5A5A5A);
     _onCircleColor = [UIColor whiteColor];
-    _offArrowColor = [UIColor blackColor];
+    _offArrowColor = [UIColor whiteColor];
     _arrowLineWidth = 2.0f;
     _animationDuration = 0.5f;
-    self.on = YES;
+    _firstRender = YES;
     
     self.backgroundColor = [UIColor clearColor];
 }
 
 - (void)setKind:(ArrowActivityKinds)kind{
+    _lastKind = _kind;
     _kind = kind;
     [self reload];
 }
 
+- (BOOL)isOn{
+    return _on;
+}
+
 - (void)setOn:(BOOL)on{
+    BOOL lastOn = _on;
+    _on = on;
+    if (!_firstRender && lastOn == on && _lastKind == _kind ) {
+        return;
+    }
+
     if (on) {
         [self drawOnCircle];
     }
-    [self drawOffArrow];
+    else{
+        [self.circleLayer removeFromSuperlayer];
+        self.circleLayer = nil;
+    }
+    [self drawOnOrOffArrow:on];
+    _firstRender = NO;
 }
 
 - (void)reload{
@@ -80,13 +98,13 @@ static CGFloat const kArrowYOffset = 8.f;
     [self.layer addSublayer:self.circleLayer];
 }
 
-- (void)drawOffArrow{
+- (void)drawOnOrOffArrow:(BOOL)isOn{
     [self.arrowLayer removeFromSuperlayer];
     self.arrowLayer = [CAShapeLayer layer];
     self.arrowLayer.frame = self.bounds;
     self.arrowLayer.path = [self pathForArrow].CGPath;
     self.arrowLayer.lineWidth = self.arrowLineWidth;
-    self.arrowLayer.strokeColor = self.offArrowColor.CGColor;
+    self.arrowLayer.strokeColor = isOn ? self.onArrowColor.CGColor : self.offArrowColor.CGColor;
     self.arrowLayer.lineCap = kCALineCapRound;
     self.arrowLayer.lineJoin = kCALineJoinRound;
     self.arrowLayer.rasterizationScale = 2.0 * [UIScreen mainScreen].scale;
