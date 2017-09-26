@@ -8,10 +8,6 @@
 
 #import "BaseNavigationViewController.h"
 
-@interface BaseNavigationViewController ()
-
-@end
-
 @implementation BaseNavigationViewController
 
 - (void)viewDidLoad {

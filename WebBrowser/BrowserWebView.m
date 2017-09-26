@@ -44,6 +44,9 @@
     self.allowsInlineMediaPlayback = YES;
     self.mediaPlaybackRequiresUserAction = NO;
     self.scalesPageToFit = YES;
+    if (@available(iOS 11.0, *)) {
+        self.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    }
     
     [self setDrawInWebThread];
     

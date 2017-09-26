@@ -14,6 +14,7 @@
 typedef void(^MultiWebViewOperationBlock)(NSArray<WebModel *> *);
 typedef void(^CurWebViewOperationBlock)(WebModel *, BrowserWebView *);
 typedef void(^WebBrowserNoParamsBlock)(void);
+typedef void(^SwitchOperationBlock)(WebModel *preWebModel, WebModel *curWebModel);
 
 @interface WebModel : NSObject <NSSecureCoding>
 
@@ -36,6 +37,8 @@ typedef void(^WebBrowserNoParamsBlock)(void);
 SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(TabManager)
 - (void)setMultiWebViewOperationBlockWith:(MultiWebViewOperationBlock)block;
 - (void)setCurWebViewOperationBlockWith:(CurWebViewOperationBlock)block;
+- (void)switchToLeftWindowWithCompletion:(SwitchOperationBlock)block;
+- (void)switchToRightWindowWithCompletion:(SwitchOperationBlock)block;
 - (void)updateWebModelArray:(NSArray<WebModel *> *)webArray;
 - (void)updateWebModelArray:(NSArray<WebModel *> *)webArray completion:(WebBrowserNoParamsBlock)block;
 - (void)addWebModelWithURL:(NSURL *)url completion:(WebBrowserNoParamsBlock)completion;

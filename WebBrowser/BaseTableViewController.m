@@ -8,10 +8,6 @@
 
 #import "BaseTableViewController.h"
 
-@interface BaseTableViewController ()
-
-@end
-
 @implementation BaseTableViewController
 
 - (void)viewDidLoad {

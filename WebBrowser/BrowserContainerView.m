@@ -22,12 +22,13 @@
 #import "MenuHelper.h"
 #import "ArrowActivityView.h"
 #import "GestureProxy.h"
+#import "NSData+ZWUtility.h"
+#import "UIAlertAction+ZWUtility.h"
 
 #import <Photos/Photos.h>
 
 static CGFloat const ArrowActivitySize = 30.f;
 static NSInteger const ActionSheetTitleMaxLength = 120;
-static NSString *const CancelString = @"取消";
 static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word=";
 
 @interface BrowserContainerView () <WebViewDelegate, MenuHelperInterface, BrowserContainerLoadURLDelegate, BrowserWebViewDelegate, FindInPageBarDelegate>
@@ -135,7 +136,7 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
                     NSDictionary *originalDic = sessionData.jsonDictionary;
                     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:originalDic options:0 error:NULL];
                     if (jsonData) {
-                        NSString *escapedJSON = [[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+                        NSString *escapedJSON = [jsonData jsonString];
                         escapedJSON = (escapedJSON) ? escapedJSON : @"";
                         NSURL *restoreURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/about/sessionrestore?history=%@",[[WebServer sharedInstance] base],escapedJSON]];
                         NSURLRequest *request = [NSURLRequest requestWithURL:restoreURL];
@@ -188,6 +189,13 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
 - (void)setShowActivityViewIfNeeded{
     NSUInteger num = [[TabManager sharedInstance] numberOfTabs];
     self.showActivityView = (num > 1);
+}
+
+- (BOOL)isWindowSwitchLeft{
+    if (self.edgeStartPoint.x < self.width / 2.f) {
+        return YES;
+    }
+    return NO;
 }
 
 #pragma mark - Handle WebView FindInPage Results
@@ -247,7 +255,19 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
            self.webView.transform = CGAffineTransformIdentity;
         } completion:^(BOOL finished){
             self.backgroundColor = [UIColor clearColor];
-//            NSString *str = self.arrowActivityView.isOn ? @"切换" : @"不切换";
+            
+            if (self.arrowActivityView.isOn) {
+                WEAK_REF(self)
+                
+                void (^block)(WebModel *prev, WebModel *cur) = ^(WebModel *prev, WebModel *cur) {
+                    STRONG_REF(self_)
+                    if (self__) {
+                        [self__ restoreWithCompletionHandler:nil animation:NO];
+                    }
+                };
+                
+                [self isWindowSwitchLeft] ? [[TabManager sharedInstance] switchToLeftWindowWithCompletion:block] : [[TabManager sharedInstance] switchToRightWindowWithCompletion:block];
+            }
             [self removeArrowActivityView];
         }];
     }
@@ -283,16 +303,12 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
     
     if (linkURL) {
         dialogTitle = linkURL.absoluteString;
-        UIAlertAction  *openNewTabAction = [UIAlertAction actionWithTitle:@"在新窗口打开" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        UIAlertAction *openNewTabAction = [UIAlertAction actionOpenNewTabWithCompletion:^{
             [self handleOpenInNewWindowWithURL:linkURL];
         }];
         [actionSheetController addAction:openNewTabAction];
         
-        UIAlertAction *copyAction = [UIAlertAction actionWithTitle:@"拷贝链接" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-            UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
-            pasteBoard.URL = linkURL;
-            [[BrowserVC navigationController].view showHUDAtBottomWithMessage:@"拷贝成功"];
-        }];
+        UIAlertAction *copyAction = [UIAlertAction actionCopyLinkWithURL:linkURL];
         [actionSheetController addAction:copyAction];
     }
     
@@ -312,12 +328,10 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
             } else {
                 UIAlertController *accessDenied = [UIAlertController alertControllerWithTitle:@"WebBrowser 想要访问照片" message:@"将允许图片保存到照片" preferredStyle:UIAlertControllerStyleAlert];
                 
-                UIAlertAction *dismissAction = [UIAlertAction actionWithTitle:CancelString style:UIAlertActionStyleCancel handler:nil];
+                UIAlertAction *dismissAction = [UIAlertAction actionDismiss];
                 [accessDenied addAction:dismissAction];
                 
-                UIAlertAction *settingsAction = [UIAlertAction actionWithTitle:@"打开设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-                }];
+                UIAlertAction *settingsAction = [UIAlertAction actionSettings];
                 [accessDenied addAction:settingsAction];
                 
                 [BrowserVC presentViewController:accessDenied animated:YES completion:nil];
@@ -327,7 +341,7 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
     }
     
     actionSheetController.title = [dialogTitle ellipsizeWithMaxLength:ActionSheetTitleMaxLength];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:CancelString style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *cancelAction = [UIAlertAction actionDismiss];
     [actionSheetController addAction:cancelAction];
     
     if (!BrowserVC.presentedViewController) {

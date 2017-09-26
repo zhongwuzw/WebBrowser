@@ -58,6 +58,10 @@
 	</array>
 	<key>UIStatusBarHidden</key>
 	<false/>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>允许保存和上传照片</string>
+	<key>NSContactsUsageDescription</key>
+	<string>允许访问通讯录</string>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleLightContent</string>
 	<key>UISupportedInterfaceOrientations</key>

@@ -27,6 +27,7 @@
 		0E39F9AA1E14C8AA007B5681 /* SearchInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E39F9A91E14C8AA007B5681 /* SearchInputView.m */; };
 		0E3A4F301E7A22A7006FA3F8 /* SessionRestoreHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3A4F2F1E7A22A7006FA3F8 /* SessionRestoreHelper.m */; };
 		0E3A6B731E11102C00071397 /* SettingsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3A6B721E11102C00071397 /* SettingsCollectionViewCell.m */; };
+		0E3C50421F7946B400DD3828 /* UIAlertAction+ZWUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3C50411F7946B400DD3828 /* UIAlertAction+ZWUtility.m */; };
 		0E3D2B711E24836700364B69 /* NSFileManager+ZWUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3D2B701E24836700364B69 /* NSFileManager+ZWUtility.m */; };
 		0E3D2B741E248D5E00364B69 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3D2B731E248D5E00364B69 /* SettingsTableViewController.m */; };
 		0E3D2B771E24CD3000364B69 /* UIImage+ZWUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E3D2B761E24CD3000364B69 /* UIImage+ZWUtility.m */; };
@@ -81,6 +82,7 @@
 		0EB636641E5B30E8000BD2D6 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EB636631E5B30E8000BD2D6 /* CFNetwork.framework */; };
 		0EBB15A01EC36A1D0044156A /* BookmarkItemEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EBB159F1EC36A1D0044156A /* BookmarkItemEditViewController.m */; };
 		0EBB15A31EC36C780044156A /* BookmarkEditBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EBB15A21EC36C780044156A /* BookmarkEditBaseViewController.m */; };
+		0EBC36B41F79096400DB4889 /* NSData+ZWUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EBC36B31F79096400DB4889 /* NSData+ZWUtility.m */; };
 		0EBDC6241E1DDEC100B6A4DB /* SearchInputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0EBDC6231E1DDEC100B6A4DB /* SearchInputView.xib */; };
 		0EBDC6271E1DE49700B6A4DB /* CharacterSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EBDC6261E1DE49700B6A4DB /* CharacterSelectView.m */; };
 		0EBF3A651DCF33ED00CD77C8 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EBF3A631DCF33ED00CD77C8 /* CocoaLumberjack.framework */; };
@@ -183,6 +185,8 @@
 		0E3A4F2F1E7A22A7006FA3F8 /* SessionRestoreHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionRestoreHelper.m; sourceTree = "<group>"; };
 		0E3A6B711E11102C00071397 /* SettingsCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsCollectionViewCell.h; sourceTree = "<group>"; };
 		0E3A6B721E11102C00071397 /* SettingsCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SettingsCollectionViewCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		0E3C50401F7946B400DD3828 /* UIAlertAction+ZWUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIAlertAction+ZWUtility.h"; sourceTree = "<group>"; };
+		0E3C50411F7946B400DD3828 /* UIAlertAction+ZWUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIAlertAction+ZWUtility.m"; sourceTree = "<group>"; };
 		0E3D2B6F1E24836700364B69 /* NSFileManager+ZWUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+ZWUtility.h"; sourceTree = "<group>"; };
 		0E3D2B701E24836700364B69 /* NSFileManager+ZWUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+ZWUtility.m"; sourceTree = "<group>"; };
 		0E3D2B721E248D5E00364B69 /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
@@ -290,6 +294,8 @@
 		0EBB159F1EC36A1D0044156A /* BookmarkItemEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkItemEditViewController.m; sourceTree = "<group>"; };
 		0EBB15A11EC36C780044156A /* BookmarkEditBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkEditBaseViewController.h; sourceTree = "<group>"; };
 		0EBB15A21EC36C780044156A /* BookmarkEditBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkEditBaseViewController.m; sourceTree = "<group>"; };
+		0EBC36B21F79096400DB4889 /* NSData+ZWUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+ZWUtility.h"; sourceTree = "<group>"; };
+		0EBC36B31F79096400DB4889 /* NSData+ZWUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+ZWUtility.m"; sourceTree = "<group>"; };
 		0EBDC6231E1DDEC100B6A4DB /* SearchInputView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchInputView.xib; sourceTree = "<group>"; };
 		0EBDC6251E1DE49700B6A4DB /* CharacterSelectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CharacterSelectView.h; sourceTree = "<group>"; };
 		0EBDC6261E1DE49700B6A4DB /* CharacterSelectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CharacterSelectView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -492,26 +498,8 @@
 		0E2C53A01DAA31210077B9B4 /* Category */ = {
 			isa = PBXGroup;
 			children = (
-				0E2CC0151E0988AE0078EB91 /* UIColor+ZWUtility.h */,
-				0E2CC0161E0988AE0078EB91 /* UIColor+ZWUtility.m */,
-				0E7795951E21042300CE86BE /* NSString+ZWUtility.h */,
-				0E7795961E21042300CE86BE /* NSString+ZWUtility.m */,
-				0E19A4D21E232FA8009DAF9A /* NSNumber+ZWUtility.h */,
-				0E19A4D31E232FA8009DAF9A /* NSNumber+ZWUtility.m */,
-				0E3D2B6F1E24836700364B69 /* NSFileManager+ZWUtility.h */,
-				0E3D2B701E24836700364B69 /* NSFileManager+ZWUtility.m */,
-				0E2C53A11DAA314C0077B9B4 /* UIView+ZWUtility.h */,
-				0E2C53A21DAA314C0077B9B4 /* UIView+ZWUtility.m */,
-				0E3D2B751E24CD3000364B69 /* UIImage+ZWUtility.h */,
-				0E3D2B761E24CD3000364B69 /* UIImage+ZWUtility.m */,
-				0E74382F1E58885A00641889 /* NSURL+ZWUtility.h */,
-				0E7438301E58885A00641889 /* NSURL+ZWUtility.m */,
-				0E6A29291E83C1D1002142B1 /* NSCharacterSet+ZWUtility.h */,
-				0E6A292A1E83C1D1002142B1 /* NSCharacterSet+ZWUtility.m */,
-				0E831A0D1E87DBCD00FB3576 /* NSURLCache+ZWUtility.h */,
-				0E831A0E1E87DBCD00FB3576 /* NSURLCache+ZWUtility.m */,
-				0E70780F1E9633F000E898A8 /* NSDate+ZWUtility.h */,
-				0E7078101E9633F000E898A8 /* NSDate+ZWUtility.m */,
+				0E3C50441F7946D700DD3828 /* NSFoundation */,
+				0E3C50431F7946C100DD3828 /* UIKit */,
 			);
 			name = Category;
 			sourceTree = "<group>";
@@ -617,6 +605,44 @@
 				0E1702C71ECC412B0075C7D5 /* FindInPageBar.m */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		0E3C50431F7946C100DD3828 /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				0E2CC0151E0988AE0078EB91 /* UIColor+ZWUtility.h */,
+				0E2CC0161E0988AE0078EB91 /* UIColor+ZWUtility.m */,
+				0E2C53A11DAA314C0077B9B4 /* UIView+ZWUtility.h */,
+				0E2C53A21DAA314C0077B9B4 /* UIView+ZWUtility.m */,
+				0E3D2B751E24CD3000364B69 /* UIImage+ZWUtility.h */,
+				0E3D2B761E24CD3000364B69 /* UIImage+ZWUtility.m */,
+				0E3C50401F7946B400DD3828 /* UIAlertAction+ZWUtility.h */,
+				0E3C50411F7946B400DD3828 /* UIAlertAction+ZWUtility.m */,
+			);
+			name = UIKit;
+			sourceTree = "<group>";
+		};
+		0E3C50441F7946D700DD3828 /* NSFoundation */ = {
+			isa = PBXGroup;
+			children = (
+				0E7795951E21042300CE86BE /* NSString+ZWUtility.h */,
+				0E7795961E21042300CE86BE /* NSString+ZWUtility.m */,
+				0E19A4D21E232FA8009DAF9A /* NSNumber+ZWUtility.h */,
+				0E19A4D31E232FA8009DAF9A /* NSNumber+ZWUtility.m */,
+				0E3D2B6F1E24836700364B69 /* NSFileManager+ZWUtility.h */,
+				0E3D2B701E24836700364B69 /* NSFileManager+ZWUtility.m */,
+				0E74382F1E58885A00641889 /* NSURL+ZWUtility.h */,
+				0E7438301E58885A00641889 /* NSURL+ZWUtility.m */,
+				0E6A29291E83C1D1002142B1 /* NSCharacterSet+ZWUtility.h */,
+				0E6A292A1E83C1D1002142B1 /* NSCharacterSet+ZWUtility.m */,
+				0E831A0D1E87DBCD00FB3576 /* NSURLCache+ZWUtility.h */,
+				0E831A0E1E87DBCD00FB3576 /* NSURLCache+ZWUtility.m */,
+				0E70780F1E9633F000E898A8 /* NSDate+ZWUtility.h */,
+				0E7078101E9633F000E898A8 /* NSDate+ZWUtility.m */,
+				0EBC36B21F79096400DB4889 /* NSData+ZWUtility.h */,
+				0EBC36B31F79096400DB4889 /* NSData+ZWUtility.m */,
+			);
+			name = NSFoundation;
 			sourceTree = "<group>";
 		};
 		0E3CD34D1E093F2700BC77FC /* Model */ = {
@@ -1246,6 +1272,7 @@
 				0EBF3A6A1DCF38D600CD77C8 /* BrowserBottomToolBar.m in Sources */,
 				0EF025651DD951EB0011019F /* HTTPClient.m in Sources */,
 				0EC14F541E31B97900A44D05 /* FMResultSet.m in Sources */,
+				0E3C50421F7946B400DD3828 /* UIAlertAction+ZWUtility.m in Sources */,
 				0E32E2FB1E08C69E00CFBBB5 /* CardCollectionViewCell.m in Sources */,
 				0E2E41841E55906600A23142 /* WebServer.m in Sources */,
 				0E7795931E20F8C800CE86BE /* SearchTableViewCell.m in Sources */,
@@ -1274,6 +1301,7 @@
 				0EBB15A31EC36C780044156A /* BookmarkEditBaseViewController.m in Sources */,
 				0E1702C81ECC412B0075C7D5 /* FindInPageBar.m in Sources */,
 				0E7078141E9652C400E898A8 /* ZWDatabaseQueue.m in Sources */,
+				0EBC36B41F79096400DB4889 /* NSData+ZWUtility.m in Sources */,
 				0E2329311DADE07B007E9886 /* BrowserTopToolBar.m in Sources */,
 				0E2329341DAE19BB007E9886 /* TopToolBarShapeView.m in Sources */,
 				0E5988A51E2F8070003259C0 /* SettingActivityTableViewCell.m in Sources */,

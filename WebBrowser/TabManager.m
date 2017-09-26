@@ -328,6 +328,41 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
     });
 }
 
+- (void)switchToLeftOrRight:(BOOL)isLeft completion:(SwitchOperationBlock)block{
+    dispatch_async(self.synchQueue, ^{
+        if (self.webModelArray.count <= 1) {
+            return ;
+        }
+        
+        WebModel *prevWebModel = [self.webModelArray lastObject];
+        
+        if (isLeft) {
+            [self.webModelArray insertObject:prevWebModel atIndex:0];
+            [self.webModelArray removeLastObject];
+        }
+        else {
+            [self.webModelArray addObject:[self.webModelArray firstObject]];
+            [self.webModelArray removeObjectAtIndex:0];
+        }
+        
+        WebModel *curWebModel = [self.webModelArray lastObject];
+        
+        if (block) {
+            dispatch_main_safe_async(^{
+                block(prevWebModel, curWebModel);
+            })
+        }
+    });
+}
+
+- (void)switchToLeftWindowWithCompletion:(SwitchOperationBlock)block{
+    [self switchToLeftOrRight:YES completion:block];
+}
+
+- (void)switchToRightWindowWithCompletion:(SwitchOperationBlock)block{
+    [self switchToLeftOrRight:NO completion:block];
+}
+
 - (void)addWebModelWithURL:(NSURL *)url completion:(WebBrowserNoParamsBlock)completion{
     if (!url) {
         return;

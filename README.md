@@ -37,6 +37,10 @@
   <img src="https://raw.githubusercontent.com/zhongwuzw/WebBrowser/master/images/tab_manage.gif" alt="tab"/>
 </p>
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/zhongwuzw/WebBrowser/master/images/multi_window_switch.gif" alt="tab"/>
+</p>
+
 #### 3. Search (搜索)：
 <p align="center">
   <img src="https://raw.githubusercontent.com/zhongwuzw/WebBrowser/master/images/home_search.gif" alt="search"/>
