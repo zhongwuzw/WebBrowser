@@ -5,10 +5,11 @@
 ## Features - 功能
 1. 多Tab页浏览(multi-tab browsing)
 2. 冷启动恢复浏览记录，包括当前页及前进后退页面(session restore, includes current page and backforward list)
-3. 书签、历史记录管理(bookmark、history manage)
-4. 页内查找(find in page)
-5. 点击标题栏进行页面访问或搜索(tap the title bar to  input url for surf or key to search)
-6. 自动监控剪切板`URL`，可在新窗口中打开
+3. 多窗口管理，屏幕左右边缘滑动切换窗口(multi-window management, edge pan to switch windows)
+4. 书签、历史记录管理(bookmark、history manage)
+5. 页内查找(find in page)
+6. 点击标题栏进行页面访问或搜索(tap the title bar to  input url for surf or key to search)
+7. 自动监控剪切板`URL`，可在新窗口中打开
 
   
 ## Usage - 用法
@@ -18,6 +19,7 @@
   
 ## Requirements - 依赖
 * iOS 8.0 or higher
+* Xcode 9
 * ARC
 * [Carthage](https://github.com/Carthage/Carthage)
 
@@ -36,6 +38,8 @@
 <p align="center">
   <img src="https://raw.githubusercontent.com/zhongwuzw/WebBrowser/master/images/tab_manage.gif" alt="tab"/>
 </p>
+
+左右边缘滑动切换窗口：
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/zhongwuzw/WebBrowser/master/images/multi_window_switch.gif" alt="tab"/>
