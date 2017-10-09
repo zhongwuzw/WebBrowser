@@ -456,11 +456,11 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
 #pragma mark - UIGestureRecognizerDelegate
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
-    if ([[otherGestureRecognizer.delegate description] containsString:@"_UIKeyboardBasedNonEditableTextSelectionGestureController"]) {
+    if ([NSStringFromClass([otherGestureRecognizer.delegate class]) containsString:@"_UIKeyboardBasedNonEditableTextSelectionGestureController"]) {
         self.selectionGestureRecognizer = otherGestureRecognizer;
     }
     if ([otherGestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]]) {
-        return [[otherGestureRecognizer.delegate description] containsString:@"UIWebBrowserView"];
+        return [NSStringFromClass([otherGestureRecognizer.delegate class]) containsString:@"UIWebBrowserView"];
     }
     
     return NO;
