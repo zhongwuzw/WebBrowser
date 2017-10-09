@@ -456,7 +456,12 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
 #pragma mark - UIGestureRecognizerDelegate
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
-    if ([NSStringFromClass([otherGestureRecognizer.delegate class]) containsString:@"_UIKeyboardBasedNonEditableTextSelectionGestureController"]) {
+    if (@available(iOS 11.0, *)) {
+        if ([NSStringFromClass([otherGestureRecognizer.delegate class]) containsString:@"_UIKeyboardBasedNonEditableTextSelectionGestureCluster"]) {
+            self.selectionGestureRecognizer = otherGestureRecognizer;
+        }
+    }
+    else if ([NSStringFromClass([otherGestureRecognizer.delegate class]) containsString:@"_UIKeyboardBasedNonEditableTextSelectionGestureController"]){
         self.selectionGestureRecognizer = otherGestureRecognizer;
     }
     if ([otherGestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]]) {
