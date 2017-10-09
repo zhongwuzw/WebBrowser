@@ -40,33 +40,27 @@
     
     UIBarButtonItem *backItem = [self createBottomToolBarButtonWithImage:TOOLBAR_BUTTON_BACK_HILIGHT_STRING tag:BottomToolBarBackButtonTag];
     self.backItem = backItem;
-    self.backItem.width = 45;
     [self.backItem setEnabled:NO];
     
     UIBarButtonItem *forwardItem = [self createBottomToolBarButtonWithImage:TOOLBAR_BUTTON_FORWARD_HILIGHT_STRING tag:BottomToolBarForwardButtonTag];
     self.forwardItem = forwardItem;
-    self.forwardItem.width = 45;
     [self.forwardItem setEnabled:NO];
     
     UIBarButtonItem *refreshOrStopItem = [self createBottomToolBarButtonWithImage:TOOLBAR_BUTTON_STOP_STRING tag:BottomToolBarRefreshOrStopButtonTag];
     self.isRefresh = NO;
-    refreshOrStopItem.width = 45;
     self.refreshOrStopItem = refreshOrStopItem;
     
     UIBarButtonItem *multiWindowItem = [self createBottomToolBarButtonWithImage:TOOLBAR_BUTTON_MULTIWINDOW_STRING tag:BottomToolBarMultiWindowButtonTag];
     
     UIBarButtonItem *settingItem = [self createBottomToolBarButtonWithImage:TOOLBAR_BUTTON_MORE_STRING tag:BottomToolBarMoreButtonTag];
     
-    UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    flexibleItem.tag = BottomToolBarFlexibleButtonTag;
-    
-    [self setItems:@[refreshOrStopItem,flexibleItem,multiWindowItem,flexibleItem,backItem,flexibleItem,forwardItem,flexibleItem,settingItem] animated:YES];
-    
+    [self setItems:@[refreshOrStopItem,multiWindowItem,backItem,forwardItem,settingItem] animated:YES];
 }
 
 - (UIBarButtonItem *)createBottomToolBarButtonWithImage:(NSString *)imageName tag:(NSInteger)tag{
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:imageName] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(handleBottomToolBarButtonClicked:)];
     item.tag = tag;
+    item.width = self.width / 5.0f;
     
     return item;
 }
