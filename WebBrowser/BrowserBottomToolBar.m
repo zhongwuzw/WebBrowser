@@ -53,8 +53,10 @@
     UIBarButtonItem *multiWindowItem = [self createBottomToolBarButtonWithImage:TOOLBAR_BUTTON_MULTIWINDOW_STRING tag:BottomToolBarMultiWindowButtonTag];
     
     UIBarButtonItem *settingItem = [self createBottomToolBarButtonWithImage:TOOLBAR_BUTTON_MORE_STRING tag:BottomToolBarMoreButtonTag];
+
+    UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
-    [self setItems:@[refreshOrStopItem,multiWindowItem,backItem,forwardItem,settingItem] animated:YES];
+    [self setItems:@[flexibleItem,refreshOrStopItem,flexibleItem,multiWindowItem,flexibleItem,backItem,flexibleItem,forwardItem,flexibleItem,settingItem,flexibleItem] animated:NO];
 }
 
 - (UIBarButtonItem *)createBottomToolBarButtonWithImage:(NSString *)imageName tag:(NSInteger)tag{
