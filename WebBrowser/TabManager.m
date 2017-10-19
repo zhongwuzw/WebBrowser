@@ -158,35 +158,33 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
 
 - (void)loadWebModelArray{
     dispatch_async(_synchQueue, ^{
-        dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            if ([[NSFileManager defaultManager] fileExistsAtPath:_filePath]) {
-                NSData *data = [NSData dataWithContentsOfFile:_filePath options:NSDataReadingUncached error:nil];
-                if (data) {
-                    NSKeyedUnarchiver *unarchiver;
-                    @try {
-                        unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-                        NSArray<WebModel *> *array = [unarchiver decodeObjectForKey:MY_HISTORY_DATA_KEY];
-                        
-                        if (array && [array isKindOfClass:[NSArray<WebModel *> class]] && array.count > 0) {
-                            [_webModelArray addObjectsFromArray:array];
-                        }
-                        else{
-                            [self setDefaultWebArray];
-                        }
-                    } @catch (NSException *exception) {
-                        DDLogError(@"tab unarchive error");
-                        [self setDefaultWebArray];
-                    } @finally {
-                        [unarchiver finishDecoding];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:_filePath]) {
+            NSData *data = [NSData dataWithContentsOfFile:_filePath options:NSDataReadingUncached error:nil];
+            if (data) {
+                NSKeyedUnarchiver *unarchiver;
+                @try {
+                    unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+                    NSArray<WebModel *> *array = [unarchiver decodeObjectForKey:MY_HISTORY_DATA_KEY];
+                    
+                    if (array && [array isKindOfClass:[NSArray<WebModel *> class]] && array.count > 0) {
+                        [_webModelArray addObjectsFromArray:array];
                     }
-
-                }
-                else
+                    else{
+                        [self setDefaultWebArray];
+                    }
+                } @catch (NSException *exception) {
+                    DDLogError(@"tab unarchive error");
                     [self setDefaultWebArray];
+                } @finally {
+                    [unarchiver finishDecoding];
+                }
+                
             }
             else
                 [self setDefaultWebArray];
-        });
+        }
+        else
+            [self setDefaultWebArray];
     });
 }
 
@@ -496,41 +494,39 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
     [self saveWebModelData];
     
     dispatch_async(self.synchQueue, ^{
-        dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            //remove outdated image
-            NSMutableSet *urlSet = [NSMutableSet setWithCapacity:self.webModelArray.count];
-            [self.webModelArray enumerateObjectsUsingBlock:^(WebModel *webModel, NSUInteger idx, BOOL *stop){
-                [urlSet addObject:[[self defaultCachePathForKey:webModel.imageKey] lastPathComponent]];
-            }];
+        //remove outdated image
+        NSMutableSet *urlSet = [NSMutableSet setWithCapacity:self.webModelArray.count];
+        [self.webModelArray enumerateObjectsUsingBlock:^(WebModel *webModel, NSUInteger idx, BOOL *stop){
+            [urlSet addObject:[[self defaultCachePathForKey:webModel.imageKey] lastPathComponent]];
+        }];
+        
+        NSURL *diskCacheURL = [NSURL fileURLWithPath:self.imagesFolderPath isDirectory:YES];
+        NSArray *resourceKeys = @[NSURLIsDirectoryKey];
+        
+        NSDirectoryEnumerator *fileEnumerator = [[NSFileManager defaultManager] enumeratorAtURL:diskCacheURL includingPropertiesForKeys:resourceKeys options:NSDirectoryEnumerationSkipsHiddenFiles errorHandler:NULL];
+        
+        NSMutableArray *urlsToDelete = [NSMutableArray array];
+        foreach(fileURL, fileEnumerator) {
+            NSDictionary *resourceValues = [fileURL resourceValuesForKeys:resourceKeys error:NULL];
             
-            NSURL *diskCacheURL = [NSURL fileURLWithPath:self.imagesFolderPath isDirectory:YES];
-            NSArray *resourceKeys = @[NSURLIsDirectoryKey];
-            
-            NSDirectoryEnumerator *fileEnumerator = [[NSFileManager defaultManager] enumeratorAtURL:diskCacheURL includingPropertiesForKeys:resourceKeys options:NSDirectoryEnumerationSkipsHiddenFiles errorHandler:NULL];
-            
-            NSMutableArray *urlsToDelete = [NSMutableArray array];
-            foreach(fileURL, fileEnumerator) {
-                NSDictionary *resourceValues = [fileURL resourceValuesForKeys:resourceKeys error:NULL];
-                
-                if ([resourceValues[NSURLIsDirectoryKey] boolValue]) {
-                    continue;
-                }
-                
-                if (![urlSet containsObject:[fileURL lastPathComponent]]) {
-                    [urlsToDelete addObject:fileURL];
-                }
+            if ([resourceValues[NSURLIsDirectoryKey] boolValue]) {
+                continue;
             }
             
-            foreach(fileURL, urlsToDelete) {
-                [[NSFileManager defaultManager] removeItemAtURL:fileURL error:nil];
+            if (![urlSet containsObject:[fileURL lastPathComponent]]) {
+                [urlsToDelete addObject:fileURL];
             }
-            
-            if (completionBlock) {
-                dispatch_main_safe_async(^{
-                    completionBlock();
-                })
-            }
-        });
+        }
+        
+        foreach(fileURL, urlsToDelete) {
+            [[NSFileManager defaultManager] removeItemAtURL:fileURL error:nil];
+        }
+        
+        if (completionBlock) {
+            dispatch_main_safe_async(^{
+                completionBlock();
+            })
+        }
     });
 }
 
