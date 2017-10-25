@@ -18,6 +18,9 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     self.tableView.tableFooterView = [UIView new];
+    self.tableView.estimatedRowHeight = 0;
+    self.tableView.estimatedSectionHeaderHeight = 0;
+    self.tableView.estimatedSectionFooterHeight = 0;
 }
 
 - (void)viewWillAppear:(BOOL)animated{

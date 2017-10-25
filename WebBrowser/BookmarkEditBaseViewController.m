@@ -46,6 +46,11 @@ NSString *const kBookmarkEditTextFieldCellIdentifier = @"kBookmarkEditTextFieldC
     UINavigationBar *navigationBar = self.navigationController.navigationBar;
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(navigationBar.frame), self.view.width, self.view.height - CGRectGetMaxY(navigationBar.frame)) style:UITableViewStyleGrouped];
+    
+    self.tableView.estimatedRowHeight = 0;
+    self.tableView.estimatedSectionHeaderHeight = 0;
+    self.tableView.estimatedSectionFooterHeight = 0;
+    
     [self.view addSubview:_tableView];
     [_tableView registerNib:[UINib nibWithNibName:NSStringFromClass([BookmarkEditTextFieldTableViewCell class]) bundle:nil] forCellReuseIdentifier:kBookmarkEditTextFieldCellIdentifier];
     
