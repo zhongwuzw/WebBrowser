@@ -10,6 +10,48 @@
 
 @implementation NSFileManager (ZWUtility)
 
+- (long long)getAllocatedSizeOfCacheDirectoryAtURL:(NSURL *)directoryURL error:(NSError *__autoreleasing *)error{
+    long long size = 0;
+    NSArray<NSString *> *array = [self contentsOfDirectoryAtPath:directoryURL.absoluteString error:error];
+    
+    foreach(path, array){
+        if (![path isEqualToString:@"Snapshots"]) {
+            NSString *fullPath = [directoryURL URLByAppendingPathComponent:path].absoluteString;
+            BOOL isDir;
+            if (!([self fileExistsAtPath:fullPath isDirectory:&isDir] && isDir)) {
+                NSDictionary *fileAttributesDic = [self attributesOfItemAtPath:fullPath error:error];
+                size += fileAttributesDic.fileSize;
+            }
+            else {
+                size += [self getAllocatedSizeOfCacheDirectoryAtURL:[NSURL URLWithString:fullPath] error:error];
+            }
+        }
+    }
+    return size;
+}
+
+- (long long)getAllocatedSizeOfCacheDirectoryAtURLS:(NSArray<NSURL *> *)directoryURLs error:(NSError *__autoreleasing *)error{
+    __block unsigned long long accumulatedSize = 0;
+    
+    __block BOOL isError = NO;
+    [directoryURLs enumerateObjectsUsingBlock:^(NSURL *url, NSUInteger idx, BOOL *stop){
+        long long size = 0;
+        if ((size = [self getAllocatedSizeOfCacheDirectoryAtURL:url error:error]) != -1) {
+            accumulatedSize += size;
+        }
+        else{
+            isError = YES;
+            *stop = YES;
+        }
+    }];
+    
+    if (isError) {
+        return -1;
+    }
+    
+    return accumulatedSize;
+}
+
 - (long long)getAllocatedSizeOfDirectoryAtURLS:(NSArray<NSURL *> *)directoryURLs error:(NSError * _Nullable __autoreleasing *)error{
     __block unsigned long long accumulatedSize = 0;
     

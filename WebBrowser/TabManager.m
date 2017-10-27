@@ -70,6 +70,7 @@ assert((shouldSyncQueue ? manager == self : manager != self) && "operate on webM
         self.webView.webModel = nil;
         self.webView.delegate = nil;
         self.webView.scrollView.delegate = nil;
+        self.webView.homePage = nil;
         [self.webView stopLoading];
         [self.webView loadHTMLString:@"" baseURL:nil];
     });
@@ -548,6 +549,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
     [JavaScriptHelper setNoImageMode:[PreferenceHelper boolForKey:KeyNoImageModeStatus] webView:webView loadPrimaryScript:YES];
     [JavaScriptHelper setLongPressGestureWithWebView:webView];
     [JavaScriptHelper setFindInPageWithWebView:webView];
+    
+    NSURL *url = [NSURL URLWithString:webView.mainFURL];
+    if ([url.host isEqualToString:@"m.baidu.com"] || [url.host isEqualToString:@"www.baidu.com"]) {
+        [JavaScriptHelper setBaiduADBlockWithWebView:webView];
+    }
     
     [[HistorySQLiteManager sharedInstance] insertOrUpdateHistoryWithURL:webView.mainFURL title:titleName];
 }

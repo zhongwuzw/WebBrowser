@@ -10,6 +10,10 @@
 
 @interface NSFileManager (ZWUtility)
 
+- (long long)getAllocatedSizeOfCacheDirectoryAtURL:(NSURL *)directoryURL error:(NSError **)error;
+
+- (long long)getAllocatedSizeOfCacheDirectoryAtURLS:(NSArray<NSURL *> *)directoryURLs error:(NSError **)error;
+
 - (long long)getAllocatedSizeOfDirectoryAtURL:(NSURL *)directoryURL error:(NSError **)error;
 
 - (long long)getAllocatedSizeOfDirectoryAtURLS:(NSArray<NSURL *> *)directoryURLs error:(NSError **)error;

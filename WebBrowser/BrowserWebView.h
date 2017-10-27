@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class BrowserWebView, WebModel, WebViewBackForwardList;
+@class BrowserWebView, WebModel, WebViewBackForwardList, HomePageView;
 
 typedef void (^WebCompletionBlock)(NSString *, NSError *);
 
@@ -28,6 +28,7 @@ typedef void (^WebCompletionBlock)(NSString *, NSError *);
 @property (nonatomic, assign, readonly) BOOL isMainFrameLoaded;
 @property (nonatomic, unsafe_unretained, readonly) UIActivityIndicatorView *indicatorView;
 @property (nonatomic, unsafe_unretained, readonly) UILongPressGestureRecognizer *longPressGestureRecognizer;
+@property (nonatomic, unsafe_unretained) HomePageView *homePage;
 
 - (void)evaluateJavaScript:(NSString *)javaScriptString completionHandler:(WebCompletionBlock)completionHandler;
 

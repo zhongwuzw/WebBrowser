@@ -15,5 +15,6 @@
 + (void)setNoImageMode:(BOOL)enabled webView:(BrowserWebView *)webView loadPrimaryScript:(BOOL)needsLoad;
 + (void)setLongPressGestureWithWebView:(BrowserWebView *)webView;
 + (void)setFindInPageWithWebView:(BrowserWebView *)webView;
++ (void)setBaiduADBlockWithWebView:(BrowserWebView *)webView;
 
 @end

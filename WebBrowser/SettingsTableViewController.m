@@ -73,7 +73,8 @@ static NSString *const SettingPlaceholderTableViewCellIdentifier   = @"SettingPl
     
     [cell setCalculateBlock:^{
         NSArray *urlArray = [NSArray arrayWithObjects:[NSURL URLWithString:CachePath], [NSURL URLWithString:TempPath], nil];
-        long long size = [[NSFileManager defaultManager] getAllocatedSizeOfDirectoryAtURLS:urlArray error:nil];
+
+        long long size = [[NSFileManager defaultManager] getAllocatedSizeOfCacheDirectoryAtURLS:urlArray error:NULL];
         
         if (size == -1)
             return @"0M";
@@ -137,23 +138,11 @@ static NSString *const SettingPlaceholderTableViewCellIdentifier   = @"SettingPl
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
         [array enumerateObjectsUsingBlock:^(NSURL *diskCacheURL, NSUInteger idx, BOOL *stop){
             @autoreleasepool {
-                NSArray *resourceKeys = @[NSURLIsDirectoryKey];
-                
-                NSDirectoryEnumerator *fileEnumerator = [[NSFileManager defaultManager] enumeratorAtURL:diskCacheURL includingPropertiesForKeys:resourceKeys options:NSDirectoryEnumerationSkipsHiddenFiles errorHandler:NULL];
-                
-                NSMutableArray *urlsToDelete = [NSMutableArray array];
-                foreach(fileURL, fileEnumerator) {
-                    NSDictionary *resourceValues = [fileURL resourceValuesForKeys:resourceKeys error:NULL];
-                    
-                    if ([resourceValues[NSURLIsDirectoryKey] boolValue]) {
-                        continue;
+                NSArray *array = [[NSFileManager defaultManager] contentsOfDirectoryAtURL:diskCacheURL includingPropertiesForKeys:nil options:0 error:NULL];
+                foreach(path, array) {
+                    if (![[path lastPathComponent] isEqualToString:@"Snapshots"]) {
+                        [[NSFileManager defaultManager] removeItemAtURL:path error:NULL];
                     }
-                    
-                    [urlsToDelete addObject:fileURL];
-                }
-                
-                foreach(fileURL, urlsToDelete) {
-                    [[NSFileManager defaultManager] removeItemAtURL:fileURL error:nil];
                 }
             }
         }];

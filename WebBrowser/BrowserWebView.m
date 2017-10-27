@@ -414,6 +414,7 @@
     self.longPressGestureRecognizer = nil;
     self.indicatorView = nil;
     self.webModel = nil;
+    self.homePage = nil;
     self.delegate = nil;
     self.scrollView.delegate = nil;
     [self stopLoading];

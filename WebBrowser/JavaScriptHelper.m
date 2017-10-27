@@ -42,4 +42,8 @@
     [self loadJavascriptWithName:@"FindInPage" webView:webView];
 }
 
++ (void)setBaiduADBlockWithWebView:(BrowserWebView *)webView{
+    [self loadJavascriptWithName:@"BaiduADBlock" webView:webView];
+}
+
 @end

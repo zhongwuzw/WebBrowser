@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E081F0C1FA1C5C10024DFE5 /* HomePageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E081F0B1FA1C5C10024DFE5 /* HomePageView.m */; };
 		0E1702C81ECC412B0075C7D5 /* FindInPageBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1702C71ECC412B0075C7D5 /* FindInPageBar.m */; };
 		0E1710F51F726782007A7DB0 /* GestureProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1710F41F726782007A7DB0 /* GestureProxy.m */; };
 		0E19A4D41E232FA8009DAF9A /* NSNumber+ZWUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E19A4D31E232FA8009DAF9A /* NSNumber+ZWUtility.m */; };
@@ -68,6 +69,7 @@
 		0E829CD71E12075B008FF0A8 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E829CD61E12075B008FF0A8 /* SearchViewController.m */; };
 		0E831A0F1E87DBCD00FB3576 /* NSURLCache+ZWUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E831A0E1E87DBCD00FB3576 /* NSURLCache+ZWUtility.m */; };
 		0E831AC71F1726EB00E8D9C1 /* BaseNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E831AC61F1726EB00E8D9C1 /* BaseNavigationViewController.m */; };
+		0E855AA91FA0E28100F0A946 /* BaiduADBlock.js in Resources */ = {isa = PBXBuildFile; fileRef = 0E855AA81FA0E28000F0A946 /* BaiduADBlock.js */; };
 		0E8EE8311E11123600B6DADF /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8EE8301E11123600B6DADF /* SettingsViewController.m */; };
 		0E8EE8351E11277100B6DADF /* SettingAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E8EE8341E11277100B6DADF /* SettingAnimator.m */; };
 		0E9361D81EB0EDA1004F6AE7 /* BookmarkSectionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E9361D71EB0EDA1004F6AE7 /* BookmarkSectionInfo.m */; };
@@ -144,6 +146,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0E081F0A1FA1C5C10024DFE5 /* HomePageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomePageView.h; sourceTree = "<group>"; };
+		0E081F0B1FA1C5C10024DFE5 /* HomePageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomePageView.m; sourceTree = "<group>"; };
 		0E1702C61ECC412B0075C7D5 /* FindInPageBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindInPageBar.h; sourceTree = "<group>"; };
 		0E1702C71ECC412B0075C7D5 /* FindInPageBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindInPageBar.m; sourceTree = "<group>"; };
 		0E1710F31F726782007A7DB0 /* GestureProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GestureProxy.h; sourceTree = "<group>"; };
@@ -269,6 +273,7 @@
 		0E831A0E1E87DBCD00FB3576 /* NSURLCache+ZWUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLCache+ZWUtility.m"; sourceTree = "<group>"; };
 		0E831AC51F1726EB00E8D9C1 /* BaseNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseNavigationViewController.h; sourceTree = "<group>"; };
 		0E831AC61F1726EB00E8D9C1 /* BaseNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseNavigationViewController.m; sourceTree = "<group>"; };
+		0E855AA81FA0E28000F0A946 /* BaiduADBlock.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = BaiduADBlock.js; sourceTree = "<group>"; };
 		0E8EE82F1E11123600B6DADF /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		0E8EE8301E11123600B6DADF /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SettingsViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0E8EE8331E11277100B6DADF /* SettingAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingAnimator.h; sourceTree = "<group>"; };
@@ -603,6 +608,8 @@
 				0EBF3A691DCF38D600CD77C8 /* BrowserBottomToolBar.m */,
 				0E1702C61ECC412B0075C7D5 /* FindInPageBar.h */,
 				0E1702C71ECC412B0075C7D5 /* FindInPageBar.m */,
+				0E081F0A1FA1C5C10024DFE5 /* HomePageView.h */,
+				0E081F0B1FA1C5C10024DFE5 /* HomePageView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1085,6 +1092,7 @@
 		0EFCB9DC1E4F628B0094C466 /* JavaScript */ = {
 			isa = PBXGroup;
 			children = (
+				0E855AA81FA0E28000F0A946 /* BaiduADBlock.js */,
 				0EFCB9DD1E4F62A60094C466 /* NoImageModeHelper.js */,
 				0EF59F991ECB0B5000D6BDF9 /* FindInPage.js */,
 				0E9836B51E82CC9B0044BEA9 /* ContextMenu.js */,
@@ -1214,6 +1222,7 @@
 				0EF59F9A1ECB0B5000D6BDF9 /* FindInPage.js in Resources */,
 				0E9836B61E82CC9B0044BEA9 /* ContextMenu.js in Resources */,
 				0E9361DD1EB0FAEE004F6AE7 /* BookmarkTableViewCell.xib in Resources */,
+				0E855AA91FA0E28100F0A946 /* BaiduADBlock.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1266,6 +1275,7 @@
 				0EC14F5B1E31BB0800A44D05 /* HistoryTableViewController.m in Sources */,
 				0E986A0F1D4D06170003900D /* TabManager.m in Sources */,
 				0EC14F521E31B97900A44D05 /* FMDatabasePool.m in Sources */,
+				0E081F0C1FA1C5C10024DFE5 /* HomePageView.m in Sources */,
 				0ED35E8C1E40B56F0060A367 /* DelegateManager+WebViewDelegate.m in Sources */,
 				0EBFFE7A1E52B22C00404199 /* SettingSwitchTableViewCell.m in Sources */,
 				0E5CC9E41E794FFD0049ABEB /* WebViewBackForwardList.m in Sources */,

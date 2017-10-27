@@ -33,8 +33,6 @@ static NSString * const CELL = @"CELL";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.automaticallyAdjustsScrollViewInsets = YES;
-    
     [[KeyboardHelper sharedInstance] addDelegate:self];
     
     [self commonUIInit];

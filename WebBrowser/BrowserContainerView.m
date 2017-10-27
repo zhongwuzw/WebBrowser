@@ -24,6 +24,7 @@
 #import "GestureProxy.h"
 #import "NSData+ZWUtility.h"
 #import "UIAlertAction+ZWUtility.h"
+#import "HomePageView.h"
 
 #import <Photos/Photos.h>
 
@@ -73,9 +74,23 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
         NSURL *originalUrl = [[NSURL URLWithString:url] originalURLFromErrorURL];
         url = originalUrl.absoluteString;
     }
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
     
-    [self.webView loadRequest:request];
+    [self startLoadWithWebView:self.webView url:[NSURL URLWithString:url]];
+}
+
+- (void)startLoadWithWebView:(BrowserWebView *)webView url:(NSURL *)url{
+    [self removeHomePageIfNeededWithWebView:webView url:url needsEqual:NO];
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    [webView loadRequest:request];
+}
+
+- (void)removeHomePageIfNeededWithWebView:(BrowserWebView *)webView url:(NSURL *)url needsEqual:(BOOL)needsEqual{
+    BOOL isNeeds = needsEqual ? [url.absoluteString isEqualToString:DEFAULT_CARD_CELL_URL] : ![url.absoluteString isEqualToString:DEFAULT_CARD_CELL_URL];
+    if (webView.homePage && isNeeds) {
+        [webView.homePage removeFromSuperview];
+        webView.homePage = nil;
+    }
 }
 
 - (void)handleOpenInNewWindow:(NSNotification *)notify{
@@ -139,8 +154,8 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
                         NSString *escapedJSON = [jsonData jsonString];
                         escapedJSON = (escapedJSON) ? escapedJSON : @"";
                         NSURL *restoreURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/about/sessionrestore?history=%@",[[WebServer sharedInstance] base],escapedJSON]];
-                        NSURLRequest *request = [NSURLRequest requestWithURL:restoreURL];
-                        [browserWebView loadRequest:request];
+                        [self__ startLoadWithWebView:browserWebView url:restoreURL];
+                        
                     }
                 }
                 else{
@@ -153,6 +168,18 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
             }
         }
     }];
+}
+
+#pragma mark - Handle HomePage Load
+
+- (void)handleHomePageWithWebView:(BrowserWebView *)webView{
+    HomePageView *homePage = [[HomePageView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height)];
+    webView.homePage = homePage;
+    
+    [webView addSubview:homePage];
+    
+    // remove wrong title when back to home page
+    [[DelegateManager sharedInstance] performSelector:@selector(webView:gotTitleName:) arguments:@[webView,@""] key:DelegateManagerWebView];
 }
 
 #pragma mark - ActivityView
@@ -376,22 +403,28 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
 - (void)browserBottomToolBarButtonClickedWithTag:(BottomToolBarButtonTag)tag{
     switch (tag) {
         case BottomToolBarForwardButtonTag:
+        {
+            [self removeHomePageIfNeededWithWebView:self.webView url:self.webView.request.URL needsEqual:YES];
             [self.webView goForward];
             break;
+        }
         case BottomToolBarBackButtonTag:
+        {
+            [self removeHomePageIfNeededWithWebView:self.webView url:self.webView.request.URL needsEqual:YES];
             [self.webView goBack];
             break;
+        }
         case BottomToolBarRefreshButtonTag:
         {
             NSURL *url = self.webView.request.URL;
             if ([url isErrorPageURL]) {
                 NSURL *url = [self.webView.request.URL originalURLFromErrorURL];
-                [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
+                [self startLoadWithWebView:self.webView url:url];
             }
             else if (!url || [url.absoluteString isEqualToString:@""]){
                 WebModel *webModel = [[TabManager sharedInstance] getCurrentWebModel];
                 url = [NSURL URLWithString:webModel.url];
-                [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
+                [self startLoadWithWebView:self.webView url:url];
             }
             else{
                 [self.webView reload];
@@ -417,7 +450,7 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
         }
         else if ([url.scheme isEqualToString:@"zwsessionrestore"] && [url.host isEqualToString:@"reload"]){
             //session restore, just reload
-            [self.webView reload];
+            [webView reload];
             return NO;
         }
         else if ([url.scheme isEqualToString:@"zwcontextmenu"]){
@@ -427,6 +460,10 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
         else if ([url.scheme isEqualToString:@"zwfindinpage"]){
             [self handleFindInPageWithComponents:url.string];
             return NO;
+        }
+        else if ([url.scheme isEqualToString:@"about"] && [url.path isEqualToString:@"homepage"]) {
+            [self handleHomePageWithWebView:webView];
+            return YES;
         }
     }
     return YES;
@@ -450,7 +487,7 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
     }
     
     NSURL *url = [NSURL URLWithString:urlString];
-    [self.webView loadRequest:[NSURLRequest requestWithURL:url]];
+    [self startLoadWithWebView:self.webView url:url];
 }
 
 #pragma mark - UIGestureRecognizerDelegate

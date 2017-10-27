@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 
-@interface SearchViewController : UIViewController
+@interface SearchViewController : BaseViewController
 
 @property (nonatomic, copy) NSString *origTextFieldString;
 
