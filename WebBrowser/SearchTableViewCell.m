@@ -21,7 +21,8 @@
 - (void)updateCellWithString:(NSString *)text{
     self.searchResultLabel.text = text;
     
-    if ([HttpHelper isURL:text])
+    NSURL *url = [NSURL URLWithString:text];
+    if (url && url.scheme && url.host)
         [self.leftImageView setImage:[UIImage imageNamed:@"search_list_url"]];
     else
         [self.leftImageView setImage:[UIImage imageNamed:@"search_list_search"]];

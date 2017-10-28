@@ -6,7 +6,6 @@
 //  Copyright © 2017年 钟武. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "BaseTableViewController.h"
 
 @interface SettingsTableViewController : BaseTableViewController

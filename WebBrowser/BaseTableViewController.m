@@ -15,8 +15,6 @@
     
     self.clearsSelectionOnViewWillAppear = NO;
     
-    self.view.backgroundColor = [UIColor whiteColor];
-    
     self.tableView.tableFooterView = [UIView new];
     self.tableView.estimatedRowHeight = 0;
     self.tableView.estimatedSectionHeaderHeight = 0;

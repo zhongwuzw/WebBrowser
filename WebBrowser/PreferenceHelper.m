@@ -9,6 +9,7 @@
 #import "PreferenceHelper.h"
 
 NSString * const KeyNoImageModeStatus = @"KeyNoImageModeStatus";
+NSString * const KeyBlockBaiduADStatus = @"KeyBlockBaiduADStatus";
 NSString * const KeyPasteboardURL = @"KeyPasteboardURL";
 
 @implementation PreferenceHelper
@@ -16,7 +17,7 @@ NSString * const KeyPasteboardURL = @"KeyPasteboardURL";
 #pragma mark - Setter Method
 
 + (void)setBool:(BOOL)value forKey:(NSString *)defaultName{
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:value] forKey:defaultName];
+    [[NSUserDefaults standardUserDefaults] setObject:@(value) forKey:defaultName];
 }
 
 + (void)setURL:(NSURL *)url forKey:(NSString *)defaultName{
@@ -27,6 +28,17 @@ NSString * const KeyPasteboardURL = @"KeyPasteboardURL";
 
 + (BOOL)boolForKey:(NSString *)defaultName{
     NSNumber *number = [[NSUserDefaults standardUserDefaults] objectForKey:defaultName];
+    return [number boolValue];
+}
+
++ (BOOL)boolDefaultYESForKey:(NSString *)defaultName{
+    NSNumber *number = [[NSUserDefaults standardUserDefaults] objectForKey:defaultName];
+    
+    if (number == nil) {
+        [self setBool:YES forKey:defaultName];
+        return YES;
+    }
+    
     return [number boolValue];
 }
 

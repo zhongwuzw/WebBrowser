@@ -3,13 +3,16 @@
 一款用于网页浏览的APP（Web Browser For iOS)。[Github地址](https://github.com/zhongwuzw/WebBrowser)
 
 ## Features - 功能
-1. 多Tab页浏览(multi-tab browsing)
-2. 冷启动恢复浏览记录，包括当前页及前进后退页面(session restore, includes current page and backforward list)
-3. 多窗口管理，屏幕左右边缘滑动切换窗口(multi-window management, edge pan to switch windows)
-4. 书签、历史记录管理(bookmark、history manage)
-5. 页内查找(find in page)
-6. 点击标题栏进行页面访问或搜索(tap the title bar to  input url for surf or key to search)
-7. 自动监控剪切板`URL`，可在新窗口中打开
+1. 扩展功能，通过JavaScript注入来扩展功能，在菜单->扩展页面进行选择，目前包括（大家如果有想要的功能，或者直接上代码更好，可以在Issue中提出）：
+    * 无图模式
+    * 屏蔽百度广告及banner推广
+2. 多Tab页浏览(multi-tab browsing)
+3. 冷启动恢复浏览记录，包括当前页及前进后退页面(session restore, includes current page and backforward list)
+4. 多窗口管理，屏幕左右边缘滑动切换窗口(multi-window management, edge pan to switch windows)
+5. 书签、历史记录管理(bookmark、history manage)
+6. 页内查找(find in page)
+7. 点击标题栏进行页面访问或搜索(tap the title bar to  input url for surf or key to search)
+8. 自动监控剪切板`URL`，可在新窗口中打开
 
   
 ## Usage - 用法
@@ -50,7 +53,7 @@
   <img src="https://raw.githubusercontent.com/zhongwuzw/WebBrowser/master/images/home_search.gif" alt="search"/>
 </p>
 
-#### 4. No Image Mode (无图模式)
+#### 4. No Image Mode (无图模式，功能已并入扩展)
 <p align="center">
   <img src="https://raw.githubusercontent.com/zhongwuzw/WebBrowser/master/images/no-image-mode.gif" alt="no image mode"/>
 </p>

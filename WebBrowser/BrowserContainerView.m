@@ -179,7 +179,7 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
     [webView addSubview:homePage];
     
     // remove wrong title when back to home page
-    [[DelegateManager sharedInstance] performSelector:@selector(webView:gotTitleName:) arguments:@[webView,@""] key:DelegateManagerWebView];
+    [[DelegateManager sharedInstance] performSelector:@selector(webView:gotTitleName:) arguments:@[webView,@"首页"] key:DelegateManagerWebView];
 }
 
 #pragma mark - ActivityView

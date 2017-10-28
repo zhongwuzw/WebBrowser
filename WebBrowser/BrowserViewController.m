@@ -24,6 +24,7 @@
 #import "FindInPageBar.h"
 #import "KeyboardHelper.h"
 #import "NSURL+ZWUtility.h"
+#import "ExtentionsTableViewController.h"
 
 static NSString *const kBrowserViewControllerAddBookmarkSuccess = @"添加书签成功";
 static NSString *const kBrowserViewControllerAddBookmarkFailure = @"添加书签失败";
@@ -207,17 +208,20 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
         WEAK_REF(self)
         NSArray<SettingsMenuItem *> *items =
         @[
+          [SettingsMenuItem itemWithText:@"扩展" image:[UIImage imageNamed:@"album"] action:^{
+              [self_ pushTableViewControllerWithControllerName:[ExtentionsTableViewController class] style:UITableViewStyleGrouped];
+          }],
           [SettingsMenuItem itemWithText:@"加入书签" image:[UIImage imageNamed:@"album"] action:^{
               [self_ addBookmark];
           }],
           [SettingsMenuItem itemWithText:@"书签" image:[UIImage imageNamed:@"album"] action:^{
-              [self_ pushTableViewControllerWithControllerName:[BookmarkTableViewController class]];
+              [self_ pushTableViewControllerWithControllerName:[BookmarkTableViewController class] style:UITableViewStylePlain];
           }],
           [SettingsMenuItem itemWithText:@"历史" image:[UIImage imageNamed:@"album"] action:^{
-              [self_ pushTableViewControllerWithControllerName:[HistoryTableViewController class]];
+              [self_ pushTableViewControllerWithControllerName:[HistoryTableViewController class] style:UITableViewStylePlain];
           }],
           [SettingsMenuItem itemWithText:@"设置" image:[UIImage imageNamed:@"album"] action:^{
-              [self_ pushTableViewControllerWithControllerName:[SettingsTableViewController class]];
+              [self_ pushTableViewControllerWithControllerName:[SettingsTableViewController class] style:UITableViewStylePlain];
           }],
           [SettingsMenuItem itemWithText:@"拷贝连接" image:[UIImage imageNamed:@"album"] action:^{
               [self_ handleCopyURLButtonClicked];
@@ -242,11 +246,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
     }
 }
 
-- (void)pushTableViewControllerWithControllerName:(Class)class{
+- (void)pushTableViewControllerWithControllerName:(Class)class style:(UITableViewStyle)style{
     if (![class isSubclassOfClass:[UITableViewController class]]) {
         return;
     }
-    UITableViewController *vc = [[class alloc] initWithStyle:UITableViewStylePlain];
+    UITableViewController *vc = [[class alloc] initWithStyle:style];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

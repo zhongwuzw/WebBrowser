@@ -8,17 +8,13 @@
 
 #import "SettingsTableViewController.h"
 #import "SettingActivityTableViewCell.h"
-#import "SettingSwitchTableViewCell.h"
 #import "NSFileManager+ZWUtility.h"
-#import "PreferenceHelper.h"
 
 typedef enum : NSUInteger {
     CellKindForCache,
-    CellKindForNoImage,
 } CellKind;
 
 static NSString *const SettingActivityTableViewCellIdentifier = @"SettingActivityTableViewCellIdentifier";
-static NSString *const SettingSwitchTableViewCellIdentifier   = @"SettingSwitchTableViewCellIdentifier";
 static NSString *const SettingPlaceholderTableViewCellIdentifier   = @"SettingPlaceholderTableViewCellIdentifier";
 
 @interface SettingsTableViewController ()
@@ -34,10 +30,9 @@ static NSString *const SettingPlaceholderTableViewCellIdentifier   = @"SettingPl
     
     self.title = @"设置";
     
-    self.dataArray = @[@"清除缓存",@"无图浏览模式"];
+    self.dataArray = @[@"清除缓存"];
     
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([SettingActivityTableViewCell class]) bundle:nil] forCellReuseIdentifier:SettingActivityTableViewCellIdentifier];
-    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([SettingSwitchTableViewCell class]) bundle:nil] forCellReuseIdentifier:SettingSwitchTableViewCellIdentifier];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:SettingPlaceholderTableViewCellIdentifier];
 }
 
@@ -87,18 +82,6 @@ static NSString *const SettingPlaceholderTableViewCellIdentifier   = @"SettingPl
     return cell;
 }
 
-- (UITableViewCell *)noImageModeCellWithIndexPath:(NSIndexPath *)indexPath{
-    SettingSwitchTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:SettingSwitchTableViewCellIdentifier];
-    cell.leftLabel.text = self.dataArray[indexPath.row];
-    [cell.switchControl setOn:[PreferenceHelper boolForKey:KeyNoImageModeStatus]];
-    cell.valueChangedBlock = ^(UISwitch *switchControl){
-        [PreferenceHelper setBool:switchControl.on forKey:KeyNoImageModeStatus];
-        [Notifier postNotification:[NSNotification notificationWithName:kNoImageModeChanged object:nil]];
-    };
-    
-    return cell;
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -110,9 +93,6 @@ static NSString *const SettingPlaceholderTableViewCellIdentifier   = @"SettingPl
     switch (indexPath.row) {
         case CellKindForCache:
             cell = [self cacheCellWithIndexPath:indexPath];
-            break;
-        case CellKindForNoImage:
-            cell = [self noImageModeCellWithIndexPath:indexPath];
             break;
         default:
             //never called

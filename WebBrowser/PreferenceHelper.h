@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 extern NSString * const KeyNoImageModeStatus;
+extern NSString * const KeyBlockBaiduADStatus;
 extern NSString * const KeyPasteboardURL;
 
 @interface PreferenceHelper : NSObject
@@ -17,6 +18,7 @@ extern NSString * const KeyPasteboardURL;
 + (void)setURL:(NSURL *)url forKey:(NSString *)defaultName;
 
 + (BOOL)boolForKey:(NSString *)defaultName;
++ (BOOL)boolDefaultYESForKey:(NSString *)defaultName;
 + (NSURL *)URLForKey:(NSString *)defaultName;
 
 @end

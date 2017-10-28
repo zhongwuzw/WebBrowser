@@ -21,56 +21,17 @@
 + (BOOL)isURL:(NSString *)content{
     if(content && [content length] > 0)
     {
-        if([content hasPrefix:@"http://"])
+        if([content hasPrefix:@"http://"] || [content hasPrefix:@"https://"])
         {
-            NSString* temp = [content stringByReplacingOccurrencesOfString:@"http://" withString:@""];
-            NSRange position = [temp rangeOfString:@"/"];
-            if(NSNotFound == position.location)
-            {
-                return [temp isValidURL];
-            }
-            else
-            {
-                temp = [temp substringToIndex:position.location];
-                return [temp isValidURL];
-            }
-        }
-        else if([content hasPrefix:@"https://"])
-        {
-            NSString* temp = [content stringByReplacingOccurrencesOfString:@"https://" withString:@""];
-            NSRange position = [temp rangeOfString:@"/"];
-            if(NSNotFound == position.location)
-            {
-                return [temp isValidURL];
-            }
-            else
-            {
-                temp = [temp substringToIndex:position.location];
-                return [temp isValidURL];
-            }
+            return YES;
         }
         else
         {
-            NSURL* url = [NSURL URLWithString:[content stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+            NSURL* url = [NSURL URLWithString:content];
             if(!url)
                 return NO;
             
-            NSRange position = [content rangeOfString:@"/"];
-            if(NSNotFound == position.location)
-            {
-                if([content rangeOfString:@" "].location != NSNotFound)
-                    return NO;
-                
-                return [content isValidURL];
-            }
-            else
-            {
-                NSString* temp = [content substringToIndex:position.location];
-                if([temp rangeOfString:@" "].location != NSNotFound)
-                    return NO;
-                
-                return [temp isValidURL];
-            }
+            return [content isValidURL];
         }
     }
 

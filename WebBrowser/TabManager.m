@@ -551,7 +551,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
     [JavaScriptHelper setFindInPageWithWebView:webView];
     
     NSURL *url = [NSURL URLWithString:webView.mainFURL];
-    if ([url.host isEqualToString:@"m.baidu.com"] || [url.host isEqualToString:@"www.baidu.com"]) {
+    if ([PreferenceHelper boolDefaultYESForKey:KeyBlockBaiduADStatus] && ([url.host isEqualToString:@"m.baidu.com"] || [url.host isEqualToString:@"www.baidu.com"])) {
         [JavaScriptHelper setBaiduADBlockWithWebView:webView];
     }
     
