@@ -3,7 +3,7 @@
 一款用于网页浏览的APP（Web Browser For iOS)。[Github地址](https://github.com/zhongwuzw/WebBrowser)
 
 ## Features - 功能
-1. 扩展功能，通过JavaScript注入来扩展功能，在菜单->扩展页面进行选择，目前包括（大家如果有想要的功能，或者直接上代码更好，可以在Issue中提出）：
+1. 扩展功能，通过JavaScript注入来扩展功能，在菜单->扩展页面进行选择，目前包括（大家如果有想要的功能，或者直接上代码更好，欢迎大家在Issue中提出）：
     * 无图模式
     * 屏蔽百度广告及banner推广
 2. 多Tab页浏览(multi-tab browsing)
@@ -27,13 +27,8 @@
 * [Carthage](https://github.com/Carthage/Carthage)
 
 ## Demo
-#### 1. Home Page (主页)：
-<p align="center">
-  <img src="https://raw.githubusercontent.com/zhongwuzw/WebBrowser/master/images/home_scroll.gif" alt="home page"/>
-</p>
 
-
-#### 2. Multi-tab (多窗口)：
+#### 1. Multi-tab (多窗口)：
 <p align="center">
   <img src="https://raw.githubusercontent.com/zhongwuzw/WebBrowser/master/images/home_tab_switch.gif" alt="tab"/>
 </p>
@@ -48,24 +43,24 @@
   <img src="https://raw.githubusercontent.com/zhongwuzw/WebBrowser/master/images/multi_window_switch.gif" alt="tab"/>
 </p>
 
-#### 3. Search (搜索)：
+#### 2. Search (搜索)：
 <p align="center">
   <img src="https://raw.githubusercontent.com/zhongwuzw/WebBrowser/master/images/home_search.gif" alt="search"/>
 </p>
 
-#### 4. No Image Mode (无图模式，功能已并入扩展)
+#### 3. No Image Mode (无图模式，功能已并入扩展)
 <p align="center">
   <img src="https://raw.githubusercontent.com/zhongwuzw/WebBrowser/master/images/no-image-mode.gif" alt="no image mode"/>
 </p>
 
-#### 5. History (历史)
+#### 4. History (历史)
 1. Long Press to select options. (长按记录可弹出选项按钮)
 2. Tap to open history in current window.(点击记录会在当前窗口打开历史页面)
 <p align="center">
   <img src="https://raw.githubusercontent.com/zhongwuzw/WebBrowser/master/images/history.gif" alt="history"/>
 </p>
 
-#### 6. Favorite (收藏)
+#### 5. Favorite (收藏)
 ##### In non-editing mode (在非编辑模式下操作)
 1. Long press on directory to edit directory name in non-editing mode.(长按目录来编辑目录名字)
 <p align="center">
@@ -98,7 +93,7 @@
   <img src="https://raw.githubusercontent.com/zhongwuzw/WebBrowser/master/images/bookmark_add.gif" alt="favorite"/>
 </p>
 
-#### 7. find in page (页内查找)
+#### 6. find in page (页内查找)
 <p align="center">
   <img src="https://raw.githubusercontent.com/zhongwuzw/WebBrowser/master/images/findinpage.gif" alt="find in page"/>
 </p>
