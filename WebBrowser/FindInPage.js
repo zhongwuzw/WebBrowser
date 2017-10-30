@@ -281,8 +281,8 @@ function updateSearch(text) {
   updateActiveHighlight();
 }
 
-if (!window.__firefox__) {
-  Object.defineProperty(window, '__firefox__', {
+if (!window.__zhongwu__) {
+  Object.defineProperty(window, '__zhongwu__', {
     enumerable: false,
     configurable: false,
     writable: false,
@@ -290,7 +290,7 @@ if (!window.__firefox__) {
   });
 }
 
-Object.defineProperty(window.__firefox__, 'find', {
+Object.defineProperty(window.__zhongwu__, 'find', {
   enumerable: false,
   configurable: false,
   writable: false,
@@ -299,7 +299,7 @@ Object.defineProperty(window.__firefox__, 'find', {
   }
 });
 
-Object.defineProperty(window.__firefox__, 'findNext', {
+Object.defineProperty(window.__zhongwu__, 'findNext', {
   enumerable: false,
   configurable: false,
   writable: false,
@@ -309,7 +309,7 @@ Object.defineProperty(window.__firefox__, 'findNext', {
   }
 });
 
-Object.defineProperty(window.__firefox__, 'findPrevious', {
+Object.defineProperty(window.__zhongwu__, 'findPrevious', {
   enumerable: false,
   configurable: false,
   writable: false,
@@ -319,7 +319,7 @@ Object.defineProperty(window.__firefox__, 'findPrevious', {
   }
 });
 
-Object.defineProperty(window.__firefox__, 'findDone', {
+Object.defineProperty(window.__zhongwu__, 'findDone', {
   enumerable: false,
   configurable: false,
   writable: false,
@@ -330,7 +330,7 @@ Object.defineProperty(window.__firefox__, 'findDone', {
 });
 
 // 获取页内查找时选择的文本
-Object.defineProperty(window.__firefox__, 'getSelection', {
+Object.defineProperty(window.__zhongwu__, 'getSelection', {
   enumerable: false,
   configurable: false,
   writable: false,

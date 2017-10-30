@@ -527,7 +527,7 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
     
     escaped = (escaped) ? escaped : @"";
     
-    [self.webView evaluateJavaScript:[NSString stringWithFormat:@"window.__firefox__.%@(\"%@\")",function,escaped] completionHandler:nil];
+    [self.webView evaluateJavaScript:[NSString stringWithFormat:@"window.__zhongwu__.%@(\"%@\")",function,escaped] completionHandler:nil];
 }
 
 #pragma mark - MenuHelperInterface Protocol
@@ -555,7 +555,7 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
 
 - (void)getWebViewSelectionWithCompletion:(void(^)(NSString *result))completion{
     WEAK_REF(self)
-    [self.webView evaluateJavaScript:@"window.__firefox__.getSelection()" completionHandler:^(NSString *result, NSError *error){
+    [self.webView evaluateJavaScript:@"window.__zhongwu__.getSelection()" completionHandler:^(NSString *result, NSError *error){
         STRONG_REF(self_)
         if (self__ && result.length > 0 && completion) {
             dispatch_main_safe_async(^{
@@ -580,7 +580,7 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
 }
 
 - (void)findInPageDidPressClose:(FindInPageBar *)findInPage{
-    [self.webView evaluateJavaScript:@"window.__firefox__.findDone()" completionHandler:nil];
+    [self.webView evaluateJavaScript:@"window.__zhongwu__.findDone()" completionHandler:nil];
 }
 
 #pragma mark - Dealloc

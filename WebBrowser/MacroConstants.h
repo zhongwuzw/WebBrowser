@@ -28,15 +28,17 @@
 #define DEFAULT_CARD_CELL_TITLE @"百度一下"
 
 #pragma mark - Notification
-//无图模式
+// 无图模式
 #define kNoImageModeChanged         @"kNoImageModeChanged"
-//tab switch
+// 护眼模式
+#define kEyeProtectiveModeChanged   @"kEyeProtectiveModeChanged"
+// tab switch
 #define kWebTabSwitch               @"kWebTabSwitch"
-//webView navigation change
+// webView navigation change
 #define kWebHistoryItemChangedNotification @"WebHistoryItemChangedNotification"
-//expand toolbar
+// expand toolbar
 #define kExpandHomeToolBarNotification @"kExpandHomeToolBarNotification"
-//open in new window
+// open in new window
 #define kOpenInNewWindowNotification @"kOpenInNewWindowNotification"
 
 #endif /* MacroConstants_h */

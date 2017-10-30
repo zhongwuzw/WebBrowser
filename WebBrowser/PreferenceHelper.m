@@ -10,6 +10,8 @@
 
 NSString * const KeyNoImageModeStatus = @"KeyNoImageModeStatus";
 NSString * const KeyBlockBaiduADStatus = @"KeyBlockBaiduADStatus";
+NSString * const KeyEyeProtectiveStatus = @"KeyEyeProtectiveStatus";
+NSString * const KeyEyeProtectiveColorKind = @"KeyEyeProtectiveColorKind";
 NSString * const KeyPasteboardURL = @"KeyPasteboardURL";
 
 @implementation PreferenceHelper
@@ -22,6 +24,10 @@ NSString * const KeyPasteboardURL = @"KeyPasteboardURL";
 
 + (void)setURL:(NSURL *)url forKey:(NSString *)defaultName{
     [[NSUserDefaults standardUserDefaults] setURL:url forKey:defaultName];
+}
+
++ (void)setInteger:(NSInteger)value forKey:(NSString *)defaultName{
+    [[NSUserDefaults standardUserDefaults] setInteger:value forKey:defaultName];
 }
 
 #pragma mark - Getter Method
@@ -40,6 +46,18 @@ NSString * const KeyPasteboardURL = @"KeyPasteboardURL";
     }
     
     return [number boolValue];
+}
+
++ (NSInteger)integerDefault1ForKey:(NSString *)defaultName{
+    if ([[NSUserDefaults standardUserDefaults] integerForKey:defaultName] == 0) {
+        [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:defaultName];
+        return 1;
+    }
+    return [self integerForKey:defaultName];
+}
+
++ (NSInteger)integerForKey:(NSString *)defaultName{
+    return [[NSUserDefaults standardUserDefaults] integerForKey:defaultName];
 }
 
 + (NSURL *)URLForKey:(NSString *)defaultName{

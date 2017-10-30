@@ -13,6 +13,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     [self.switchControl addTarget:self action:@selector(handleSwitchValueChanged:) forControlEvents:UIControlEventValueChanged];
 }
 

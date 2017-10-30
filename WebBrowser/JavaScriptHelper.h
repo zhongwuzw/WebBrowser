@@ -12,9 +12,11 @@
 
 @interface JavaScriptHelper : NSObject
 
+SYNTHESIZE_SINGLETON_FOR_CLASS_HEADER(JavaScriptHelper)
 + (void)setNoImageMode:(BOOL)enabled webView:(BrowserWebView *)webView loadPrimaryScript:(BOOL)needsLoad;
 + (void)setLongPressGestureWithWebView:(BrowserWebView *)webView;
 + (void)setFindInPageWithWebView:(BrowserWebView *)webView;
 + (void)setBaiduADBlockWithWebView:(BrowserWebView *)webView;
++ (void)setEyeProtectiveWithWebView:(BrowserWebView *)webView colorValue:(NSInteger)colorValue loadPrimaryScript:(BOOL)needsLoad;
 
 @end

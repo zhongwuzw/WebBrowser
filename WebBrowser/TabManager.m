@@ -9,15 +9,17 @@
 #import "TabManager.h"
 #import "BrowserWebView.h"
 #import "BrowserViewController.h"
-#import "JavaScriptHelper.h"
-#import "PreferenceHelper.h"
 #import "ErrorPageHelper.h"
 #import "BrowserContainerView.h"
 #import "SessionData.h"
 #import "WebViewBackForwardList.h"
 #import "HistorySQLiteManager.h"
+#import "ExtentionsManager.h"
+#import "PreferenceHelper.h"
 
 #import <CommonCrypto/CommonDigest.h>
+
+typedef void(^JSBlock)(BrowserWebView *);
 
 static NSString *const MULTI_WINDOW_FILE_NAME    = @"multiWindowHis.plist";
 static NSString *const MY_HISTORY_DATA_KEY       = @"multiWindowHisData";
@@ -126,6 +128,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
                                                object:nil];
     
     [Notifier addObserver:self selector:@selector(noImageModeChanged) name:kNoImageModeChanged object:nil];
+    [Notifier addObserver:self selector:@selector(eyeProtectiveModeChanged) name:kEyeProtectiveModeChanged object:nil];
     
     [[DelegateManager sharedInstance] registerDelegate:self forKey:DelegateManagerWebView];
 }
@@ -532,10 +535,26 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
 }
 
 - (void)noImageModeChanged{
+    JSBlock block = ^(BrowserWebView *webView){
+        [ExtentionsManager evaluateScriptButNotLoadExtentionsWithWebView:webView jsKey:KeyNoImageModeStatus];
+    };
+    [self enumerateWebViewsToEvaluateJSWithBlock:block];
+}
+
+- (void)eyeProtectiveModeChanged{
+    JSBlock block = ^(BrowserWebView *webView){
+        [ExtentionsManager evaluateScriptButNotLoadExtentionsWithWebView:webView jsKey:KeyEyeProtectiveStatus];
+    };
+    [self enumerateWebViewsToEvaluateJSWithBlock:block];
+}
+
+- (void)enumerateWebViewsToEvaluateJSWithBlock:(JSBlock)block{
+    NSCParameterAssert(block);
+    
     [[self.webModelArray copy] enumerateObjectsUsingBlock:^(WebModel *webModel, NSUInteger idx, BOOL *stop){
         if (webModel.webView) {
             dispatch_main_safe_async(^{
-                [JavaScriptHelper setNoImageMode:[PreferenceHelper boolForKey:KeyNoImageModeStatus] webView:webModel.webView loadPrimaryScript:NO];
+                block(webModel.webView);
             })
         }
     }];
@@ -546,15 +565,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
 
 //当解析完head标签后注入无图模式js,需要注意的是，当启用无图模式时，UIWebView依然会进行图片网络请求,只是设置visible为false
 - (void)webView:(BrowserWebView *)webView gotTitleName:(NSString*)titleName{
-    [JavaScriptHelper setNoImageMode:[PreferenceHelper boolForKey:KeyNoImageModeStatus] webView:webView loadPrimaryScript:YES];
-    [JavaScriptHelper setLongPressGestureWithWebView:webView];
-    [JavaScriptHelper setFindInPageWithWebView:webView];
-    
-    NSURL *url = [NSURL URLWithString:webView.mainFURL];
-    if ([PreferenceHelper boolDefaultYESForKey:KeyBlockBaiduADStatus] && ([url.host isEqualToString:@"m.baidu.com"] || [url.host isEqualToString:@"www.baidu.com"])) {
-        [JavaScriptHelper setBaiduADBlockWithWebView:webView];
-    }
-    
+    [ExtentionsManager loadExtentionsIfNeededWhenGotTitleWithWebView:webView];
     [[HistorySQLiteManager sharedInstance] insertOrUpdateHistoryWithURL:webView.mainFURL title:titleName];
 }
 
@@ -577,6 +588,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
 
 - (void)webViewForMainFrameDidFinishLoad:(BrowserWebView *)webView{
     [self saveWebModelData];
+}
+
+- (void)webViewDidFinishLoad:(BrowserWebView *)webView{
+    [ExtentionsManager loadExtentionsIfNeededWhenWebViewDidFinishLoad:webView];
 }
 
 #pragma mark - Dealloc

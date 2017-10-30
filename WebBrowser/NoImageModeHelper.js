@@ -5,11 +5,11 @@
  (function() {
   "use strict";
 
-  if (!window.__firefox__) {
-    window.__firefox__ = {};
+  if (!window.__zhongwu__) {
+    window.__zhongwu__ = {};
   }
 
-  window.__firefox__.NoImageMode = {
+  window.__zhongwu__.NoImageMode = {
     enabled: false,
     setEnabled: null
   };
@@ -31,11 +31,11 @@
     }
   }
 
-  window.__firefox__.NoImageMode.setEnabled = function (enabled) {
-    if (enabled === window.__firefox__.NoImageMode.enabled) {
+  window.__zhongwu__.NoImageMode.setEnabled = function (enabled) {
+    if (enabled === window.__zhongwu__.NoImageMode.enabled) {
       return;
     }
-    window.__firefox__.NoImageMode.enabled = enabled;
+    window.__zhongwu__.NoImageMode.enabled = enabled;
     if (enabled) {
       initializeStyleSheet();
 
@@ -67,6 +67,6 @@
   };
 
   window.addEventListener("DOMContentLoaded", function (event) {
-    window.__firefox__.NoImageMode.setEnabled(window.__firefox__.NoImageMode.enabled);
+    window.__zhongwu__.NoImageMode.setEnabled(window.__zhongwu__.NoImageMode.enabled);
   });
 })();

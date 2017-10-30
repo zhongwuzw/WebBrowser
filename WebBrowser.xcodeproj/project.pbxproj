@@ -86,6 +86,7 @@
 		0EBC36B41F79096400DB4889 /* NSData+ZWUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EBC36B31F79096400DB4889 /* NSData+ZWUtility.m */; };
 		0EBDC6241E1DDEC100B6A4DB /* SearchInputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0EBDC6231E1DDEC100B6A4DB /* SearchInputView.xib */; };
 		0EBDC6271E1DE49700B6A4DB /* CharacterSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EBDC6261E1DE49700B6A4DB /* CharacterSelectView.m */; };
+		0EBE39331FA6B87800D59D04 /* ExtentionsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EBE39321FA6B87800D59D04 /* ExtentionsManager.m */; };
 		0EBF3A651DCF33ED00CD77C8 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EBF3A631DCF33ED00CD77C8 /* CocoaLumberjack.framework */; };
 		0EBF3A661DCF33ED00CD77C8 /* MBProgressHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EBF3A641DCF33ED00CD77C8 /* MBProgressHUD.framework */; };
 		0EBF3A6A1DCF38D600CD77C8 /* BrowserBottomToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EBF3A691DCF38D600CD77C8 /* BrowserBottomToolBar.m */; };
@@ -110,6 +111,7 @@
 		0ED304181E99F42D00445A9A /* HistoryDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED304171E99F42D00445A9A /* HistoryDataManager.m */; };
 		0ED35E8C1E40B56F0060A367 /* DelegateManager+WebViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ED35E8B1E40B56F0060A367 /* DelegateManager+WebViewDelegate.m */; };
 		0EDD68E51DACFBF400265744 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0EDD68E41DACFBF400265744 /* Assets.xcassets */; };
+		0EE62E581FA4D26C0054CFD5 /* EyeProtective.js in Resources */ = {isa = PBXBuildFile; fileRef = 0EE62E571FA4D26C0054CFD5 /* EyeProtective.js */; };
 		0EED28311DC1A32100EC8581 /* ZWUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EED28301DC1A32100EC8581 /* ZWUtility.m */; };
 		0EF025651DD951EB0011019F /* HTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF025601DD951EB0011019F /* HTTPClient.m */; };
 		0EF025661DD951EB0011019F /* HTTPManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EF025621DD951EB0011019F /* HTTPManager.m */; };
@@ -286,6 +288,8 @@
 		0EBDC6231E1DDEC100B6A4DB /* SearchInputView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchInputView.xib; sourceTree = "<group>"; };
 		0EBDC6251E1DE49700B6A4DB /* CharacterSelectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CharacterSelectView.h; sourceTree = "<group>"; };
 		0EBDC6261E1DE49700B6A4DB /* CharacterSelectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CharacterSelectView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		0EBE39311FA6B87800D59D04 /* ExtentionsManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExtentionsManager.h; sourceTree = "<group>"; };
+		0EBE39321FA6B87800D59D04 /* ExtentionsManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExtentionsManager.m; sourceTree = "<group>"; };
 		0EBF3A631DCF33ED00CD77C8 /* CocoaLumberjack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjack.framework; path = Carthage/Build/iOS/CocoaLumberjack.framework; sourceTree = "<group>"; };
 		0EBF3A641DCF33ED00CD77C8 /* MBProgressHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MBProgressHUD.framework; path = Carthage/Build/iOS/MBProgressHUD.framework; sourceTree = "<group>"; };
 		0EBF3A681DCF38D600CD77C8 /* BrowserBottomToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BrowserBottomToolBar.h; sourceTree = "<group>"; };
@@ -326,6 +330,7 @@
 		0ED35E8A1E40B56F0060A367 /* DelegateManager+WebViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DelegateManager+WebViewDelegate.h"; sourceTree = "<group>"; };
 		0ED35E8B1E40B56F0060A367 /* DelegateManager+WebViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DelegateManager+WebViewDelegate.m"; sourceTree = "<group>"; };
 		0EDD68E41DACFBF400265744 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0EE62E571FA4D26C0054CFD5 /* EyeProtective.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = EyeProtective.js; sourceTree = "<group>"; };
 		0EED282F1DC1A32100EC8581 /* ZWUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWUtility.h; sourceTree = "<group>"; };
 		0EED28301DC1A32100EC8581 /* ZWUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWUtility.m; sourceTree = "<group>"; };
 		0EF0255E1DD951D10011019F /* HTTPErrorCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPErrorCode.h; sourceTree = "<group>"; };
@@ -671,6 +676,7 @@
 		0E6110A11FA2DFDB009F2568 /* Extentions */ = {
 			isa = PBXGroup;
 			children = (
+				0EBE39301FA6B85700D59D04 /* Manager */,
 				0E6110A21FA2E00A009F2568 /* Controller */,
 			);
 			name = Extentions;
@@ -714,10 +720,10 @@
 				0EC14F571E31BAD100A44D05 /* History */,
 				0E3A6B6E1E110F1C00071397 /* Setting */,
 				0E32E2F71E08C5DC00CFBBB5 /* MultiWindow */,
+				0E6110A11FA2DFDB009F2568 /* Extentions */,
 				0E986A0C1D4D06030003900D /* Tab */,
 				0E986A081D4CA6890003900D /* Browser */,
 				0E681F5E1D4AF2A3003534F5 /* Application */,
-				0E6110A11FA2DFDB009F2568 /* Extentions */,
 				0E681F5B1D4AF1A8003534F5 /* Utils */,
 				0EFCB9DB1E4F62520094C466 /* Assets */,
 				0E681F361D4AEC3F003534F5 /* LaunchScreen.storyboard */,
@@ -931,6 +937,15 @@
 			name = Controller;
 			sourceTree = "<group>";
 		};
+		0EBE39301FA6B85700D59D04 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				0EBE39311FA6B87800D59D04 /* ExtentionsManager.h */,
+				0EBE39321FA6B87800D59D04 /* ExtentionsManager.m */,
+			);
+			name = Manager;
+			sourceTree = "<group>";
+		};
 		0EBF3A621DCF33ED00CD77C8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1076,6 +1091,7 @@
 		0EFCB9DC1E4F628B0094C466 /* JavaScript */ = {
 			isa = PBXGroup;
 			children = (
+				0EE62E571FA4D26C0054CFD5 /* EyeProtective.js */,
 				0E855AA81FA0E28000F0A946 /* BaiduADBlock.js */,
 				0EFCB9DD1E4F62A60094C466 /* NoImageModeHelper.js */,
 				0EF59F991ECB0B5000D6BDF9 /* FindInPage.js */,
@@ -1149,6 +1165,7 @@
 				0E8013DD1EB0A3280098BF64 /* BookmarkSectionHeaderView.xib in Resources */,
 				0ECA02891E5AE45900955887 /* NetError.html in Resources */,
 				0EC3D8BD1EC1C99D0059E4DC /* BookmarkSectionTableViewCell.xib in Resources */,
+				0EE62E581FA4D26C0054CFD5 /* EyeProtective.js in Resources */,
 				0E7795941E20F8C900CE86BE /* SearchTableViewCell.xib in Resources */,
 				0E5CC9DA1E7922AE0049ABEB /* SessionRestore.html in Resources */,
 				0EFCB9DE1E4F62A60094C466 /* NoImageModeHelper.js in Resources */,
@@ -1274,6 +1291,7 @@
 				0E7795971E21042300CE86BE /* NSString+ZWUtility.m in Sources */,
 				0E3A4F301E7A22A7006FA3F8 /* SessionRestoreHelper.m in Sources */,
 				0E39F9AA1E14C8AA007B5681 /* SearchInputView.m in Sources */,
+				0EBE39331FA6B87800D59D04 /* ExtentionsManager.m in Sources */,
 				0EBB15A01EC36A1D0044156A /* BookmarkItemEditViewController.m in Sources */,
 				0E8EE8311E11123600B6DADF /* SettingsViewController.m in Sources */,
 				0E7E43A01F67E0D200DB6CD7 /* ArrowActivityView.m in Sources */,
