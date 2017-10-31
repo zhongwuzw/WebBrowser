@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0E081F0C1FA1C5C10024DFE5 /* HomePageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E081F0B1FA1C5C10024DFE5 /* HomePageView.m */; };
+		0E113C251FA81670000DFEA7 /* URLConnectionDelegateProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E113C241FA81670000DFEA7 /* URLConnectionDelegateProxy.m */; };
 		0E1702C81ECC412B0075C7D5 /* FindInPageBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1702C71ECC412B0075C7D5 /* FindInPageBar.m */; };
 		0E1710F51F726782007A7DB0 /* GestureProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E1710F41F726782007A7DB0 /* GestureProxy.m */; };
 		0E19A4D41E232FA8009DAF9A /* NSNumber+ZWUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E19A4D31E232FA8009DAF9A /* NSNumber+ZWUtility.m */; };
@@ -132,6 +133,8 @@
 /* Begin PBXFileReference section */
 		0E081F0A1FA1C5C10024DFE5 /* HomePageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomePageView.h; sourceTree = "<group>"; };
 		0E081F0B1FA1C5C10024DFE5 /* HomePageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomePageView.m; sourceTree = "<group>"; };
+		0E113C231FA81670000DFEA7 /* URLConnectionDelegateProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = URLConnectionDelegateProxy.h; sourceTree = "<group>"; };
+		0E113C241FA81670000DFEA7 /* URLConnectionDelegateProxy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = URLConnectionDelegateProxy.m; sourceTree = "<group>"; };
 		0E1702C61ECC412B0075C7D5 /* FindInPageBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindInPageBar.h; sourceTree = "<group>"; };
 		0E1702C71ECC412B0075C7D5 /* FindInPageBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindInPageBar.m; sourceTree = "<group>"; };
 		0E1710F31F726782007A7DB0 /* GestureProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GestureProxy.h; sourceTree = "<group>"; };
@@ -669,6 +672,8 @@
 				0E5CC9E31E794FFD0049ABEB /* WebViewBackForwardList.m */,
 				0E1710F31F726782007A7DB0 /* GestureProxy.h */,
 				0E1710F41F726782007A7DB0 /* GestureProxy.m */,
+				0E113C231FA81670000DFEA7 /* URLConnectionDelegateProxy.h */,
+				0E113C241FA81670000DFEA7 /* URLConnectionDelegateProxy.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1229,6 +1234,7 @@
 				0E7795931E20F8C800CE86BE /* SearchTableViewCell.m in Sources */,
 				0EA7DEE31DB0ABD8005C592E /* BaseViewController.m in Sources */,
 				0E829CD71E12075B008FF0A8 /* SearchViewController.m in Sources */,
+				0E113C251FA81670000DFEA7 /* URLConnectionDelegateProxy.m in Sources */,
 				0E2C539F1DAA24970077B9B4 /* BrowserContainerView.m in Sources */,
 				0EC14F531E31B97900A44D05 /* FMDatabaseQueue.m in Sources */,
 				0E681F661D4AFEAA003534F5 /* KeyboardHelper.m in Sources */,

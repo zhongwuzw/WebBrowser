@@ -5,7 +5,7 @@
 ## Features - 功能
 1. 扩展功能，通过JavaScript注入来扩展功能，在菜单->扩展页面进行选择，目前包括（大家如果有想要的功能，或者直接上代码更好，欢迎大家在Issue中提出）：
     * 无图模式
-    * 屏蔽百度广告及banner推广
+    * 屏蔽百度广告及banner推广【默认开启】
     * 护眼模式（多种颜色可选）
 2. 多Tab页浏览(multi-tab browsing)
 3. 冷启动恢复浏览记录，包括当前页及前进后退页面(session restore, includes current page and backforward list)

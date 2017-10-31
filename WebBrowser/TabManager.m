@@ -16,6 +16,8 @@
 #import "HistorySQLiteManager.h"
 #import "ExtentionsManager.h"
 #import "PreferenceHelper.h"
+#import "URLConnectionDelegateProxy.h"
+#import "UIAlertAction+ZWUtility.h"
 
 #import <CommonCrypto/CommonDigest.h>
 
@@ -570,17 +572,18 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
 }
 
 - (void)webView:(BrowserWebView *)webView didFailLoadWithError:(NSError *)error{
-    if ([error.domain isEqualToString:@"WebKitErrorDomain"] && error.code == 102) {
-        return;
-    }
-    
     if (error.code == kCFURLErrorCancelled) {
         return;
     }
     
     NSURL *url = error.userInfo[NSURLErrorFailingURLErrorKey];
+    
+    if (error.code == kCFURLErrorServerCertificateUntrusted && [url.absoluteString isEqualToString:webView.mainFURL]) {
+        [self handleSSLUntrustedWithWebView:webView];
+    }
+    
     //just trigger error page in case of "http" or "https"
-    if ([url.absoluteString isEqual:webView.mainFURL] && ([url.scheme isEqualToString:@"http"] || [url.scheme isEqualToString:@"https"])) {
+    if ([url.absoluteString isEqualToString:webView.mainFURL] && ([url.scheme isEqualToString:@"http"] || [url.scheme isEqualToString:@"https"])) {
         [ErrorPageHelper showPageWithError:error URL:url inWebView:webView];
         [self saveWebModelData];
     }
@@ -592,6 +595,25 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
 
 - (void)webViewDidFinishLoad:(BrowserWebView *)webView{
     [ExtentionsManager loadExtentionsIfNeededWhenWebViewDidFinishLoad:webView];
+}
+
+#pragma mark - SSL Error Handler
+
+- (void)handleSSLUntrustedWithWebView:(BrowserWebView *)webView{
+    UIAlertController *accessDenied = [UIAlertController alertControllerWithTitle:@"您的连接不是私密连接" message:[NSString stringWithFormat:@"攻击者可能会试图从 %@ 窃取您的信息（例如：密码、通讯内容或信用卡信息）。",webView.request.URL.host] preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *dismissAction = [UIAlertAction actionDismiss];
+    [accessDenied addAction:dismissAction];
+    
+    UIAlertAction *continueAction = [UIAlertAction actionWithTitle:@"继续前往（不安全）" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        URLConnectionDelegateProxy *proxy __attribute__((unused)) = [[URLConnectionDelegateProxy alloc] initWithURL:webView.request.URL success:^{
+            [webView reload];
+        } failure:nil];
+    }];
+    [accessDenied addAction:continueAction];
+    
+    [BrowserVC presentViewController:accessDenied animated:YES completion:nil];
+    
 }
 
 #pragma mark - Dealloc
