@@ -82,6 +82,11 @@ static NSString * const CELL = @"CELL";
     [self.searchInputView.textField becomeFirstResponder];
 }
 
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self.view endEditing:YES];
+}
+
 - (void)viewDidLayoutSubviews{
     [super viewDidLayoutSubviews];
     

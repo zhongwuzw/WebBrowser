@@ -247,7 +247,7 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
 
 - (void)addScreenEdgePanGesture{
     UIPanGestureRecognizer *edgeGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleScreenEdgePanGesture:)];
-    self.gestureProxy = [[GestureProxy alloc] initWithCGPoint:CGPointMake(18, 0)];
+    self.gestureProxy = [[GestureProxy alloc] initWithCGPoint:CGPointMake(60, 0)];
     edgeGesture.delegate = _gestureProxy;
     edgeGesture.minimumNumberOfTouches = 1;
     edgeGesture.maximumNumberOfTouches = 1;

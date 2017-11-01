@@ -1,6 +1,7 @@
 # Master
 
 * Added untrust authentical challenge handler
+* Changed `containerView`'s pan gesture insets
 
 # 1.2.1
 
