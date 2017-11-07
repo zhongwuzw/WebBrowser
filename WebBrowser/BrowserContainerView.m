@@ -282,6 +282,7 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
            self.webView.transform = CGAffineTransformIdentity;
         } completion:^(BOOL finished){
             self.backgroundColor = [UIColor clearColor];
+            self.webView.frame = CGRectMake(0, 0, self.width, self.height);
             
             if (self.arrowActivityView.isOn) {
                 WEAK_REF(self)
