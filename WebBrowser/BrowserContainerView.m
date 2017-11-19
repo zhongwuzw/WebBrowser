@@ -120,6 +120,7 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
         if (self__) {
             BrowserWebView *oldBrowserView = self__.webView;
             
+            browserWebView.transform = CGAffineTransformIdentity;
             browserWebView.bounds = CGRectMake(0, 0, self__.width, self__.height);
             browserWebView.center = self__.center;
             
@@ -136,6 +137,8 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
                     browserWebView.transform = CGAffineTransformIdentity;
                     
                 }completion:^(BOOL finished){
+                    browserWebView.bounds = CGRectMake(0, 0, self__.width, self__.height);
+                    browserWebView.center = self__.center;
                     [oldBrowserView removeFromSuperview];
                 }];
             }
