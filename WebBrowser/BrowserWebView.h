@@ -11,6 +11,7 @@
 @class BrowserWebView, WebModel, WebViewBackForwardList, HomePageView;
 
 typedef void (^WebCompletionBlock)(NSString *, NSError *);
+typedef void(^BackForwardListCompletion)(WebViewBackForwardList *);
 
 @protocol WebViewDelegate <NSObject>
 
@@ -34,6 +35,6 @@ typedef void (^WebCompletionBlock)(NSString *, NSError *);
 
 - (NSString *)mainFURL;
 - (NSString *)mainFTitle;
-- (WebViewBackForwardList *)webViewBackForwardList;
+- (void)webViewBackForwardListWithCompletion:(BackForwardListCompletion)completion;
 
 @end

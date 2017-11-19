@@ -133,10 +133,12 @@
         return nil;
 }
 
-- (WebViewBackForwardList *)webViewBackForwardList{
+- (void)webViewBackForwardListWithCompletion:(BackForwardListCompletion)completion{
     NSAssert([NSThread isMainThread], @"method should called in main thread");
     
     id webView = [self webView];
+    
+    WebViewBackForwardList *list = nil;
     
     if (webView && [webView respondsToSelector:NSSelectorFromString(BACK_FORWARD_LIST)]) {
         id backForwardList = nil;
@@ -159,12 +161,13 @@
                 currentItem = [[(CURRENT_ITEM__PROTO objc_msgSend)(backForwardList, NSSelectorFromString(CURRENT_ITEM)) retain] autorelease];
             }
             
-            WebViewBackForwardList *list = [[[WebViewBackForwardList alloc] initWithCurrentItem:[self getCurrentItem:currentItem] backList:[self getBackForwardItemsWithArray:backList] forwardList:[self getBackForwardItemsWithArray:forwardList]] autorelease];
-            return list;
+            list = [[[WebViewBackForwardList alloc] initWithCurrentItem:[self getCurrentItem:currentItem] backList:[self getBackForwardItemsWithArray:backList] forwardList:[self getBackForwardItemsWithArray:forwardList]] autorelease];
         }
     }
     
-    return nil;
+    if (completion) {
+        completion(list);
+    }
 }
 
 - (WebViewHistoryItem *)getCurrentItem:(id)item{

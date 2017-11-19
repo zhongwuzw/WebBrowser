@@ -68,18 +68,6 @@ assert((shouldSyncQueue ? manager == self : manager != self) && "operate on webM
     return YES;
 }
 
-- (void)dealloc{
-    // dealloc called in secondly thread, we need call in main thread
-    dispatch_main_safe_sync(^{
-        self.webView.webModel = nil;
-        self.webView.delegate = nil;
-        self.webView.scrollView.delegate = nil;
-        self.webView.homePage = nil;
-        [self.webView stopLoading];
-        [self.webView loadHTMLString:@"" baseURL:nil];
-    });
-}
-
 @end
 
 @interface TabManager () <BrowserWebViewDelegate>
@@ -195,24 +183,40 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
 }
 
 - (void)saveWebModelToDisk{
+    NSUInteger count = _webModelArray.count;
     [_webModelArray enumerateObjectsUsingBlock:^(WebModel *model, NSUInteger idx, BOOL *stop){
-     BrowserWebView *webView = model.webView;
+        BrowserWebView *webView = model.webView;
+        
         if (webView) {
-            __block WebViewBackForwardList *backForwardList;
-            dispatch_main_safe_sync(^{
-                backForwardList = [webView webViewBackForwardList];
+            // Fix dead lock between synchQueue and main queue
+            dispatch_main_safe_async(^{
+                [webView webViewBackForwardListWithCompletion:^(WebViewBackForwardList *backForwardList){
+                    if (!backForwardList) {
+                        return ;
+                    }
+                    dispatch_async(self.synchQueue, ^{
+                        NSArray *urls = [self getBackForwardListURL:backForwardList];
+                        NSInteger currentPage = -backForwardList.forwardList.count;
+                        model.sessionData = [[SessionData alloc] initWithCurrentPage:currentPage urls:urls];
+                    });
+                }];
             });
-            NSArray *urls = [self getBackForwardListURL:backForwardList];
-            NSInteger currentPage = -backForwardList.forwardList.count;
-            model.sessionData = [[SessionData alloc] initWithCurrentPage:currentPage urls:urls];
+        }
+        
+        if (idx + 1 == count) {
+            // Fix dead lock between synchQueue and main queue
+            dispatch_main_safe_async(^{
+                dispatch_async(self.synchQueue, ^{
+                    NSMutableData *data = [NSMutableData data];
+                    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+                    [archiver encodeObject:_webModelArray forKey:MY_HISTORY_DATA_KEY];
+                    [archiver finishEncoding];
+                    
+                    [data writeToFile:_filePath atomically:YES];
+                });
+            })
         }
     }];
-    NSMutableData *data = [NSMutableData data];
-    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
-    [archiver encodeObject:_webModelArray forKey:MY_HISTORY_DATA_KEY];
-    [archiver finishEncoding];
-    
-    [data writeToFile:_filePath atomically:YES];
 }
 
 //save webModel, public API
@@ -272,7 +276,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
             }
             webModel.image = image;
         }];
-        dispatch_main_safe_sync(^{
+        dispatch_main_safe_async(^{
             if (block) {
                 block([_webModelArray copy]);
             }
@@ -281,28 +285,35 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
 }
 
 - (void)setCurWebViewOperationBlockWith:(CurWebViewOperationBlock)block{
+    WEAK_REF(self)
     dispatch_async(self.synchQueue, ^{
         __block BrowserWebView *browserWebView;
-        WebModel *curModel = [_webModelArray lastObject];
+        WebModel *curModel = [self_.webModelArray lastObject];
         if (!curModel.webView) {
-            dispatch_main_safe_sync(^{
+            dispatch_main_safe_async(^{
                 browserWebView = [BrowserWebView new];
                 browserWebView.scrollView.contentInset = UIEdgeInsetsMake(TOP_TOOL_BAR_HEIGHT, 0, BOTTOM_TOOL_BAR_HEIGHT, 0);
+                browserWebView.scrollView.delegate = BrowserVC;
+                
+                dispatch_async(self_.synchQueue, ^{
+                    self_.webModelArray.lastObject.webView = browserWebView;
+                    browserWebView.webModel = curModel;
+                });
+                dispatch_main_safe_async(^{
+                    if (block) {
+                        block(curModel, browserWebView);
+                    }
+                })
             })
-            
-            _webModelArray[_webModelArray.count - 1].webView = browserWebView;
-            browserWebView.webModel = curModel;
         }
         else {
             browserWebView = curModel.webView;
+            dispatch_main_safe_async(^{
+                if (block) {
+                    block(curModel, browserWebView);
+                }
+            })
         }
-        
-        dispatch_main_safe_sync(^{
-            browserWebView.scrollView.delegate = BrowserVC;
-            if (block) {
-                block(curModel, browserWebView);
-            }
-        })
     });
 }
 

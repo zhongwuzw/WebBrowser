@@ -1,7 +1,12 @@
 # Master
 
+
+
+# 1.2.2
+
 * Added untrust authentical challenge handler
 * Changed `containerView`'s pan gesture insets
+* Fix thread dead lock between `TabManager`'s `synchQueue` and `main queue`
 
 # 1.2.1
 
