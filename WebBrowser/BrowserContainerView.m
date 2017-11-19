@@ -120,13 +120,15 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
         if (self__) {
             BrowserWebView *oldBrowserView = self__.webView;
             
-            browserWebView.frame = CGRectMake(0, 0, self__.width, self__.height);
+            browserWebView.bounds = CGRectMake(0, 0, self__.width, self__.height);
+            browserWebView.center = self__.center;
             
             if (oldBrowserView != browserWebView && [oldBrowserView superview] && animation) {
                 browserWebView.transform = CGAffineTransformMakeTranslation(self__.width, 0);
                 oldBrowserView.transform = CGAffineTransformIdentity;
                 // If the transform property is not the identity transform, the value of frame is undefined and therefore should be ignored.
-                oldBrowserView.frame = CGRectMake(0, 0, self__.width, self__.height);
+                oldBrowserView.bounds = CGRectMake(0, 0, self__.width, self__.height);
+                oldBrowserView.center = self__.center;
                 
                 [UIView transitionWithView:self__ duration:.5f options:UIViewAnimationOptionCurveEaseInOut animations:^{
                     oldBrowserView.transform = CGAffineTransformMakeTranslation(- self__.width, 0);
@@ -282,7 +284,8 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
            self.webView.transform = CGAffineTransformIdentity;
         } completion:^(BOOL finished){
             self.backgroundColor = [UIColor clearColor];
-            self.webView.frame = CGRectMake(0, 0, self.width, self.height);
+            self.webView.bounds = CGRectMake(0, 0, self.width, self.height);
+            self.webView.center = self.center;
             
             if (self.arrowActivityView.isOn) {
                 WEAK_REF(self)

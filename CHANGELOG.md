@@ -1,6 +1,6 @@
 # Master
 
-
+* `transform` optimize for `BrowserWebView`
 
 # 1.2.2
 
