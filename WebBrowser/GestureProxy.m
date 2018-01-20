@@ -33,14 +33,25 @@
 }
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
-    UIView *view = gestureRecognizer.view;
-    CGPoint location = [gestureRecognizer locationInView:view];
+    UIPanGestureRecognizer *panGesture;
+    
+    if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
+        panGesture = (UIPanGestureRecognizer *)gestureRecognizer;
+    }
+    else {
+        return YES;
+    }
+    
+    UIView *view = panGesture.view;
+    CGPoint location = [panGesture locationInView:view];
     
     if (CGRectContainsPoint(CGRectInset(view.frame, _point.x, _point.y), location)) {
         return NO;
     }
     
-    return YES;
+    CGPoint velocity = [panGesture velocityInView:view];
+    
+    return fabs(velocity.x) > fabs(velocity.y);
 }
 
 @end
