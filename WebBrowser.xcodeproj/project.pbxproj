@@ -384,60 +384,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0E19A4D51E236464009DAF9A /* DelegateManager */ = {
+		0E29644720134D6E00E0B914 /* Vendors */ = {
 			isa = PBXGroup;
 			children = (
-				0E70784A1E18A89500A91048 /* DelegateManager.h */,
-				0E70784B1E18A89500A91048 /* DelegateManager.m */,
+				0E29644B201355C700E0B914 /* NJKWebViewProgress */,
+				0E29644A2013557400E0B914 /* fmdb */,
 			);
-			name = DelegateManager;
+			path = Vendors;
 			sourceTree = "<group>";
 		};
-		0E1A9F141EAF593500FAB196 /* Bookmark */ = {
+		0E29644A2013557400E0B914 /* fmdb */ = {
 			isa = PBXGroup;
 			children = (
-				0E9361D51EB0ED48004F6AE7 /* Model */,
-				0EF336721EAF91BF00A2B6E7 /* View */,
-				0E1A9F161EAF595000FAB196 /* Controller */,
-				0E1A9F151EAF594900FAB196 /* Manager */,
+				0EC14F451E31B97900A44D05 /* FMDatabase.h */,
+				0EC14F461E31B97900A44D05 /* FMDatabase.m */,
+				0EC14F471E31B97900A44D05 /* FMDatabaseAdditions.h */,
+				0EC14F481E31B97900A44D05 /* FMDatabaseAdditions.m */,
+				0EC14F491E31B97900A44D05 /* FMDatabasePool.h */,
+				0EC14F4A1E31B97900A44D05 /* FMDatabasePool.m */,
+				0EC14F4B1E31B97900A44D05 /* FMDatabaseQueue.h */,
+				0EC14F4C1E31B97900A44D05 /* FMDatabaseQueue.m */,
+				0EC14F4D1E31B97900A44D05 /* FMDB.h */,
+				0EC14F4E1E31B97900A44D05 /* FMResultSet.h */,
+				0EC14F4F1E31B97900A44D05 /* FMResultSet.m */,
 			);
-			name = Bookmark;
+			path = fmdb;
 			sourceTree = "<group>";
 		};
-		0E1A9F151EAF594900FAB196 /* Manager */ = {
-			isa = PBXGroup;
-			children = (
-				0E1A9F1A1EAF59AC00FAB196 /* BookmarkDataManager.h */,
-				0E1A9F1B1EAF59AC00FAB196 /* BookmarkDataManager.m */,
-			);
-			name = Manager;
-			sourceTree = "<group>";
-		};
-		0E1A9F161EAF595000FAB196 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				0E1A9F171EAF597400FAB196 /* BookmarkTableViewController.h */,
-				0E1A9F181EAF597400FAB196 /* BookmarkTableViewController.m */,
-				0E9B8D451EBF4E1C004088A0 /* BookmarkDirectoryEditViewController.h */,
-				0E9B8D461EBF4E1C004088A0 /* BookmarkDirectoryEditViewController.m */,
-				0EBB159E1EC36A1D0044156A /* BookmarkItemEditViewController.h */,
-				0EBB159F1EC36A1D0044156A /* BookmarkItemEditViewController.m */,
-				0EBB15A11EC36C780044156A /* BookmarkEditBaseViewController.h */,
-				0EBB15A21EC36C780044156A /* BookmarkEditBaseViewController.m */,
-			);
-			name = Controller;
-			sourceTree = "<group>";
-		};
-		0E1F9F981DD2D83400FA84EA /* Vendors */ = {
-			isa = PBXGroup;
-			children = (
-				0EC14F441E31B95A00A44D05 /* fmdb */,
-				0E1F9F991DD2D84500FA84EA /* NJKWebViewProgress */,
-			);
-			name = Vendors;
-			sourceTree = "<group>";
-		};
-		0E1F9F991DD2D84500FA84EA /* NJKWebViewProgress */ = {
+		0E29644B201355C700E0B914 /* NJKWebViewProgress */ = {
 			isa = PBXGroup;
 			children = (
 				0E1F9F9A1DD2D86E00FA84EA /* NJKWebViewProgress.h */,
@@ -445,84 +419,49 @@
 				0E1F9F9C1DD2D86E00FA84EA /* NJKWebViewProgressView.h */,
 				0E1F9F9D1DD2D86E00FA84EA /* NJKWebViewProgressView.m */,
 			);
-			name = NJKWebViewProgress;
+			path = NJKWebViewProgress;
 			sourceTree = "<group>";
 		};
-		0E2A091F1E978F800060EB22 /* Header */ = {
+		0E29644E20135B0E00E0B914 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				0E2A09201E978FA10060EB22 /* ZWSQLSQL.h */,
+				0E29644F20135B3400E0B914 /* Models */,
+				0EF0255E1DD951D10011019F /* HTTPErrorCode.h */,
+				0EF0255F1DD951EB0011019F /* HTTPClient.h */,
+				0EF025601DD951EB0011019F /* HTTPClient.m */,
+				0EF025681DD9554F0011019F /* HTTPClient+SearchSug.h */,
+				0EF025691DD9554F0011019F /* HTTPClient+SearchSug.m */,
+				0EF025611DD951EB0011019F /* HTTPManager.h */,
+				0EF025621DD951EB0011019F /* HTTPManager.m */,
+				0EF025631DD951EB0011019F /* HTTPURLConfiguration.h */,
+				0EF025641DD951EB0011019F /* HTTPURLConfiguration.m */,
+				0E2E41821E55906600A23142 /* WebServer.h */,
+				0E2E41831E55906600A23142 /* WebServer.m */,
 			);
-			name = Header;
+			path = Network;
 			sourceTree = "<group>";
 		};
-		0E2C539B1DAA23A40077B9B4 /* Controller */ = {
+		0E29644F20135B3400E0B914 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				0E986A091D4CA6C10003900D /* BrowserViewController.h */,
-				0E986A0A1D4CA6C10003900D /* BrowserViewController.m */,
+				0EF0256E1DD957EC0011019F /* BaseResponseModel.h */,
+				0EF0256F1DD957EC0011019F /* BaseResponseModel.m */,
+				0EF025731DD99FAC0011019F /* BaiduSugResponseModel.h */,
+				0EF025741DD99FAC0011019F /* BaiduSugResponseModel.m */,
 			);
-			name = Controller;
+			path = Models;
 			sourceTree = "<group>";
 		};
-		0E2C539C1DAA245A0077B9B4 /* View */ = {
+		0E29645020135B7900E0B914 /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				0E2C539D1DAA24970077B9B4 /* BrowserContainerView.h */,
-				0E2C539E1DAA24970077B9B4 /* BrowserContainerView.m */,
-				0E48FAFF1DA3FD4B00B8FCDB /* BrowserWebView.h */,
-				0E48FB001DA3FD4B00B8FCDB /* BrowserWebView.m */,
+				0E2964522013682600E0B914 /* Controller */,
+				0E29645120135B8600E0B914 /* View */,
 			);
-			name = View;
+			path = Search;
 			sourceTree = "<group>";
 		};
-		0E2C53A01DAA31210077B9B4 /* Category */ = {
-			isa = PBXGroup;
-			children = (
-				0E3C50441F7946D700DD3828 /* NSFoundation */,
-				0E3C50431F7946C100DD3828 /* UIKit */,
-			);
-			name = Category;
-			sourceTree = "<group>";
-		};
-		0E32E2F71E08C5DC00CFBBB5 /* MultiWindow */ = {
-			isa = PBXGroup;
-			children = (
-				0E3D2B781E24F23D00364B69 /* Manager */,
-				0E3CD34D1E093F2700BC77FC /* Model */,
-				0E32E2FC1E08C8BE00CFBBB5 /* Layout */,
-				0E32E2F81E08C5F900CFBBB5 /* View */,
-			);
-			name = MultiWindow;
-			sourceTree = "<group>";
-		};
-		0E32E2F81E08C5F900CFBBB5 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				0E32E2F91E08C69E00CFBBB5 /* CardCollectionViewCell.h */,
-				0E32E2FA1E08C69E00CFBBB5 /* CardCollectionViewCell.m */,
-				0E32E3051E08D4FB00CFBBB5 /* CardMainView.h */,
-				0E32E3061E08D4FB00CFBBB5 /* CardMainView.m */,
-				0E50004F1E0B6D60004BA658 /* CardMainBottomView.h */,
-				0E5000501E0B6D60004BA658 /* CardMainBottomView.m */,
-			);
-			name = View;
-			sourceTree = "<group>";
-		};
-		0E32E2FC1E08C8BE00CFBBB5 /* Layout */ = {
-			isa = PBXGroup;
-			children = (
-				0E32E2FD1E08C8F600CFBBB5 /* CardCollectionViewLayout.h */,
-				0E32E2FE1E08C8F600CFBBB5 /* CardCollectionViewLayout.m */,
-				0E512D411E6675ED008A8AFA /* CardBrowserCollectionViewLayout.h */,
-				0E512D421E6675ED008A8AFA /* CardBrowserCollectionViewLayout.m */,
-				0E512D441E66BCA9008A8AFA /* CardBrowserFlatLayout.h */,
-				0E512D451E66BCA9008A8AFA /* CardBrowserFlatLayout.m */,
-			);
-			name = Layout;
-			sourceTree = "<group>";
-		};
-		0E39F9A71E14B9D9007B5681 /* View */ = {
+		0E29645120135B8600E0B914 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				0E39F9A81E14C8AA007B5681 /* SearchInputView.h */,
@@ -534,31 +473,101 @@
 				0E7795911E20F8C800CE86BE /* SearchTableViewCell.m */,
 				0E7795921E20F8C800CE86BE /* SearchTableViewCell.xib */,
 			);
-			name = View;
+			path = View;
 			sourceTree = "<group>";
 		};
-		0E3A6B6E1E110F1C00071397 /* Setting */ = {
+		0E2964522013682600E0B914 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				0E8EE8321E11275F00B6DADF /* Animator */,
-				0E3A6B701E110F6500071397 /* View */,
-				0E3A6B6F1E110F5100071397 /* Controller */,
+				0E829CD51E12075B008FF0A8 /* SearchViewController.h */,
+				0E829CD61E12075B008FF0A8 /* SearchViewController.m */,
 			);
-			name = Setting;
+			path = Controller;
 			sourceTree = "<group>";
 		};
-		0E3A6B6F1E110F5100071397 /* Controller */ = {
+		0E2964532013685100E0B914 /* Bookmark */ = {
 			isa = PBXGroup;
 			children = (
-				0E8EE82F1E11123600B6DADF /* SettingsViewController.h */,
-				0E8EE8301E11123600B6DADF /* SettingsViewController.m */,
-				0E3D2B721E248D5E00364B69 /* SettingsTableViewController.h */,
-				0E3D2B731E248D5E00364B69 /* SettingsTableViewController.m */,
+				0E2964572013686F00E0B914 /* Manager */,
+				0E2964562013686900E0B914 /* Controller */,
+				0E2964552013686300E0B914 /* View */,
+				0E2964542013685C00E0B914 /* Model */,
 			);
-			name = Controller;
+			path = Bookmark;
 			sourceTree = "<group>";
 		};
-		0E3A6B701E110F6500071397 /* View */ = {
+		0E2964542013685C00E0B914 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0E9361D61EB0EDA1004F6AE7 /* BookmarkSectionInfo.h */,
+				0E9361D71EB0EDA1004F6AE7 /* BookmarkSectionInfo.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		0E2964552013686300E0B914 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0E8013D91EB0A1B60098BF64 /* BookmarkSectionHeaderView.h */,
+				0E8013DA1EB0A1B60098BF64 /* BookmarkSectionHeaderView.m */,
+				0E8013DC1EB0A3280098BF64 /* BookmarkSectionHeaderView.xib */,
+				0E9361D91EB0FAEE004F6AE7 /* BookmarkTableViewCell.h */,
+				0E9361DA1EB0FAEE004F6AE7 /* BookmarkTableViewCell.m */,
+				0E9361DB1EB0FAEE004F6AE7 /* BookmarkTableViewCell.xib */,
+				0E44786A1EC0395100D8F3F3 /* BookmarkEditTextFieldTableViewCell.h */,
+				0E44786B1EC0395100D8F3F3 /* BookmarkEditTextFieldTableViewCell.m */,
+				0E44786C1EC0395100D8F3F3 /* BookmarkEditTextFieldTableViewCell.xib */,
+				0EC3D8B91EC1C99D0059E4DC /* BookmarkSectionTableViewCell.h */,
+				0EC3D8BA1EC1C99D0059E4DC /* BookmarkSectionTableViewCell.m */,
+				0EC3D8BB1EC1C99D0059E4DC /* BookmarkSectionTableViewCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0E2964562013686900E0B914 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				0E1A9F171EAF597400FAB196 /* BookmarkTableViewController.h */,
+				0E1A9F181EAF597400FAB196 /* BookmarkTableViewController.m */,
+				0E9B8D451EBF4E1C004088A0 /* BookmarkDirectoryEditViewController.h */,
+				0E9B8D461EBF4E1C004088A0 /* BookmarkDirectoryEditViewController.m */,
+				0EBB159E1EC36A1D0044156A /* BookmarkItemEditViewController.h */,
+				0EBB159F1EC36A1D0044156A /* BookmarkItemEditViewController.m */,
+				0EBB15A11EC36C780044156A /* BookmarkEditBaseViewController.h */,
+				0EBB15A21EC36C780044156A /* BookmarkEditBaseViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		0E2964572013686F00E0B914 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				0E1A9F1A1EAF59AC00FAB196 /* BookmarkDataManager.h */,
+				0E1A9F1B1EAF59AC00FAB196 /* BookmarkDataManager.m */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		0E296458201368B100E0B914 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				0E29645B201368C600E0B914 /* Controller */,
+				0E29645A201368C100E0B914 /* View */,
+				0E296459201368BB00E0B914 /* Animator */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		0E296459201368BB00E0B914 /* Animator */ = {
+			isa = PBXGroup;
+			children = (
+				0E8EE8331E11277100B6DADF /* SettingAnimator.h */,
+				0E8EE8341E11277100B6DADF /* SettingAnimator.m */,
+			);
+			path = Animator;
+			sourceTree = "<group>";
+		};
+		0E29645A201368C100E0B914 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				0E3A6B711E11102C00071397 /* SettingsCollectionViewCell.h */,
@@ -570,10 +579,197 @@
 				0EBFFE781E52B22C00404199 /* SettingSwitchTableViewCell.m */,
 				0EBFFE791E52B22C00404199 /* SettingSwitchTableViewCell.xib */,
 			);
-			name = View;
+			path = View;
 			sourceTree = "<group>";
 		};
-		0E3C09981DAA8F7700993129 /* View */ = {
+		0E29645B201368C600E0B914 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				0E8EE82F1E11123600B6DADF /* SettingsViewController.h */,
+				0E8EE8301E11123600B6DADF /* SettingsViewController.m */,
+				0E3D2B721E248D5E00364B69 /* SettingsTableViewController.h */,
+				0E3D2B731E248D5E00364B69 /* SettingsTableViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		0E29645C2013696300E0B914 /* History */ = {
+			isa = PBXGroup;
+			children = (
+				0E2964602013697E00E0B914 /* Controller */,
+				0E29645F2013697900E0B914 /* Manager */,
+				0E29645E2013697100E0B914 /* Header */,
+				0E29645D2013696C00E0B914 /* View */,
+			);
+			path = History;
+			sourceTree = "<group>";
+		};
+		0E29645D2013696C00E0B914 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0E29645E2013697100E0B914 /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				0E2A09201E978FA10060EB22 /* ZWSQLSQL.h */,
+			);
+			path = Header;
+			sourceTree = "<group>";
+		};
+		0E29645F2013697900E0B914 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				0E70780C1E96314000E898A8 /* HistorySQLiteManager.h */,
+				0E70780D1E96314000E898A8 /* HistorySQLiteManager.m */,
+				0ED304161E99F42D00445A9A /* HistoryDataManager.h */,
+				0ED304171E99F42D00445A9A /* HistoryDataManager.m */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		0E2964602013697E00E0B914 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				0EC14F591E31BB0800A44D05 /* HistoryTableViewController.h */,
+				0EC14F5A1E31BB0800A44D05 /* HistoryTableViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		0E2964612013699E00E0B914 /* MultiWindow */ = {
+			isa = PBXGroup;
+			children = (
+				0E296463201369BB00E0B914 /* View */,
+				0E296462201369B400E0B914 /* Layout */,
+			);
+			path = MultiWindow;
+			sourceTree = "<group>";
+		};
+		0E296462201369B400E0B914 /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				0E32E2FD1E08C8F600CFBBB5 /* CardCollectionViewLayout.h */,
+				0E32E2FE1E08C8F600CFBBB5 /* CardCollectionViewLayout.m */,
+				0E512D411E6675ED008A8AFA /* CardBrowserCollectionViewLayout.h */,
+				0E512D421E6675ED008A8AFA /* CardBrowserCollectionViewLayout.m */,
+				0E512D441E66BCA9008A8AFA /* CardBrowserFlatLayout.h */,
+				0E512D451E66BCA9008A8AFA /* CardBrowserFlatLayout.m */,
+			);
+			path = Layout;
+			sourceTree = "<group>";
+		};
+		0E296463201369BB00E0B914 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0E32E2F91E08C69E00CFBBB5 /* CardCollectionViewCell.h */,
+				0E32E2FA1E08C69E00CFBBB5 /* CardCollectionViewCell.m */,
+				0E32E3051E08D4FB00CFBBB5 /* CardMainView.h */,
+				0E32E3061E08D4FB00CFBBB5 /* CardMainView.m */,
+				0E50004F1E0B6D60004BA658 /* CardMainBottomView.h */,
+				0E5000501E0B6D60004BA658 /* CardMainBottomView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0E296464201369E500E0B914 /* Extentions */ = {
+			isa = PBXGroup;
+			children = (
+				0E296466201369F100E0B914 /* Controller */,
+				0E296465201369EC00E0B914 /* Manager */,
+			);
+			path = Extentions;
+			sourceTree = "<group>";
+		};
+		0E296465201369EC00E0B914 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				0EBE39311FA6B87800D59D04 /* ExtentionsManager.h */,
+				0EBE39321FA6B87800D59D04 /* ExtentionsManager.m */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		0E296466201369F100E0B914 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				0E6110A31FA2E050009F2568 /* ExtentionsTableViewController.h */,
+				0E6110A41FA2E050009F2568 /* ExtentionsTableViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		0E29646720136A0C00E0B914 /* Tab */ = {
+			isa = PBXGroup;
+			children = (
+				0E29646A20136A2700E0B914 /* View */,
+				0E29646920136A1A00E0B914 /* Manager */,
+				0E29646820136A1400E0B914 /* Model */,
+			);
+			path = Tab;
+			sourceTree = "<group>";
+		};
+		0E29646820136A1400E0B914 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0E5CC9DC1E79305E0049ABEB /* SessionData.h */,
+				0E5CC9DD1E79305E0049ABEB /* SessionData.m */,
+				0E5CC9DF1E794D880049ABEB /* WebViewHistoryItem.h */,
+				0E5CC9E01E794D880049ABEB /* WebViewHistoryItem.m */,
+				0E5CC9E21E794FFD0049ABEB /* WebViewBackForwardList.h */,
+				0E5CC9E31E794FFD0049ABEB /* WebViewBackForwardList.m */,
+				0E1710F31F726782007A7DB0 /* GestureProxy.h */,
+				0E1710F41F726782007A7DB0 /* GestureProxy.m */,
+				0E113C231FA81670000DFEA7 /* URLConnectionDelegateProxy.h */,
+				0E113C241FA81670000DFEA7 /* URLConnectionDelegateProxy.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		0E29646920136A1A00E0B914 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				0E986A0D1D4D06170003900D /* TabManager.h */,
+				0E986A0E1D4D06170003900D /* TabManager.m */,
+				0ED35E8A1E40B56F0060A367 /* DelegateManager+WebViewDelegate.h */,
+				0ED35E8B1E40B56F0060A367 /* DelegateManager+WebViewDelegate.m */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		0E29646A20136A2700E0B914 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0E2C539D1DAA24970077B9B4 /* BrowserContainerView.h */,
+				0E2C539E1DAA24970077B9B4 /* BrowserContainerView.m */,
+				0E48FAFF1DA3FD4B00B8FCDB /* BrowserWebView.h */,
+				0E48FB001DA3FD4B00B8FCDB /* BrowserWebView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0E29646B20136A7300E0B914 /* Browser */ = {
+			isa = PBXGroup;
+			children = (
+				0E29646E20136A9900E0B914 /* Controller */,
+				0E29646D20136A9300E0B914 /* View */,
+				0E29646C20136A8D00E0B914 /* Header */,
+			);
+			path = Browser;
+			sourceTree = "<group>";
+		};
+		0E29646C20136A8D00E0B914 /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				0E82A4481DAF8BCA00F13D4E /* BrowserHeader.h */,
+				0EBF3A6B1DCF715200CD77C8 /* BrowserBottomToolBarHeader.h */,
+			);
+			path = Header;
+			sourceTree = "<group>";
+		};
+		0E29646D20136A9300E0B914 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				0E23292F1DADE07B007E9886 /* BrowserTopToolBar.h */,
@@ -587,25 +783,137 @@
 				0E081F0A1FA1C5C10024DFE5 /* HomePageView.h */,
 				0E081F0B1FA1C5C10024DFE5 /* HomePageView.m */,
 			);
-			name = View;
+			path = View;
 			sourceTree = "<group>";
 		};
-		0E3C50431F7946C100DD3828 /* UIKit */ = {
+		0E29646E20136A9900E0B914 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				0E2CC0151E0988AE0078EB91 /* UIColor+ZWUtility.h */,
-				0E2CC0161E0988AE0078EB91 /* UIColor+ZWUtility.m */,
-				0E2C53A11DAA314C0077B9B4 /* UIView+ZWUtility.h */,
-				0E2C53A21DAA314C0077B9B4 /* UIView+ZWUtility.m */,
-				0E3D2B751E24CD3000364B69 /* UIImage+ZWUtility.h */,
-				0E3D2B761E24CD3000364B69 /* UIImage+ZWUtility.m */,
-				0E3C50401F7946B400DD3828 /* UIAlertAction+ZWUtility.h */,
-				0E3C50411F7946B400DD3828 /* UIAlertAction+ZWUtility.m */,
+				0E986A091D4CA6C10003900D /* BrowserViewController.h */,
+				0E986A0A1D4CA6C10003900D /* BrowserViewController.m */,
 			);
-			name = UIKit;
+			path = Controller;
 			sourceTree = "<group>";
 		};
-		0E3C50441F7946D700DD3828 /* NSFoundation */ = {
+		0E29646F20136ACB00E0B914 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				0E29647620136AFC00E0B914 /* Macro */,
+				0E29647520136AF500E0B914 /* Helper */,
+				0E29647420136AED00E0B914 /* Category */,
+				0E29647320136AE400E0B914 /* Controller */,
+				0E29647220136ADF00E0B914 /* Header */,
+				0E29647120136ADA00E0B914 /* View */,
+				0E29647020136AD500E0B914 /* Manager */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		0E29647020136AD500E0B914 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				0E29647820136B6100E0B914 /* DelegateManager */,
+				0E29647720136B2000E0B914 /* SQLiteManager */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		0E29647120136ADA00E0B914 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0E7E439E1F67E0D200DB6CD7 /* ArrowActivityView.h */,
+				0E7E439F1F67E0D200DB6CD7 /* ArrowActivityView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0E29647220136ADF00E0B914 /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				0E48FB031DA4058300B8FCDB /* WebViewHeader.h */,
+				0E2A091E1E977E5C0060EB22 /* ZWSQLiteHeader.h */,
+				0E9CD4851F3EABA300D6AFE5 /* ZWFastEnumeration.h */,
+			);
+			path = Header;
+			sourceTree = "<group>";
+		};
+		0E29647320136AE400E0B914 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				0EA7DEE11DB0ABD8005C592E /* BaseViewController.h */,
+				0EA7DEE21DB0ABD8005C592E /* BaseViewController.m */,
+				0ED304131E98697C00445A9A /* BaseTableViewController.h */,
+				0ED304141E98697C00445A9A /* BaseTableViewController.m */,
+				0E831AC51F1726EB00E8D9C1 /* BaseNavigationViewController.h */,
+				0E831AC61F1726EB00E8D9C1 /* BaseNavigationViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		0E29647420136AED00E0B914 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				0E29647A20136BDA00E0B914 /* UIKit */,
+				0E29647920136BC400E0B914 /* Foundation */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		0E29647520136AF500E0B914 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				0E681F641D4AFEAA003534F5 /* KeyboardHelper.h */,
+				0E681F651D4AFEAA003534F5 /* KeyboardHelper.m */,
+				0E681F671D4B34EB003534F5 /* MenuHelper.h */,
+				0E681F681D4B34EB003534F5 /* MenuHelper.m */,
+				0EED282F1DC1A32100EC8581 /* ZWUtility.h */,
+				0EED28301DC1A32100EC8581 /* ZWUtility.m */,
+				0EFDD3061DD423AC002AB3FB /* HttpHelper.h */,
+				0EFDD3071DD423AC002AB3FB /* HttpHelper.m */,
+				0EBFFE711E5299A500404199 /* JavaScriptHelper.h */,
+				0EBFFE721E5299A500404199 /* JavaScriptHelper.m */,
+				0EBFFE741E52AA7500404199 /* PreferenceHelper.h */,
+				0EBFFE751E52AA7500404199 /* PreferenceHelper.m */,
+				0E7438321E588C3B00641889 /* ErrorPageHelper.h */,
+				0E7438331E588C3B00641889 /* ErrorPageHelper.m */,
+				0E3A4F2E1E7A22A7006FA3F8 /* SessionRestoreHelper.h */,
+				0E3A4F2F1E7A22A7006FA3F8 /* SessionRestoreHelper.m */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
+		0E29647620136AFC00E0B914 /* Macro */ = {
+			isa = PBXGroup;
+			children = (
+				0E681F5D1D4AF218003534F5 /* MacroMethod.h */,
+				0E681F621D4AF8DB003534F5 /* MacroConstants.h */,
+			);
+			path = Macro;
+			sourceTree = "<group>";
+		};
+		0E29647720136B2000E0B914 /* SQLiteManager */ = {
+			isa = PBXGroup;
+			children = (
+				0E7078051E96294A00E898A8 /* ZWSQLiteManager.h */,
+				0E7078061E96294A00E898A8 /* ZWSQLiteManager.m */,
+				0E7078121E9652C400E898A8 /* ZWDatabaseQueue.h */,
+				0E7078131E9652C400E898A8 /* ZWDatabaseQueue.m */,
+				0E7078151E9656E500E898A8 /* ZWDatabase.h */,
+				0E7078161E9656E500E898A8 /* ZWDatabase.m */,
+			);
+			name = SQLiteManager;
+			sourceTree = "<group>";
+		};
+		0E29647820136B6100E0B914 /* DelegateManager */ = {
+			isa = PBXGroup;
+			children = (
+				0E70784A1E18A89500A91048 /* DelegateManager.h */,
+				0E70784B1E18A89500A91048 /* DelegateManager.m */,
+			);
+			name = DelegateManager;
+			sourceTree = "<group>";
+		};
+		0E29647920136BC400E0B914 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
 				0E7795951E21042300CE86BE /* NSString+ZWUtility.h */,
@@ -625,75 +933,63 @@
 				0EBC36B21F79096400DB4889 /* NSData+ZWUtility.h */,
 				0EBC36B31F79096400DB4889 /* NSData+ZWUtility.m */,
 			);
-			name = NSFoundation;
+			name = Foundation;
 			sourceTree = "<group>";
 		};
-		0E3CD34D1E093F2700BC77FC /* Model */ = {
+		0E29647A20136BDA00E0B914 /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
+				0E2CC0151E0988AE0078EB91 /* UIColor+ZWUtility.h */,
+				0E2CC0161E0988AE0078EB91 /* UIColor+ZWUtility.m */,
+				0E2C53A11DAA314C0077B9B4 /* UIView+ZWUtility.h */,
+				0E2C53A21DAA314C0077B9B4 /* UIView+ZWUtility.m */,
+				0E3D2B751E24CD3000364B69 /* UIImage+ZWUtility.h */,
+				0E3D2B761E24CD3000364B69 /* UIImage+ZWUtility.m */,
+				0E3C50401F7946B400DD3828 /* UIAlertAction+ZWUtility.h */,
+				0E3C50411F7946B400DD3828 /* UIAlertAction+ZWUtility.m */,
 			);
-			name = Model;
+			name = UIKit;
 			sourceTree = "<group>";
 		};
-		0E3D2B781E24F23D00364B69 /* Manager */ = {
+		0E29647B20136C4A00E0B914 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				0EDD68E41DACFBF400265744 /* Assets.xcassets */,
+				0E681F361D4AEC3F003534F5 /* LaunchScreen.storyboard */,
+				0E29647E20136C5D00E0B914 /* JavaScript */,
+				0E29647D20136C5800E0B914 /* HTML */,
+				0E29647C20136C5300E0B914 /* CSS */,
 			);
-			name = Manager;
+			path = Assets;
 			sourceTree = "<group>";
 		};
-		0E48FAFE1DA3FCCB00B8FCDB /* View */ = {
+		0E29647C20136C5300E0B914 /* CSS */ = {
 			isa = PBXGroup;
 			children = (
-				0E7E439E1F67E0D200DB6CD7 /* ArrowActivityView.h */,
-				0E7E439F1F67E0D200DB6CD7 /* ArrowActivityView.m */,
+				0ECA028B1E5AE46A00955887 /* NetError.css */,
 			);
-			name = View;
+			path = CSS;
 			sourceTree = "<group>";
 		};
-		0E48FB021DA4055A00B8FCDB /* Header */ = {
+		0E29647D20136C5800E0B914 /* HTML */ = {
 			isa = PBXGroup;
 			children = (
-				0E48FB031DA4058300B8FCDB /* WebViewHeader.h */,
-				0E2A091E1E977E5C0060EB22 /* ZWSQLiteHeader.h */,
-				0E9CD4851F3EABA300D6AFE5 /* ZWFastEnumeration.h */,
+				0ECA02881E5AE45900955887 /* NetError.html */,
+				0E5CC9D91E7922AE0049ABEB /* SessionRestore.html */,
 			);
-			name = Header;
+			path = HTML;
 			sourceTree = "<group>";
 		};
-		0E5CC9DB1E79303A0049ABEB /* Model */ = {
+		0E29647E20136C5D00E0B914 /* JavaScript */ = {
 			isa = PBXGroup;
 			children = (
-				0E5CC9DC1E79305E0049ABEB /* SessionData.h */,
-				0E5CC9DD1E79305E0049ABEB /* SessionData.m */,
-				0E5CC9DF1E794D880049ABEB /* WebViewHistoryItem.h */,
-				0E5CC9E01E794D880049ABEB /* WebViewHistoryItem.m */,
-				0E5CC9E21E794FFD0049ABEB /* WebViewBackForwardList.h */,
-				0E5CC9E31E794FFD0049ABEB /* WebViewBackForwardList.m */,
-				0E1710F31F726782007A7DB0 /* GestureProxy.h */,
-				0E1710F41F726782007A7DB0 /* GestureProxy.m */,
-				0E113C231FA81670000DFEA7 /* URLConnectionDelegateProxy.h */,
-				0E113C241FA81670000DFEA7 /* URLConnectionDelegateProxy.m */,
+				0EE62E571FA4D26C0054CFD5 /* EyeProtective.js */,
+				0E855AA81FA0E28000F0A946 /* BaiduADBlock.js */,
+				0EFCB9DD1E4F62A60094C466 /* NoImageModeHelper.js */,
+				0EF59F991ECB0B5000D6BDF9 /* FindInPage.js */,
+				0E9836B51E82CC9B0044BEA9 /* ContextMenu.js */,
 			);
-			name = Model;
-			sourceTree = "<group>";
-		};
-		0E6110A11FA2DFDB009F2568 /* Extentions */ = {
-			isa = PBXGroup;
-			children = (
-				0EBE39301FA6B85700D59D04 /* Manager */,
-				0E6110A21FA2E00A009F2568 /* Controller */,
-			);
-			name = Extentions;
-			sourceTree = "<group>";
-		};
-		0E6110A21FA2E00A009F2568 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				0E6110A31FA2E050009F2568 /* ExtentionsTableViewController.h */,
-				0E6110A41FA2E050009F2568 /* ExtentionsTableViewController.m */,
-			);
-			name = Controller;
+			path = JavaScript;
 			sourceTree = "<group>";
 		};
 		0E681F1C1D4AEC3F003534F5 = {
@@ -718,22 +1014,19 @@
 		0E681F271D4AEC3F003534F5 /* WebBrowser */ = {
 			isa = PBXGroup;
 			children = (
-				0E1F9F981DD2D83400FA84EA /* Vendors */,
-				0EF0255D1DD94FCF0011019F /* Network */,
-				0E829CD31E12073B008FF0A8 /* Search */,
-				0E1A9F141EAF593500FAB196 /* Bookmark */,
-				0EC14F571E31BAD100A44D05 /* History */,
-				0E3A6B6E1E110F1C00071397 /* Setting */,
-				0E32E2F71E08C5DC00CFBBB5 /* MultiWindow */,
-				0E6110A11FA2DFDB009F2568 /* Extentions */,
-				0E986A0C1D4D06030003900D /* Tab */,
-				0E986A081D4CA6890003900D /* Browser */,
+				0E29647B20136C4A00E0B914 /* Assets */,
+				0E29646F20136ACB00E0B914 /* Utils */,
+				0E29646720136A0C00E0B914 /* Tab */,
+				0E296464201369E500E0B914 /* Extentions */,
+				0E2964612013699E00E0B914 /* MultiWindow */,
+				0E29645C2013696300E0B914 /* History */,
+				0E296458201368B100E0B914 /* Setting */,
+				0E2964532013685100E0B914 /* Bookmark */,
+				0E29645020135B7900E0B914 /* Search */,
+				0E29644E20135B0E00E0B914 /* Network */,
+				0E29646B20136A7300E0B914 /* Browser */,
+				0E29644720134D6E00E0B914 /* Vendors */,
 				0E681F5E1D4AF2A3003534F5 /* Application */,
-				0E681F5B1D4AF1A8003534F5 /* Utils */,
-				0EFCB9DB1E4F62520094C466 /* Assets */,
-				0E681F361D4AEC3F003534F5 /* LaunchScreen.storyboard */,
-				0E681F391D4AEC3F003534F5 /* Info.plist */,
-				0E681F5F1D4AF2D5003534F5 /* WebBrowser.pch */,
 				0E681F281D4AEC3F003534F5 /* Supporting Files */,
 			);
 			path = WebBrowser;
@@ -742,6 +1035,8 @@
 		0E681F281D4AEC3F003534F5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0E681F391D4AEC3F003534F5 /* Info.plist */,
+				0E681F5F1D4AF2D5003534F5 /* WebBrowser.pch */,
 				0E681F291D4AEC3F003534F5 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -765,29 +1060,6 @@
 			path = WebBrowserUITests;
 			sourceTree = "<group>";
 		};
-		0E681F5B1D4AF1A8003534F5 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				0E7078491E18A87100A91048 /* Manager */,
-				0E48FAFE1DA3FCCB00B8FCDB /* View */,
-				0E48FB021DA4055A00B8FCDB /* Header */,
-				0EA7DEE01DB0ABB7005C592E /* Controller */,
-				0E2C53A01DAA31210077B9B4 /* Category */,
-				0E681F631D4AFE93003534F5 /* Helper */,
-				0E681F5C1D4AF1C8003534F5 /* Macro */,
-			);
-			name = Utils;
-			sourceTree = "<group>";
-		};
-		0E681F5C1D4AF1C8003534F5 /* Macro */ = {
-			isa = PBXGroup;
-			children = (
-				0E681F5D1D4AF218003534F5 /* MacroMethod.h */,
-				0E681F621D4AF8DB003534F5 /* MacroConstants.h */,
-			);
-			name = Macro;
-			sourceTree = "<group>";
-		};
 		0E681F5E1D4AF2A3003534F5 /* Application */ = {
 			isa = PBXGroup;
 			children = (
@@ -795,160 +1067,6 @@
 				0E681F2C1D4AEC3F003534F5 /* AppDelegate.m */,
 			);
 			name = Application;
-			sourceTree = "<group>";
-		};
-		0E681F631D4AFE93003534F5 /* Helper */ = {
-			isa = PBXGroup;
-			children = (
-				0E681F641D4AFEAA003534F5 /* KeyboardHelper.h */,
-				0E681F651D4AFEAA003534F5 /* KeyboardHelper.m */,
-				0E681F671D4B34EB003534F5 /* MenuHelper.h */,
-				0E681F681D4B34EB003534F5 /* MenuHelper.m */,
-				0EED282F1DC1A32100EC8581 /* ZWUtility.h */,
-				0EED28301DC1A32100EC8581 /* ZWUtility.m */,
-				0EFDD3061DD423AC002AB3FB /* HttpHelper.h */,
-				0EFDD3071DD423AC002AB3FB /* HttpHelper.m */,
-				0EBFFE711E5299A500404199 /* JavaScriptHelper.h */,
-				0EBFFE721E5299A500404199 /* JavaScriptHelper.m */,
-				0EBFFE741E52AA7500404199 /* PreferenceHelper.h */,
-				0EBFFE751E52AA7500404199 /* PreferenceHelper.m */,
-				0E7438321E588C3B00641889 /* ErrorPageHelper.h */,
-				0E7438331E588C3B00641889 /* ErrorPageHelper.m */,
-				0E3A4F2E1E7A22A7006FA3F8 /* SessionRestoreHelper.h */,
-				0E3A4F2F1E7A22A7006FA3F8 /* SessionRestoreHelper.m */,
-			);
-			name = Helper;
-			sourceTree = "<group>";
-		};
-		0E7078011E9628A700E898A8 /* SQLiteManager */ = {
-			isa = PBXGroup;
-			children = (
-				0E7078051E96294A00E898A8 /* ZWSQLiteManager.h */,
-				0E7078061E96294A00E898A8 /* ZWSQLiteManager.m */,
-				0E7078121E9652C400E898A8 /* ZWDatabaseQueue.h */,
-				0E7078131E9652C400E898A8 /* ZWDatabaseQueue.m */,
-				0E7078151E9656E500E898A8 /* ZWDatabase.h */,
-				0E7078161E9656E500E898A8 /* ZWDatabase.m */,
-			);
-			name = SQLiteManager;
-			sourceTree = "<group>";
-		};
-		0E70780B1E96312900E898A8 /* Manager */ = {
-			isa = PBXGroup;
-			children = (
-				0E70780C1E96314000E898A8 /* HistorySQLiteManager.h */,
-				0E70780D1E96314000E898A8 /* HistorySQLiteManager.m */,
-				0ED304161E99F42D00445A9A /* HistoryDataManager.h */,
-				0ED304171E99F42D00445A9A /* HistoryDataManager.m */,
-			);
-			name = Manager;
-			sourceTree = "<group>";
-		};
-		0E7078491E18A87100A91048 /* Manager */ = {
-			isa = PBXGroup;
-			children = (
-				0E7078011E9628A700E898A8 /* SQLiteManager */,
-				0E19A4D51E236464009DAF9A /* DelegateManager */,
-			);
-			name = Manager;
-			sourceTree = "<group>";
-		};
-		0E8059861E2D0C0D000DDA42 /* Manager */ = {
-			isa = PBXGroup;
-			children = (
-				0E986A0D1D4D06170003900D /* TabManager.h */,
-				0E986A0E1D4D06170003900D /* TabManager.m */,
-				0ED35E8A1E40B56F0060A367 /* DelegateManager+WebViewDelegate.h */,
-				0ED35E8B1E40B56F0060A367 /* DelegateManager+WebViewDelegate.m */,
-			);
-			name = Manager;
-			sourceTree = "<group>";
-		};
-		0E829CD31E12073B008FF0A8 /* Search */ = {
-			isa = PBXGroup;
-			children = (
-				0E39F9A71E14B9D9007B5681 /* View */,
-				0E829CD41E120744008FF0A8 /* Controller */,
-			);
-			name = Search;
-			sourceTree = "<group>";
-		};
-		0E829CD41E120744008FF0A8 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				0E829CD51E12075B008FF0A8 /* SearchViewController.h */,
-				0E829CD61E12075B008FF0A8 /* SearchViewController.m */,
-			);
-			name = Controller;
-			sourceTree = "<group>";
-		};
-		0E82A4471DAF8BB600F13D4E /* Header */ = {
-			isa = PBXGroup;
-			children = (
-				0E82A4481DAF8BCA00F13D4E /* BrowserHeader.h */,
-				0EBF3A6B1DCF715200CD77C8 /* BrowserBottomToolBarHeader.h */,
-			);
-			name = Header;
-			sourceTree = "<group>";
-		};
-		0E8EE8321E11275F00B6DADF /* Animator */ = {
-			isa = PBXGroup;
-			children = (
-				0E8EE8331E11277100B6DADF /* SettingAnimator.h */,
-				0E8EE8341E11277100B6DADF /* SettingAnimator.m */,
-			);
-			name = Animator;
-			sourceTree = "<group>";
-		};
-		0E9361D51EB0ED48004F6AE7 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				0E9361D61EB0EDA1004F6AE7 /* BookmarkSectionInfo.h */,
-				0E9361D71EB0EDA1004F6AE7 /* BookmarkSectionInfo.m */,
-			);
-			name = Model;
-			sourceTree = "<group>";
-		};
-		0E986A081D4CA6890003900D /* Browser */ = {
-			isa = PBXGroup;
-			children = (
-				0E82A4471DAF8BB600F13D4E /* Header */,
-				0E3C09981DAA8F7700993129 /* View */,
-				0E2C539B1DAA23A40077B9B4 /* Controller */,
-			);
-			name = Browser;
-			sourceTree = "<group>";
-		};
-		0E986A0C1D4D06030003900D /* Tab */ = {
-			isa = PBXGroup;
-			children = (
-				0E5CC9DB1E79303A0049ABEB /* Model */,
-				0E8059861E2D0C0D000DDA42 /* Manager */,
-				0E2C539C1DAA245A0077B9B4 /* View */,
-			);
-			name = Tab;
-			sourceTree = "<group>";
-		};
-		0EA7DEE01DB0ABB7005C592E /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				0EA7DEE11DB0ABD8005C592E /* BaseViewController.h */,
-				0EA7DEE21DB0ABD8005C592E /* BaseViewController.m */,
-				0ED304131E98697C00445A9A /* BaseTableViewController.h */,
-				0ED304141E98697C00445A9A /* BaseTableViewController.m */,
-				0E831AC51F1726EB00E8D9C1 /* BaseNavigationViewController.h */,
-				0E831AC61F1726EB00E8D9C1 /* BaseNavigationViewController.m */,
-			);
-			name = Controller;
-			sourceTree = "<group>";
-		};
-		0EBE39301FA6B85700D59D04 /* Manager */ = {
-			isa = PBXGroup;
-			children = (
-				0EBE39311FA6B87800D59D04 /* ExtentionsManager.h */,
-				0EBE39321FA6B87800D59D04 /* ExtentionsManager.m */,
-			);
-			name = Manager;
 			sourceTree = "<group>";
 		};
 		0EBF3A621DCF33ED00CD77C8 /* Frameworks */ = {
@@ -969,140 +1087,6 @@
 				0EBF3A641DCF33ED00CD77C8 /* MBProgressHUD.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		0EC14F441E31B95A00A44D05 /* fmdb */ = {
-			isa = PBXGroup;
-			children = (
-				0EC14F451E31B97900A44D05 /* FMDatabase.h */,
-				0EC14F461E31B97900A44D05 /* FMDatabase.m */,
-				0EC14F471E31B97900A44D05 /* FMDatabaseAdditions.h */,
-				0EC14F481E31B97900A44D05 /* FMDatabaseAdditions.m */,
-				0EC14F491E31B97900A44D05 /* FMDatabasePool.h */,
-				0EC14F4A1E31B97900A44D05 /* FMDatabasePool.m */,
-				0EC14F4B1E31B97900A44D05 /* FMDatabaseQueue.h */,
-				0EC14F4C1E31B97900A44D05 /* FMDatabaseQueue.m */,
-				0EC14F4D1E31B97900A44D05 /* FMDB.h */,
-				0EC14F4E1E31B97900A44D05 /* FMResultSet.h */,
-				0EC14F4F1E31B97900A44D05 /* FMResultSet.m */,
-			);
-			name = fmdb;
-			sourceTree = "<group>";
-		};
-		0EC14F571E31BAD100A44D05 /* History */ = {
-			isa = PBXGroup;
-			children = (
-				0ED404591EA06C9600F17CE2 /* View */,
-				0E2A091F1E978F800060EB22 /* Header */,
-				0E70780B1E96312900E898A8 /* Manager */,
-				0EC14F581E31BAE000A44D05 /* Controller */,
-			);
-			name = History;
-			sourceTree = "<group>";
-		};
-		0EC14F581E31BAE000A44D05 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				0EC14F591E31BB0800A44D05 /* HistoryTableViewController.h */,
-				0EC14F5A1E31BB0800A44D05 /* HistoryTableViewController.m */,
-			);
-			name = Controller;
-			sourceTree = "<group>";
-		};
-		0ECA02871E5AE42D00955887 /* HTML */ = {
-			isa = PBXGroup;
-			children = (
-				0ECA02881E5AE45900955887 /* NetError.html */,
-				0E5CC9D91E7922AE0049ABEB /* SessionRestore.html */,
-			);
-			name = HTML;
-			sourceTree = "<group>";
-		};
-		0ECA028A1E5AE45D00955887 /* CSS */ = {
-			isa = PBXGroup;
-			children = (
-				0ECA028B1E5AE46A00955887 /* NetError.css */,
-			);
-			name = CSS;
-			sourceTree = "<group>";
-		};
-		0ED404591EA06C9600F17CE2 /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = View;
-			sourceTree = "<group>";
-		};
-		0EF0255D1DD94FCF0011019F /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				0EF0256D1DD957DD0011019F /* Models */,
-				0EF0255E1DD951D10011019F /* HTTPErrorCode.h */,
-				0EF0255F1DD951EB0011019F /* HTTPClient.h */,
-				0EF025601DD951EB0011019F /* HTTPClient.m */,
-				0EF025681DD9554F0011019F /* HTTPClient+SearchSug.h */,
-				0EF025691DD9554F0011019F /* HTTPClient+SearchSug.m */,
-				0EF025611DD951EB0011019F /* HTTPManager.h */,
-				0EF025621DD951EB0011019F /* HTTPManager.m */,
-				0EF025631DD951EB0011019F /* HTTPURLConfiguration.h */,
-				0EF025641DD951EB0011019F /* HTTPURLConfiguration.m */,
-				0E2E41821E55906600A23142 /* WebServer.h */,
-				0E2E41831E55906600A23142 /* WebServer.m */,
-			);
-			name = Network;
-			sourceTree = "<group>";
-		};
-		0EF0256D1DD957DD0011019F /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				0EF0256E1DD957EC0011019F /* BaseResponseModel.h */,
-				0EF0256F1DD957EC0011019F /* BaseResponseModel.m */,
-				0EF025731DD99FAC0011019F /* BaiduSugResponseModel.h */,
-				0EF025741DD99FAC0011019F /* BaiduSugResponseModel.m */,
-			);
-			name = Models;
-			sourceTree = "<group>";
-		};
-		0EF336721EAF91BF00A2B6E7 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				0E8013D91EB0A1B60098BF64 /* BookmarkSectionHeaderView.h */,
-				0E8013DA1EB0A1B60098BF64 /* BookmarkSectionHeaderView.m */,
-				0E8013DC1EB0A3280098BF64 /* BookmarkSectionHeaderView.xib */,
-				0E9361D91EB0FAEE004F6AE7 /* BookmarkTableViewCell.h */,
-				0E9361DA1EB0FAEE004F6AE7 /* BookmarkTableViewCell.m */,
-				0E9361DB1EB0FAEE004F6AE7 /* BookmarkTableViewCell.xib */,
-				0E44786A1EC0395100D8F3F3 /* BookmarkEditTextFieldTableViewCell.h */,
-				0E44786B1EC0395100D8F3F3 /* BookmarkEditTextFieldTableViewCell.m */,
-				0E44786C1EC0395100D8F3F3 /* BookmarkEditTextFieldTableViewCell.xib */,
-				0EC3D8B91EC1C99D0059E4DC /* BookmarkSectionTableViewCell.h */,
-				0EC3D8BA1EC1C99D0059E4DC /* BookmarkSectionTableViewCell.m */,
-				0EC3D8BB1EC1C99D0059E4DC /* BookmarkSectionTableViewCell.xib */,
-			);
-			name = View;
-			sourceTree = "<group>";
-		};
-		0EFCB9DB1E4F62520094C466 /* Assets */ = {
-			isa = PBXGroup;
-			children = (
-				0ECA028A1E5AE45D00955887 /* CSS */,
-				0ECA02871E5AE42D00955887 /* HTML */,
-				0EFCB9DC1E4F628B0094C466 /* JavaScript */,
-				0EDD68E41DACFBF400265744 /* Assets.xcassets */,
-			);
-			name = Assets;
-			sourceTree = "<group>";
-		};
-		0EFCB9DC1E4F628B0094C466 /* JavaScript */ = {
-			isa = PBXGroup;
-			children = (
-				0EE62E571FA4D26C0054CFD5 /* EyeProtective.js */,
-				0E855AA81FA0E28000F0A946 /* BaiduADBlock.js */,
-				0EFCB9DD1E4F62A60094C466 /* NoImageModeHelper.js */,
-				0EF59F991ECB0B5000D6BDF9 /* FindInPage.js */,
-				0E9836B51E82CC9B0044BEA9 /* ContextMenu.js */,
-			);
-			name = JavaScript;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

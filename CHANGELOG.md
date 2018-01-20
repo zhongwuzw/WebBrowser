@@ -1,5 +1,9 @@
 # Master
 
+# 1.2.3
+
+* Optimize switch gesture recognizer to prevent trigger when scroll from edge screen
+* Refactor directory structure
 * `transform` optimize for `BrowserWebView`
 
 # 1.2.2
