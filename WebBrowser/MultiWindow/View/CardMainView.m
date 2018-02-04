@@ -151,9 +151,7 @@
         if (self__) {
             [self__.cardArr removeObjectAtIndex:index.item];
             [[TabManager sharedInstance] updateWebModelArray:self__.cardArr];
-            [self__.collectionView performBatchUpdates:^{
-                [self__.collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index.item inSection:0]]];
-            }completion:nil];
+            [self__.collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index.item inSection:0]]];
         }
     };
     
@@ -229,8 +227,6 @@
     if (recognizer.state == UIGestureRecognizerStateBegan) {
         self.browserLayout.pannedItemIndexPath = indexPath;
         self.browserLayout.panStartPoint = point;
-        return;
-        
     } else if (recognizer.state == UIGestureRecognizerStateChanged) {
         self.browserLayout.panUpdatePoint = point;
         [self.browserLayout invalidateLayout];

@@ -308,7 +308,7 @@
 
 #pragma mark - decidePolicy method
 
-//new window 回调
+//new window 回调，现在很多网站已经做移动版适配，很少会使用新窗口打开了
 - (void)zwWebView:(id)webView decidePolicyForNewWindowAction:(id)actionInformation request:(id)request newFrameName:(id)frameName decisionListener:(id)listener{
     if ([self respondsToSelector:@selector(zwWebView:decidePolicyForNewWindowAction:request:newFrameName:decisionListener:)]) {
         ((void(*)(id, SEL, id, id, id, id, id)) objc_msgSend)(self, @selector(zwWebView:decidePolicyForNewWindowAction:request:newFrameName:decisionListener:), webView, actionInformation, request, frameName, listener);
@@ -322,7 +322,7 @@
     
 }
 
-//navigation 回调
+//navigation 回调,如果想实现点击url新窗口打开可以判断intNaviType是否为WebNavigationTypeLinkClicked
 - (void)zwWebView:(id)webView decidePolicyForNavigationAction:(id)actionInformation request:(id)request frame:(id)frame decisionListener:(id)listener{
     if(![request isKindOfClass:[NSURLRequest class]])
         return;
