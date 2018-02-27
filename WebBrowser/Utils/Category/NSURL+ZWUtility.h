@@ -13,5 +13,6 @@
 - (BOOL)isErrorPageURL;
 - (NSURL *)originalURLFromErrorURL;
 - (BOOL)isLocal;
+- (BOOL)isHTTPProtocol;
 
 @end

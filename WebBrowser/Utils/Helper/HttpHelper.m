@@ -15,7 +15,7 @@
     if (([url.scheme isEqualToString:@"http"] || [url.scheme isEqualToString:@"https"]) && [url.host isEqualToString:@"itunes.apple.com"]) {
         return YES;
     }
-    return NO;
+    return [[UIApplication sharedApplication] canOpenURL:url];
 }
 
 + (BOOL)isURL:(NSString *)content{

@@ -1,5 +1,7 @@
 # Master
 
+* Fix issue that some video from tencent can not play.
+
 # 1.2.3
 
 * Optimize switch gesture recognizer to prevent trigger when scroll from edge screen

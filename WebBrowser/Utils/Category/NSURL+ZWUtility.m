@@ -33,4 +33,8 @@
     return [self.host.lowercaseString isEqualToString:@"localhost"] || [self.host isEqualToString:@"127.0.0.1"];
 }
 
+- (BOOL)isHTTPProtocol{
+    return [self.scheme isEqualToString:@"http"] || [self.scheme isEqualToString:@"https"];
+}
+
 @end

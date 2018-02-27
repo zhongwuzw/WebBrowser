@@ -472,6 +472,15 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
             [self handleHomePageWithWebView:webView];
             return YES;
         }
+        else if ([url.scheme isEqualToString:@"http"] || [url.scheme isEqualToString:@"https"]) {
+            return YES;
+        }
+        else if ([HttpHelper canAppHandleURL:request.URL]) {
+            return YES;
+        }// return NO that can't handle
+        else {
+            return NO;
+        }
     }
     return YES;
 }
@@ -488,7 +497,7 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
         urlString = [NSString stringWithFormat:BAIDU_SEARCH_URL,[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     }
     else{
-        if (![urlString hasPrefix:@"http://"] && ![urlString hasPrefix:@"https://"]) {
+        if (![urlString isHTTPProtocol]) {
             urlString = [NSString stringWithFormat:@"http://%@",urlString];
         }
     }
