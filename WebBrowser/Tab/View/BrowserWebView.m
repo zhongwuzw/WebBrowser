@@ -65,11 +65,11 @@
     [longPressGesture release];
 }
 
-- (void)setFrame:(CGRect)frame{
-    if (!CGSizeEqualToSize(frame.size, self.size)) {
-        self.indicatorView.center = CGPointMake(self.bounds.origin.x + frame.size.width / 2, self.bounds.origin.y + frame.size.height / 2);
+- (void)setBounds:(CGRect)bounds{
+    if (!CGSizeEqualToSize(self.bounds.size, bounds.size)) {
+        self.indicatorView.center = CGPointMake(self.bounds.origin.x + bounds.size.width / 2, self.bounds.origin.y + bounds.size.height / 2);
     }
-    [super setFrame:frame];
+    [super setBounds:bounds];
 }
 
 - (void)evaluateJavaScript:(NSString *)javaScriptString completionHandler:(WebCompletionBlock)completionHandler
