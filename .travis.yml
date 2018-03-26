@@ -8,6 +8,7 @@ env:
   - EXAMPLE_SCHEME="WebBrowser"
 before_install:
 - brew update
+- pod repo update
 - brew outdated carthage || brew upgrade carthage
 before_script:
 - carthage bootstrap
