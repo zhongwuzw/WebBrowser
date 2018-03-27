@@ -13,4 +13,6 @@
 //Objective-C Runtime Method
 void MethodSwizzle(Class c,SEL origSEL,SEL overrideSEL);
 
++ (BOOL)isIphoneX;
+
 @end

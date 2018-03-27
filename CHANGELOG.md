@@ -1,6 +1,9 @@
 # Master
 
+# 1.2.4
+
 * Fix issue that some video from tencent can not play.
+* Adapt `iPhoneX`.
 
 # 1.2.3
 

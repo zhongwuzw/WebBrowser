@@ -26,4 +26,8 @@ void MethodSwizzle(Class c,SEL origSEL,SEL overrideSEL)
     }
 }
 
++ (BOOL)isIphoneX{
+    return (int)[[UIScreen mainScreen] nativeBounds].size.height == 2436;
+}
+
 @end
