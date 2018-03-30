@@ -18,8 +18,10 @@
   
 ## Usage - 用法
   1. `clone` or download zip file.
-  2. Run command `carthage update --platform iOS` or `pod install`
-  3. Open WebBrowser.xcodeproj(Carthage) or WebBrowser.xcworkspace(Cocoapods)
+  2. Two choices to install dependencies, you can choose any one below:
+      * 2.1 Install by `Carthage`, Run command `carthage update --platform iOS`
+      * 2.2 Install by `CocoaPods`, first execute `sh transfer-carthage-to-cocoapods.sh` shell script which located in project root directory, then run `pod install`.
+  3. Open `WebBrowser.xcodeproj`(`Carthage`) or `WebBrowser.xcworkspace`(`CocoaPods`)
   
 ## Requirements - 依赖
 * iOS 8.0 or higher
