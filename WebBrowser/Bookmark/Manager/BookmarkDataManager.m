@@ -50,8 +50,8 @@ static const void * const kDispatchQueueSpecificKey = &kDispatchQueueSpecificKey
 
 - (void)loadBookmarkModelArrayWithCompletion:(BookmarkDataInitCompletion)completion{
     dispatch_async(_syncQueue, ^{
-        if ([[NSFileManager defaultManager] fileExistsAtPath:_filePath]) {
-            NSData *data = [NSData dataWithContentsOfFile:_filePath options:NSDataReadingUncached error:nil];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:self.filePath]) {
+            NSData *data = [NSData dataWithContentsOfFile:self.filePath options:NSDataReadingUncached error:nil];
             if (data) {
                 NSKeyedUnarchiver *unarchiver;
                 @try {
@@ -59,29 +59,29 @@ static const void * const kDispatchQueueSpecificKey = &kDispatchQueueSpecificKey
                     NSArray<BookmarkSectionModel *> *array = [unarchiver decodeObjectForKey:kBookmarkArchiveDataKey];
                     
                     if (array && [array isKindOfClass:[NSMutableArray<BookmarkSectionModel *> class]] && array.count > 0) {
-                        _sectionArray = (NSMutableArray<BookmarkSectionModel *> *)array;
+                        self.sectionArray = (NSMutableArray<BookmarkSectionModel *> *)array;
                     }
                     else
                     {
-                        _sectionArray = [self defaultArray];
+                        self.sectionArray = [self defaultArray];
                     }
                 } @catch (NSException *exception) {
                     DDLogError(@"bookmark unarchive error");
-                    _sectionArray = [self defaultArray];
+                    self.sectionArray = [self defaultArray];
                 } @finally {
                     [unarchiver finishDecoding];
                 }
             }
             else{
-                _sectionArray = [self defaultArray];
+                self.sectionArray = [self defaultArray];
             }
         }
         else{
-            _sectionArray = [self defaultArray];
+            self.sectionArray = [self defaultArray];
         }
         if (completion) {
             dispatch_main_safe_async(^{
-                completion([_sectionArray copy]);
+                completion([self.sectionArray copy]);
             })
         }
     });

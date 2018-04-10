@@ -476,7 +476,7 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
             return YES;
         }
         else if ([HttpHelper canAppHandleURL:request.URL]) {
-            return url.host;
+            return url.host != nil;
         }// return NO that can't handle
         else {
             return NO;

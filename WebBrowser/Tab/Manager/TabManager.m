@@ -152,8 +152,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
 
 - (void)loadWebModelArray{
     dispatch_async(_synchQueue, ^{
-        if ([[NSFileManager defaultManager] fileExistsAtPath:_filePath]) {
-            NSData *data = [NSData dataWithContentsOfFile:_filePath options:NSDataReadingUncached error:nil];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:self.filePath]) {
+            NSData *data = [NSData dataWithContentsOfFile:self.filePath options:NSDataReadingUncached error:nil];
             if (data) {
                 NSKeyedUnarchiver *unarchiver;
                 @try {
@@ -161,7 +161,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
                     NSArray<WebModel *> *array = [unarchiver decodeObjectForKey:MY_HISTORY_DATA_KEY];
                     
                     if (array && [array isKindOfClass:[NSArray<WebModel *> class]] && array.count > 0) {
-                        [_webModelArray addObjectsFromArray:array];
+                        [self.webModelArray addObjectsFromArray:array];
                     }
                     else{
                         [self setDefaultWebArray];
@@ -209,10 +209,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
                 dispatch_async(self.synchQueue, ^{
                     NSMutableData *data = [NSMutableData data];
                     NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
-                    [archiver encodeObject:_webModelArray forKey:MY_HISTORY_DATA_KEY];
+                    [archiver encodeObject:self.webModelArray forKey:MY_HISTORY_DATA_KEY];
                     [archiver finishEncoding];
                     
-                    [data writeToFile:_filePath atomically:YES];
+                    [data writeToFile:self.filePath atomically:YES];
                 });
             })
         }
@@ -222,7 +222,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
 //save webModel, public API
 - (void)saveWebModelData{
     dispatch_async(self.synchQueue, ^{
-        [_webModelArray enumerateObjectsUsingBlock:^(WebModel *webModel, NSUInteger idx, BOOL *stop){
+        [self.webModelArray enumerateObjectsUsingBlock:^(WebModel *webModel, NSUInteger idx, BOOL *stop){
             @autoreleasepool {
                 if (webModel.webView) {
                     NSString *key = [NSString stringWithFormat:@"%f%@%@",[[NSDate date] timeIntervalSince1970],webModel.url,webModel.title];
@@ -254,7 +254,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
     
     __block WebModel *webModel = nil;
     dispatch_sync(self.synchQueue, ^{
-        webModel = [_webModelArray lastObject];
+        webModel = [self.webModelArray lastObject];
     });
     
     return webModel;
@@ -262,7 +262,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
 
 - (void)setMultiWebViewOperationBlockWith:(MultiWebViewOperationBlock)block{
     dispatch_async(self.synchQueue, ^{
-        [_webModelArray enumerateObjectsUsingBlock:^(WebModel *webModel, NSUInteger idx, BOOL *stop){
+        [self.webModelArray enumerateObjectsUsingBlock:^(WebModel *webModel, NSUInteger idx, BOOL *stop){
             webModel.isImageProcessed = NO;
             UIImage *image = [webModel.webView snapshotForBrowserWebView];
             if (!image) {
@@ -278,7 +278,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
         }];
         dispatch_main_safe_async(^{
             if (block) {
-                block([_webModelArray copy]);
+                block([self.webModelArray copy]);
             }
         })
     });
