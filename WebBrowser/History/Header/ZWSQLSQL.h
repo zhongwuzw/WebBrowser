@@ -41,6 +41,9 @@
         ZW_FIELD_TIME                                   \
     @") VALUES(?, ?, ?, ?);"
 
+// It's not particularly efficient, but works if iterating over a
+// small index, see https://www.sqlite.org/cvstrac/wiki?p=ScrollingCursor for details,
+// I just don't want to optimize, sigh.
 #define ZW_SQL_SELECT_HISTORY                \
     @"SELECT * FROM " ZW_TABLE_HISTORY @" ORDER BY "  \
         ZW_FIELD_TIME           @" DESC,"         \
