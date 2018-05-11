@@ -31,7 +31,7 @@
 #define ZW_SQL_CREATE_HISTORY_INDEX_TABLE               \
     @"CREATE INDEX IF NOT EXISTS "                      \
         ZW_TABLE_HISTORY_HOUR_MINUTE_INDEX @" ON "      \
-        ZW_TABLE_HISTORY @"(" ZW_FIELD_HOUR_MINUTE @");"
+        ZW_TABLE_HISTORY @"(" ZW_FIELD_HOUR_MINUTE @", " ZW_FIELD_TIME @");"
 
 #define ZW_SQL_INSERT_OR_IGNORE_HISTORY                 \
     @"INSERT OR IGNORE INTO " ZW_TABLE_HISTORY  @" ("   \

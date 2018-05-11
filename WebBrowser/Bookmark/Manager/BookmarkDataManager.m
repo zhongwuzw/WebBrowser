@@ -49,7 +49,7 @@ static const void * const kDispatchQueueSpecificKey = &kDispatchQueueSpecificKey
 }
 
 - (void)loadBookmarkModelArrayWithCompletion:(BookmarkDataInitCompletion)completion{
-    dispatch_async(_syncQueue, ^{
+    dispatch_async(self.syncQueue, ^{
         if ([[NSFileManager defaultManager] fileExistsAtPath:self.filePath]) {
             NSData *data = [NSData dataWithContentsOfFile:self.filePath options:NSDataReadingUncached error:nil];
             if (data) {
@@ -109,7 +109,7 @@ static const void * const kDispatchQueueSpecificKey = &kDispatchQueueSpecificKey
 - (NSInteger)numberOfSections{
     QueueCheck(NO);
     __block NSInteger count = 0;
-    dispatch_sync(_syncQueue,^{
+    dispatch_sync(self.syncQueue,^{
         count = self.sectionArray.count;
     });
     return count;
@@ -118,7 +118,7 @@ static const void * const kDispatchQueueSpecificKey = &kDispatchQueueSpecificKey
 - (NSInteger)numberOfRowsInSection:(NSInteger)section{
     QueueCheck(NO);
     __block NSInteger count = 0;
-    dispatch_sync(_syncQueue, ^{
+    dispatch_sync(self.syncQueue, ^{
         if (section < self.sectionArray.count) {
             count = self.sectionArray[section].itemsArray.count;
         }
@@ -132,7 +132,7 @@ static const void * const kDispatchQueueSpecificKey = &kDispatchQueueSpecificKey
     NSInteger row = indexPath.row;
     __block BookmarkItemModel *itemModel = nil;
     
-    dispatch_sync(_syncQueue, ^{
+    dispatch_sync(self.syncQueue, ^{
         if (section < self.sectionArray.count && row < self.sectionArray[section].itemsArray.count) {
             itemModel = self.sectionArray[section].itemsArray[row];
         }
@@ -143,7 +143,7 @@ static const void * const kDispatchQueueSpecificKey = &kDispatchQueueSpecificKey
 - (NSString *)headerTitleForSection:(NSInteger)section{
     QueueCheck(NO);
     __block NSString *title;
-    dispatch_sync(_syncQueue, ^{
+    dispatch_sync(self.syncQueue, ^{
         if (section < self.sectionArray.count) {
             title = self.sectionArray[section].title;
         }
@@ -160,7 +160,7 @@ static const void * const kDispatchQueueSpecificKey = &kDispatchQueueSpecificKey
     NSInteger toSection = newIndexPath.section;
     NSInteger toRow = newIndexPath.row;
     
-    dispatch_async(_syncQueue, ^{
+    dispatch_async(self.syncQueue, ^{
         if (fromIndexPath == newIndexPath && !itemModel && toSection >= self.sectionArray.count && toRow > self.sectionArray[toSection].itemsArray.count) {
             if (completion) {
                 dispatch_main_safe_async(^{
@@ -175,7 +175,7 @@ static const void * const kDispatchQueueSpecificKey = &kDispatchQueueSpecificKey
         [self.sectionArray[fromSection].itemsArray removeObject:itemModel];
         self.sectionArray[toSection].itemsArray = self.sectionArray[toSection].itemsArray ? self.sectionArray[toSection].itemsArray : [NSMutableArray array];
         [self.sectionArray[toSection].itemsArray insertObject:itemModel atIndex:toRow];
-        dispatch_async(_syncQueue, ^{
+        dispatch_async(self.syncQueue, ^{
             [self saveBookmarkSectionModelToDisk];
         });
         
@@ -193,7 +193,7 @@ static const void * const kDispatchQueueSpecificKey = &kDispatchQueueSpecificKey
     NSInteger fromSection = fromIndexPath.section;
     NSInteger toSection = newIndexPath.section;
     
-    dispatch_async(_syncQueue, ^{
+    dispatch_async(self.syncQueue, ^{
         if (!(fromSection < self.sectionArray.count && toSection < self.sectionArray.count) && completion) {
             dispatch_main_safe_async(^{
                 completion(NO);
@@ -204,7 +204,7 @@ static const void * const kDispatchQueueSpecificKey = &kDispatchQueueSpecificKey
         [self.sectionArray removeObjectAtIndex:fromSection];
         [self.sectionArray insertObject:sectionModel atIndex:toSection];
         
-        dispatch_async(_syncQueue, ^{
+        dispatch_async(self.syncQueue, ^{
             [self saveBookmarkSectionModelToDisk];
         });
         
@@ -224,10 +224,10 @@ static const void * const kDispatchQueueSpecificKey = &kDispatchQueueSpecificKey
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
     
-    dispatch_async(_syncQueue, ^{
+    dispatch_async(self.syncQueue, ^{
         if (section < self.sectionArray.count && row < self.sectionArray[section].itemsArray.count) {
             [self.sectionArray[section].itemsArray removeObjectAtIndex:row];
-            dispatch_async(_syncQueue, ^{
+            dispatch_async(self.syncQueue, ^{
                 [self saveBookmarkSectionModelToDisk];
             });
             
@@ -249,7 +249,7 @@ static const void * const kDispatchQueueSpecificKey = &kDispatchQueueSpecificKey
     QueueCheck(NO);
     dispatch_sync(_syncQueue, ^{
         [self.sectionArray removeAllObjects];
-        dispatch_async(_syncQueue, ^{
+        dispatch_async(self.syncQueue, ^{
             [self saveBookmarkSectionModelToDisk];
         });
     });
@@ -263,7 +263,7 @@ static const void * const kDispatchQueueSpecificKey = &kDispatchQueueSpecificKey
         if (section < self.sectionArray.count) {
             [self.sectionArray removeObjectAtIndex:section];
             isSuccess = YES;
-            dispatch_async(_syncQueue, ^{
+            dispatch_async(self.syncQueue, ^{
                 [self saveBookmarkSectionModelToDisk];
             });
         }
@@ -310,7 +310,7 @@ static const void * const kDispatchQueueSpecificKey = &kDispatchQueueSpecificKey
         self.sectionArray[index].itemsArray = (self.sectionArray[index].itemsArray) ? self.sectionArray[index].itemsArray : [NSMutableArray array];
         [self.sectionArray[index].itemsArray addObject:itemModel];
         
-        dispatch_async(_syncQueue, ^{
+        dispatch_async(self.syncQueue, ^{
             [self saveBookmarkSectionModelToDisk];
         });
         
@@ -342,7 +342,7 @@ static const void * const kDispatchQueueSpecificKey = &kDispatchQueueSpecificKey
             self.sectionArray[sectionIndex].itemsArray = (self.sectionArray[sectionIndex].itemsArray) ? self.sectionArray[sectionIndex].itemsArray : [NSMutableArray array];
             [self.sectionArray[sectionIndex].itemsArray addObject:itemModel];
             
-            dispatch_async(_syncQueue, ^{
+            dispatch_async(self.syncQueue, ^{
                 [self saveBookmarkSectionModelToDisk];
             });
         }
@@ -370,7 +370,7 @@ static const void * const kDispatchQueueSpecificKey = &kDispatchQueueSpecificKey
         if (!isExisted) {
             BookmarkSectionModel *model = [BookmarkSectionModel bookmarkSectionWithTitle:name itemsArray:nil];
             [self.sectionArray addObject:model];
-            dispatch_async(_syncQueue, ^{
+            dispatch_async(self.syncQueue, ^{
                 [self saveBookmarkSectionModelToDisk];
             });
         }
@@ -404,7 +404,7 @@ static const void * const kDispatchQueueSpecificKey = &kDispatchQueueSpecificKey
         
         if (isSuccess) {
             self.sectionArray[index].title = name;
-            dispatch_async(_syncQueue, ^{
+            dispatch_async(self.syncQueue, ^{
                 [self saveBookmarkSectionModelToDisk];
             });
         }
@@ -440,7 +440,7 @@ static const void * const kDispatchQueueSpecificKey = &kDispatchQueueSpecificKey
         }
         
         if (success) {
-            dispatch_async(_syncQueue, ^{
+            dispatch_async(self.syncQueue, ^{
                 [self saveBookmarkSectionModelToDisk];
             });
         }

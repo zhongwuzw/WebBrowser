@@ -1,5 +1,10 @@
 # Master
 
+# 1.2.6
+
+* Fixed compiler warning.
+* Add index for `ZW_FIELD_TIME` field.
+
 # 1.2.4
 
 * Fix issue that some video from tencent can not play.
