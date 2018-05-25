@@ -300,6 +300,14 @@
     [self.indicatorView stopAnimating];
 }
 
+- (void)webView:(id)webView resource:(id)resource didReceiveAuthenticationChallenge:(id)challenge fromDataSource:(id)source{
+    if ([challenge class] == [NSURLAuthenticationChallenge class] ) {
+        NSURLAuthenticationChallenge *urlChallenge = (NSURLAuthenticationChallenge *)challenge;
+        
+        [[DelegateManager sharedInstance] performSelector:@selector(webView:didReceiveAuthenticationChallenge:) arguments:@[self, urlChallenge] key:DelegateManagerWebView];
+    }
+}
+
 #pragma mark - decidePolicy method
 
 //new window 回调，现在很多网站已经做移动版适配，很少会使用新窗口打开了
