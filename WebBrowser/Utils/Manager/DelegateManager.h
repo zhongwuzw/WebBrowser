@@ -25,6 +25,7 @@ extern NSString *const DelegateManagerFindInPageBarDelegate;
 - (void)webView:(BrowserWebView *)webView gotTitleName:(NSString*)titleName;
 - (void)webViewForMainFrameDidCommitLoad:(BrowserWebView *)webView;
 - (void)webViewForMainFrameDidFinishLoad:(BrowserWebView *)webView;
+- (void)webView:(BrowserWebView *)webView didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge;
 
 @end
 

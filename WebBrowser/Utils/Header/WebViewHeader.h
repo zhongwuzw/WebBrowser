@@ -25,6 +25,7 @@
 #define MAIN_FRAME_TITLE__PROTO (id (*)(id, SEL))
 
 #define WEB_GOT_TITLE @"webView:didReceiveTitle:forFrame:" //webView:didReceiveTitle:forFrame:
+#define WEB_RECEIVE_AUTHENTICATION_CHALLENGE @"webView:resource:didReceiveAuthenticationChallenge:fromDataSource:" // webView:resource:didReceiveAuthenticationChallenge:fromDataSource:
 
 #define MAIN_FRAME @"mainFrame" //_documentView - _webView - mainFrame
 #define MAIN_FRAME__PROTO (id (*)(id, SEL))

@@ -1,5 +1,7 @@
 # Master
 
+* Added basic authentication of `HTTP`.
+
 # 1.2.6
 
 * Fixed compiler warning.

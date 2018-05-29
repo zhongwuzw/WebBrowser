@@ -300,6 +300,18 @@
     [self.indicatorView stopAnimating];
 }
 
+- (void)zwWebView:(id)webView resource:(id)resource didReceiveAuthenticationChallenge:(id)challenge fromDataSource:(id)source{
+    if ([challenge class] == [NSURLAuthenticationChallenge class] ) {
+        NSURLAuthenticationChallenge *urlChallenge = (NSURLAuthenticationChallenge *)challenge;
+        
+        [[DelegateManager sharedInstance] performSelector:@selector(webView:didReceiveAuthenticationChallenge:) arguments:@[self, urlChallenge] key:DelegateManagerWebView];
+    }
+    else {
+        if([self respondsToSelector:@selector(zwWebView:resource:didReceiveAuthenticationChallenge:fromDataSource:)])
+            ((void(*)(id, SEL, id, id, id, id)) objc_msgSend)(self, @selector(zwWebView:resource:didReceiveAuthenticationChallenge:fromDataSource:), webView, resource, challenge, source);
+    }
+}
+
 #pragma mark - decidePolicy method
 
 //new window 回调，现在很多网站已经做移动版适配，很少会使用新窗口打开了
@@ -425,19 +437,21 @@
 #pragma mark - Initialize
 
 + (void)initialize{
-    if (self == [BrowserWebView class]) {
+    Class browserClass = [BrowserWebView class];
+    if (self == browserClass) {
         @autoreleasepool {
-            MethodSwizzle([BrowserWebView class], NSSelectorFromString(WEB_GOT_TITLE), @selector(zwWebView:didReceiveTitle:forFrame:));
+            MethodSwizzle(browserClass, NSSelectorFromString(WEB_GOT_TITLE), @selector(zwWebView:didReceiveTitle:forFrame:));
             
-            MethodSwizzle([BrowserWebView class], NSSelectorFromString(WEB_NEW_WINDOW), @selector(zwWebView:decidePolicyForNewWindowAction:request:newFrameName:decisionListener:));
+            MethodSwizzle(browserClass, NSSelectorFromString(WEB_NEW_WINDOW), @selector(zwWebView:decidePolicyForNewWindowAction:request:newFrameName:decisionListener:));
             
-            MethodSwizzle([BrowserWebView class], NSSelectorFromString(WEB_ACTION_NAVIGATION), @selector(zwWebView:decidePolicyForNavigationAction:request:frame:decisionListener:));
+            MethodSwizzle(browserClass, NSSelectorFromString(WEB_ACTION_NAVIGATION), @selector(zwWebView:decidePolicyForNavigationAction:request:frame:decisionListener:));
             
-            MethodSwizzle([BrowserWebView class], NSSelectorFromString(MAIN_FRAME_COMMIT_LOAD), @selector(zwMainFrameCommitLoad:));
+            MethodSwizzle(browserClass, NSSelectorFromString(MAIN_FRAME_COMMIT_LOAD), @selector(zwMainFrameCommitLoad:));
             
-            MethodSwizzle([BrowserWebView class], NSSelectorFromString(MAIN_FRAME_FINISIH_LOAD), @selector(zwMainFrameFinishLoad:));
+            MethodSwizzle(browserClass, NSSelectorFromString(MAIN_FRAME_FINISIH_LOAD), @selector(zwMainFrameFinishLoad:));
             
-            MethodSwizzle([BrowserWebView class], NSSelectorFromString(FRAME_PROVISIONALLOAD), @selector(zwWebView:didStartProvisionalLoadForFrame:));
+            MethodSwizzle(browserClass, NSSelectorFromString(FRAME_PROVISIONALLOAD), @selector(zwWebView:didStartProvisionalLoadForFrame:));
+            MethodSwizzle(browserClass, NSSelectorFromString(WEB_RECEIVE_AUTHENTICATION_CHALLENGE), @selector(zwWebView:resource:didReceiveAuthenticationChallenge:fromDataSource:));
         }
     }
 }
