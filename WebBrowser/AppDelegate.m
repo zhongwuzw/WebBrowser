@@ -20,7 +20,7 @@
 #import "PreferenceHelper.h"
 #import "BaseNavigationViewController.h"
 
-static NSString * const UserAgent = @"Mozilla/5.0 (iPhone; CPU iPhone OS 10_0 like Mac OS X) AppleWebKit/602.1.38 (KHTML, like Gecko) Version/10.0 Mobile/14A300 Safari/602.1";
+static NSString * const UserAgent = @"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/11.1.2 Safari/605.1.15";
 
 @interface AppDelegate ()
 
