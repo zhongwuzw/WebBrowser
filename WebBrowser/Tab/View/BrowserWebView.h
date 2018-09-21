@@ -25,11 +25,11 @@ typedef void(^BackForwardListCompletion)(WebViewBackForwardList *);
 
 @interface BrowserWebView : UIWebView<UIWebViewDelegate>
 
-@property (nonatomic, unsafe_unretained) WebModel *webModel;
+@property (nonatomic, assign) WebModel *webModel;
 @property (nonatomic, assign, readonly) BOOL isMainFrameLoaded;
-@property (nonatomic, unsafe_unretained, readonly) UIActivityIndicatorView *indicatorView;
-@property (nonatomic, unsafe_unretained, readonly) UILongPressGestureRecognizer *longPressGestureRecognizer;
-@property (nonatomic, unsafe_unretained) HomePageView *homePage;
+@property (nonatomic, assign, readonly) UIActivityIndicatorView *indicatorView;
+@property (nonatomic, assign, readonly) UILongPressGestureRecognizer *longPressGestureRecognizer;
+@property (nonatomic, assign) HomePageView *homePage;
 
 - (void)evaluateJavaScript:(NSString *)javaScriptString completionHandler:(WebCompletionBlock)completionHandler;
 

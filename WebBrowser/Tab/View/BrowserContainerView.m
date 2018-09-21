@@ -28,9 +28,9 @@
 
 #import <Photos/Photos.h>
 
-static CGFloat const ArrowActivitySize = 30.f;
-static NSInteger const ActionSheetTitleMaxLength = 120;
-static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word=";
+static CGFloat const kArrowActivitySize = 30.f;
+static NSInteger const kActionSheetTitleMaxLength = 120;
+static NSString *const kBaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word=";
 
 @interface BrowserContainerView () <WebViewDelegate, MenuHelperInterface, BrowserContainerLoadURLDelegate, BrowserWebViewDelegate, FindInPageBarDelegate>
 
@@ -61,7 +61,7 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
 
     [self restoreWithCompletionHandler:nil animation:NO];
     
-    [[DelegateManager sharedInstance] registerDelegate:self forKeys:@[DelegateManagerBrowserContainerLoadURL, DelegateManagerWebView, DelegateManagerFindInPageBarDelegate]];
+    [[DelegateManager sharedInstance] registerDelegate:self forKeys:@[kDelegateManagerBrowserContainerLoadURL, kDelegateManagerWebView, kDelegateManagerFindInPageBarDelegate]];
     [[DelegateManager sharedInstance] addWebViewDelegate:self];
     [Notifier addObserver:self selector:@selector(handleOpenInNewWindow:) name:kOpenInNewWindowNotification object:nil];
     
@@ -184,14 +184,14 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
     [webView addSubview:homePage];
     
     // remove wrong title when back to home page
-    [[DelegateManager sharedInstance] performSelector:@selector(webView:gotTitleName:) arguments:@[webView,@"首页"] key:DelegateManagerWebView];
+    [[DelegateManager sharedInstance] performSelector:@selector(webView:gotTitleName:) arguments:@[webView,@"首页"] key:kDelegateManagerWebView];
 }
 
 #pragma mark - ActivityView
 
 - (ArrowActivityView *)arrowActivityView{
     if (!_arrowActivityView) {
-        _arrowActivityView = [[ArrowActivityView alloc] initWithFrame:CGRectMake(0, 0, ArrowActivitySize, ArrowActivitySize) kind:ArrowActivityKindLeft];
+        _arrowActivityView = [[ArrowActivityView alloc] initWithFrame:CGRectMake(0, 0, kArrowActivitySize, kArrowActivitySize) kind:ArrowActivityKindLeft];
         [self insertSubview:_arrowActivityView atIndex:0];
     }
     return _arrowActivityView;
@@ -204,10 +204,10 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
     
     BOOL isLeft = point.x < self.width / 2.0f;
     if (isLeft) {
-        self.arrowActivityView.center = CGPointMake(5.f + ArrowActivitySize / 2.0f, self.height / 2);
+        self.arrowActivityView.center = CGPointMake(5.f + kArrowActivitySize / 2.0f, self.height / 2);
     }
     else{
-        self.arrowActivityView.center = CGPointMake(self.width - ArrowActivitySize / 2.0f - 5.f, self.height / 2.0f);
+        self.arrowActivityView.center = CGPointMake(self.width - kArrowActivitySize / 2.0f - 5.f, self.height / 2.0f);
     }
     
     [self.arrowActivityView setKind:(isLeft) ? ArrowActivityKindLeft : ArrowActivityKindRight];
@@ -272,7 +272,7 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
     else if (gesture.state == UIGestureRecognizerStateChanged) {
         CGFloat offset = point.x - _edgeStartPoint.x;
         self.webView.transform = CGAffineTransformMakeTranslation(offset, 0);
-        if (self.showActivityView && fabs(offset) >= ArrowActivitySize + 5.f * 2) {
+        if (self.showActivityView && fabs(offset) >= kArrowActivitySize + 5.f * 2) {
             self.arrowActivityView.centerX = (offset > 0) ? offset / 2.0f : self.width - fabs(offset) / 2.0f;
             if (fabs(offset) > self.width / 2.0f - 50) {
                 [self.arrowActivityView setOn:YES];
@@ -374,7 +374,7 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
         [actionSheetController addAction:saveImageAction];
     }
     
-    actionSheetController.title = [dialogTitle ellipsizeWithMaxLength:ActionSheetTitleMaxLength];
+    actionSheetController.title = [dialogTitle ellipsizeWithMaxLength:kActionSheetTitleMaxLength];
     UIAlertAction *cancelAction = [UIAlertAction actionDismiss];
     [actionSheetController addAction:cancelAction];
     
@@ -562,7 +562,7 @@ static NSString *const BaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word="
     [self getWebViewSelectionWithCompletion:^(NSString *result){
         STRONG_REF(self_)
         if (self__) {
-            result = [BaiduSearchPath stringByAppendingString:[result stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+            result = [kBaiduSearchPath stringByAppendingString:[result stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
             NSURL *url = [NSURL URLWithString:result];
             [self__ handleOpenInNewWindowWithURL:url];
         }

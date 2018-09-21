@@ -146,19 +146,19 @@
 
 - (void)handleTextChange:(UITextField *)sender{
     self.matchCountView.hidden = !self.searchText.text.length;
-    [[DelegateManager sharedInstance] performSelector:@selector(findInPage:didTextChange:) arguments:@[self, self.searchText.text ? self.searchText.text : @""] key:DelegateManagerFindInPageBarDelegate];
+    [[DelegateManager sharedInstance] performSelector:@selector(findInPage:didTextChange:) arguments:@[self, self.searchText.text ? self.searchText.text : @""] key:kDelegateManagerFindInPageBarDelegate];
 }
 
 - (void)handleDidFindPrevious:(UIButton *)sender{
-    [[DelegateManager sharedInstance] performSelector:@selector(findInPage:didFindPreviousWithText:) arguments:@[self, self.searchText.text ? self.searchText.text : @""] key:DelegateManagerFindInPageBarDelegate];
+    [[DelegateManager sharedInstance] performSelector:@selector(findInPage:didFindPreviousWithText:) arguments:@[self, self.searchText.text ? self.searchText.text : @""] key:kDelegateManagerFindInPageBarDelegate];
 }
 
 - (void)handleDidFindNext:(UIButton *)sender{
-    [[DelegateManager sharedInstance] performSelector:@selector(findInPage:didFindNextWithText:) arguments:@[self, self.searchText.text ? self.searchText.text : @""] key:DelegateManagerFindInPageBarDelegate];
+    [[DelegateManager sharedInstance] performSelector:@selector(findInPage:didFindNextWithText:) arguments:@[self, self.searchText.text ? self.searchText.text : @""] key:kDelegateManagerFindInPageBarDelegate];
 }
 
 - (void)handleDidPressClose:(UIButton *)sender{
-    [[DelegateManager sharedInstance] performSelector:@selector(findInPageDidPressClose:) arguments:@[self] key:DelegateManagerFindInPageBarDelegate];
+    [[DelegateManager sharedInstance] performSelector:@selector(findInPageDidPressClose:) arguments:@[self] key:kDelegateManagerFindInPageBarDelegate];
 }
 
 - (BOOL)becomeFirstResponder{
