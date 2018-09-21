@@ -120,7 +120,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(TabManager)
     [Notifier addObserver:self selector:@selector(noImageModeChanged) name:kNoImageModeChanged object:nil];
     [Notifier addObserver:self selector:@selector(eyeProtectiveModeChanged) name:kEyeProtectiveModeChanged object:nil];
     
-    [[DelegateManager sharedInstance] registerDelegate:self forKey:DelegateManagerWebView];
+    [[DelegateManager sharedInstance] registerDelegate:self forKey:kDelegateManagerWebView];
 }
 
 - (BOOL)isCurrentWebView:(BrowserWebView *)webView{

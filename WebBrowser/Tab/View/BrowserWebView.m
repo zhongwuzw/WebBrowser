@@ -20,8 +20,8 @@
 @interface BrowserWebView () <MenuHelperInterface>
 
 @property (nonatomic, assign, readwrite) BOOL isMainFrameLoaded;
-@property (nonatomic, unsafe_unretained) UIActivityIndicatorView *indicatorView;
-@property (nonatomic, unsafe_unretained) UILongPressGestureRecognizer *longPressGestureRecognizer;
+@property (nonatomic, assign) UIActivityIndicatorView *indicatorView;
+@property (nonatomic, assign) UILongPressGestureRecognizer *longPressGestureRecognizer;
 
 @end
 
@@ -248,11 +248,11 @@
 #pragma mark - UIWebViewDelegate
 
 - (void)webViewDidStartLoad:(BrowserWebView *)webView{
-    [[DelegateManager sharedInstance] performSelector:@selector(webViewDidStartLoad:) arguments:@[webView] key:DelegateManagerWebView];
+    [[DelegateManager sharedInstance] performSelector:@selector(webViewDidStartLoad:) arguments:@[webView] key:kDelegateManagerWebView];
 }
 
 - (void)webView:(BrowserWebView *)webView didFailLoadWithError:(NSError *)error{
-    [[DelegateManager sharedInstance] performSelector:@selector(webView:didFailLoadWithError:) arguments:@[webView,error] key:DelegateManagerWebView];
+    [[DelegateManager sharedInstance] performSelector:@selector(webView:didFailLoadWithError:) arguments:@[webView,error] key:kDelegateManagerWebView];
     [self.indicatorView stopAnimating];
 }
 
@@ -274,7 +274,7 @@
 }
 
 - (void)webViewDidFinishLoad:(BrowserWebView *)webView{
-    [[DelegateManager sharedInstance] performSelector:@selector(webViewDidFinishLoad:) arguments:@[webView] key:DelegateManagerWebView];
+    [[DelegateManager sharedInstance] performSelector:@selector(webViewDidFinishLoad:) arguments:@[webView] key:kDelegateManagerWebView];
     
     [self.indicatorView stopAnimating];
 }
@@ -304,7 +304,7 @@
     if ([challenge class] == [NSURLAuthenticationChallenge class] ) {
         NSURLAuthenticationChallenge *urlChallenge = (NSURLAuthenticationChallenge *)challenge;
         
-        [[DelegateManager sharedInstance] performSelector:@selector(webView:didReceiveAuthenticationChallenge:) arguments:@[self, urlChallenge] key:DelegateManagerWebView];
+        [[DelegateManager sharedInstance] performSelector:@selector(webView:didReceiveAuthenticationChallenge:) arguments:@[self, urlChallenge] key:kDelegateManagerWebView];
     }
     else {
         if([self respondsToSelector:@selector(zwWebView:resource:didReceiveAuthenticationChallenge:fromDataSource:)])
@@ -362,7 +362,7 @@
     self.webModel.url = [self mainFURL];
     self.isMainFrameLoaded = NO;
     
-    [[DelegateManager sharedInstance] performSelector:@selector(webViewForMainFrameDidCommitLoad:) arguments:@[self] key:DelegateManagerWebView];
+    [[DelegateManager sharedInstance] performSelector:@selector(webViewForMainFrameDidCommitLoad:) arguments:@[self] key:kDelegateManagerWebView];
 }
 
 //webViewMainFrameDidFinishLoad:
@@ -379,14 +379,14 @@
 - (void)webViewForMainFrameDidFinishLoad:(BrowserWebView *)webView{
     self.isMainFrameLoaded = YES;
     
-    [[DelegateManager sharedInstance] performSelector:@selector(webViewForMainFrameDidFinishLoad:) arguments:@[self] key:DelegateManagerWebView];
+    [[DelegateManager sharedInstance] performSelector:@selector(webViewForMainFrameDidFinishLoad:) arguments:@[self] key:kDelegateManagerWebView];
 }
 
 #pragma mark - replaced method calling
 
 - (void)webView:(BrowserWebView *)webView gotTitleName:(NSString*)titleName{
     self.webModel.title = titleName;
-    [[DelegateManager sharedInstance] performSelector:@selector(webView:gotTitleName:) arguments:@[webView,titleName] key:DelegateManagerWebView];
+    [[DelegateManager sharedInstance] performSelector:@selector(webView:gotTitleName:) arguments:@[webView,titleName] key:kDelegateManagerWebView];
 }
 
 #pragma mark - frame method
@@ -419,11 +419,11 @@
 #pragma mark - Dealloc
 
 - (void)dealloc{
-    [self.indicatorView removeFromSuperview];
-    self.longPressGestureRecognizer = nil;
-    self.indicatorView = nil;
-    self.webModel = nil;
-    self.homePage = nil;
+    [_indicatorView removeFromSuperview];
+    _indicatorView = nil;
+    _longPressGestureRecognizer = nil;
+    _webModel = nil;
+    _homePage = nil;
     self.delegate = nil;
     self.scrollView.delegate = nil;
     [self stopLoading];

@@ -258,7 +258,7 @@ static NSString *const kHistoryTableViewContentSize = @"contentSize";
     
     HistoryItemModel *itemModel = [self.historyDataManager historyModelForRowAtIndexPath:indexPath];
     
-    [[DelegateManager sharedInstance] performSelector:@selector(browserContainerViewLoadWebViewWithSug:) arguments:@[itemModel.url] key:DelegateManagerBrowserContainerLoadURL];
+    [[DelegateManager sharedInstance] performSelector:@selector(browserContainerViewLoadWebViewWithSug:) arguments:@[itemModel.url] key:kDelegateManagerBrowserContainerLoadURL];
     [self.navigationController popViewControllerAnimated:NO];
 }
 

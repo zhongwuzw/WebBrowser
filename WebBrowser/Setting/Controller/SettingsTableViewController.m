@@ -14,8 +14,8 @@ typedef enum : NSUInteger {
     CellKindForCache,
 } CellKind;
 
-static NSString *const SettingActivityTableViewCellIdentifier = @"SettingActivityTableViewCellIdentifier";
-static NSString *const SettingPlaceholderTableViewCellIdentifier   = @"SettingPlaceholderTableViewCellIdentifier";
+static NSString *const kSettingActivityTableViewCellIdentifier = @"SettingActivityTableViewCellIdentifier";
+static NSString *const kSettingPlaceholderTableViewCellIdentifier   = @"SettingPlaceholderTableViewCellIdentifier";
 
 @interface SettingsTableViewController ()
 
@@ -32,8 +32,8 @@ static NSString *const SettingPlaceholderTableViewCellIdentifier   = @"SettingPl
     
     self.dataArray = @[@"清除缓存"];
     
-    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([SettingActivityTableViewCell class]) bundle:nil] forCellReuseIdentifier:SettingActivityTableViewCellIdentifier];
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:SettingPlaceholderTableViewCellIdentifier];
+    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([SettingActivityTableViewCell class]) bundle:nil] forCellReuseIdentifier:kSettingActivityTableViewCellIdentifier];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kSettingPlaceholderTableViewCellIdentifier];
 }
 
 - (void)handleTableViewSelectAt:(NSInteger)index{
@@ -61,7 +61,7 @@ static NSString *const SettingPlaceholderTableViewCellIdentifier   = @"SettingPl
 #pragma mark - Helper Method
 
 - (UITableViewCell *)cacheCellWithIndexPath:(NSIndexPath *)indexPath{
-    SettingActivityTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:SettingActivityTableViewCellIdentifier];
+    SettingActivityTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kSettingActivityTableViewCellIdentifier];
     
     cell.leftLabel.text = self.dataArray[indexPath.row];
     [cell.activityIndicatorView startAnimating];
@@ -96,7 +96,7 @@ static NSString *const SettingPlaceholderTableViewCellIdentifier   = @"SettingPl
             break;
         default:
             //never called
-            cell = [tableView dequeueReusableCellWithIdentifier:SettingPlaceholderTableViewCellIdentifier];
+            cell = [tableView dequeueReusableCellWithIdentifier:kSettingPlaceholderTableViewCellIdentifier];
             break;
     }
     return cell;

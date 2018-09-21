@@ -29,7 +29,7 @@
 static NSString *const kBrowserViewControllerAddBookmarkSuccess = @"添加书签成功";
 static NSString *const kBrowserViewControllerAddBookmarkFailure = @"添加书签失败";
 
-@interface BrowserViewController () <BrowserBottomToolBarButtonClickedDelegate,  UIViewControllerRestoration, KeyboardHelperDelegate>
+@interface BrowserViewController () <BrowserBottomToolBarButtonClickedDelegate, UIViewControllerRestoration, KeyboardHelperDelegate>
 
 @property (nonatomic, strong) BrowserContainerView *browserContainerView;
 @property (nonatomic, strong) BrowserBottomToolBar *bottomToolBar;
@@ -56,7 +56,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(BrowserViewController)
 
     self.lastContentOffset = - TOP_TOOL_BAR_HEIGHT;
     
-    [[DelegateManager sharedInstance] registerDelegate:self forKeys:@[DelegateManagerWebView, DelegateManagerFindInPageBarDelegate]];
+    [[DelegateManager sharedInstance] registerDelegate:self forKeys:@[kDelegateManagerWebView, kDelegateManagerFindInPageBarDelegate]];
     [[KeyboardHelper sharedInstance] addDelegate:self];
     
     self.restorationIdentifier = NSStringFromClass([self class]);

@@ -20,7 +20,7 @@
 #import "PreferenceHelper.h"
 #import "BaseNavigationViewController.h"
 
-static NSString * const UserAgent = @"Mozilla/5.0 (iPhone; CPU iPhone OS 10_0 like Mac OS X) AppleWebKit/602.1.38 (KHTML, like Gecko) Version/10.0 Mobile/14A300 Safari/602.1";
+static NSString * const kUserAgentOfiOS = @"Mozilla/5.0 (iPhone; CPU iPhone OS 10_0 like Mac OS X) AppleWebKit/602.1.38 (KHTML, like Gecko) Version/10.0 Mobile/14A300 Safari/602.1";
 
 @interface AppDelegate ()
 
@@ -96,11 +96,12 @@ static NSString * const UserAgent = @"Mozilla/5.0 (iPhone; CPU iPhone OS 10_0 li
     [[WebServer sharedInstance] start];
     
     //解决UIWebView首次加载页面时间过长问题,设置UserAgent减少跳转和判断
-    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent" : UserAgent}];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent" : kUserAgentOfiOS}];
     
-    [TabManager sharedInstance];    //load archive data ahead
+    [TabManager sharedInstance];    //load archive data in advance
     
-    dispatch_async(dispatch_get_main_queue(), ^{
+    // Delay some operations
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self applicationStartPrepare];
     });
     
