@@ -33,72 +33,72 @@
 
 #### 1. Multi-tab (多窗口)：
 <p align="center">
-  <img src="https://raw.githubusercontent.com/zhongwuzw/WebBrowser/master/images/home_tab_switch.gif" alt="tab"/>
+  <img src="https://raw.githubusercontent.com/zhongwuzw/zhongwuzw.github.io.resource/master/images/repos/WebBrowser/images/home_tab_switch.gif" alt="tab"/>
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/zhongwuzw/WebBrowser/master/images/tab_manage.gif" alt="tab"/>
+  <img src="https://raw.githubusercontent.com/zhongwuzw/zhongwuzw.github.io.resource/master/images/repos/WebBrowser/images/tab_manage.gif" alt="tab"/>
 </p>
 
 左右边缘滑动切换窗口：
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/zhongwuzw/WebBrowser/master/images/multi_window_switch.gif" alt="tab"/>
+  <img src="https://raw.githubusercontent.com/zhongwuzw/zhongwuzw.github.io.resource/master/images/repos/WebBrowser/images/multi_window_switch.gif" alt="tab"/>
 </p>
 
 #### 2. Search (搜索)：
 <p align="center">
-  <img src="https://raw.githubusercontent.com/zhongwuzw/WebBrowser/master/images/home_search.gif" alt="search"/>
+  <img src="https://raw.githubusercontent.com/zhongwuzw/zhongwuzw.github.io.resource/master/images/repos/WebBrowser/images/home_search.gif" alt="search"/>
 </p>
 
 #### 3. No Image Mode (无图模式，功能已并入扩展)
 <p align="center">
-  <img src="https://raw.githubusercontent.com/zhongwuzw/WebBrowser/master/images/no-image-mode.gif" alt="no image mode"/>
+  <img src="https://raw.githubusercontent.com/zhongwuzw/zhongwuzw.github.io.resource/master/images/repos/WebBrowser/images/no-image-mode.gif" alt="no image mode"/>
 </p>
 
 #### 4. History (历史)
 1. Long Press to select options. (长按记录可弹出选项按钮)
 2. Tap to open history in current window.(点击记录会在当前窗口打开历史页面)
 <p align="center">
-  <img src="https://raw.githubusercontent.com/zhongwuzw/WebBrowser/master/images/history.gif" alt="history"/>
+  <img src="https://raw.githubusercontent.com/zhongwuzw/zhongwuzw.github.io.resource/master/images/repos/WebBrowser/images/history.gif" alt="history"/>
 </p>
 
 #### 5. Favorite (收藏)
 ##### In non-editing mode (在非编辑模式下操作)
 1. Long press on directory to edit directory name in non-editing mode.(长按目录来编辑目录名字)
 <p align="center">
-  <img src="https://raw.githubusercontent.com/zhongwuzw/WebBrowser/master/images/bookmark_edit_long_section.gif" alt="favorite"/>
+  <img src="https://raw.githubusercontent.com/zhongwuzw/zhongwuzw.github.io.resource/master/images/repos/WebBrowser/images/bookmark_edit_long_section.gif" alt="favorite"/>
 </p>
 
 2. Long press on bookmark item to edit bookmark's url, name, directory in non-editing mode.(长按书签项来编辑书签的地址、名字、以及所在目录)
 <p align="center">
-  <img src="https://raw.githubusercontent.com/zhongwuzw/WebBrowser/master/images/bookmark_long_edit_item.gif" alt="favorite"/>
+  <img src="https://raw.githubusercontent.com/zhongwuzw/zhongwuzw.github.io.resource/master/images/repos/WebBrowser/images/bookmark_long_edit_item.gif" alt="favorite"/>
 </p>
 
 ##### In editing mode (在编辑模式下)
 1. reorder, delete directory in editing mode.(删除、排序目录)
 <p align="center">
-  <img src="https://raw.githubusercontent.com/zhongwuzw/WebBrowser/master/images/bookmark_edit_section.gif" alt="favorite"/>
+  <img src="https://raw.githubusercontent.com/zhongwuzw/zhongwuzw.github.io.resource/master/images/repos/WebBrowser/images/bookmark_edit_section.gif" alt="favorite"/>
 </p>
 
 2. click "新文件夹" button to add new directory in editing mode.(点击"新文件夹"按钮来创建新的目录)
 <p align="center">
-  <img src="https://raw.githubusercontent.com/zhongwuzw/WebBrowser/master/images/bookmark_add_section.gif" alt="favorite"/>
+  <img src="https://raw.githubusercontent.com/zhongwuzw/zhongwuzw.github.io.resource/master/images/repos/WebBrowser/images/bookmark_add_section.gif" alt="favorite"/>
 </p>
 
 3. reorder, delete bookmark in editing mode.(删除、排序书签)
 <p align="center">
-  <img src="https://raw.githubusercontent.com/zhongwuzw/WebBrowser/master/images/bookmark_edit_item.gif" alt="favorite"/>
+  <img src="https://raw.githubusercontent.com/zhongwuzw/zhongwuzw.github.io.resource/master/images/repos/WebBrowser/images/bookmark_edit_item.gif" alt="favorite"/>
 </p>
 
 4. add new bookmark.(添加新书签)
 <p align="center">
-  <img src="https://raw.githubusercontent.com/zhongwuzw/WebBrowser/master/images/bookmark_add.gif" alt="favorite"/>
+  <img src="https://raw.githubusercontent.com/zhongwuzw/zhongwuzw.github.io.resource/master/images/repos/WebBrowser/images/bookmark_add.gif" alt="favorite"/>
 </p>
 
 #### 6. find in page (页内查找)
 <p align="center">
-  <img src="https://raw.githubusercontent.com/zhongwuzw/WebBrowser/master/images/findinpage.gif" alt="find in page"/>
+  <img src="https://raw.githubusercontent.com/zhongwuzw/zhongwuzw.github.io.resource/master/images/repos/WebBrowser/images/findinpage.gif" alt="find in page"/>
 </p>
 
 ## License
