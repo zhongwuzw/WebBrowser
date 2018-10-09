@@ -1,6 +1,9 @@
 # Master
 
+# 1.2.7
+
 * Added basic authentication of `HTTP`.
+* Fix home page not disappear.
 
 # 1.2.6
 

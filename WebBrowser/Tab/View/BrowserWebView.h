@@ -29,7 +29,7 @@ typedef void(^BackForwardListCompletion)(WebViewBackForwardList *);
 @property (nonatomic, assign, readonly) BOOL isMainFrameLoaded;
 @property (nonatomic, assign, readonly) UIActivityIndicatorView *indicatorView;
 @property (nonatomic, assign, readonly) UILongPressGestureRecognizer *longPressGestureRecognizer;
-@property (nonatomic, assign) HomePageView *homePage;
+@property (nonatomic, retain) HomePageView *homePage;
 
 - (void)evaluateJavaScript:(NSString *)javaScriptString completionHandler:(WebCompletionBlock)completionHandler;
 

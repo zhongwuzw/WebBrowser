@@ -423,6 +423,7 @@
     _indicatorView = nil;
     _longPressGestureRecognizer = nil;
     _webModel = nil;
+	[_homePage release];
     _homePage = nil;
     self.delegate = nil;
     self.scrollView.delegate = nil;
