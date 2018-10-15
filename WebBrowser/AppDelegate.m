@@ -20,7 +20,7 @@
 #import "PreferenceHelper.h"
 #import "BaseNavigationViewController.h"
 
-static NSString * const kUserAgentOfiOS = @"Mozilla/5.0 (iPhone; CPU iPhone OS 10_0 like Mac OS X) AppleWebKit/602.1.38 (KHTML, like Gecko) Version/10.0 Mobile/14A300 Safari/602.1";
+static NSString * const kUserAgentOfiOS = @"Mozilla/5.0 (iPhone; CPU iPhone OS %ld_0 like Mac OS X) AppleWebKit/602.1.38 (KHTML, like Gecko) Version/%ld.0 Mobile/14A300 Safari/602.1";
 
 @interface AppDelegate ()
 
@@ -30,11 +30,11 @@ static NSString * const kUserAgentOfiOS = @"Mozilla/5.0 (iPhone; CPU iPhone OS 1
 
 @implementation AppDelegate
 
-- (void)dealloc{
+- (void)dealloc {
     [Notifier removeObserver:self name:UIPasteboardChangedNotification object:nil];
 }
 
-- (void)setAudioPlayInBackgroundMode{
+- (void)setAudioPlayInBackgroundMode {
     AVAudioSession *audioSession = [AVAudioSession sharedInstance];
     
     NSError *setCategoryError = nil;
@@ -46,11 +46,11 @@ static NSString * const kUserAgentOfiOS = @"Mozilla/5.0 (iPhone; CPU iPhone OS 1
     if (!success) { /* handle the error condition */ }
 }
 
-- (void)handlePasteboardNotification:(NSNotification *)notify{
+- (void)handlePasteboardNotification:(NSNotification *)notify {
     self.pasteboardChangeCount = [UIPasteboard generalPasteboard].changeCount;
 }
 
-- (void)presentPasteboardChangedAlertWithURL:(NSURL *)url{
+- (void)presentPasteboardChangedAlertWithURL:(NSURL *)url {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"新窗口打开剪切板网址" message:@"您是否需要在新窗口中打开剪切板中的网址？" preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action){
@@ -64,7 +64,16 @@ static NSString * const kUserAgentOfiOS = @"Mozilla/5.0 (iPhone; CPU iPhone OS 1
     [self.window.rootViewController presentViewController:alert animated:YES completion:nil];
 }
 
-- (void)applicationStartPrepare{
+- (void)makeWebViewSafariLike {
+	NSOperatingSystemVersion systemVersion = [[NSProcessInfo processInfo] operatingSystemVersion];
+	NSInteger version = systemVersion.majorVersion;
+
+	NSString *userAgent = [NSString stringWithFormat:kUserAgentOfiOS, version, version];
+	//解决UIWebView首次加载页面时间过长问题,设置UserAgent减少跳转和判断
+	[[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent" : userAgent}];
+}
+
+- (void)applicationStartPrepare {
     [self setAudioPlayInBackgroundMode];
     [[KeyboardHelper sharedInstance] startObserving];
     [[MenuHelper sharedInstance] setItems];
@@ -95,8 +104,7 @@ static NSString * const kUserAgentOfiOS = @"Mozilla/5.0 (iPhone; CPU iPhone OS 1
     
     [[WebServer sharedInstance] start];
     
-    //解决UIWebView首次加载页面时间过长问题,设置UserAgent减少跳转和判断
-    [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent" : kUserAgentOfiOS}];
+	[self makeWebViewSafariLike];
     
     [TabManager sharedInstance];    //load archive data in advance
     
