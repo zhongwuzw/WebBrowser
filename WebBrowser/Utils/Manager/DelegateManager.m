@@ -42,7 +42,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DelegateManager)
 }
 
 - (void)registerDelegate:(id)delegate forKeys:(NSArray<NSString *> *)keys{
-    [keys enumerateObjectsUsingBlock:^(NSString *key, NSUInteger idx, BOOL *stop){
+    [[keys copy] enumerateObjectsUsingBlock:^(NSString *key, NSUInteger idx, BOOL *stop){
         [self registerDelegate:delegate forKey:key];
     }];
 }
@@ -66,7 +66,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DelegateManager)
     if (!key || !anInvocation) {
         return;
     }
-    NSPointerArray *array = [self.delegateDic objectForKey:key];
+	
+	__block NSPointerArray *array = nil;
+	dispatch_sync(self.synchronizationQueue, ^{
+		array = [self.delegateDic objectForKey:key];
+	});
     
     // Compact delegate because delegate may already be niled.
     [array compact];
