@@ -31,7 +31,7 @@
 - (instancetype)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]) {
         [self initializeView];
-        [[DelegateManager sharedInstance] registerDelegate:self forKey:DelegateManagerWebView];
+        [[DelegateManager sharedInstance] registerDelegate:self forKey:kDelegateManagerWebView];
         [[DelegateManager sharedInstance] addWebViewDelegate:self];
         [Notifier addObserver:self selector:@selector(handletabSwitch:) name:kWebTabSwitch object:nil];
     }

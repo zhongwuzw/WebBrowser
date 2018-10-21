@@ -8,8 +8,8 @@
 
 #import "SessionData.h"
 
-static NSString *const CurrentPageKey = @"CurrentPageKey";
-static NSString *const URLsKey = @"URLsKey";
+static NSString *const kCurrentPageKey = @"CurrentPageKey";
+static NSString *const kURLsKey = @"URLsKey";
 
 @interface SessionData () <NSCoding>
 
@@ -40,15 +40,15 @@ static NSString *const URLsKey = @"URLsKey";
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder{
     if (self = [super init]) {
-        _currentPage = [aDecoder decodeIntegerForKey:CurrentPageKey];
-        _urls = [aDecoder decodeObjectForKey:URLsKey];
+        _currentPage = [aDecoder decodeIntegerForKey:kCurrentPageKey];
+        _urls = [aDecoder decodeObjectForKey:kURLsKey];
     }
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder{
-    [aCoder encodeInteger:self.currentPage forKey:CurrentPageKey];
-    [aCoder encodeObject:self.urls forKey:URLsKey];
+    [aCoder encodeInteger:self.currentPage forKey:kCurrentPageKey];
+    [aCoder encodeObject:self.urls forKey:kURLsKey];
 }
 
 @end

@@ -10,9 +10,9 @@
 
 @class BrowserWebView,BrowserWebView,FindInPageBar;
 
-extern NSString *const DelegateManagerWebView;
-extern NSString *const DelegateManagerBrowserContainerLoadURL;
-extern NSString *const DelegateManagerFindInPageBarDelegate;
+extern NSString *const kDelegateManagerWebView;
+extern NSString *const kDelegateManagerBrowserContainerLoadURL;
+extern NSString *const kDelegateManagerFindInPageBarDelegate;
 
 #pragma mark - BrowserWebViewDelegate
 

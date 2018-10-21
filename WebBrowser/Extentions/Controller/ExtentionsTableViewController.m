@@ -10,8 +10,8 @@
 #import "SettingSwitchTableViewCell.h"
 #import "PreferenceHelper.h"
 
-static NSString *const ExtentionsTableViewSwitchCellIdentifier = @"ExtentionsTableViewSwitchCellIdentifier";
-static NSString *const ExtentionsTableViewDefaultCellIdentifier = @"ExtentionsTableViewDefaultCellIdentifier";
+static NSString *const kExtentionsTableViewSwitchCellIdentifier = @"ExtentionsTableViewSwitchCellIdentifier";
+static NSString *const kExtentionsTableViewDefaultCellIdentifier = @"ExtentionsTableViewDefaultCellIdentifier";
 
 typedef NS_ENUM(NSUInteger, ExtentionsTableViewCellKind) {
     ExtentionsTableViewCellKindOfNoImage,
@@ -39,8 +39,8 @@ typedef NS_ENUM(NSUInteger, ExtentionsTableViewCellKind) {
     self.footerDescriptionArray = @[@"注意：无图模式仅对图片进行了隐藏，浏览器依然会发起图片资源请求",@"去除百度搜索页面广告及banner推广,基于https://greasyfork.org/scripts/24192-kill-baidu-ad/code/Kill%20Baidu%20AD.user.js代码修改,感谢作者@hoothin",@"护眼扩展,修改网页背景色,关闭护眼功能需刷新页面才能生效"];
     self.dataKeyArray = @[KeyNoImageModeStatus, KeyBlockBaiduADStatus, KeyEyeProtectiveStatus];
     self.tableView.sectionHeaderHeight = 0;
-    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([SettingSwitchTableViewCell class]) bundle:nil] forCellReuseIdentifier:ExtentionsTableViewSwitchCellIdentifier];
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:ExtentionsTableViewDefaultCellIdentifier];
+    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([SettingSwitchTableViewCell class]) bundle:nil] forCellReuseIdentifier:kExtentionsTableViewSwitchCellIdentifier];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kExtentionsTableViewDefaultCellIdentifier];
 }
 
 #pragma mark - Table view data source
@@ -61,7 +61,7 @@ typedef NS_ENUM(NSUInteger, ExtentionsTableViewCellKind) {
         return [self configureEyeProtectiveCellAtIndexPath:indexPath];
     }
     
-    SettingSwitchTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ExtentionsTableViewSwitchCellIdentifier forIndexPath:indexPath];
+    SettingSwitchTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kExtentionsTableViewSwitchCellIdentifier forIndexPath:indexPath];
     
     ValueChangedBlock valueChangedBlock = nil;
     
@@ -140,7 +140,7 @@ typedef NS_ENUM(NSUInteger, ExtentionsTableViewCellKind) {
 
 - (UITableViewCell *)configureEyeProtectiveCellAtIndexPath:(NSIndexPath *)indexPath{
     NSArray<NSString *> *titleArray = @[@"",@"乡土黄",@"豆沙绿",@"浅色灰",@"淡橄榄"];
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:ExtentionsTableViewDefaultCellIdentifier];
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kExtentionsTableViewDefaultCellIdentifier];
     cell.textLabel.text = titleArray[indexPath.row];
     
     if ([PreferenceHelper integerDefault1ForKey:KeyEyeProtectiveColorKind] == indexPath.row) {

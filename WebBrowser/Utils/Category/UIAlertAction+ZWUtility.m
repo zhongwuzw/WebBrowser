@@ -9,7 +9,7 @@
 #import "UIAlertAction+ZWUtility.h"
 #import "BrowserViewController.h"
 
-static NSString *const CancelString = @"取消";
+static NSString *const kCancelString = @"取消";
 
 @implementation UIAlertAction (ZWUtility)
 
@@ -32,7 +32,7 @@ static NSString *const CancelString = @"取消";
 }
 
 + (UIAlertAction *)actionDismiss{
-    UIAlertAction *dismissAction = [UIAlertAction actionWithTitle:CancelString style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *dismissAction = [UIAlertAction actionWithTitle:kCancelString style:UIAlertActionStyleCancel handler:nil];
     return dismissAction;
 }
 

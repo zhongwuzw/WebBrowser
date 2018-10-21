@@ -8,9 +8,9 @@
 
 #import "DelegateManager.h"
 
-NSString *const DelegateManagerWebView = @"WebViewDelegate";
-NSString *const DelegateManagerBrowserContainerLoadURL = @"DelegateManagerBrowserContainerLoadURL";
-NSString *const DelegateManagerFindInPageBarDelegate = @"DelegateManagerFindInPageBarDelegate";
+NSString *const kDelegateManagerWebView = @"WebViewDelegate";
+NSString *const kDelegateManagerBrowserContainerLoadURL = @"DelegateManagerBrowserContainerLoadURL";
+NSString *const kDelegateManagerFindInPageBarDelegate = @"DelegateManagerFindInPageBarDelegate";
 
 // Arguments 0 and 1 are self and _cmd always
 const unsigned int kNumberOfImplicitArgs = 2;
@@ -42,7 +42,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DelegateManager)
 }
 
 - (void)registerDelegate:(id)delegate forKeys:(NSArray<NSString *> *)keys{
-    [keys enumerateObjectsUsingBlock:^(NSString *key, NSUInteger idx, BOOL *stop){
+    [[keys copy] enumerateObjectsUsingBlock:^(NSString *key, NSUInteger idx, BOOL *stop){
         [self registerDelegate:delegate forKey:key];
     }];
 }
@@ -66,8 +66,13 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DelegateManager)
     if (!key || !anInvocation) {
         return;
     }
-    NSPointerArray *array = [self.delegateDic objectForKey:key];
+	
+	__block NSPointerArray *array = nil;
+	dispatch_sync(self.synchronizationQueue, ^{
+		array = [self.delegateDic objectForKey:key];
+	});
     
+    // Compact delegate because delegate may already be niled.
     [array compact];
     if ([array count] == 0) {
         return;
@@ -75,6 +80,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(DelegateManager)
     [[array allObjects] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop){
         if ([obj respondsToSelector:anInvocation.selector]) {
             [anInvocation setTarget:obj];
+            // Every callback would be called on main queue
             dispatch_main_safe_sync(^{
                 [anInvocation invoke];
             })
