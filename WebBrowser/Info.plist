@@ -24,7 +24,15 @@
 	<string>1.2.2.1</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>sinaweibohd</string>
+		<string>mqzone</string>
+		<string>sinaweibosso</string>
+		<string>sinaweibo</string>
+		<string>wtloginmqq</string>
 		<string>wtloginmqq2</string>
+		<string>alipay</string>
+		<string>alipayshare</string>
+		<string>weibosdk</string>
 		<string>mqq</string>
 		<string>mqqapi</string>
 		<string>mqqopensdkapiV2</string>
