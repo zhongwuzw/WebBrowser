@@ -15,8 +15,8 @@
 #define TOP_TOOL_BAR_HEIGHT 70
 #define TOP_TOOL_BAR_THRESHOLD 45
 
-#define Card_Cell_Close_Width 22
-#define Card_Cell_Close_Height 22
+#define Card_Cell_Close_Width 50
+#define Card_Cell_Close_Height 50
 
 #define TEXT_FIELD_PLACEHOLDER   @"搜索或输入网址"
 
