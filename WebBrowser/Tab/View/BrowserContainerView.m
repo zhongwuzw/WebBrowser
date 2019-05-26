@@ -178,6 +178,9 @@ static NSString *const kBaiduSearchPath = @"https://m.baidu.com/s?ie=utf-8&word=
 #pragma mark - Handle HomePage Load
 
 - (void)handleHomePageWithWebView:(BrowserWebView *)webView{
+    if (webView.homePage) {
+        return;
+    }
     HomePageView *homePage = [[HomePageView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height)];
     webView.homePage = homePage;
     

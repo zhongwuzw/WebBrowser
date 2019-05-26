@@ -1,5 +1,7 @@
 # Master
 
+* Fixes HomePageView re-added.
+
 # 1.2.7
 
 * Added basic authentication of `HTTP`.
