@@ -1,5 +1,10 @@
 # Master
 
+#1.2.8
+
+* Fixes HomePageView re-added.
+* Enlarge card close button respond area
+
 # 1.2.7
 
 * Added basic authentication of `HTTP`.
