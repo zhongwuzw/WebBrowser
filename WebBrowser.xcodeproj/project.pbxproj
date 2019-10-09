@@ -127,7 +127,6 @@
 		0EFDD3081DD423AC002AB3FB /* HttpHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EFDD3071DD423AC002AB3FB /* HttpHelper.m */; };
 		0EFDD30A1DD42861002AB3FB /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EFDD3091DD42861002AB3FB /* AVFoundation.framework */; };
 		0EFDD30C1DD42868002AB3FB /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EFDD30B1DD42868002AB3FB /* AudioToolbox.framework */; };
-		0EFDD30E1DD45764002AB3FB /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EFDD30D1DD45764002AB3FB /* StoreKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -357,7 +356,6 @@
 		0EFDD3071DD423AC002AB3FB /* HttpHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpHelper.m; sourceTree = "<group>"; };
 		0EFDD3091DD42861002AB3FB /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		0EFDD30B1DD42868002AB3FB /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		0EFDD30D1DD45764002AB3FB /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -372,7 +370,6 @@
 				0EC14F561E31B9B300A44D05 /* libsqlite3.tbd in Frameworks */,
 				0EF025721DD95B1E0011019F /* Mantle.framework in Frameworks */,
 				0EF0256C1DD9578F0011019F /* AFNetworking.framework in Frameworks */,
-				0EFDD30E1DD45764002AB3FB /* StoreKit.framework in Frameworks */,
 				0EFDD30C1DD42868002AB3FB /* AudioToolbox.framework in Frameworks */,
 				0EFDD30A1DD42861002AB3FB /* AVFoundation.framework in Frameworks */,
 				0EAA18B91DD35D5D0072F9B3 /* WebKit.framework in Frameworks */,
@@ -1079,7 +1076,6 @@
 				0EC14F551E31B9B300A44D05 /* libsqlite3.tbd */,
 				0EF025711DD95B1E0011019F /* Mantle.framework */,
 				0EF0256B1DD9578F0011019F /* AFNetworking.framework */,
-				0EFDD30D1DD45764002AB3FB /* StoreKit.framework */,
 				0EFDD30B1DD42868002AB3FB /* AudioToolbox.framework */,
 				0EFDD3091DD42861002AB3FB /* AVFoundation.framework */,
 				0EAA18B81DD35D5D0072F9B3 /* WebKit.framework */,
